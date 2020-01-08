@@ -1,7 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
+
+import focusAtEnd from './commands/focusAtEnd/focusAtEnd';
 
 const mainStyles = {
   minHeight: 120,
@@ -26,6 +28,12 @@ const MMSEditor = props => {
   // keep its own internal state.
   const [value, setValue] = useState(initialValue)
 
+  // on mount
+  useEffect(() => {
+    // focus on mount
+    if (props.autofocus) focusAtEnd(editor);
+  }, []);
+
   return (
     <Slate
       editor={editor}
@@ -45,6 +53,8 @@ MMSEditor.propTypes = {
   id: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.object,
+
+  autofocus: PropTypes.bool,
 };
 
 export default MMSEditor;
