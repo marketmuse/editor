@@ -6,7 +6,12 @@ function App() {
   return (
     <div className="wrapper">
       <div className="container">
-        <MMSEditor />
+        <MMSEditor>
+          {({ component, api }) => {
+            window.api = api;
+            return component;
+          }}
+        </MMSEditor>
       </div>
     </div>
   );

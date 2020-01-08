@@ -18,6 +18,7 @@
     "react/jsx-boolean-value": 0,
     "semi": 0,
     "no-unused-vars": 0,
-    "comma-dangle": 0
+    "comma-dangle": 0,
+    "padded-blocks": 0
   }
 }
