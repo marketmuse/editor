@@ -1,31 +1,26 @@
 /** @jsx jsx */
-
-import { Transforms } from 'slate'
 import { ReactEditor } from 'slate-react'
 import jsx from '../../test-utils/jsx';
-import run from '../../test-utils/run';
+import mount from '../../test-utils/mount';
 import withTest from '../../test-utils/withTest';
+import initApi from '..';
 
 describe('api', () => {
-  test('is focus working', async () => {
+  test('is focus working', () => {
 
-    const initial = withTest(
-      <editor><block>test</block></editor>
-    );
+    const initial = withTest(<editor />);
+    const api = initApi(initial);
 
-    const actual = run(initial, api => {
-      api.focus();
-      api.insertText('-----');
-    });
+    // initially the editor shouldn't have focus
+    expect(ReactEditor.isFocused(initial)).toBe(false);
 
-    // TODO: figure out the weird behaviour here
+    // mount the editor
+    mount(initial);
 
-    console.log('initial isfocused', ReactEditor.isFocused(initial));
-    console.log('actual isfocused', ReactEditor.isFocused(actual));
+    // focus
+    api.focus();
 
-    console.log('initial -->', JSON.stringify(initial));
-    console.log('actual -->', JSON.stringify(actual));
-
-    expect(true).toBe(true);
+    // the editor should receive focus
+    expect(ReactEditor.isFocused(initial)).toBe(true);
   })
 })
