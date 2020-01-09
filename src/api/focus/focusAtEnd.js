@@ -1,5 +1,5 @@
-import moveCursorToEnd from '../moveCursorToEnd/moveCursorToEnd';
-import hasFocus from '../hasFocus/hasFocus';
+import moveCursorToEnd from '../moveCursor/moveCursorToEnd';
+import hasFocus from '../focus/hasFocus';
 import focus from '../focus/focus';
 
 export default editor => {
