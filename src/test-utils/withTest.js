@@ -11,5 +11,5 @@ export default editor => {
     return element.void === true ? true : isVoid(element)
   }
 
-  return withReact(editor);
+  return editor;
 }

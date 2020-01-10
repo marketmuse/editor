@@ -5,7 +5,7 @@ import mount from '../../test-utils/mount';
 import withTest from '../../test-utils/withTest';
 import initApi from '..';
 
-describe('api', () => {
+describe('api: moveCursorToStart', () => {
   test('moving cursor to start', () => {
 
     const initial = withTest(

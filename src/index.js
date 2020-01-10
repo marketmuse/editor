@@ -4,9 +4,7 @@ import { Transforms, createEditor } from 'slate';
 import { Slate, Editable, ReactEditor, withReact, useFocused } from 'slate-react';
 import get from 'lodash/get';
 import isNil from 'lodash/isNil';
-
 import initApi from './api';
-import insertText from './api/insertText/insertText';
 
 const mainStyles = {
   minHeight: 120,
@@ -17,7 +15,13 @@ const mainStyles = {
 const initialValue = [{
   type: 'paragraph',
   children: [{
-    text: 'A line of text in a paragraph.'
+    type: 'paragraph',
+    children: [{
+      type: 'paragraph',
+      children: [{
+        text: 'A line of text in a paragraph.'
+      }],
+    }],
   }],
 }];
 

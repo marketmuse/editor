@@ -5,7 +5,7 @@ import mount from '../../test-utils/mount';
 import withTest from '../../test-utils/withTest';
 import initApi from '..';
 
-describe('api', () => {
+describe('api: hasFocus', () => {
   test('hasFocus working', () => {
 
     const input = withTest(<editor />);

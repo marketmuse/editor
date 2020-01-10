@@ -32,7 +32,7 @@
 
 .control-wrapper {
   flex-shrink: 0;
-  width: 320px;
+  width: 480px;
 
   display: flex;
   flex-flow: column;

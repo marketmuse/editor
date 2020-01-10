@@ -74,11 +74,8 @@ function App() {
                 <button onClick={() => api().focusAtEnd()}>focus at end</button>
               </section>
 
-              {/* text controls */}
-              <Separator text="Text" />
-              <section>
-                <button>clear content</button>
-              </section>
+              {/* content controls */}
+              <Separator text="Content" />
               <section class="col">
                 <textarea
                   className="has-item-below"
@@ -93,6 +90,13 @@ function App() {
                   <button className="has-item-above has-item-right has-item-left">+cursor</button>
                   <button className="has-item-above has-item-left">replace</button>
                 </section>
+              </section>
+              <section>
+                <button onClick={() => api().clear()}>clear</button>
+                <button onClick={() => api().clear({ hard: true })}>hard clear</button>
+              </section>
+              <section>
+                <button onClick={() => api().selectAll()}>select all</button>
               </section>
 
             </div>
