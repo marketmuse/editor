@@ -6,13 +6,15 @@ const Separator = props => (
   <separator>
     <span>{props.text}</span>
   </separator>
-)
+);
 
 function App() {
 
   const [code, setCode] = useState('')
   const [text, setText] = useState('')
-  const defaultCode = 'api().focus();\napi().moveCursorToStart()\nslate.Transforms.select(editor, { path: [0, 0], offset: 3 });\nconsole.log("cursor moved")';
+  const [jsx, setJsx] = useState('')
+  const defaultCode = 'api().focus();\napi().moveCursorToStart()\nconsole.log("cursor moved")';
+  const defaultJsx = `<editor>\n\t<block>\n\t\t<text>yo!</text>\n\t</block>\n</editor>`;
 
   return (
     <MMSEditor>
@@ -76,6 +78,8 @@ function App() {
 
               {/* content controls */}
               <Separator text="Content" />
+              {/* text content */}
+              <label>Text</label>
               <section class="col">
                 <textarea
                   className="has-item-below"
@@ -88,7 +92,23 @@ function App() {
                   <button className="has-item-above has-item-right">+start</button>
                   <button className="has-item-above has-item-right has-item-left">+end</button>
                   <button className="has-item-above has-item-right has-item-left">+cursor</button>
-                  <button className="has-item-above has-item-left">replace</button>
+                  <button className="has-item-above has-item-right has-item-left">replace</button>
+                  <button className="has-item-above has-item-left">clear</button>
+                </section>
+              </section>
+              {/* jsx content */}
+              <label>Jsx</label>
+              <section class="col">
+                <textarea
+                  className="has-item-below"
+                  style={{ borderBottom: 'none' }}
+                  placeholder={defaultJsx}
+                  value={jsx}
+                  onChange={e => setJsx(e.target.value)}
+                />
+                <section style={{ margin: 0 }}>
+                  <button className="has-item-above has-item-right">replace</button>
+                  <button className="has-item-above has-item-left">clear</button>
                 </section>
               </section>
               <section>

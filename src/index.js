@@ -5,25 +5,13 @@ import { Slate, Editable, ReactEditor, withReact, useFocused } from 'slate-react
 import get from 'lodash/get';
 import isNil from 'lodash/isNil';
 import initApi from './api';
+import initialState from './config/initialState';
 
 const mainStyles = {
   minHeight: 120,
   backgroundColor: 'white',
   padding: '20px 22px',
 };
-
-const initialValue = [{
-  type: 'paragraph',
-  children: [{
-    type: 'paragraph',
-    children: [{
-      type: 'paragraph',
-      children: [{
-        text: 'A line of text in a paragraph.'
-      }],
-    }],
-  }],
-}];
 
 const MMSEditor = props => {
   const editor = isNil(props._editor) ?
@@ -36,7 +24,7 @@ const MMSEditor = props => {
   // the data should be exposed through an api in a meaningful way, and it should
   // keep its own internal state.
   const [value, setValue] = useState(isNil(props._editor) ?
-    initialValue :
+    initialState :
     (get(props, '_editor.children') || [])
   );
 

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { ReactEditor } from 'slate-react'
-import jsx from '../../test-utils/jsx';
+import jsx from '../../utils/jsx';
 import mount from '../../test-utils/mount';
 import withTest from '../../test-utils/withTest';
 import initApi from '..';
@@ -86,7 +86,7 @@ describe('api utils: getDocumentPoints', () => {
 
   // ***
   // TODO: find a way to better handle hard clear
-  test('get document point works after hard clear', () => {
+  test('get document point works after clear', () => {
     const input = withTest(
       <editor>
         <block>test</block>
@@ -94,12 +94,21 @@ describe('api utils: getDocumentPoints', () => {
     );
 
     // hard clear
-    initApi(input).clear({ hard: true })
+    initApi(input).clear()
 
     // it should select the first point
     const startPoint = getDocumentStartPoint(input);
     const endPoint = getDocumentEndPoint(input);
     expect(startPoint).toEqual({ path: [0, 0], offset: 0 });
     expect(endPoint).toEqual({ path: [0, 0], offset: 0 })
+  })
+
+  // TODO
+  test('get document point works with no text node', () => {
+    const input = withTest(<editor />);
+    const startPoint = getDocumentStartPoint(input);
+    const endPoint = getDocumentEndPoint(input);
+    expect(startPoint).toBeNull();
+    expect(endPoint).toBeNull();
   })
 })

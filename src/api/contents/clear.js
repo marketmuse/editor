@@ -1,20 +1,23 @@
+import isNil from 'lodash/isNil';
 import { Transforms } from 'slate';
 import selectAll from './selectAll';
 import ensureFocus from '../utils/ensureFocus';
+import getDocumentStartPoint from '../utils/getDocumentStartPoint';
+import moveCursorToStart from '../moveCursor/moveCursorToStart';
+import hasFocus from '../focus/hasFocus';
+import initialState from '../../config/initialState';
 
 export default (editor, { hard } = {}) => {
-
-  // Transform.delete preserves the block structure, only
-  // clears textual content. That's also the default backspace
-  // behaviour. If you want to make sure editor is in a clean state,
-  // use hard clear, which removes all nodes and selection.
-  if (hard) {
-    // TODO: is it better to do this using Transforms ?
-    editor.children = [];
-    editor.selection = null;
-  } else {
-    ensureFocus(editor);
-    selectAll(editor);
-    Transforms.delete(editor);
+  // set document children to an empty paragraph with some text
+  editor.children = initialState;
+  // if document already has a selection
+  if (!isNil(editor.selection)) {
+    // if the editor has focus while clearing, just
+    // move the cursor to the start
+    if (hasFocus(editor)) moveCursorToStart(editor);
+    // if the editor has no focus, set selection to null
+    else editor.selection = null;
   }
+  // call a transform to trigger an update
+  Transforms.insertText(editor, '', { at: [] });
 }
