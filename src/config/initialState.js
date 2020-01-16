@@ -1,8 +1,6 @@
-import { type } from '../editorComponents/Paragraph';
+import { type } from '../components/editor/core/block/Paragraph';
 
 export default [{
   type,
-  children: [{
-    text: ''
-  }]
+  children: [{ text: '' }]
 }];

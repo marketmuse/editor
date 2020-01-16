@@ -1,5 +1,9 @@
+// Intended for testing purposes only
+// Use with a custom jsx pragma comment:
+// https://babeljs.io/docs/en/babel-plugin-transform-react-jsx#custom
+
 import { createHyperscript } from 'slate-hyperscript'
-import { type as paragraphType } from '../editorComponents/Paragraph';
+import { type as paragraphType } from '../components/editor/core/block/Paragraph';
 
 const h = createHyperscript({
   elements: {

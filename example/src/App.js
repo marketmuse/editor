@@ -97,7 +97,11 @@ function App() {
                 </section>
               </section>
               {/* jsx content */}
-              <label>Jsx</label>
+              <label>
+                <a href="https://github.com/ianstormtaylor/slate/tree/master/packages/slate-hyperscript" target="_new">
+                  Hyperscript
+                </a>
+              </label>
               <section class="col">
                 <textarea
                   className="has-item-below"
