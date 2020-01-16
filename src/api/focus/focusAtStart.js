@@ -1,5 +1,5 @@
 import moveCursorToStart from '../moveCursor/moveCursorToStart';
-import ensureFocus from '../utils/ensureFocus';
+import ensureFocus from '../../editor/ensureFocus';
 
 export default editor => {
   ensureFocus(editor);

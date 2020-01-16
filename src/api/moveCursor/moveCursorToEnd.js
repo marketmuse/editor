@@ -1,6 +1,6 @@
 import { Editor, Transforms } from 'slate';
-import getDocumentEdgePoint from '../utils/getDocumentEdgePoint';
-import ensureFocus from '../utils/ensureFocus';
+import getDocumentEdgePoint from '../../editor/getDocumentEdgePoint';
+import ensureFocus from '../../editor/ensureFocus';
 
 export default editor => {
   ensureFocus(editor);

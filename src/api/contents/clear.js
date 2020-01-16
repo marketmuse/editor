@@ -1,7 +1,7 @@
 import isNil from 'lodash/isNil';
 import { Transforms } from 'slate';
 import selectAll from './selectAll';
-import ensureFocus from '../utils/ensureFocus';
+import ensureFocus from '../../editor/ensureFocus';
 import moveCursorToStart from '../moveCursor/moveCursorToStart';
 import hasFocus from '../focus/hasFocus';
 import initialState from '../../config/initialState';
