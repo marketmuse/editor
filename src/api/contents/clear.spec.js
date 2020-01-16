@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { ReactEditor } from 'slate-react'
-import jsx from '../../editordeserializer/deserializeJsx';
+import jsx from '../../editor/deserializer/deserializeJsx';
 import withTest from '../../test-utils/withTest';
 import initApi from '..';
 

@@ -3,7 +3,7 @@
 // https://babeljs.io/docs/en/babel-plugin-transform-react-jsx#custom
 
 import { createHyperscript } from 'slate-hyperscript'
-import { type as paragraphType } from '../components/editor/core/block/Paragraph';
+import { type as paragraphType } from '../../components/editor/core/block/Paragraph';
 
 const h = createHyperscript({
   elements: {
