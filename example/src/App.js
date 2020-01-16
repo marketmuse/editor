@@ -112,11 +112,10 @@ function App() {
                 </section>
               </section>
               <section>
-                <button onClick={() => api().clear()}>clear</button>
-                <button onClick={() => api().clear({ hard: true })}>hard clear</button>
+                <button onClick={() => api().selectAll()}>select all</button>
               </section>
               <section>
-                <button onClick={() => api().selectAll()}>select all</button>
+                <button onClick={() => api().clear()}>clear</button>
               </section>
 
             </div>

@@ -2,7 +2,6 @@ import isNil from 'lodash/isNil';
 import { Transforms } from 'slate';
 import selectAll from './selectAll';
 import ensureFocus from '../utils/ensureFocus';
-import getDocumentStartPoint from '../utils/getDocumentStartPoint';
 import moveCursorToStart from '../moveCursor/moveCursorToStart';
 import hasFocus from '../focus/hasFocus';
 import initialState from '../../config/initialState';

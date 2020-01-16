@@ -9,6 +9,8 @@ import clear from './contents/clear';
 import populateWindow from '../test-utils/populateWindow';
 
 export default editor => ({
+
+  // actions
   focus: () => focus(editor),
   hasFocus: () => hasFocus(editor),
   focusAtEnd: () => focusAtEnd(editor),
