@@ -1,4 +1,7 @@
 export const tag = 'A';
 export const type = 'link';
 
-export default el => ({ tag, type, url: el.getAttribute('href') });
+export default ({ href } = {}) => ({ type, href });
+
+// TODO: this isn't block level!! block / inline is
+// wrong! rename block -> element, inline -> text

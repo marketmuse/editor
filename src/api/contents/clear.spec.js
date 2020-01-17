@@ -16,16 +16,16 @@ describe('api: clear', () => {
     const [actual, expected] = run(
       withTest(
         <editor>
-          <paragraph>
+          <p>
             <text>test</text>
-          </paragraph>
+          </p>
         </editor>
       ),
       withTest(
         <editor>
-          <paragraph>
+          <p>
             <text />
-          </paragraph>
+          </p>
         </editor>
       )
     );
@@ -38,16 +38,16 @@ describe('api: clear', () => {
     const [actual, expected] = run(
       withTest(
         <editor>
-          <paragraph><text>test</text></paragraph>
-          <paragraph><text>test</text></paragraph>
-          <paragraph><text>test</text></paragraph>
+          <p><text>test</text></p>
+          <p><text>test</text></p>
+          <p><text>test</text></p>
         </editor>
       ),
       withTest(
         <editor>
-          <paragraph>
+          <p>
             <text />
-          </paragraph>
+          </p>
         </editor>
       )
     );
@@ -60,18 +60,18 @@ describe('api: clear', () => {
     const [actual, expected] = run(
       withTest(
         <editor>
-          <paragraph>
-            <paragraph>
+          <p>
+            <p>
               <text>test</text>
-            </paragraph>
-          </paragraph>
+            </p>
+          </p>
         </editor>
       ),
       withTest(
         <editor>
-          <paragraph>
+          <p>
             <text />
-          </paragraph>
+          </p>
         </editor>
       ),
     );
@@ -84,25 +84,25 @@ describe('api: clear', () => {
     const [actual, expected] = run(
       withTest(
         <editor>
-          <paragraph><paragraph><paragraph><text>test</text></paragraph></paragraph></paragraph>
-          <paragraph><paragraph><paragraph><text>test</text></paragraph></paragraph></paragraph>
-          <paragraph><paragraph><paragraph><text>test</text></paragraph></paragraph></paragraph>
-          <paragraph>
-            <paragraph><paragraph><text>test</text></paragraph></paragraph>
-            <paragraph><paragraph><text>test</text></paragraph></paragraph>
-            <paragraph>
-              <paragraph><text>test</text></paragraph>
-              <paragraph><text>test</text></paragraph>
-              <paragraph><text>test</text></paragraph>
-            </paragraph>
-          </paragraph>
+          <p><p><p><text>test</text></p></p></p>
+          <p><p><p><text>test</text></p></p></p>
+          <p><p><p><text>test</text></p></p></p>
+          <p>
+            <p><p><text>test</text></p></p>
+            <p><p><text>test</text></p></p>
+            <p>
+              <p><text>test</text></p>
+              <p><text>test</text></p>
+              <p><text>test</text></p>
+            </p>
+          </p>
         </editor>
       ),
       withTest(
         <editor>
-          <paragraph>
+          <p>
             <text />
-          </paragraph>
+          </p>
         </editor>
       )
     );
@@ -115,18 +115,18 @@ describe('api: clear', () => {
     const [actual, expected] = run(
       withTest(
         <editor>
-          <paragraph>
+          <p>
             <text>te<cursor />st</text>
-          </paragraph>
+          </p>
         </editor>
       ),
       withTest(
         <editor>
-          <paragraph>
+          <p>
             <text>
               <cursor />
             </text>
-          </paragraph>
+          </p>
         </editor>
       )
     );

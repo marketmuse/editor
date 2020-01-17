@@ -1,16 +1,17 @@
 import get from 'lodash/get';
 
 export default (components = []) => (
-  components.reduce((acc, c) => {
-    if (!c || !get(c.tag)) return acc;
-    const makeObject = c => ({ [c.tag]: c });
+  components.reduce((acc, c = {}) => {
+    if (!c || !c.tag) return acc;
+
+    const makeObject = tag => ({ [tag]: c.default });
 
     return {
       ...acc,
       ...(Array.isArray(c.tag)
-        ? c.tag.reduce((acc2, ct) => ({ ...acc2, ...makeObject(ct) }), {})
-        : makeObject(c)
+        ? c.tag.reduce((acc2, tag) => ({ ...acc2, ...makeObject(tag) }), {})
+        : makeObject(c.tag)
       ),
     }
   }, {})
-)
+);
