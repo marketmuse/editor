@@ -10,7 +10,7 @@ const H5 = ({ children, ...rest }) => <h5 {...rest}>{children}</h5>;
 const H6 = ({ children, ...rest }) => <h6 {...rest}>{children}</h6>;
 /* eslint-enable */
 
-const Heading = ({ level, children, ...rest } = {}) => {
+const Heading = ({ level, children, style, className, ...rest } = {}) => {
   const contents = children;
   let Tag = H1;
 
@@ -25,7 +25,11 @@ const Heading = ({ level, children, ...rest } = {}) => {
   }
 
   return (
-    <Tag {...rest}>
+    <Tag
+      style={style}
+      className={className}
+      {...rest}
+    >
       {children}
     </Tag>
   )
@@ -34,6 +38,8 @@ const Heading = ({ level, children, ...rest } = {}) => {
 Heading.propTypes = {
   level: PropTypes.number,
   children: PropTypes.any,
+  className: PropTypes.string,
+  style: PropTypes.object,
 };
 
 export default Heading;
