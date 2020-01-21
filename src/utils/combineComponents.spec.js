@@ -1,5 +1,4 @@
 import combineComponents from './combineComponents';
-import * as p from '../components/editor/core/block/Paragraph';
 
 describe('combine-components', () => {
 
@@ -8,7 +7,7 @@ describe('combine-components', () => {
 
     const tag = 'P';
     const type = 'paragraph';
-    const p = { tag, type, default: () => ({ type }) };
+    const p = { tag, type, get: () => ({ type }) };
 
     const combined = combineComponents([ p ]);
 
@@ -22,11 +21,11 @@ describe('combine-components', () => {
 
     const tagP = 'P';
     const typeP = 'paragraph';
-    const p = { tag: tagP, type: typeP, default: () => ({ type: typeP }) };
+    const p = { tag: tagP, type: typeP, get: () => ({ type: typeP }) };
 
     const tagH1 = 'H1';
     const typeH1 = 'heading-one';
-    const h1 = { tag: tagH1, type: typeH1, default: () => ({ type: typeH1 }) };
+    const h1 = { tag: tagH1, type: typeH1, get: () => ({ type: typeH1 }) };
 
     const combined = combineComponents([ p, h1 ]);
 
@@ -42,11 +41,11 @@ describe('combine-components', () => {
 
     const tag1 = ['OL', 'UL'];
     const type1 = 'list';
-    const l = { tag: tag1, type: type1, default: () => ({ type: type1 }) };
+    const l = { tag: tag1, type: type1, get: () => ({ type: type1 }) };
 
     const tag2 = ['H1', 'H2', 'H3'];
     const type2 = 'heading';
-    const h = { tag: tag2, type: type2, default: () => ({ type: type2 }) };
+    const h = { tag: tag2, type: type2, get: () => ({ type: type2 }) };
 
     const combined = combineComponents([ l, h ]);
 

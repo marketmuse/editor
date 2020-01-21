@@ -1,16 +1,14 @@
-// Use with a custom jsx pragma comment:
+// To use with a custom jsx pragma comment:
 // https://babeljs.io/docs/en/babel-plugin-transform-react-jsx#custom
 
 import get from 'lodash/get';
 import isNil from 'lodash/isNil';
 import { createHyperscript } from 'slate-hyperscript'
-import blocks from '../../components/editor/core/block';
-import inlines from '../../components/editor/core/inline';
 
-const elements = {
-  ...blocks,
-  ...inlines,
-};
+import { elements } from '../../../components/editor/core/Element';
+
+// TODO: does slate-hyperscript support leafs ?
+// import { leafs } from '../../../components/editor/core/Leaf';
 
 const h = createHyperscript({
   elements: {
@@ -38,6 +36,6 @@ export default (tagName, attributes = {}, ...children) => {
 
   // if editor element exists, grab its config
   // and use those as the attributes
-  const useAttributes = getAttributes(attributes);
+  const useAttributes = getAttributes({ tag: tagName, ...(attributes || {}) });
   return h(tagNameCapital, useAttributes, ...children);
 }
