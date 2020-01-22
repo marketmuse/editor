@@ -12,8 +12,8 @@ describe('combine-components', () => {
     const combined = combineComponents([ p ]);
 
     expect(typeof combined === 'object').toBe(true);
-    expect(typeof combined[tag] === 'function').toBe(true);
-    expect(combined[tag]()).toEqual({ type })
+    expect(typeof combined[tag].get === 'function').toBe(true);
+    expect(combined[tag].get()).toEqual({ type })
   });
 
   // ****
@@ -30,10 +30,10 @@ describe('combine-components', () => {
     const combined = combineComponents([ p, h1 ]);
 
     expect(typeof combined === 'object').toBe(true);
-    expect(typeof combined[tagP] === 'function').toBe(true);
-    expect(typeof combined[tagH1] === 'function').toBe(true);
-    expect(combined[tagP]()).toEqual({ type: typeP })
-    expect(combined[tagH1]()).toEqual({ type: typeH1 })
+    expect(typeof combined[tagP].get === 'function').toBe(true);
+    expect(typeof combined[tagH1].get === 'function').toBe(true);
+    expect(combined[tagP].get()).toEqual({ type: typeP })
+    expect(combined[tagH1].get()).toEqual({ type: typeH1 })
   });
 
   // ****
@@ -50,16 +50,16 @@ describe('combine-components', () => {
     const combined = combineComponents([ l, h ]);
 
     expect(typeof combined === 'object').toBe(true);
-    expect(typeof combined[tag1[0]] === 'function').toBe(true);
-    expect(typeof combined[tag1[1]] === 'function').toBe(true);
-    expect(typeof combined[tag2[0]] === 'function').toBe(true);
-    expect(typeof combined[tag2[1]] === 'function').toBe(true);
-    expect(typeof combined[tag2[2]] === 'function').toBe(true);
-    expect(combined[tag1[0]]()).toEqual({ type: type1 })
-    expect(combined[tag1[1]]()).toEqual({ type: type1 })
-    expect(combined[tag2[0]]()).toEqual({ type: type2 })
-    expect(combined[tag2[1]]()).toEqual({ type: type2 })
-    expect(combined[tag2[2]]()).toEqual({ type: type2 })
+    expect(typeof combined[tag1[0]].get === 'function').toBe(true);
+    expect(typeof combined[tag1[1]].get === 'function').toBe(true);
+    expect(typeof combined[tag2[0]].get === 'function').toBe(true);
+    expect(typeof combined[tag2[1]].get === 'function').toBe(true);
+    expect(typeof combined[tag2[2]].get === 'function').toBe(true);
+    expect(combined[tag1[0]].get()).toEqual({ type: type1 })
+    expect(combined[tag1[1]].get()).toEqual({ type: type1 })
+    expect(combined[tag2[0]].get()).toEqual({ type: type2 })
+    expect(combined[tag2[1]].get()).toEqual({ type: type2 })
+    expect(combined[tag2[2]].get()).toEqual({ type: type2 })
   });
 
 });

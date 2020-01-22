@@ -1,12 +1,12 @@
-import { withHistory } from 'slate-history'
 import { withReact } from 'slate-react';
+import { withHistory } from 'slate-history'
 import withLinks from './withLinks';
 
-export default editor => {
+export default (editor, { test } = {}) => {
 
   let useEditor = editor;
 
-  useEditor = withReact(useEditor);
+  if (!test) useEditor = withReact(useEditor);
   useEditor = withHistory(useEditor);
   useEditor = withLinks(useEditor);
 

@@ -12,10 +12,9 @@ import { elements } from '../../../components/editor/Element';
 
 const h = createHyperscript({
   elements: {
-    block: {},
     ...Object.keys(elements).reduce((acc, k) => ({
       ...acc, [k]: {}
-    }), {})
+    }), {}),
   },
 });
 
@@ -29,7 +28,7 @@ export default (tagName, attributes = {}, ...children) => {
   // if there is, we need to capitalize the tag name to use its configuration,
   // because that's how they're stored.
   const tagNameCapital = typeof tagName === 'string' ? tagName.toUpperCase() : null;
-  const getAttributes = get(elements, tagNameCapital);
+  const getAttributes = get(elements, `['${tagNameCapital}'].get`);
 
   // if editor element doesn't exist, return
   if (!getAttributes) return h(tagName, attributes, ...children);

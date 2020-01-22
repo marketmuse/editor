@@ -5,7 +5,7 @@ export default (components = []) => (
     if (!c || !c.tag) return acc;
 
     const makeObject = tag => ({
-      [tag]: c.get
+      [tag]: c
     });
 
     return {

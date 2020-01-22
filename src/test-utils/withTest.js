@@ -1,4 +1,4 @@
-import { withReact } from 'slate-react';
+import withMarketmuse from '../editor/enhancer/withMarketmuse';
 
 export default editor => {
   const { isInline, isVoid } = editor
@@ -11,5 +11,5 @@ export default editor => {
     return element.void === true ? true : isVoid(element)
   }
 
-  return editor;
+  return withMarketmuse(editor, { test: true });
 }

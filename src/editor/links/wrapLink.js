@@ -12,7 +12,8 @@ export default (editor, href) => {
   const { selection } = editor
   const isCollapsed = selection && Range.isCollapsed(selection)
 
-  const link = Object.assign(l.get({ href }), {
+  const linkConfig = l.get({ href });
+  const link = Object.assign(linkConfig, {
     children: isCollapsed ? [{ text: href }] : [],
   })
 
