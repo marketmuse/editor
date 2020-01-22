@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Blockquote = ({ children, style, className, ...rest } = {}) => (
+const Blockquote = React.forwardRef(({ children, style, className, ...rest } = {}, ref) => (
   <blockquote
     style={style}
     className={className}
@@ -9,7 +9,7 @@ const Blockquote = ({ children, style, className, ...rest } = {}) => (
   >
     {children}
   </blockquote>
-);
+));
 
 Blockquote.propTypes = {
   children: PropTypes.any,

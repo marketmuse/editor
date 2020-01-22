@@ -1,11 +1,11 @@
 import { type } from '../components/editor/core/elements/Paragraph';
-/*
+
 export default [{
   type,
   children: [{ text: '' }]
 }];
-*/
 
+/*
 export default [
   {
     type: 'paragraph',
@@ -77,3 +77,4 @@ export default [
     children: [{ text: 'italic and underlined text', italic: true, underline: true }]
   }
 ];
+*/

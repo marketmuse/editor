@@ -8,8 +8,8 @@ import initApi from './api';
 import initialState from './config/initialState';
 import withMarketmuse from './editor/enhancer/withMarketmuse';
 
-import Leaf from './components/editor/core/Leaf';
-import Element from './components/editor/core/Element';
+import Leaf from './components/editor/Leaf';
+import Element from './components/editor/Element';
 
 const mainStyles = {
   minHeight: 120,

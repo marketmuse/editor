@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Paragraph = ({ children, style, className, ...rest }) => (
+const Paragraph = React.forwardRef(({ children, style, className, ...rest }, ref) => (
   <p
     style={style}
     className={className}
@@ -9,7 +9,7 @@ const Paragraph = ({ children, style, className, ...rest }) => (
   >
     {children}
   </p>
-);
+));
 
 Paragraph.propTypes = {
   children: PropTypes.any,

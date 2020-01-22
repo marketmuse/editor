@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Link = ({
+const Link = React.forwardRef(({
   children,
   className,
   style,
   href,
   ...rest
-}) => (
+}, ref) => (
   <a
     href={href}
     target='_new'
@@ -17,7 +17,7 @@ const Link = ({
   >
     {children}
   </a>
-);
+));
 
 Link.propTypes = {
   children: PropTypes.any,

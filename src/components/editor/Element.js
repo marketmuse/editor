@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import combineComponents from '../../../utils/combineComponents';
+import combineComponents from '../../utils/combineComponents';
 
-import Blockquote, * as bq from './elements/Blockquote';
-import Paragraph, * as p from './elements/Paragraph';
-import Heading, * as h from './elements/Heading';
-import Link, * as a from './elements/Link';
-import ListBulleted, * as ul from './elements/ListBulleted';
-import ListNumbered, * as ol from './elements/ListNumbered';
-import ListItem, * as li from './elements/ListItem';
+import Blockquote, * as bq from './core/elements/Blockquote';
+import Paragraph, * as p from './core/elements/Paragraph';
+import Heading, * as h from './core/elements/Heading';
+import Link, * as a from './core/elements/Link';
+import ListBulleted, * as ul from './core/elements/ListBulleted';
+import ListNumbered, * as ol from './core/elements/ListNumbered';
+import ListItem, * as li from './core/elements/ListItem';
 
 const Element = ({ attributes, children, element = {} }) => {
   const pass = Object.assign({}, attributes, element);

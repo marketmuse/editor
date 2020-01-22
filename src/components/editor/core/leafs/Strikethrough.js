@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Strikethrough = ({ children, style, className, ...rest }) => (
+const Strikethrough = React.forwardRef(({ children, style, className, ...rest }, ref) => (
   <span
     style={Object.assign({ textDecoration: 'line-through' }, style)}
     className={className}
-    // {...rest}
   >
     {children}
   </span>
-);
+));
 
 Strikethrough.propTypes = {
   children: PropTypes.any,

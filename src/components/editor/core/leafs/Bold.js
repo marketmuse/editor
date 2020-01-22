@@ -1,15 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Bold = ({ children, style, className, ...rest }) => (
-  <b
-    style={style}
-    className={className}
-    // {...rest}
-  >
+const Bold = React.forwardRef(({ children, style, className, ...rest }, ref) => (
+  <b style={style} className={className}>
     {children}
   </b>
-);
+));
 
 Bold.propTypes = {
   children: PropTypes.any,

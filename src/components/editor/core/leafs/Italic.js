@@ -1,15 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Italic = ({ children, style, className, ...rest }) => (
-  <i
-    style={style}
-    className={className}
-    // {...rest}
-  >
+const Italic = React.forwardRef(({ children, style, className, ...rest }, ref) => (
+  <i style={style} className={className}>
     {children}
   </i>
-);
+));
 
 Italic.propTypes = {
   children: PropTypes.any,

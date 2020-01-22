@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ListBulleted = ({ children, style, className, ...rest }) => (
+const ListBulleted = React.forwardRef(({ children, style, className, ...rest }, ref) => (
   <ul
     style={style}
     className={className}
@@ -9,7 +9,7 @@ const ListBulleted = ({ children, style, className, ...rest }) => (
   >
     {children}
   </ul>
-);
+));
 
 ListBulleted.propTypes = {
   children: PropTypes.any,

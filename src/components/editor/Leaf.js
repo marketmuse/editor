@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import combineComponents from '../../../utils/combineComponents';
+import combineComponents from '../../utils/combineComponents';
 
-import Bold, * as b from './leafs/Bold';
-import Italic, * as i from './leafs/Italic';
-import Strikethrough, * as s from './leafs/Strikethrough';
-import Underline, * as u from './leafs/Underline';
+import Bold, * as b from './core/leafs/Bold';
+import Italic, * as i from './core/leafs/Italic';
+import Strikethrough, * as s from './core/leafs/Strikethrough';
+import Underline, * as u from './core/leafs/Underline';
 
 const Leaf = ({ attributes, children, leaf } = {}) => {
   if (leaf[b.key]) children = <Bold {...attributes}>{children}</Bold>;

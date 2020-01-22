@@ -5,10 +5,10 @@ import get from 'lodash/get';
 import isNil from 'lodash/isNil';
 import { createHyperscript } from 'slate-hyperscript'
 
-import { elements } from '../../../components/editor/core/Element';
+import { elements } from '../../../components/editor/Element';
 
 // TODO: does slate-hyperscript support leafs ?
-// import { leafs } from '../../../components/editor/core/Leaf';
+// import { leafs } from '../../../components/editor/Leaf';
 
 const h = createHyperscript({
   elements: {

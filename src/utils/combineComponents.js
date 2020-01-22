@@ -4,7 +4,9 @@ export default (components = []) => (
   components.reduce((acc, c = {}) => {
     if (!c || !c.tag) return acc;
 
-    const makeObject = tag => ({ [tag]: c.get });
+    const makeObject = tag => ({
+      [tag]: c.get
+    });
 
     return {
       ...acc,

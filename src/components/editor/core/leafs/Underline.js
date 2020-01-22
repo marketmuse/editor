@@ -1,15 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Underline = ({ children, style, className, ...rest }) => (
-  <u
-    style={style}
-    className={className}
-    // {...rest}
-  >
+const Underline = React.forwardRef(({ children, style, className, ...rest }, ref) => (
+  <u style={style} className={className}>
     {children}
   </u>
-);
+));
 
 Underline.propTypes = {
   children: PropTypes.any,

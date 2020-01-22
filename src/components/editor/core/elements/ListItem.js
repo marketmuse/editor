@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ListItem = ({ children, style, className, ...rest }) => (
+const ListItem = React.forwardRef(({ children, style, className, ...rest }, ref) => (
   <li
     style={style}
     className={className}
@@ -9,7 +9,7 @@ const ListItem = ({ children, style, className, ...rest }) => (
   >
     {children}
   </li>
-);
+));
 
 ListItem.propTypes = {
   children: PropTypes.any,
