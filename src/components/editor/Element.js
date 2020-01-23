@@ -10,6 +10,8 @@ import ListBulleted, * as ul from './core/elements/ListBulleted';
 import ListNumbered, * as ol from './core/elements/ListNumbered';
 import ListItem, * as li from './core/elements/ListItem';
 
+// TODO: export all components from 'index.js'. Do below automatically
+// improve combineComponents
 const Element = ({ attributes, children, element = {} }) => {
   const pass = Object.assign({}, attributes, element);
   switch (element.type) {
