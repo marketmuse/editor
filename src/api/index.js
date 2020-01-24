@@ -4,6 +4,8 @@ import focusAtEnd from './focus/focusAtEnd';
 import focusAtStart from './focus/focusAtStart';
 import moveCursorToStart from './moveCursor/moveCursorToStart';
 import moveCursorToEnd from './moveCursor/moveCursorToEnd';
+import insertLink from './links/insertLink';
+import removeLink from './links/removeLink';
 import selectAll from './contents/selectAll';
 import clear from './contents/clear';
 import populateWindow from '../test-utils/populateWindow';
@@ -18,7 +20,9 @@ export default editor => ({
   moveCursorToStart: () => moveCursorToStart(editor),
   moveCursorToEnd: () => moveCursorToEnd(editor),
   selectAll: () => selectAll(editor),
-  clear: (options) => clear(editor, options),
+  clear: options => clear(editor, options),
+  insertLink: url => insertLink(editor, url),
+  removeLink: () => removeLink(editor),
 
   // internals
   _getEditor: () => editor,

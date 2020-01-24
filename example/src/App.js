@@ -12,6 +12,7 @@ function App() {
 
   const [code, setCode] = useState('')
   const [text, setText] = useState('')
+  const [url, setUrl] = useState('')
   const [jsx, setJsx] = useState('')
   const defaultCode = 'api().focus();\napi().moveCursorToStart()\nconsole.log("cursor moved")';
   const defaultJsx = `<editor>\n\t<block>\n\t\t<text>yo!</text>\n\t</block>\n</editor>`;
@@ -120,6 +121,33 @@ function App() {
               </section>
               <section>
                 <button onClick={() => api().clear()}>clear</button>
+              </section>
+
+              {/* links */}
+              <Separator text="Link" />
+              <label>Url</label>
+              <section class="col">
+                <input
+                  className="has-item-below"
+                  style={{ borderBottom: 'none' }}
+                  placeholder="Enter url..."
+                  value={url}
+                  onChange={e => setUrl(e.target.value)}
+                />
+                <section style={{ margin: 0 }}>
+                  <button
+                    className="has-item-above has-item-right"
+                    onClick={() => api().insertLink(url)}
+                  >
+                    insert link
+                  </button>
+                  <button
+                    className="has-item-above has-item-left"
+                    onClick={() => api().removeLink()}
+                  >
+                    remove link
+                  </button>
+                </section>
               </section>
 
             </div>
