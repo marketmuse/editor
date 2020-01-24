@@ -1,5 +1,5 @@
 import isUrl from 'is-url'
-import wrapLink from '../links/wrapLink';
+import insertLink from '../../api/links/insertLink';
 import * as l from '../../components/editor/core/elements/Link';
 export default editor => {
   const { insertData, insertText, isInline } = editor
@@ -9,14 +9,14 @@ export default editor => {
   }
 
   editor.insertText = text => {
-    if (text && isUrl(text)) wrapLink(editor, text);
+    if (text && isUrl(text)) insertLink(editor, text);
     else insertText(text);
   }
 
   editor.insertData = data => {
     const text = data.getData('text/plain');
 
-    if (text && isUrl(text)) wrapLink(editor, text);
+    if (text && isUrl(text)) insertLink(editor, text);
     else insertData(data);
   }
 

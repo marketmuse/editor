@@ -1,7 +1,8 @@
-import unwrapLink from '../../editor/links/unwrapLink';
-import ensureFocus from '../../editor/ensureFocus';
+import { Transforms } from 'slate';
+import * as link from '../../components/editor/core/elements/Link';
 
 export default editor => {
-  ensureFocus(editor);
-  unwrapLink(editor);
+  Transforms.unwrapNodes(editor, {
+    match: n => n.type === link.type
+  })
 }
