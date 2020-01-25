@@ -1,6 +1,5 @@
 import { Range, Transforms } from 'slate';
-// import removeLink from '@api/links/removeLink.js';
-import removeLink from './removeLink';
+import removeLink from '@api/links/removeLink.js';
 import isLinkActive from '../../editor/links/isLinkActive';
 import * as l from '../../components/editor/core/elements/Link';
 
