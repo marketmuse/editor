@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { ReactEditor } from 'slate-react'
-import jsx from '../../editor/deserializer/deserializeJsx/deserializeJsx';
-import withTest from '../../test-utils/withTest';
-import initApi from '..';
+import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
+import withTest from '@utils/test/withTest';
+import initApi from '@editor/api';
 
 const run = (input, exHard) => {
   initApi(input).clear();

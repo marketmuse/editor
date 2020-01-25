@@ -1,9 +1,10 @@
 import isNil from 'lodash/isNil';
 import { Transforms } from 'slate';
-import ensureFocus from '../../editor/ensureFocus';
-import moveCursorToStart from '../moveCursor/moveCursorToStart';
-import hasFocus from '../focus/hasFocus';
-import initialState from '../../config/initialState';
+
+import ensureFocus from '@editor/focus/ensureFocus';
+import hasFocus from '@editor/focus/hasFocus';
+import moveCursorToStart from '@editor/cursor/moveCursorToStart';
+import initialState from '@config/initialState';
 
 export default (editor, { hard } = {}) => {
   // set document children to an empty paragraph with some text

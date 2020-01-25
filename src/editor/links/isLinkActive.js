@@ -1,5 +1,5 @@
 import { Editor } from 'slate';
-import * as l from '../../components/editor/core/elements/Link';
+import * as l from '@components/editor/core/elements/Link';
 
 export default editor => {
   const [link] = Editor.nodes(editor, {

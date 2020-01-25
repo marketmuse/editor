@@ -1,6 +1,7 @@
 import isUrl from 'is-url'
-import insertLink from '../../api/links/insertLink';
-import * as l from '../../components/editor/core/elements/Link';
+import insertLink from '@editor/links/insertLink';
+import * as l from '@components/editor/core/elements/Link';
+
 export default editor => {
   const { insertData, insertText, isInline } = editor
 

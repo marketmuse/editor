@@ -5,6 +5,15 @@
   ],
   "plugins": [
     ["@babel/plugin-proposal-class-properties"],
-    ["@babel/plugin-transform-spread"]
+    ["@babel/plugin-transform-spread"],
+    ["module-resolver", {
+      "alias": {
+        "@": "./src",
+        "@editor": "./src/editor",
+        "@components": "./src/components",
+        "@config": "./src/config",
+        "@utils": "./src/utils",
+      }
+    }]
   ]
 }

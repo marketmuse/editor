@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { ReactEditor } from 'slate-react'
-import jsx from '../../editor/deserializer/deserializeJsx/deserializeJsx';
-import mount from '../../test-utils/mount';
-import withTest from '../../test-utils/withTest';
-import initApi from '..';
+import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
+import mount from '@utils/test/mount';
+import withTest from '@utils/test/withTest';
+import initApi from '@editor/api';
 
 describe('api: focus', () => {
   test('is focus working', () => {
