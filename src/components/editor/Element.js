@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import combineComponents from '../../utils/combineComponents';
+import combineComponents from '@utils/combineComponents';
 
-import Blockquote, * as bq from './core/elements/Blockquote';
-import Paragraph, * as p from './core/elements/Paragraph';
-import Heading, * as h from './core/elements/Heading';
-import Link, * as a from './core/elements/Link';
-import ListBulleted, * as ul from './core/elements/ListBulleted';
-import ListNumbered, * as ol from './core/elements/ListNumbered';
-import ListItem, * as li from './core/elements/ListItem';
+import Blockquote, * as bq from '@components/editor/core/elements/Blockquote';
+import Paragraph, * as p from '@components/editor/core/elements/Paragraph';
+import Heading, * as h from '@components/editor/core/elements/Heading';
+import Link, * as a from '@components/editor/core/elements/Link';
+import ListBulleted, * as ul from '@components/editor/core/elements/ListBulleted';
+import ListNumbered, * as ol from '@components/editor/core/elements/ListNumbered';
+import ListItem, * as li from '@components/editor/core/elements/ListItem';
 
 // TODO: export all components from 'index.js'. Do below automatically
 // improve combineComponents

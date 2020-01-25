@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { ReactEditor } from 'slate-react'
-import jsx from './deserializer/deserializeJsx/deserializeJsx';
-import withTest from '../test-utils/withTest';
-import initApi from '../api';
+import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
+import withTest from '@utils/test/withTest';
+import initApi from '@editor/api';
 import getDocumentEdgePoint from './getDocumentEdgePoint';
 
 describe('api utils: getDocumentPoints', () => {

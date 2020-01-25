@@ -13,8 +13,8 @@
     "npm": ">=5"
   },
   "scripts": {
-    "test": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
+    "test": "cross-env CI=1 react-scripts test --env=jsdom --moduleNameMapper='{\"@(.*)\":\"<rootDir>/src/$1\"}'",
+    "test:watch": "react-scripts test --env=jsdom --moduleNameMapper='{\"@(.*)\":\"<rootDir>/src/$1\"}'",
     "build": "rollup -c",
     "build:example": "yarn predeploy",
     "start": "rollup -c -w",
@@ -49,7 +49,6 @@
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
     "@svgr/rollup": "^2.4.1",
-    "babel-jest": "^25.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "cross-env": "^5.1.4",
     "enzyme": "^3.11.0",

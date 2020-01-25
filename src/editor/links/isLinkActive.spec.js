@@ -1,7 +1,7 @@
 /** @jsx jsx */
-import jsx from '../deserializer/deserializeJsx/deserializeJsx';
-import withTest from '../../test-utils/withTest';
-import isLinkActive from './isLinkActive';
+import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
+import withTest from '@utils/test/withTest';
+import isLinkActive from '@editor/links/isLinkActive';
 
 describe('isLinkActive', () => {
 

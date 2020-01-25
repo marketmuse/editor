@@ -1,6 +1,6 @@
 import { withReact } from 'slate-react';
 import { withHistory } from 'slate-history'
-import withLinks from './withLinks';
+import withLinks from '@editor/enhancer/withLinks';
 
 export default (editor, { test } = {}) => {
 

@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { mount } from 'enzyme';
 import { withReact } from 'slate-react';
 import isNil from 'lodash/isNil';
-import MMSEditor from '..';
-import initApi from '../api';
+import MMSEditor from '@';
+import initApi from '@editor/api';
 
 export default (initial) => {
 

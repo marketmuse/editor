@@ -1,4 +1,4 @@
-import combineComponents from './combineComponents';
+import combineComponents from '@utils/combineComponents';
 
 describe('combine-components', () => {
 

@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import { ReactEditor } from 'slate-react'
-import jsx from '../../editor/deserializer/deserializeJsx/deserializeJsx';
-import mount from '../../test-utils/mount';
-import withTest from '../../test-utils/withTest';
-import initApi from '..';
+import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
+import mount from '@utils/test/mount';
+import withTest from '@utils/test/withTest';
+import initApi from '@editor/api';
 
-describe('api: focus at end', () => {
-  test('is focus at end working', () => {
+describe('api: focus at start', () => {
+  test('is focus at start working', () => {
 
     const initial = withTest(
       <editor>
@@ -22,7 +22,7 @@ describe('api: focus at end', () => {
       <editor>
         <block>
           <text>
-            hello<cursor />
+            <cursor />hello
           </text>
         </block>
       </editor>
@@ -34,7 +34,7 @@ describe('api: focus at end', () => {
     mount(initial);
 
     // focus
-    api.focusAtEnd();
+    api.focusAtStart();
 
     expect(initial.selection).toEqual(expected.selection)
   })

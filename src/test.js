@@ -1,4 +1,4 @@
-import MMSEditor from './'
+import MMSEditor from '@'
 
 describe('MMSEditor', () => {
   it('is truthy', () => {

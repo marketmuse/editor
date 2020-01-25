@@ -1,4 +1,4 @@
-import withMarketmuse from '../editor/enhancer/withMarketmuse';
+import withMarketmuse from '@editor/enhancer/withMarketmuse';
 
 export default editor => {
   const { isInline, isVoid } = editor

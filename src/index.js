@@ -4,12 +4,13 @@ import { Transforms, createEditor } from 'slate';
 import { Slate, Editable, ReactEditor, withReact, useFocused } from 'slate-react';
 import get from 'lodash/get';
 import isNil from 'lodash/isNil';
-import initApi from './api';
-import initialState from './config/initialState';
-import withMarketmuse from './editor/enhancer/withMarketmuse';
 
-import Leaf from './components/editor/Leaf';
-import Element from './components/editor/Element';
+import initApi from '@editor/api';
+import initialState from '@config/initialState';
+import withMarketmuse from '@editor/enhancer/withMarketmuse';
+
+import Leaf from '@components/editor/Leaf';
+import Element from '@components/editor/Element';
 
 const mainStyles = {
   minHeight: 120,

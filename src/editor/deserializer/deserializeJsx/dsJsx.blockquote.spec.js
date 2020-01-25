@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { ReactEditor } from 'slate-react'
-import jsx from './deserializeJsx';
-import withTest from '../../../test-utils/withTest';
+import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
+import withTest from '@utils/test/withTest';
 
 describe('deserialize jsx: blockquote', () => {
 
