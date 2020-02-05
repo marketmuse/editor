@@ -7,10 +7,10 @@ import _leafs from '@components/editor/core/leafs';
 
 const Leaf = ({ attributes, children, leaf } = {}) => {
 
-  children = Object.keys(_leafs).reduce((acc, c) => {
-    const useLeaf = get(_leafs, c);
-    if (!useLeaf || !useLeaf.Component) return acc;
-    const Component = useLeaf.Component;
+  children = Object.values(_leafs).reduce((acc, l) => {
+    if (!leaf[l.key]) return acc;
+    if (!l || !l.Component) return acc;
+    const Component = l.Component;
     return <Component {...attributes}>{acc}</Component>;
   }, children);
 
