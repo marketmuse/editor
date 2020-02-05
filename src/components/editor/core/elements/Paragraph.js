@@ -18,6 +18,7 @@ Paragraph.propTypes = {
 };
 
 export default Paragraph;
+export const Component = Paragraph;
 export const tag = ['BLOCK', 'P'];
 export const type = 'paragraph';
 export const get = () => ({ type });

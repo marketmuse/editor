@@ -18,6 +18,7 @@ ListItem.propTypes = {
 };
 
 export default ListItem;
+export const Component = ListItem;
 export const tag = 'LI';
 export const type = 'list-item';
 export const get = () => ({ type });

@@ -43,6 +43,7 @@ Heading.propTypes = {
 };
 
 export default Heading;
+export const Component = Heading;
 export const tag = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
 export const type = 'heading';
 export const get = ({ level, tag = '' } = {}) => {

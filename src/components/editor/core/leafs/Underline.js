@@ -14,6 +14,7 @@ Underline.propTypes = {
 };
 
 export default Underline;
+export const Component = Underline;
 export const tag = 'U';
 export const key = 'underline';
 export const get = () => ({ [key]: true });

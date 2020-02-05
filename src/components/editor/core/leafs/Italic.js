@@ -14,6 +14,7 @@ Italic.propTypes = {
 };
 
 export default Italic;
+export const Component = Italic;
 export const tag = ['I', 'EM'];
 export const key = 'italic';
 export const get = () => ({ [key]: true });

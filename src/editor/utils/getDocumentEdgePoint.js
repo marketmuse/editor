@@ -12,12 +12,11 @@ export default (editor, { edge = 'end' } = {}) => {
   let position = null;
   try {
     // yield and get the first item
-    position = positionsGen.next().value;
+    return positionsGen.next().value || null;
   } catch (e) {
     // it will fail to yield when editor children
     // is [] and there is nowhere to place the cursor
     // in which case, return null
+    return null;
   }
-
-  return position || null;
 }

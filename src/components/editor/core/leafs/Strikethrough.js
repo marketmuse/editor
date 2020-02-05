@@ -17,6 +17,7 @@ Strikethrough.propTypes = {
 };
 
 export default Strikethrough;
+export const Component = Strikethrough;
 export const tag = 'S';
 export const key = 'strikethrough';
 export const get = () => ({ [key]: true });
