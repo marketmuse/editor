@@ -2,10 +2,7 @@
 import { ReactEditor } from 'slate-react'
 import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
-import isFormatActive from '@editor/utils/isFormatActive';
 import toggleFormat from '@editor/utils/toggleFormat';
-
-// TODO: fix tests here
 
 describe('api utils: toggleFormat', () => {
 
@@ -14,16 +11,26 @@ describe('api utils: toggleFormat', () => {
     
     const input = withTest(
       <editor>
-        <anchor />
-        <text bold>test</text>
-        <focus />
+        <block>
+          <text bold>
+            <anchor />test<focus />
+          </text>
+        </block>
+      </editor>
+    );
+
+    const expected = withTest(
+      <editor>
+        <block>
+          <text>
+            <anchor />test<focus />
+          </text>
+        </block>
       </editor>
     );
 
     toggleFormat(input, 'bold');
-
-    const isActive = isFormatActive(input, 'bold')
-    expect(isActive).toBe(false);
+    expect(input.children).toEqual(expected.children)
   });
 
   // ****
@@ -31,16 +38,26 @@ describe('api utils: toggleFormat', () => {
     
     const input = withTest(
       <editor>
-        <anchor />
-        <text>test</text>
-        <focus />
+        <block>
+          <text>
+            <anchor />test<focus />
+          </text>
+        </block>
+      </editor>
+    );
+
+    const expected = withTest(
+      <editor>
+        <block>
+          <text bold>
+            <anchor />test<focus />
+          </text>
+        </block>
       </editor>
     );
 
     toggleFormat(input, 'bold');
-
-    const isActive = isFormatActive(input, 'bold')
-    expect(isActive).toBe(true);
+    expect(input.children).toEqual(expected.children)
   });
 
 })

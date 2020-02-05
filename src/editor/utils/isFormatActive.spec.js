@@ -33,6 +33,44 @@ describe('api utils: isFormatActive', () => {
   });
 
   // ****
-  // TODO: cover selections
+  test('format active when selection covers formatted text', () => {
+    const input = withTest(
+      <editor>
+        <text bold><anchor />test<focus /></text>
+        <text>test</text>
+      </editor>
+    );
+
+    const isActive = isFormatActive(input, 'bold')
+    expect(isActive).toBe(true);
+  });
+
+  // ****
+  test('format active when selection partially covers formatted text', () => {
+    const input = withTest(
+      <editor>
+        <text bold>t<anchor />es<focus />t</text>
+        <text>test</text>
+      </editor>
+    );
+
+    const isActive = isFormatActive(input, 'bold')
+    expect(isActive).toBe(true);
+  });
+
+  // ****
+  test('format not active when selection partially covers more than formatted text', () => {
+    const input = withTest(
+      <editor>
+        <text>te<anchor />st</text>
+        <text bold>test</text>
+        <text>te<focus />st</text>
+      </editor>
+    );
+
+    const isActive = isFormatActive(input, 'bold')
+    expect(isActive).toBe(true);
+  });
+
 
 })
