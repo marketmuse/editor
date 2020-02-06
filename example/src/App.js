@@ -19,7 +19,14 @@ function App() {
 
   return (
     <MMSEditor>
-      {({ api, component }) => {
+      {({
+        api,
+        component,
+        isBold,
+        isItalic,
+        isUnderline,
+        isStrikethrough,
+      }) => {
         window.api = api;
 
         return (
@@ -70,10 +77,10 @@ function App() {
               {/* formatters */}
               <Separator text="Formatters" />
               <section>
-                <button className={`has-item-right ${false ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleBold(); }}><b>bold</b></button>
-                <button className="has-item-right has-item-left" onMouseDown={e => { e.preventDefault(); api().toggleItalic(); }}><i>italic</i></button>
-                <button className="has-item-right has-item-left" onMouseDown={e => { e.preventDefault(); api().toggleUnderline(); }}><u>underline</u></button>
-                <button className="has-item-left" onMouseDown={e => { e.preventDefault(); api().toggleStrikethrough(); }}><strike>strike</strike></button>
+                <button className={`has-item-right ${isBold ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleBold(); }}><b>bold</b></button>
+                <button className={`has-item-right has-item-left ${isItalic ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleItalic(); }}><i>italic</i></button>
+                <button className={`has-item-right has-item-left ${isUnderline ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleUnderline(); }}><u>underline</u></button>
+                <button className={`has-item-left ${isStrikethrough ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleStrikethrough(); }}><strike>strike</strike></button>
               </section>
 
               {/* links */}
