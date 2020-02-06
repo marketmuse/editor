@@ -67,6 +67,42 @@ function App() {
                 <button onClick={() => api()._populateWindow()}>populate window</button>
               </section>
 
+              {/* formatters */}
+              <Separator text="Formatters" />
+              <section>
+                <button className="has-item-right" onMouseDown={e => { e.preventDefault(); api().toggleBold(); }}><b>bold</b></button>
+                <button className="has-item-right has-item-left" onMouseDown={e => { e.preventDefault(); api().toggleItalic(); }}><i>italic</i></button>
+                <button className="has-item-right has-item-left" onMouseDown={e => { e.preventDefault(); api().toggleUnderline(); }}><u>underline</u></button>
+                <button className="has-item-left" onMouseDown={e => { e.preventDefault(); api().toggleStrikethrough(); }}><strike>strike</strike></button>
+              </section>
+
+              {/* links */}
+              <Separator text="Link" />
+              <label>Url</label>
+              <section class="col">
+                <input
+                  className="has-item-below"
+                  style={{ borderBottom: 'none' }}
+                  placeholder="Enter url..."
+                  value={url}
+                  onChange={e => setUrl(e.target.value)}
+                />
+                <section style={{ margin: 0 }}>
+                  <button
+                    className="has-item-above has-item-right"
+                    onClick={() => api().insertLink(url)}
+                  >
+                    insert link
+                  </button>
+                  <button
+                    className="has-item-above has-item-left"
+                    onClick={() => api().removeLink()}
+                  >
+                    remove link
+                  </button>
+                </section>
+              </section>
+
               {/* focus stuff */}
               <Separator text="Focus" />
               <section>
@@ -121,33 +157,6 @@ function App() {
               </section>
               <section>
                 <button onClick={() => api().clear()}>clear</button>
-              </section>
-
-              {/* links */}
-              <Separator text="Link" />
-              <label>Url</label>
-              <section class="col">
-                <input
-                  className="has-item-below"
-                  style={{ borderBottom: 'none' }}
-                  placeholder="Enter url..."
-                  value={url}
-                  onChange={e => setUrl(e.target.value)}
-                />
-                <section style={{ margin: 0 }}>
-                  <button
-                    className="has-item-above has-item-right"
-                    onClick={() => api().insertLink(url)}
-                  >
-                    insert link
-                  </button>
-                  <button
-                    className="has-item-above has-item-left"
-                    onClick={() => api().removeLink()}
-                  >
-                    remove link
-                  </button>
-                </section>
               </section>
 
             </div>
