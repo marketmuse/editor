@@ -88,6 +88,10 @@ textarea {
   background-color: #0881e2;
 }
 
+.control-wrapper button.active {
+  box-shadow: 0 0 10px orange;
+}
+
 .control-wrapper separator {
   height: 1px;
   width: 100%;

@@ -35,10 +35,10 @@ export default editor => ({
   removeLink: () => removeLink(editor),
   
   // formatters
-  toggleBold: () => toggleBold(editor),
-  toggleItalic: () => toggleItalic(editor),
-  toggleUnderline: () => toggleUnderline(editor),
-  toggleStrikethrough: () => toggleStrikethrough(editor),
+  toggleBold: status => toggleBold(editor, status),
+  toggleItalic: status => toggleItalic(editor, status),
+  toggleUnderline: status => toggleUnderline(editor, status),
+  toggleStrikethrough: status => toggleStrikethrough(editor, status),
 
   // internals
   _getEditor: () => editor,
