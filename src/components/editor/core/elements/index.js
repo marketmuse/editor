@@ -8,6 +8,7 @@ import * as listBulleted from '@components/editor/core/elements/ListBulleted';
 import * as listNumbered from '@components/editor/core/elements/ListNumbered';
 import * as listItem from '@components/editor/core/elements/ListItem';
 
+// add new elements below
 const elements = [
 	blockquote,
 	paragraph,

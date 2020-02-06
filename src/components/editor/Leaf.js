@@ -5,7 +5,7 @@ import leafs from '@components/editor/core/leafs';
 
 const Leaf = ({ attributes, children, leaf } = {}) => {
 
-  children = Object.values(leafs).reduce((acc, l) => {
+  children = leafs.reduce((acc, l) => {
     if (!leaf[l.key]) return acc;
     if (!l || !l.component) return acc;
     const Component = l.component;
