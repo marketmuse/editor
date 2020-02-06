@@ -18,8 +18,8 @@ ListNumbered.propTypes = {
 };
 
 export default ListNumbered;
-export const Component = ListNumbered;
-export const tag = 'OL';
+export const component = ListNumbered;
+export const tags = ['ol'];
 export const type = 'numbered-list';
 export const listType = true;
 export const get = () => ({ type });

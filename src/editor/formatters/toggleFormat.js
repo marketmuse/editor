@@ -1,7 +1,7 @@
 import { Transforms, Editor, Text } from 'slate';
 import isNil from 'lodash/isNil';
-import isFormatActive from '@editor/utils/isFormatActive';
-import elements, { listTypes } from '@components/editor/core/elements';
+import isFormatActive from '@editor/formatters/isFormatActive';
+import elements, { defaultElement, listTypes } from '@components/editor/core/elements';
 import * as listItem from '@components/editor/core/elements/ListItem';
 
 export default (editor, type, format, { status } = {}) => {
@@ -30,7 +30,7 @@ export default (editor, type, format, { status } = {}) => {
 
     // if toggling on, set to desired format otherwise
     // turn block into the default format (ie. paragraph)
-    const setToFormat = toggleOn ? format : elements.default.type;
+    const setToFormat = toggleOn ? format : defaultElement.type;
 
     // if toggling list node, unwrap it first
     Transforms.unwrapNodes(editor, {
@@ -44,7 +44,7 @@ export default (editor, type, format, { status } = {}) => {
     // format later on)
     Transforms.setNodes(editor, {
       type: !toggleOn
-        ? elements.default.type
+        ? defaultElement.type
         : (isListType ? listItem.type : format)
     })
 

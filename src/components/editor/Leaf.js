@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-
-import combineComponents from '@utils/combineComponents';
-import _leafs from '@components/editor/core/leafs';
+import leafs from '@components/editor/core/leafs';
 
 const Leaf = ({ attributes, children, leaf } = {}) => {
 
-  children = Object.values(_leafs).reduce((acc, l) => {
+  children = Object.values(leafs).reduce((acc, l) => {
     if (!leaf[l.key]) return acc;
-    if (!l || !l.Component) return acc;
-    const Component = l.Component;
+    if (!l || !l.component) return acc;
+    const Component = l.component;
     return <Component {...attributes}>{acc}</Component>;
   }, children);
 
@@ -24,6 +22,3 @@ Leaf.propTypes = {
 };
 
 export default Leaf;
-export const leafs = combineComponents(
-  Object.values(_leafs)
-);

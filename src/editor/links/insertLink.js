@@ -1,7 +1,7 @@
 import { Range, Transforms } from 'slate';
 import removeLink from '@editor/links/removeLink';
 import isLinkActive from '@editor/links/isLinkActive';
-import * as l from '@components/editor/core//elements/Link';
+import * as l from '@components/editor/core/elements/Link';
 
 export default (editor, href) => {
   if (!editor || !editor.selection) return;

@@ -1,24 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ListItem = React.forwardRef(({ children, style, className, ...rest }, ref) => (
-  <li
+const HeadingOne = React.forwardRef(({ children, style, className, ...rest } = {}, ref) => (
+  <h1
     style={style}
     className={className}
     {...rest}
   >
     {children}
-  </li>
+  </h1>
 ));
 
-ListItem.propTypes = {
+HeadingOne.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
   style: PropTypes.object,
 };
 
-export default ListItem;
-export const component = ListItem;
-export const tags = ['li'];
-export const type = 'list-item';
+export default HeadingOne;
+export const component = HeadingOne;
+export const tags = ['h1'];
+export const type = 'heading-one';
 export const get = () => ({ type });

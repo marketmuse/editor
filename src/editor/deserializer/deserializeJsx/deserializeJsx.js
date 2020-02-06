@@ -4,14 +4,13 @@
 import get from 'lodash/get';
 import isNil from 'lodash/isNil';
 import { createHyperscript } from 'slate-hyperscript'
-import { elements } from '@components/editor/Element';
+import { elementsByTag } from '@components/editor/core/elements';
 
+// create hyperscript creator
 const h = createHyperscript({
-  elements: {
-    ...Object.keys(elements).reduce((acc, k) => ({
-      ...acc, [k]: {}
-    }), {}),
-  },
+  elements: Object
+    .keys(elementsByTag)
+    .reduce((acc, k) => ({ ...acc, [k]: {} }), {})
 });
 
 export default (tagName, attributes = {}, ...children) => {
@@ -23,14 +22,12 @@ export default (tagName, attributes = {}, ...children) => {
   // check if there's an existing MMS editor component for given tagName,
   // if there is, we need to capitalize the tag name to use its configuration,
   // because that's how they're stored.
-  const tagNameCapital = typeof tagName === 'string' ? tagName.toUpperCase() : null;
-  const getAttributes = get(elements, `['${tagNameCapital}'].get`);
+  const getAttributes = get(elementsByTag, `['${tagName}'].get`);
 
   // if editor element doesn't exist, return
   if (!getAttributes) return h(tagName, attributes, ...children);
 
   // if editor element exists, grab its config
   // and use those as the attributes
-  const useAttributes = getAttributes({ tag: tagName, ...(attributes || {}) });
-  return h(tagNameCapital, useAttributes, ...children);
+  return h(tagName, getAttributes(attributes), ...children);
 }

@@ -18,7 +18,7 @@ Blockquote.propTypes = {
 };
 
 export default Blockquote;
-export const Component = Blockquote;
-export const tag = 'BLOCKQUOTE';
+export const component = Blockquote;
+export const tags = ['blockquote'];
 export const type = 'block-quote';
 export const get = () => ({ type });

@@ -2,7 +2,7 @@
 import { ReactEditor } from 'slate-react'
 import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
-import isFormatActive from '@editor/utils/isFormatActive';
+import isFormatActive from '@editor/formatters/isFormatActive';
 
 describe('api utils: isFormatActive', () => {
 
@@ -40,7 +40,7 @@ describe('api utils: isFormatActive', () => {
       </editor>
     );
 
-    const isActive = isFormatActive(input, 'block', 'heading')
+    const isActive = isFormatActive(input, 'block', 'heading-one')
     expect(isActive).toBe(true);
   });
 
@@ -53,7 +53,7 @@ describe('api utils: isFormatActive', () => {
       </editor>
     );
 
-    const isActive = isFormatActive(input, 'block', 'heading')
+    const isActive = isFormatActive(input, 'block', 'heading-one')
     expect(isActive).toBe(false);
   });
 

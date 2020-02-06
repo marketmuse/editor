@@ -70,7 +70,7 @@ function App() {
               {/* formatters */}
               <Separator text="Formatters" />
               <section>
-                <button className={`has-item-right ${api().isBold() ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleBold(); }}><b>bold</b></button>
+                <button className={`has-item-right ${false ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleBold(); }}><b>bold</b></button>
                 <button className="has-item-right has-item-left" onMouseDown={e => { e.preventDefault(); api().toggleItalic(); }}><i>italic</i></button>
                 <button className="has-item-right has-item-left" onMouseDown={e => { e.preventDefault(); api().toggleUnderline(); }}><u>underline</u></button>
                 <button className="has-item-left" onMouseDown={e => { e.preventDefault(); api().toggleStrikethrough(); }}><strike>strike</strike></button>

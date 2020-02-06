@@ -2,7 +2,7 @@
 import { ReactEditor } from 'slate-react'
 import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
-import toggleFormat from '@editor/utils/toggleFormat';
+import toggleFormat from '@editor/formatters/toggleFormat';
 
 describe('api utils: toggleFormat', () => {
 
