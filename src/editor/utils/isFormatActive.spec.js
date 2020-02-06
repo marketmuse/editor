@@ -7,7 +7,7 @@ import isFormatActive from '@editor/utils/isFormatActive';
 describe('api utils: isFormatActive', () => {
 
   // ****
-  test('format active when cursor is over formatted text', () => {
+  test('(mark) format active when cursor is over formatted area', () => {
     const input = withTest(
       <editor>
         <text bold>te<cursor />st</text>
@@ -15,12 +15,12 @@ describe('api utils: isFormatActive', () => {
       </editor>
     );
 
-    const isActive = isFormatActive(input, 'bold')
+    const isActive = isFormatActive(input, 'mark', 'bold')
     expect(isActive).toBe(true);
   });
 
   // ****
-  test('format not active when cursor is not over formatted text', () => {
+  test('(mark) format not active when cursor is not over formatted area', () => {
     const input = withTest(
       <editor>
         <text bold>test</text>
@@ -28,49 +28,33 @@ describe('api utils: isFormatActive', () => {
       </editor>
     );
 
-    const isActive = isFormatActive(input, 'bold')
+    const isActive = isFormatActive(input, 'mark', 'bold')
     expect(isActive).toBe(false);
   });
 
   // ****
-  test('format active when selection covers formatted text', () => {
+  test('(block) format active when cursor is over formatted area', () => {
     const input = withTest(
       <editor>
-        <text bold><anchor />test<focus /></text>
-        <text>test</text>
+        <h1><text>te<cursor />st</text></h1>
       </editor>
     );
 
-    const isActive = isFormatActive(input, 'bold')
+    const isActive = isFormatActive(input, 'block', 'heading')
     expect(isActive).toBe(true);
   });
 
   // ****
-  test('format active when selection partially covers formatted text', () => {
+  test('(block) format not active when cursor is not over formatted area', () => {
     const input = withTest(
       <editor>
-        <text bold>t<anchor />es<focus />t</text>
-        <text>test</text>
+        <h1><text>test</text></h1>
+        <p><text>te<cursor />st</text></p>
       </editor>
     );
 
-    const isActive = isFormatActive(input, 'bold')
-    expect(isActive).toBe(true);
+    const isActive = isFormatActive(input, 'block', 'heading')
+    expect(isActive).toBe(false);
   });
-
-  // ****
-  test('format not active when selection partially covers more than formatted text', () => {
-    const input = withTest(
-      <editor>
-        <text>te<anchor />st</text>
-        <text bold>test</text>
-        <text>te<focus />st</text>
-      </editor>
-    );
-
-    const isActive = isFormatActive(input, 'bold')
-    expect(isActive).toBe(true);
-  });
-
 
 })

@@ -29,7 +29,7 @@ describe('api utils: toggleFormat', () => {
       </editor>
     );
 
-    toggleFormat(input, 'bold');
+    toggleFormat(input, 'mark', 'bold');
     expect(input.children).toEqual(expected.children)
   });
 
@@ -56,7 +56,7 @@ describe('api utils: toggleFormat', () => {
       </editor>
     );
 
-    toggleFormat(input, 'bold');
+    toggleFormat(input, 'mark', 'bold');
     expect(input.children).toEqual(expected.children)
   });
 
@@ -83,7 +83,7 @@ describe('api utils: toggleFormat', () => {
       </editor>
     );
 
-    toggleFormat(input, 'bold', true);
+    toggleFormat(input, 'mark', 'bold', { status: true });
     expect(input.children).toEqual(expected.children)
   });
 
@@ -110,7 +110,7 @@ describe('api utils: toggleFormat', () => {
       </editor>
     );
 
-    toggleFormat(input, 'bold', true);
+    toggleFormat(input, 'mark', 'bold', { status: true });
     expect(input.children).toEqual(expected.children)
   });
 
@@ -137,7 +137,7 @@ describe('api utils: toggleFormat', () => {
       </editor>
     );
 
-    toggleFormat(input, 'bold', false);
+    toggleFormat(input, 'mark', 'bold', { status: false });
     expect(input.children).toEqual(expected.children)
   });
 
@@ -164,7 +164,7 @@ describe('api utils: toggleFormat', () => {
       </editor>
     );
 
-    toggleFormat(input, 'bold', false);
+    toggleFormat(input, 'mark', 'bold', { status: false });
     expect(input.children).toEqual(expected.children)
   });
 

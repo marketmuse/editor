@@ -6,6 +6,11 @@ import * as listBulleted from '@components/editor/core/elements/ListBulleted';
 import * as listNumbered from '@components/editor/core/elements/ListNumbered';
 import * as listItem from '@components/editor/core/elements/ListItem';
 
+export const listTypes = [
+	listBulleted.type,
+	listNumbered.type,
+];
+
 export default {
 	[blockquote.type]: blockquote,
 	[paragraph.type]: paragraph,
