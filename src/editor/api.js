@@ -28,7 +28,7 @@ export default editor => ({
   
   // content
   selectAll: () => selectAll(editor),
-  clear: options => clear(editor, options),
+  clear: () => clear(editor),
   
   // links
   insertLink: url => insertLink(editor, url),

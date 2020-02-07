@@ -4,9 +4,9 @@ import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
 import initApi from '@editor/api';
 
-const run = (input, exHard) => {
+const run = (input, expected) => {
   initApi(input).clear();
-  return [ input.children, exHard.children ];
+  return [ input.children, expected.children ];
 }
 
 describe('api: clear', () => {

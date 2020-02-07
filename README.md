@@ -27,7 +27,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 * **style** *(object)* - Apply inline styles to the editor container.
 
-* **children** *(function)* - MMSEditor adopts the [function-as-children pattern](https://reactjs.org/docs/jsx-in-depth.html#functions-as-children) to be able to pass on some editor related data down to its children, including the api and even the text editor itself. Therefor, the children provided to this component **must** be a function.
+* **children** *(function)* - MMSEditor adopts the [function-as-children pattern](https://reactjs.org/docs/jsx-in-depth.html#functions-as-children) to be able to pass on some editor related data down to its children, including the api and even the editor itself. Therefor, the children provided to this component **must** be a function.
 
 * **autoFocus** *(boolean)* - Focus upon mount.
 
@@ -53,11 +53,37 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ### api Methods
 
+These functions will be available within an object returned by `api` provided by `MMSEditor`'s children arg. It could be used like this: `api().focus()`
+
+<u>*Focus*</u>:
+* **focus()** *(void)* - Focus on the editor programmatically
+* **focusAtEnd()** *(void)* - Focus on the editor programmatically at the end
+* **focusAtStart()** *(void)* - Focus on the editor programmatically at the start
+* **hasFocus()** *(boolean)* - Programmatically decide if the editor has focus
+
+<u>*Cursor*</u>:
+* **moveCursorToEnd()** *(void)* - Focuses the editor if not focused already, and moves the cursor to the end of the contents.
+* **moveCursorToStart()** *(void)* - Focuses the editor if not focused already, and moves the cursor to the start of the contents.
+
+<u>*Content*</u>:
+* **selectAll()** *(void)* - Programmatically highlight all the text / contents in the editor.
+* **clear()** *(void)* - Clear contents of the editor.
+
+<u>*Links*</u>:
+* **insertLink( url: string )** *(void)* - Inserts a link to the cursor location. If the selection is collapsed (ie. no text is selected, it's just the cursor), the link will be inserted and the anchor text will become the given url. Otherwise the selected text will become the anchor text. If there exists another link within the selection, it's link will be removed first.
+* **removeLink()** *(void)* - Remove link(s) at the cursor selection. If there are multiple links within selection, all will be removed. Once removed, the anchor text will simply turn into a standard text node.
+
+<u>*Formatters*</u>:
+* **toggleBold( status?: bool )** *(void)* - Toggles bold state of current selection. Switching on / off could be enforced by providing status as the first argument.
+* **toggleItalic( status?: bool )** *(void)* - Toggles italic state of current selection. Switching on / off could be enforced by providing status as the first argument.
+* **toggleUnderline( status?: bool )** *(void)* - Toggles underline state of current selection. Switching on / off could be enforced by providing status as the first argument.
+* **toggleStrikethrough( status?: bool )** *(void)* - Toggles strikethrough state of current selection. Switching on / off could be enforced by providing status as the first argument.
+
 ### classNames
 
 MMS Editor comes with some built-in class names to make it simple to style the editor using only css.
 
-* `mms--editor` - Classname of the editor. This could be used to style the text within the editor based on html tags. ie:
+* `mms--editor` - Classname of the editor. Text within the editor comes in standard html tags, so this class name could be used to style the text within the editor using those tags. ie:
 
 ```css
 .mms--editor p { ... }

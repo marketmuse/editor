@@ -6,7 +6,7 @@ import hasFocus from '@editor/focus/hasFocus';
 import moveCursorToStart from '@editor/cursor/moveCursorToStart';
 import initialState from '@config/initialState';
 
-export default (editor, { hard } = {}) => {
+export default editor => {
   // set document children to an empty paragraph with some text
   editor.children = initialState;
   // if document already has a selection
