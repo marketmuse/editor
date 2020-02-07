@@ -21,7 +21,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ### MMSEditor props
 
-`MMSEditor` component accepts the following props.
+`MMSEditor` is the Editor provider, it's responsible for keeping the state and managing the editor. It accepts the following props.
 
 * **className** *(string)* - Apply a class name to the editor container (the render output of `component`). By default, it will already have `mms--editor`, and provided class names will be appended. This also makes styling the editor root with `styled-components` or similar libraries possible.
 
