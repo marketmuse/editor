@@ -1,4 +1,4 @@
-## Docs
+# Docs
 
 Basic usage:
 
@@ -19,7 +19,7 @@ const App = () => (
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-### MMSEditor props
+## MMSEditor props
 
 `MMSEditor` is the Editor provider, it's responsible for keeping the state and managing the editor. It accepts the following props.
 
@@ -33,7 +33,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 * **readOnly** *(boolean)* - Disallow editing.
 
-### Children args
+## Children args
 
 `MMSEditor` passes below arguments to its function children:
 
@@ -51,7 +51,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 * **isStrikethrough** *(boolean)* - True if cursor / selection is over strike through text.
 
-### api Methods
+## api Methods
 
 These functions will be available within an object returned by `api` provided by `MMSEditor`'s children arg. It could be used like this: `api().focus()`
 
@@ -79,7 +79,7 @@ These functions will be available within an object returned by `api` provided by
 * **toggleUnderline( status?: bool )** *(void)* - Toggles underline state of current selection. Switching on / off could be enforced by providing status as the first argument.
 * **toggleStrikethrough( status?: bool )** *(void)* - Toggles strikethrough state of current selection. Switching on / off could be enforced by providing status as the first argument.
 
-### classNames
+## classNames
 
 MMS Editor comes with some built-in class names to make it simple to style the editor using only css.
 
