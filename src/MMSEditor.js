@@ -10,6 +10,7 @@ import withMarketmuse from '@editor/enhancer/withMarketmuse';
 
 import Leaf from '@components/editor/Leaf';
 import Element from '@components/editor/Element';
+import Toolbar, { toolbarPropTypes } from '@components/toolbar/Toolbar';
 
 import getFormats from '@editor/formatters/getFormats';
 
@@ -21,23 +22,27 @@ const mainStyles = {
 
 const MMSEditor = props => {
 
-  const useEditor = useSlate();
+  const editor = useSlate();
   const renderElement = useCallback(props => <Element {...props} />, []);
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
 
-  const formats = getFormats(useEditor);
+  const formats = getFormats(editor);
+  const toolbar = <Toolbar {...(props.toolbarOptions || {})} />;
 
   return (
     props.children({
 
-      // pass ready-to-use api, with active editor instance in closure
-      api: e => initApi(e || useEditor),
-
-      // pass the editor instance 
-      editor: useEditor,
-      
       // pass active state of formats
       ...formats,
+
+      // pass ready-to-use api, with active editor instance in closure
+      api: e => initApi(e || editor),
+
+      // pass the editor instance 
+      editor: editor,
+
+      // pass toolbar as a component
+      toolbar: toolbar,
       
       // pass editor as a component for children to render manually:
       // 1. gives the ability to easily add sidebars / toolbars to the editor
@@ -71,6 +76,9 @@ MMSEditor.propTypes = {
 
   // make the editor read only
   readOnly: PropTypes.bool,
+
+  // provide toolbar configuration
+  toolbarOptions: PropTypes.shape(toolbarPropTypes)
 
 };
 
