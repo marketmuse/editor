@@ -39,4 +39,27 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 * **component** *(React Component)* - The editor instance ready to render. <u>It is required</u> to render this, without doing so, the editor will not be mounted which is likely to cause potential crashes. This approach is particularly useful for building toolbars / sidebars / other components that lives under the Editor provider (ie `MMSEditor`) and could consume all editor related data and utilize the api.
 
-* **api** *(function)* - This is a function with the editor instance in closure. It returns an object
+* **api** *(function)* - This function grabs the Slate editor instance and returns the api methods as an object with the instance wrapped in their closures. It exposes MMS Editor's higher-level api built on top of Slate JS, without even needing to interact with Slate editors instance, however if desired, a particular editor instance could be provided as the first argument and it will be used instead.
+
+*<u>Format helpers</u>*: Below arguments are simple flags that provides information about the cursors location / selection. They are useful for building custom toolbars.
+
+* **isBold** *(boolean)* - True if cursor / selection is over bold text.
+
+* **isItalic** *(boolean)* - True if cursor / selection is over italic text.
+
+* **isUnderline** *(boolean)* - True if cursor / selection is over underlined text.
+
+* **isStrikethrough** *(boolean)* - True if cursor / selection is over strike through text.
+
+### api Methods
+
+### classNames
+
+MMS Editor comes with some built-in class names to make it simple to style the editor using only css.
+
+* `mms--editor` - Classname of the editor. This could be used to style the text within the editor based on html tags. ie:
+
+```css
+.mms--editor p { ... }
+```
+

@@ -32,6 +32,9 @@ const MMSEditor = props => {
 
       // pass ready-to-use api, with active editor instance in closure
       api: e => initApi(e || useEditor),
+
+      // pass the editor instance 
+      editor: useEditor,
       
       // pass active state of formats
       ...formats,
