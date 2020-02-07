@@ -22,6 +22,7 @@ function App() {
       {({
         api,
         component,
+        toolbar,
         isBold,
         isItalic,
         isUnderline,
@@ -31,6 +32,8 @@ function App() {
 
         return (
           <div className="main-wrapper">
+            {/* toolbar */}
+            {toolbar}
 
             {/* editor */}
             <div className="editor-wrapper">

@@ -26,8 +26,14 @@ const MMSEditor = props => {
   const renderElement = useCallback(props => <Element {...props} />, []);
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
 
+  const api = e => initApi(e || editor)
   const formats = getFormats(editor);
-  const toolbar = <Toolbar {...(props.toolbarOptions || {})} />;
+  const toolbar = (
+    <Toolbar
+      _editor={editor}
+      {...(props.toolbarOptions || {})}
+    />
+  );
 
   return (
     props.children({
@@ -36,13 +42,13 @@ const MMSEditor = props => {
       ...formats,
 
       // pass ready-to-use api, with active editor instance in closure
-      api: e => initApi(e || editor),
+      api,
 
       // pass the editor instance 
-      editor: editor,
+      editor,
 
       // pass toolbar as a component
-      toolbar: toolbar,
+      toolbar,
       
       // pass editor as a component for children to render manually:
       // 1. gives the ability to easily add sidebars / toolbars to the editor
