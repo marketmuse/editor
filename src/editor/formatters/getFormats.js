@@ -11,6 +11,7 @@ import { type as typeP } from '@components/editor/core/elements/Paragraph';
 import { type as typeH1 } from '@components/editor/core/elements/HeadingOne';
 import { type as typeH2 } from '@components/editor/core/elements/HeadingTwo';
 import { type as typeH3 } from '@components/editor/core/elements/HeadingThree';
+import { type as typeBlockquote } from '@components/editor/core/elements/Blockquote';
 
 export default editor => ({
 
@@ -21,9 +22,10 @@ export default editor => ({
 	isStrikethrough: isFormatActive(editor, 'mark', keyStrikethrough),
 
 	// blocks
-	isParagraph: isFormatActive(editor, 'block', typeP),
 	isH1: isFormatActive(editor, 'block', typeH1),
 	isH2: isFormatActive(editor, 'block', typeH2),
 	isH3: isFormatActive(editor, 'block', typeH3),
+	isParagraph: isFormatActive(editor, 'block', typeP),
+	isBlockquote: isFormatActive(editor, 'block', typeBlockquote),
 
 });

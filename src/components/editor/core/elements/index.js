@@ -32,7 +32,7 @@ export const listTypes = elements.filter(el => el.listType);
 export const elementsByType = elements.reduce((acc, el) => ({
 	...acc,
 	[el.type]: el
-}));
+}), {});
 
 // elements dict by tag
 export const elementsByTag = elements.reduce((acc, el) => ({

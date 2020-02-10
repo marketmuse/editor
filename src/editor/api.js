@@ -13,6 +13,7 @@ import toggleItalic from '@editor/formatters/toggleItalic';
 import toggleUnderline from '@editor/formatters/toggleUnderline';
 import toggleStrikethrough from '@editor/formatters/toggleStrikethrough';
 import toggleHeading from '@editor/formatters/toggleHeading';
+import toggleBlockquote from '@editor/formatters/toggleBlockquote';
 import populateWindow from '@utils/test/populateWindow';
 
 export default editor => ({
@@ -41,6 +42,7 @@ export default editor => ({
   toggleUnderline: status => toggleUnderline(editor, status),
   toggleStrikethrough: status => toggleStrikethrough(editor, status),
   toggleHeading: (level, status) => toggleHeading(editor, level, status),
+  toggleBlockquote: status => toggleBlockquote(editor, status),
 
   // internals
   _getEditor: () => editor,

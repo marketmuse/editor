@@ -14,6 +14,7 @@ import Toolbar, { toolbarPropTypes } from '@components/toolbar/Toolbar';
 
 import getFormats from '@editor/formatters/getFormats';
 
+// TODO: apply main styles by using the css api
 const mainStyles = {
   minHeight: 120,
   backgroundColor: 'white',

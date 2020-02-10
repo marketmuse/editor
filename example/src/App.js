@@ -27,10 +27,11 @@ function App() {
         isItalic,
         isUnderline,
         isStrikethrough,
-        isParagraph,
         isH1,
         isH2,
         isH3,
+        isParagraph,
+        isBlockquote,
       }) => {
         window.api = api;
 
@@ -89,11 +90,14 @@ function App() {
                 <button className={`has-item-right has-item-left ${isUnderline ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleUnderline(); }}><u>underline</u></button>
                 <button className={`has-item-left ${isStrikethrough ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleStrikethrough(); }}><strike>strike</strike></button>
               </section>
-              <section className="merge-above">
+              <section className="merge-below merge-above">
                 <button className={`disabled has-item-right ${isParagraph ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>p</button>
                 <button className={`has-item-right has-item-left ${isH1 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(1); }}>h1</button>
                 <button className={`has-item-right has-item-left ${isH2 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(2); }}>h2</button>
                 <button className={`has-item-left ${isH3 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(3); }}>h3</button>
+              </section>
+              <section className="merge-above">
+                <button className={`${isBlockquote ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleBlockquote(); }}>blockquote</button>
               </section>
 
               {/* links */}

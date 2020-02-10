@@ -15,7 +15,7 @@ describe('deserialize jsx: blockquote', () => {
     );
 
     expect(editor.children).toEqual([{
-      type: 'block-quote',
+      type: 'blockquote',
       children: [{ text: 'test' }]
     }]);
   });

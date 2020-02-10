@@ -48,10 +48,11 @@ ReactDOM.render(<App />, document.getElementById('root'));
 * **isItalic** *(boolean)* - True if cursor / selection is over italic text.
 * **isUnderline** *(boolean)* - True if cursor / selection is over underlined text.
 * **isStrikethrough** *(boolean)* - True if cursor / selection is over strike through text.
-* **isParagraph** *(boolean)* - True if cursor / selection is in a paragraph block (which is the default).
 * **isH1** *(boolean)* - True if cursor / selection is in a h1 block.
 * **isH2** *(boolean)* - True if cursor / selection is in a h2 block.
 * **isH3** *(boolean)* - True if cursor / selection is in a h3 block.
+* **isParagraph** *(boolean)* - True if cursor / selection is in a paragraph block (which is the default).
+* **isBlockquote** *(boolean)* - True if cursor / selection is in a blockquote block.
 
 ## api Methods
 
@@ -76,11 +77,12 @@ These functions will be available within an object returned by `api` provided by
 * **removeLink()** *(void)* - Remove link(s) at the cursor selection. If there are multiple links within selection, all will be removed. Once removed, the anchor text will simply turn into a standard text node.
 
 *Formatters*:
-* **toggleBold( status?: bool )** *(void)* - Toggles bold state of current selection. Switching on / off could be enforced by providing status as the first argument.
-* **toggleItalic( status?: bool )** *(void)* - Toggles italic state of current selection. Switching on / off could be enforced by providing status as the first argument.
-* **toggleUnderline( status?: bool )** *(void)* - Toggles underline state of current selection. Switching on / off could be enforced by providing status as the first argument.
-* **toggleStrikethrough( status?: bool )** *(void)* - Toggles strikethrough state of current selection. Switching on / off could be enforced by providing status as the first argument.
-* **toggleHeading( level: int, status?: bool )** *(void)* - Toggles strikethrough state of current selection. Switching on / off could be enforced by providing status as the first argument.
+* **toggleBold( status?: bool )** *(void)* - Toggles bold state of current selection. 
+* **toggleItalic( status?: bool )** *(void)* - Toggles italic state of current selection. 
+* **toggleUnderline( status?: bool )** *(void)* - Toggles underline state of current selection. 
+* **toggleStrikethrough( status?: bool )** *(void)* - Toggles strikethrough state of current selection. 
+* **toggleHeading( level: int, status?: bool )** *(void)* - Toggles heading state of current block. 
+* **toggleBlockquote( status?: bool )** *(void)* - Toggles blockquote state of current block. 
 
 ## classNames
 
