@@ -12,6 +12,7 @@ import toggleBold from '@editor/formatters/toggleBold';
 import toggleItalic from '@editor/formatters/toggleItalic';
 import toggleUnderline from '@editor/formatters/toggleUnderline';
 import toggleStrikethrough from '@editor/formatters/toggleStrikethrough';
+import toggleHeading from '@editor/formatters/toggleHeading';
 import populateWindow from '@utils/test/populateWindow';
 
 export default editor => ({
@@ -39,6 +40,7 @@ export default editor => ({
   toggleItalic: status => toggleItalic(editor, status),
   toggleUnderline: status => toggleUnderline(editor, status),
   toggleStrikethrough: status => toggleStrikethrough(editor, status),
+  toggleHeading: (level, status) => toggleHeading(editor, level, status),
 
   // internals
   _getEditor: () => editor,

@@ -85,6 +85,11 @@ function App() {
                 <button className={`has-item-right has-item-left ${isUnderline ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleUnderline(); }}><u>underline</u></button>
                 <button className={`has-item-left ${isStrikethrough ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleStrikethrough(); }}><strike>strike</strike></button>
               </section>
+              <section>
+                <button className={`has-item-right`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(1); }}>h1</button>
+                <button className={`has-item-right has-item-left`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(2); }}>h2</button>
+                <button className={`has-item-left`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(3); }}>h3</button>
+              </section>
 
               {/* links */}
               <Separator text="Link" />
