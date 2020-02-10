@@ -72,6 +72,18 @@ textarea {
 .control-wrapper section.col { flex-flow: column; }
 .control-wrapper section.col > * { margin-right: 0; }
 
+.control-wrapper section.merge-below {
+  margin-bottom: 0;
+}
+.control-wrapper section.merge-below button {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.control-wrapper section.merge-above button {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
 .control-wrapper button {
   flex-grow: 1;
   border: none;
@@ -83,13 +95,19 @@ textarea {
   border-radius: 3px;
 }
 
-.control-wrapper button:hover {
+.control-wrapper button.disabled { opacity: 0.9; }
+.control-wrapper button.disabled:hover { cursor: default !important;  }
+
+.control-wrapper button:not(.disabled):hover {
   cursor: pointer;
   background-color: #0881e2;
 }
 
 .control-wrapper button.active {
-  box-shadow: 0 0 10px orange;
+  background-color: orange;
+}
+.control-wrapper button:not(.disabled).active:hover {
+  background-color: darkorange;
 }
 
 .control-wrapper separator {

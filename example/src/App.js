@@ -27,6 +27,10 @@ function App() {
         isItalic,
         isUnderline,
         isStrikethrough,
+        isParagraph,
+        isH1,
+        isH2,
+        isH3,
       }) => {
         window.api = api;
 
@@ -79,16 +83,17 @@ function App() {
 
               {/* formatters */}
               <Separator text="Formatters" />
-              <section>
+              <section className="merge-below">
                 <button className={`has-item-right ${isBold ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleBold(); }}><b>bold</b></button>
                 <button className={`has-item-right has-item-left ${isItalic ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleItalic(); }}><i>italic</i></button>
                 <button className={`has-item-right has-item-left ${isUnderline ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleUnderline(); }}><u>underline</u></button>
                 <button className={`has-item-left ${isStrikethrough ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleStrikethrough(); }}><strike>strike</strike></button>
               </section>
-              <section>
-                <button className={`has-item-right`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(1); }}>h1</button>
-                <button className={`has-item-right has-item-left`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(2); }}>h2</button>
-                <button className={`has-item-left`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(3); }}>h3</button>
+              <section className="merge-above">
+                <button className={`disabled has-item-right ${isParagraph ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>p</button>
+                <button className={`has-item-right has-item-left ${isH1 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(1); }}>h1</button>
+                <button className={`has-item-right has-item-left ${isH2 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(2); }}>h2</button>
+                <button className={`has-item-left ${isH3 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(3); }}>h3</button>
               </section>
 
               {/* links */}
