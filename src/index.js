@@ -4,12 +4,6 @@ import PropTypes from 'prop-types';
 import Editor from '@/MMSEditor';
 import Provider from '@/MMSEditorProvider';
 
-const mainStyles = {
-  minHeight: 120,
-  backgroundColor: 'white',
-  padding: '20px 22px',
-};
-
 const MMSEditor = ({ _editor, ...props }) => {
   return (
     <Provider _editor={_editor}>
