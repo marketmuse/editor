@@ -14,6 +14,8 @@ import toggleUnderline from '@editor/formatters/toggleUnderline';
 import toggleStrikethrough from '@editor/formatters/toggleStrikethrough';
 import toggleHeading from '@editor/formatters/toggleHeading';
 import toggleBlockquote from '@editor/formatters/toggleBlockquote';
+import toggleListBulleted from '@editor/formatters/toggleListBulleted';
+import toggleListNumbered from '@editor/formatters/toggleListNumbered';
 import populateWindow from '@utils/test/populateWindow';
 
 export default editor => ({
@@ -43,6 +45,8 @@ export default editor => ({
   toggleStrikethrough: status => toggleStrikethrough(editor, status),
   toggleHeading: (level, status) => toggleHeading(editor, level, status),
   toggleBlockquote: status => toggleBlockquote(editor, status),
+  toggleListBulleted: status => toggleListBulleted(editor, status),
+  toggleListNumbered: status => toggleListNumbered(editor, status),
 
   // internals
   _getEditor: () => editor,

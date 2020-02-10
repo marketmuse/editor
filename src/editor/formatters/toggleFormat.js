@@ -26,7 +26,8 @@ export default (editor, type, format, { status } = {}) => {
   else {
 
     // are we toggling a list type ?
-    const isListType = listTypes.includes(format);
+    const listTypeTypes = listTypes.map(t => t.type);
+    const isListType = listTypeTypes.includes(format);
 
     // if toggling on, set to desired format otherwise
     // turn block into the default format (ie. paragraph)
@@ -34,7 +35,7 @@ export default (editor, type, format, { status } = {}) => {
 
     // if toggling list node, unwrap it first
     Transforms.unwrapNodes(editor, {
-      match: n => listTypes.includes(n.type),
+      match: n => listTypeTypes.includes(n.type),
       split: true,
     })
 

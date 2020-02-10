@@ -32,6 +32,8 @@ function App() {
         isH3,
         isParagraph,
         isBlockquote,
+        isListNumbered,
+        isListBulleted,
       }) => {
         window.api = api;
 
@@ -97,7 +99,9 @@ function App() {
                 <button className={`has-item-left ${isH3 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(3); }}>h3</button>
               </section>
               <section className="merge-above">
-                <button className={`${isBlockquote ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleBlockquote(); }}>blockquote</button>
+                <button className={`has-item-right ${isBlockquote ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleBlockquote(); }}>blockquote</button>
+                <button className={`has-item-right has-item-left ${isListNumbered ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleListNumbered(); }}>list (number)</button>
+                <button className={`has-item-left ${isListBulleted ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleListBulleted(); }}>list (bullet)</button>
               </section>
 
               {/* links */}

@@ -12,6 +12,8 @@ import { type as typeH1 } from '@components/editor/core/elements/HeadingOne';
 import { type as typeH2 } from '@components/editor/core/elements/HeadingTwo';
 import { type as typeH3 } from '@components/editor/core/elements/HeadingThree';
 import { type as typeBlockquote } from '@components/editor/core/elements/Blockquote';
+import { type as typeListNumbered } from '@components/editor/core/elements/ListNumbered';
+import { type as typeListBulleted } from '@components/editor/core/elements/ListBulleted';
 
 export default editor => ({
 
@@ -27,5 +29,7 @@ export default editor => ({
 	isH3: isFormatActive(editor, 'block', typeH3),
 	isParagraph: isFormatActive(editor, 'block', typeP),
 	isBlockquote: isFormatActive(editor, 'block', typeBlockquote),
+	isListNumbered: isFormatActive(editor, 'block', typeListNumbered),
+	isListBulleted: isFormatActive(editor, 'block', typeListBulleted),
 
 });

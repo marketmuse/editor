@@ -53,6 +53,8 @@ ReactDOM.render(<App />, document.getElementById('root'));
 * **isH3** *(boolean)* - True if cursor / selection is in a h3 block.
 * **isParagraph** *(boolean)* - True if cursor / selection is in a paragraph block (which is the default).
 * **isBlockquote** *(boolean)* - True if cursor / selection is in a blockquote block.
+* **isListNumbered** *(boolean)* - True if cursor / selection is in a list item (li) block within a numbered list (ol) block.
+* **isListBulleted** *(boolean)* - True if cursor / selection is in a list item (li) block within a bulleted list (ul) block.
 
 ## api Methods
 
@@ -83,6 +85,8 @@ These functions will be available within an object returned by `api` provided by
 * **toggleStrikethrough( status?: bool )** *(void)* - Toggles strikethrough state of current selection. 
 * **toggleHeading( level: int, status?: bool )** *(void)* - Toggles heading state of current block. 
 * **toggleBlockquote( status?: bool )** *(void)* - Toggles blockquote state of current block. 
+* **toggleListNumbered( status?: bool )** *(void)* - Toggles numbered list state of current block. 
+* **toggleListBulleted( status?: bool )** *(void)* - Toggles bulleted list state of current block. 
 
 ## classNames
 
