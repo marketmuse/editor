@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Editor from '@/MMSEditor';
 import Provider from '@/MMSEditorProvider';
 
+// bundler will pick up the style import below and
+// turn it into an autoprefixed standalone css file
 import '@styles';
 
 const MMSEditor = ({ editor, ...props }) => {

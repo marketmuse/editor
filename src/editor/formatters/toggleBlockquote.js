@@ -1,5 +1,5 @@
 import { Transforms, Editor, Text } from 'slate';
-import { type } from '@components/editor/core/elements/BlockQuote';
+import { type } from '@components/editor/core/elements/Blockquote';
 import toggleFormat from '@editor/formatters/toggleFormat';
 
 export default (editor, status) => {
