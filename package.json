@@ -5,9 +5,9 @@
   "author": "oguzgelal",
   "license": "MIT",
   "repository": "oguzgelal/mms-editor",
-  "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "jsnext:main": "dist/index.es.js",
+  "main": "dist/mms-editor.js",
+  "module": "dist/mms-editor.es.js",
+  "jsnext:main": "dist/mms-editor.es.js",
   "engines": {
     "node": ">=8",
     "npm": ">=5"
@@ -49,6 +49,7 @@
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
     "@svgr/rollup": "^2.4.1",
+    "autoprefixer": "^9.7.4",
     "babel-plugin-module-resolver": "^4.0.0",
     "cross-env": "^5.1.4",
     "enzyme": "^3.11.0",

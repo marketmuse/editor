@@ -1,0 +1,14 @@
+.mms--toolbar {
+	background-color: black;
+	color: white;
+	border-radius: 3px;
+	overflow: hidden;
+	display: flex;
+}
+
+.mms--toolbar-inline {
+	position: absolute;
+	transform: translateX(-50%) translateY(-100%);
+	margin-top: -10px;
+	z-index: 1;
+}

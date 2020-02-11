@@ -13,6 +13,7 @@
         "@components": "./src/components",
         "@config": "./src/config",
         "@utils": "./src/utils",
+        "@styles": "./src/styles",
       }
     }]
   ]

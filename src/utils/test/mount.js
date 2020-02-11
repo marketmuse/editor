@@ -10,7 +10,7 @@ export default (initial) => {
 
   // mount MMSEditor component, pass initial editor
   mount(
-    <MMSEditor _editor={initial}>
+    <MMSEditor editor={initial}>
       {({ component }) => {
         return component; // render the editor
       }}

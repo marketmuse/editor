@@ -5,33 +5,12 @@ import { Range, Editor, Transforms, Text, createEditor } from 'slate'
 
 import Portal from '@components/Portal';
 
-const toolbarHeight = 28;
-
-const baseStyles = {
-	backgroundColor: 'black',
-	color: 'white',
-	borderRadius: 3,
-	overflow: 'hidden',
-	display: 'flex',
-	alignItems: 'center',
-	justifyContent: 'center',
-	height: toolbarHeight,
-};
-
-const inlineStyles = {
-		position: 'absolute',
-		marginTop: -6,
-		zIndex: 1,
-		transform: 'translateX(-50%)',
-		padding: '0 8px',
-	}
-
 const Toolbar = props => {
 
 	// grab editor instance
-	// TODO: is it better to grab it with useSlate() ?
-	const editor = props._editor;
+	const editor = useSlate();
 
+	const inlineProps = {};
 	const hasSelection = !!editor.selection;
 	const hasFocus = ReactEditor.isFocused(editor);
 	const isCollapsed = hasSelection ? Range.isCollapsed(editor.selection) : null;
@@ -41,9 +20,9 @@ const Toolbar = props => {
 	if (props.inline) {
 
 		// set default values for inline styles
-		inlineStyles.opacity = 0;
-		inlineStyles.top = -1000000;
-		inlineStyles.left = -1000000;
+		inlineProps.opacity = 0;
+		inlineProps.top = -1000000;
+		inlineProps.left = -1000000;
 
 		// calculations are only needed for inline toolbars
 		if (hasSelection && hasFocus && !isCollapsed && !isSelectionEmpty) {
@@ -54,12 +33,10 @@ const Toolbar = props => {
 		  const rect = domRange.getBoundingClientRect();
 
 		  // update styles
-		  inlineStyles.opacity = 1;
-		  inlineStyles.top = rect.top + window.pageYOffset - toolbarHeight;
-		  inlineStyles.left = rect.left + window.pageXOffset + rect.width / 2;	
+		  inlineProps.opacity = 1;
+		  inlineProps.top = rect.top + window.pageYOffset;
+		  inlineProps.left = rect.left + window.pageXOffset + rect.width / 2;	
 		}
-
-		
 	}
 
 	const styleClass = props.inline
@@ -70,7 +47,7 @@ const Toolbar = props => {
 		<div
 			inline={props.inline}
 			className={`mms--toolbar ${styleClass} ${props.className || ''}`}
-			style={Object.assign({}, baseStyles, props.style, props.inline ? inlineStyles : {})}
+			style={Object.assign({}, props.style, props.inline ? inlineProps : {})}
 		>
 		  Toolbar!
 		</div>
@@ -98,11 +75,6 @@ export const toolbarPropTypes = {
 	
 	// make this an inline toolbar
 	inline: PropTypes.bool,
-
-	// internal ---
-
-	// editor instance
-	_editor: PropTypes.object,
 }
 
 Toolbar.propTypes = toolbarPropTypes;

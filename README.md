@@ -6,10 +6,14 @@ Basic usage:
 import React from 'react';
 import MMSEditor from 'mms-editor';
 
+// import styles
+import 'mms-editor/dist/mms-editor.css';
+
 const App = () => (
   <MMSEditor>
-    {({ component }) => (
+    {({ toolbar, component }) => (
       <div>
+      	{toolbar}
         {component}
       </div>
     )}
@@ -32,6 +36,8 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ## Toolbar options
 
+* **className** *(string)* - Applies to the toolbar wrapper.
+* **style** *(object)* - Applies to the toolbar wrapper. 
 * **inline** *(boolean)* - Inline toolbar. Defaults to true.
 
 ## Children args

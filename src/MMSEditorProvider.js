@@ -10,18 +10,18 @@ import withMarketmuse from '@editor/enhancer/withMarketmuse';
 
 const MMSEditor = props => {
 
-  const editor = isNil(props._editor)
+  const editor = isNil(props.editor)
     ? useMemo(() => withMarketmuse(createEditor()), [])
-    : props._editor;
+    : props.editor;
 
   // Having the editor be uncontrolled seems to make more sense given that the
   // value will be slate-specific JSON syntax and won't mean much without further
   // processing / parsing. Editor component should take that responsibility, so
   // the data should be exposed through an api in a meaningful way, and it should
   // keep its own internal state.
-  const [value, setValue] = useState(isNil(props._editor)
+  const [value, setValue] = useState(isNil(props.editor)
     ? initialState
-    : (get(props, '_editor.children') || [])
+    : (get(props, 'editor.children') || [])
   );
 
   return (
@@ -34,7 +34,7 @@ const MMSEditor = props => {
 MMSEditor.propTypes = {
   
   // use editor instead of creating one
-  _editor: PropTypes.object,
+  editor: PropTypes.object,
 
 };
 

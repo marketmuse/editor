@@ -14,13 +14,6 @@ import Toolbar, { toolbarPropTypes } from '@components/toolbar/Toolbar';
 
 import getFormats from '@editor/formatters/getFormats';
 
-// TODO: apply main styles by using the css api
-const mainStyles = {
-  minHeight: 120,
-  backgroundColor: 'white',
-  padding: '20px 22px',
-};
-
 const MMSEditor = props => {
 
   const editor = useSlate();
@@ -29,12 +22,7 @@ const MMSEditor = props => {
 
   const api = e => initApi(e || editor)
   const formats = getFormats(editor);
-  const toolbar = (
-    <Toolbar
-      _editor={editor}
-      {...(props.toolbarOptions || {})}
-    />
-  );
+  const toolbar = <Toolbar {...(props.toolbarOptions || {})} />;
 
   return (
     props.children({
@@ -58,7 +46,7 @@ const MMSEditor = props => {
         <Editable
           id={props.id}
           className={`mms--editor ${props.className || ''}`}
-          style={Object.assign(mainStyles, props.style)}
+          style={props.style}
           autoFocus={props.autoFocus}
           readOnly={props.readOnly}
           renderElement={renderElement}

@@ -4,15 +4,13 @@ import PropTypes from 'prop-types';
 import Editor from '@/MMSEditor';
 import Provider from '@/MMSEditorProvider';
 
-const mainStyles = {
-  minHeight: 120,
-  backgroundColor: 'white',
-  padding: '20px 22px',
-};
+// bundler will pick up these styles and
+// output as a standalone css file
+import '@styles';
 
-const MMSEditor = ({ _editor, ...props }) => {
+const MMSEditor = ({ editor, ...props }) => {
   return (
-    <Provider _editor={_editor}>
+    <Provider editor={editor}>
       <Editor {...props} />
     </Provider>
   )
