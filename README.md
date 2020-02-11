@@ -98,7 +98,10 @@ These functions will be available within an object returned by `api` provided by
 
 MMS Editor comes with some built-in class names to make it simple to style the editor using only css.
 
-* `mms--editor` - Classname of the editor. Text within the editor comes in standard html tags, so this class name could be used to style the text within the editor using those tags. ie:
+* `mms--editor` - Classname of the editor. Helpers:
+	* `mms--disabled` - When editor is read-only.
+
+Text within the editor comes in standard html tags, so this class name could be used to style the text within the editor using those tags. ie:
 
 ```css
 .mms--editor p { ... }
@@ -107,5 +110,20 @@ MMS Editor comes with some built-in class names to make it simple to style the e
 * `mms--toolbar` - Classname of the default toolbar wrapper (applies to both styles).
 * `mms--toolbar-inline` - Applies to toolbar wrapper for inline style toolbar.
 * `mms--toolbar-embedded` - Applies to toolbar wrapper for embedded style toolbar.
+* `mms--toolbar-button` - Applies to toolbar buttons. Helpers:
+	* `mms--disabled` - When button is disabled
+	* `mms--active` - When cursor is over mark / block indicated by the button *(ie. bold button would be appended with this class name when cursor is over bold text)*
 
 
+*Helper classNames*: Below class names gets appended to DOM elements for indicating the state. They do not represent any particular element, so they shouldn't be styled directly. Ie:
+
+```css
+/* bad */
+.mms--active {}
+
+/* good */
+.mms--toolbar-button.mms--active {}
+```
+
+* `mms--active` - Active state
+* `mms--disabled` - Disabled state

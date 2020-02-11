@@ -1,0 +1,38 @@
+.mms--toolbar-button {
+	border-radius: 4px;
+	padding: 0 4px;
+	height: 32px;
+	min-width: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: transparent;
+	border: none;
+	background-color: black;
+	border: 1px solid black;
+	color: white;
+	font-size: 14px;
+	font-weight: 500;
+	user-select: none;
+}
+
+.mms--toolbar-button:focus {
+	border: 1px solid rgba(255, 255, 255, .3);
+}
+
+.mms--toolbar-button.mms--active {
+	background-color: rgba(255, 255, 255, .3);
+}
+
+.mms--toolbar-button:hover {
+	cursor: pointer;
+	background-color: rgba(255, 255, 255, .2);
+}
+
+.mms--toolbar-button.mms--disabled {
+	color: rgba(255, 255, 255, .6);
+}
+.mms--toolbar-button.mms--disabled:hover {
+	cursor: default;
+	background-color: inherit;
+}

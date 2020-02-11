@@ -24,6 +24,10 @@ const MMSEditor = props => {
   const formats = getFormats(editor);
   const toolbar = <Toolbar {...(props.toolbarOptions || {})} />;
 
+  let editorClassName = 'mms--editor';
+  if (props.className) editorClassName += ` ${props.className}`;
+  if (props.readOnly) editorClassName += ' mms--disabled';
+
   return (
     props.children({
 
