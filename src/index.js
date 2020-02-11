@@ -6,7 +6,7 @@ import Provider from '@/MMSEditorProvider';
 
 import '@styles';
 
-const MMSEditor = ({ _editor, ...props }) => {
+const MMSEditor = ({ editor, ...props }) => {
   return (
     <Provider editor={editor}>
       <Editor {...props} />
