@@ -6,6 +6,7 @@ import url from 'rollup-plugin-url';
 import svgr from '@svgr/rollup';
 import postcss from 'rollup-plugin-postcss';
 import autoprefixer from 'autoprefixer';
+// import svg from 'rollup-plugin-svg';
 
 import pkg from './package.json'
 

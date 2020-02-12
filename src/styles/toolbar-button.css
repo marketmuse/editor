@@ -32,7 +32,21 @@
 .mms--toolbar-button.mms--disabled {
 	color: rgba(255, 255, 255, .6);
 }
+
 .mms--toolbar-button.mms--disabled:hover {
 	cursor: default;
 	background-color: inherit;
+}
+
+.mms--toolbar-spacer {
+	width: 1px;
+	height: 22px;
+	background-color: rgba(255, 255, 255, .2);
+	margin: auto;
+	margin-left: 6px;
+	margin-right: 6px;
+}
+
+.mms--toolbar-back {
+	font-size: 11px !important;
 }

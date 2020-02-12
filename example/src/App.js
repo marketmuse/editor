@@ -42,7 +42,7 @@ function App() {
         return (
           <div className="main-wrapper">
             {/* toolbar */}
-            {toolbar}
+            {toolbar()}
 
             {/* editor */}
             <div className="editor-wrapper">

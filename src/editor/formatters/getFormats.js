@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import isFormatActive from '@editor/formatters/isFormatActive';
 
 // marks
@@ -15,21 +16,36 @@ import { type as typeBlockquote } from '@components/editor/core/elements/Blockqu
 import { type as typeListNumbered } from '@components/editor/core/elements/ListNumbered';
 import { type as typeListBulleted } from '@components/editor/core/elements/ListBulleted';
 
-export default editor => ({
+export default editor => {
 
 	// marks
-	isBold: isFormatActive(editor, 'mark', keyBold),
-	isItalic: isFormatActive(editor, 'mark', keyItalic),
-	isUnderline: isFormatActive(editor, 'mark', keyUnderline),
-	isStrikethrough: isFormatActive(editor, 'mark', keyStrikethrough),
+	const isBold = isFormatActive(editor, 'mark', keyBold);
+	const isItalic = isFormatActive(editor, 'mark', keyItalic);
+	const isUnderline = isFormatActive(editor, 'mark', keyUnderline);
+	const isStrikethrough = isFormatActive(editor, 'mark', keyStrikethrough);
 
 	// blocks
-	isH1: isFormatActive(editor, 'block', typeH1),
-	isH2: isFormatActive(editor, 'block', typeH2),
-	isH3: isFormatActive(editor, 'block', typeH3),
-	isParagraph: isFormatActive(editor, 'block', typeP),
-	isBlockquote: isFormatActive(editor, 'block', typeBlockquote),
-	isListNumbered: isFormatActive(editor, 'block', typeListNumbered),
-	isListBulleted: isFormatActive(editor, 'block', typeListBulleted),
+	const isH1 = isFormatActive(editor, 'block', typeH1);
+	const isH2 = isFormatActive(editor, 'block', typeH2);
+	const isH3 = isFormatActive(editor, 'block', typeH3);
+	const isHeading = (isH1 || isH2 || isH3);
+	const isParagraph = isFormatActive(editor, 'block', typeP);
+	const isBlockquote = isFormatActive(editor, 'block', typeBlockquote);
+	const isListNumbered = isFormatActive(editor, 'block', typeListNumbered);
+	const isListBulleted = isFormatActive(editor, 'block', typeListBulleted);
 
-});
+	return {
+		isBold,
+		isItalic,
+		isUnderline,
+		isStrikethrough,
+		isH1,
+		isH2,
+		isH3,
+		isHeading,
+		isParagraph,
+		isBlockquote,
+		isListNumbered,
+		isListBulleted,
+	}
+};

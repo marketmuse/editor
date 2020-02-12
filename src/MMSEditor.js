@@ -22,7 +22,11 @@ const MMSEditor = props => {
 
   const api = e => initApi(e || editor)
   const formats = getFormats(editor);
-  const toolbar = <Toolbar {...(props.toolbarOptions || {})} />;
+  
+  const toolbarOptions = props.toolbarOptions || {};
+  const toolbar = (options = {}) => (
+    <Toolbar {...options} api={api} formats={formats} />
+  );
 
   let editorClassName = 'mms--editor';
   if (props.className) editorClassName += ` ${props.className}`;
@@ -49,7 +53,7 @@ const MMSEditor = props => {
       component: (
         <Editable
           id={props.id}
-          className={`mms--editor ${props.className || ''}`}
+          className={editorClassName}
           style={props.style}
           autoFocus={props.autoFocus}
           readOnly={props.readOnly}
@@ -75,9 +79,6 @@ MMSEditor.propTypes = {
 
   // make the editor read only
   readOnly: PropTypes.bool,
-
-  // provide toolbar configuration
-  toolbarOptions: PropTypes.shape(toolbarPropTypes)
 
 };
 

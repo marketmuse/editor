@@ -25,7 +25,11 @@ const MMSEditor = props => {
   );
 
   return (
-    <Slate editor={editor} value={value} onChange={setValue}>
+    <Slate
+      editor={editor}
+      value={value}
+      onChange={setValue}
+    >
       {props.children}
     </Slate>
   );

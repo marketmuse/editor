@@ -13,7 +13,7 @@ const App = () => (
   <MMSEditor>
     {({ toolbar, component }) => (
       <div>
-      	{toolbar}
+        {toolbar}
         {component}
       </div>
     )}
@@ -57,6 +57,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 * **isH1** *(boolean)* - True if cursor / selection is in a h1 block.
 * **isH2** *(boolean)* - True if cursor / selection is in a h2 block.
 * **isH3** *(boolean)* - True if cursor / selection is in a h3 block.
+* **isHeading** *(boolean)* - True if cursor / selection is in an heading block.
 * **isParagraph** *(boolean)* - True if cursor / selection is in a paragraph block (which is the default).
 * **isBlockquote** *(boolean)* - True if cursor / selection is in a blockquote block.
 * **isListNumbered** *(boolean)* - True if cursor / selection is in a list item (li) block within a numbered list (ol) block.
@@ -99,7 +100,7 @@ These functions will be available within an object returned by `api` provided by
 MMS Editor comes with some built-in class names to make it simple to style the editor using only css.
 
 * `mms--editor` - Classname of the editor. Helpers:
-	* `mms--disabled` - When editor is read-only.
+  * `mms--disabled` - When editor is read-only.
 
 Text within the editor comes in standard html tags, so this class name could be used to style the text within the editor using those tags. ie:
 
@@ -111,9 +112,16 @@ Text within the editor comes in standard html tags, so this class name could be 
 * `mms--toolbar-inline` - Applies to toolbar wrapper for inline style toolbar.
 * `mms--toolbar-embedded` - Applies to toolbar wrapper for embedded style toolbar.
 * `mms--toolbar-button` - Applies to toolbar buttons. Helpers:
-	* `mms--disabled` - When button is disabled
-	* `mms--active` - When cursor is over mark / block indicated by the button *(ie. bold button would be appended with this class name when cursor is over bold text)*
+  * `mms--disabled` - When button is disabled
+  * `mms--active` - When cursor is over mark / block indicated by the button *(ie. bold button would be appended with this class name when cursor is over bold text)*
 
+* `mms--toolbar-screen` - Applies to toolbar screen, a wrapper around buttons.
+* `mms--toolbar-spacer` - Applies to toolbar spacers.
+* `mms--toolbar-back` - Applies to previous screen button on toolbar.
+* `mms--toolbar-headings` - Headings button class
+* `mms--toolbar-heading-one` - H1 button class
+* `mms--toolbar-heading-two` - H2 button class
+* `mms--toolbar-heading-three` - H3 button class
 
 *Helper classNames*: Below class names gets appended to DOM elements for indicating the state. They do not represent any particular element, so they shouldn't be styled directly. Ie:
 
