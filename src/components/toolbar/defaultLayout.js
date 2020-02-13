@@ -9,7 +9,7 @@ const SCREEN_HEADINGS = 'headings';
 
 // Utils
 
-const BackToDefaultScreen = props => (
+export const BackToDefaultScreen = props => (
 	<ItemBack
 		onClick={() => props.setScreen(SCREEN_DEFAULT)}
 	/>
@@ -17,69 +17,69 @@ const BackToDefaultScreen = props => (
 
 // Headings
 
-const HeadingsButton = props => (
+export const HeadingsButton = props => (
 	<ToolbarButton
 		active={props.formats.isHeading}
 		onClick={() => props.setScreen(SCREEN_HEADINGS)}
-		children="H"
+		children={props.children || "H"}
 	/>
 );
 
-const HeadingOneButton = props => (
+export const HeadingOneButton = props => (
 	<ToolbarButton
 		active={props.formats.isH1}
 		onClick={() => props.api().toggleHeading(1)}
-		children="H1"
+		children={props.children || "H1"}
 	/>
 );
 
-const HeadingTwoButton = props => (
+export const HeadingTwoButton = props => (
 	<ToolbarButton
 		active={props.formats.isH2}
 		onClick={() => props.api().toggleHeading(2)}
-		children="H2"
+		children={props.children || "H2"}
 	/>
 );
 
-const HeadingThreeButton = props => (
+export const HeadingThreeButton = props => (
 	<ToolbarButton
 		active={props.formats.isH3}
 		onClick={() => props.api().toggleHeading(3)}
-		children="H3"
+		children={props.children || "H3"}
 	/>
 );
 
 // marks
 
-const BoldButton = props => (
+export const BoldButton = props => (
 	<ToolbarButton
 		active={props.formats.isBold}
 		onClick={() => props.api().toggleBold()}
-		children={<b>b</b>}
+		children={props.children || <b>b</b>}
 	/>
 );
 
-const ItalicButton = props => (
+export const ItalicButton = props => (
 	<ToolbarButton
 		active={props.formats.isItalic}
 		onClick={() => props.api().toggleItalic()}
-		children={<i>i</i>}
+		children={props.children || <i>i</i>}
 	/>
 );
 
-const UnderlineButton = props => (
+export const UnderlineButton = props => (
 	<ToolbarButton
 		active={props.formats.isUnderline}
 		onClick={() => props.api().toggleUnderline()}
-		children={<u>u</u>}
+		children={props.children || <u>u</u>}
 	/>
 );
 
-const StrikeButton = props => (
+export const StrikeButton = props => (
 	<ToolbarButton
 		active={props.formats.isStrikethrough}
 		onClick={() => props.api().toggleStrikethrough()}
-		children={<s>s</s>}
+		children={props.children || <s>s</s>}
 	/>
 );
 

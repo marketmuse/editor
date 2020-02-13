@@ -10,7 +10,13 @@ const TooolbarWrapper = props => {
 	// grab editor instance
 	const editor = useSlate();
 
-	const inlineProps = {};
+	const inlineProps = {
+		position: 'absolute',
+		transform: 'translateX(-50%) translateY(-100%)',
+		marginTop: -12,
+		zIndex: 1,
+	};
+
 	const hasSelection = !!editor.selection;
 	const hasFocus = ReactEditor.isFocused(editor);
 	const isCollapsed = hasSelection ? Range.isCollapsed(editor.selection) : null;

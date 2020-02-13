@@ -4,7 +4,6 @@ import { Editable, useSlate } from 'slate-react';
 import get from 'lodash/get';
 import isNil from 'lodash/isNil';
 
-import initApi from '@editor/api';
 import initialState from '@config/initialState';
 import withMarketmuse from '@editor/enhancer/withMarketmuse';
 
@@ -13,6 +12,7 @@ import Element from '@components/editor/Element';
 import Toolbar, { toolbarPropTypes } from '@components/toolbar/Toolbar';
 
 import getFormats from '@editor/formatters/getFormats';
+import getFunctions from '@editor/api';
 
 const MMSEditor = props => {
 
@@ -20,10 +20,10 @@ const MMSEditor = props => {
   const renderElement = useCallback(props => <Element {...props} />, []);
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
 
-  const api = e => initApi(e || editor)
+  const api = e => getFunctions(e || editor)
+  const functions = getFunctions(editor);
   const formats = getFormats(editor);
   
-  const toolbarOptions = props.toolbarOptions || {};
   const toolbar = (options = {}) => (
     <Toolbar {...options} api={api} formats={formats} />
   );
@@ -36,9 +36,13 @@ const MMSEditor = props => {
     props.children({
 
       // pass active state of formats
-      ...formats,
+      formats,
+
+      // pass api functions with editor instance in closure
+      functions,
 
       // pass ready-to-use api, with active editor instance in closure
+      // TODO: deprecated
       api,
 
       // pass the editor instance 

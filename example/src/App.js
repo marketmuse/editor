@@ -25,19 +25,23 @@ function App() {
         api,
         component,
         toolbar,
-        isBold,
-        isItalic,
-        isUnderline,
-        isStrikethrough,
-        isH1,
-        isH2,
-        isH3,
-        isParagraph,
-        isBlockquote,
-        isListNumbered,
-        isListBulleted,
+        formats,
       }) => {
         window.api = api;
+
+        const {
+          isBold,
+          isItalic,
+          isUnderline,
+          isStrikethrough,
+          isH1,
+          isH2,
+          isH3,
+          isParagraph,
+          isBlockquote,
+          isListNumbered,
+          isListBulleted,
+        } = formats;
 
         return (
           <div className="main-wrapper">
