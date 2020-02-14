@@ -3,7 +3,7 @@ import { ReactEditor } from 'slate-react'
 import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import mount from '@utils/test/mount';
 import withTest from '@utils/test/withTest';
-import initApi from '@editor/api';
+import getFunctions from '@editor/functions';
 
 describe('api: focus at end', () => {
   test('is focus at end working', () => {
@@ -28,7 +28,7 @@ describe('api: focus at end', () => {
       </editor>
     );
 
-    const api = initApi(initial);
+    const api = getFunctions(initial);
 
     // mount the editor
     mount(initial);

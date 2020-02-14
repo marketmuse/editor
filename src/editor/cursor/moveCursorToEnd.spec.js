@@ -3,7 +3,7 @@ import { ReactEditor } from 'slate-react'
 import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import mount from '@utils/test/mount';
 import withTest from '@utils/test/withTest';
-import initApi from '@editor/api';
+import getFunctions from '@editor/functions';
 
 describe('api: moveCursorToEnd', () => {
   test('moving cursor to end', () => {
@@ -24,7 +24,7 @@ describe('api: moveCursorToEnd', () => {
       </editor>
     );
 
-    initApi(initial).moveCursorToEnd();
+    getFunctions(initial).moveCursorToEnd();
     expect(initial.selection).toEqual(expected.selection)
   })
 })

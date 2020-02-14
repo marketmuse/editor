@@ -28,7 +28,7 @@ export const HeadingsButton = props => (
 export const HeadingOneButton = props => (
 	<ToolbarButton
 		active={props.formats.isH1}
-		onClick={() => props.api().toggleHeading(1)}
+		onClick={() => props.functions.toggleHeading(1)}
 		children={props.children || "H1"}
 	/>
 );
@@ -36,7 +36,7 @@ export const HeadingOneButton = props => (
 export const HeadingTwoButton = props => (
 	<ToolbarButton
 		active={props.formats.isH2}
-		onClick={() => props.api().toggleHeading(2)}
+		onClick={() => props.functions.toggleHeading(2)}
 		children={props.children || "H2"}
 	/>
 );
@@ -44,7 +44,7 @@ export const HeadingTwoButton = props => (
 export const HeadingThreeButton = props => (
 	<ToolbarButton
 		active={props.formats.isH3}
-		onClick={() => props.api().toggleHeading(3)}
+		onClick={() => props.functions.toggleHeading(3)}
 		children={props.children || "H3"}
 	/>
 );
@@ -54,7 +54,7 @@ export const HeadingThreeButton = props => (
 export const BoldButton = props => (
 	<ToolbarButton
 		active={props.formats.isBold}
-		onClick={() => props.api().toggleBold()}
+		onClick={() => props.functions.toggleBold()}
 		children={props.children || <b>b</b>}
 	/>
 );
@@ -62,7 +62,7 @@ export const BoldButton = props => (
 export const ItalicButton = props => (
 	<ToolbarButton
 		active={props.formats.isItalic}
-		onClick={() => props.api().toggleItalic()}
+		onClick={() => props.functions.toggleItalic()}
 		children={props.children || <i>i</i>}
 	/>
 );
@@ -70,7 +70,7 @@ export const ItalicButton = props => (
 export const UnderlineButton = props => (
 	<ToolbarButton
 		active={props.formats.isUnderline}
-		onClick={() => props.api().toggleUnderline()}
+		onClick={() => props.functions.toggleUnderline()}
 		children={props.children || <u>u</u>}
 	/>
 );
@@ -78,7 +78,7 @@ export const UnderlineButton = props => (
 export const StrikeButton = props => (
 	<ToolbarButton
 		active={props.formats.isStrikethrough}
-		onClick={() => props.api().toggleStrikethrough()}
+		onClick={() => props.functions.toggleStrikethrough()}
 		children={props.children || <s>s</s>}
 	/>
 );

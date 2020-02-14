@@ -11,8 +11,8 @@ import Leaf from '@components/editor/Leaf';
 import Element from '@components/editor/Element';
 import Toolbar, { toolbarPropTypes } from '@components/toolbar/Toolbar';
 
-import getFormats from '@editor/formatters/getFormats';
-import getFunctions from '@editor/api';
+import getFormats from '@editor/formats';
+import getFunctions from '@editor/functions';
 
 const MMSEditor = props => {
 
@@ -20,12 +20,15 @@ const MMSEditor = props => {
   const renderElement = useCallback(props => <Element {...props} />, []);
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
 
-  const api = e => getFunctions(e || editor)
   const functions = getFunctions(editor);
   const formats = getFormats(editor);
   
   const toolbar = (options = {}) => (
-    <Toolbar {...options} api={api} formats={formats} />
+    <Toolbar
+      {...options}
+      functions={functions}
+      formats={formats}
+    />
   );
 
   let editorClassName = 'mms--editor';
@@ -40,10 +43,6 @@ const MMSEditor = props => {
 
       // pass api functions with editor instance in closure
       functions,
-
-      // pass ready-to-use api, with active editor instance in closure
-      // TODO: deprecated
-      api,
 
       // pass the editor instance 
       editor,

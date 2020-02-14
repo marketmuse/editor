@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
-import initApi from '@editor/api';
+import getFunctions from '@editor/functions';
 
 describe('api: insert link', () => {
 
@@ -29,7 +29,7 @@ describe('api: insert link', () => {
       </editor>
     );
 
-    initApi(initial).insertLink('test.com');
+    getFunctions(initial).insertLink('test.com');
     expect(initial.children).toEqual(expected.children)
     expect(initial.selection).toEqual(expected.selection)
   })
@@ -60,7 +60,7 @@ describe('api: insert link', () => {
       </editor>
     );
 
-    initApi(initial).insertLink('test.com');
+    getFunctions(initial).insertLink('test.com');
     expect(initial.children).toEqual(expected.children)
     expect(initial.selection).toEqual(expected.selection)
   })
@@ -91,7 +91,7 @@ describe('api: insert link', () => {
       </editor>
     );
 
-    initApi(initial).insertLink('test.com');
+    getFunctions(initial).insertLink('test.com');
     expect(initial.children).toEqual(expected.children)
     expect(initial.selection).toEqual(expected.selection)
   })
@@ -124,7 +124,7 @@ describe('api: insert link', () => {
       </editor>
     );
 
-    initApi(initial).insertLink('test.com');
+    getFunctions(initial).insertLink('test.com');
     expect(initial.children).toEqual(expected.children)
     expect(initial.selection).toEqual(expected.selection)
   })

@@ -2,7 +2,7 @@
 import { ReactEditor } from 'slate-react'
 import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
-import initApi from '@editor/api';
+import getFunctions from '@editor/functions';
 import getDocumentEdgePoint from './getDocumentEdgePoint';
 
 describe('api utils: getDocumentPoints', () => {
@@ -91,7 +91,7 @@ describe('api utils: getDocumentPoints', () => {
     );
 
     // clear
-    initApi(input).clear()
+    getFunctions(input).clear()
 
     // it should select the first point
     const startPoint = getDocumentEdgePoint(input, { edge: 'start' });

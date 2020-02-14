@@ -3,13 +3,13 @@ import { ReactEditor } from 'slate-react'
 import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import mount from '@utils/test/mount';
 import withTest from '@utils/test/withTest';
-import initApi from '@editor/api';
+import getFunctions from '@editor/functions';
 
 describe('api: focus', () => {
   test('is focus working', () => {
 
     const initial = withTest(<editor />);
-    const api = initApi(initial);
+    const api = getFunctions(initial);
 
     // initially the editor shouldn't have focus
     expect(ReactEditor.isFocused(initial)).toBe(false);

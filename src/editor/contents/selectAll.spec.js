@@ -3,7 +3,7 @@ import { ReactEditor } from 'slate-react'
 import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import mount from '@utils/test/mount';
 import withTest from '@utils/test/withTest';
-import initApi from '@editor/api';
+import getFunctions from '@editor/functions';
 
 describe('api: selectAll', () => {
 
@@ -26,7 +26,7 @@ describe('api: selectAll', () => {
       </editor>
     );
 
-    initApi(initial).selectAll();
+    getFunctions(initial).selectAll();
     expect(initial.selection).toEqual(expected.selection)
   })
 
@@ -49,7 +49,7 @@ describe('api: selectAll', () => {
       </editor>
     );
 
-    initApi(initial).selectAll();
+    getFunctions(initial).selectAll();
     expect(initial.selection).toEqual(expected.selection)
   })
 
@@ -72,7 +72,7 @@ describe('api: selectAll', () => {
       </editor>
     );
 
-    initApi(initial).selectAll();
+    getFunctions(initial).selectAll();
     expect(initial.selection).toEqual(expected.selection)
   })
 })

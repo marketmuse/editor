@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import { withReact } from 'slate-react';
 import isNil from 'lodash/isNil';
 import MMSEditor from '@';
-import initApi from '@editor/api';
+import getFunctions from '@editor/functions';
 
 export default (initial) => {
 

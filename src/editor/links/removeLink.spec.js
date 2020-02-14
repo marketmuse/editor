@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
-import initApi from '@editor/api';
+import getFunctions from '@editor/functions';
 
 describe('api: remove link', () => {
 
@@ -30,7 +30,7 @@ describe('api: remove link', () => {
       </editor>
     );
 
-    initApi(initial).removeLink();
+    getFunctions(initial).removeLink();
     expect(initial.children).toEqual(expected.children)
     expect(initial.selection).toEqual(expected.selection)
   })
@@ -60,7 +60,7 @@ describe('api: remove link', () => {
       </editor>
     );
 
-    initApi(initial).removeLink();
+    getFunctions(initial).removeLink();
     expect(initial.children).toEqual(expected.children)
     expect(initial.selection).toEqual(expected.selection)
   })
@@ -89,7 +89,7 @@ describe('api: remove link', () => {
       </editor>
     );
 
-    initApi(initial).removeLink();
+    getFunctions(initial).removeLink();
     expect(initial.children).toEqual(expected.children)
     expect(initial.selection).toEqual(expected.selection)
   })

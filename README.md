@@ -38,7 +38,6 @@ ReactDOM.render(<App />, document.getElementById('root'));
 * **component** *(React Component)* - The editor instance ready to render. It is required to render this, without doing so, the editor will not be mounted which is likely to cause potential crashes. This approach is particularly useful for building toolbars / sidebars / other components that lives under the Editor provider (ie `MMSEditor`) and could consume all editor related data and utilize the api.
 * **formats** *(object)* - Flags that provides information about the cursors location / selection (see formats section for more details).
 * **functions** *(object)* - Object that contains high-level api methods with the editor instance in their closure. Useful for building custom behaviour. See functions api section for more details.
-* **api (DEPRECATED. TODO: remove)** *(function)* - This function grabs the Slate editor instance and returns the api methods as an object with the instance wrapped in their closures. It exposes MMS Editor's higher-level api built on top of Slate JS, without even needing to interact with Slate editors instance, however if desired, a particular editor instance could be provided as the first argument and it will be used instead.
 * **toolbar( config?: object )** *(function)* - A function that takes in a config object, and returns the toolbar component ready to render. Note that this needs to be rendered for the toolbar to function, even for inline style. See the toolbars section for more details.
 
 ## Formats api

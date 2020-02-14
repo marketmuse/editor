@@ -2,10 +2,10 @@
 import { ReactEditor } from 'slate-react'
 import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
-import initApi from '@editor/api';
+import getFunctions from '@editor/functions';
 
 const run = (input, expected) => {
-  initApi(input).clear();
+  getFunctions(input).clear();
   return [ input.children, expected.children ];
 }
 

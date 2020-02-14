@@ -5,7 +5,7 @@ import get from 'lodash/get';
 import ToolbarWrapper, { toolbarWrapperPropTypes } from '@components/toolbar/ToolbarWrapper';
 import defaultLayout from '@components/toolbar/defaultLayout';
 
-const ToolbarComponent = ({ api, formats, layout = {}, ...wrapperProps }) => {
+const ToolbarComponent = ({ functions, formats, layout = {}, ...wrapperProps }) => {
 
 	// toolbar screen state
 	const [screen, setScreen] = useState(null);
@@ -18,7 +18,7 @@ const ToolbarComponent = ({ api, formats, layout = {}, ...wrapperProps }) => {
 	  <ToolbarWrapper {...wrapperProps}>
 	    {screenElements.map(ScreenItem => (
 	    	<ScreenItem
-	    		api={api}
+	    		functions={functions}
 	    		formats={formats}
 	    		setScreen={setScreen}
 	    	/>
@@ -30,14 +30,14 @@ const ToolbarComponent = ({ api, formats, layout = {}, ...wrapperProps }) => {
 export const toolbarPropTypes = {
 	...toolbarWrapperPropTypes,
 
-	// pass down api with editor instance in closure
-	api: PropTypes.func.isRequired,
-
 	// layout of the toolbar
 	layout: PropTypes.object,
 
-	// formats
+	// formats object
 	formats: PropTypes.object,
+
+	// functions object
+	functions: PropTypes.object.isRequired,
 }
 
 ToolbarComponent.propTypes = toolbarPropTypes;
