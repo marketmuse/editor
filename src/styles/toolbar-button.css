@@ -6,7 +6,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: transparent;
 	border: none;
 	background-color: black;
 	border: 1px solid black;
@@ -14,6 +13,12 @@
 	font-size: 14px;
 	font-weight: 500;
 	user-select: none;
+}
+
+.mms--toolbar-button svg {
+	fill: white;
+	width: 14px;
+	height: 14px;
 }
 
 .mms--toolbar-button:focus {
@@ -31,6 +36,9 @@
 
 .mms--toolbar-button.mms--disabled {
 	color: rgba(255, 255, 255, .6);
+}
+.mms--toolbar-button.mms--disabled svg {
+	fill: rgba(255, 255, 255, .6);
 }
 
 .mms--toolbar-button.mms--disabled:hover {

@@ -1,15 +1,10 @@
 import React, { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Editable, useSlate } from 'slate-react';
-import get from 'lodash/get';
-import isNil from 'lodash/isNil';
-
-import initialState from '@config/initialState';
-import withMarketmuse from '@editor/enhancer/withMarketmuse';
 
 import Leaf from '@components/editor/Leaf';
 import Element from '@components/editor/Element';
-import Toolbar, { toolbarPropTypes } from '@components/toolbar/Toolbar';
+import Toolbar from '@components/toolbar/Toolbar';
 
 import getFormats from '@editor/formats';
 import getFunctions from '@editor/functions';
@@ -22,7 +17,7 @@ const MMSEditor = props => {
 
   const functions = getFunctions(editor);
   const formats = getFormats(editor);
-  
+
   const toolbar = (options = {}) => (
     <Toolbar
       {...options}
@@ -44,12 +39,12 @@ const MMSEditor = props => {
       // pass api functions with editor instance in closure
       functions,
 
-      // pass the editor instance 
+      // pass the editor instance
       editor,
 
       // pass toolbar as a component
       toolbar,
-      
+
       // pass editor as a component for children to render manually:
       // 1. gives the ability to easily add sidebars / toolbars to the editor
       // 2. blocks direct consumer access to slate's Editable props

@@ -84,6 +84,7 @@
   "dependencies": {
     "is-url": "^1.2.4",
     "lodash": "^4.17.15",
+    "material-design-icons": "^3.0.1",
     "slate": "^0.57.1",
     "slate-history": "^0.57.1",
     "slate-hyperscript": "^0.57.1",
