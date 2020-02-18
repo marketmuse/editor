@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSlate } from 'slate-react'
 
 import { ReactComponent as IconHeadings } from '@assets/heading.svg';
 import { ReactComponent as IconHeadingOne } from '@assets/heading1.svg';
@@ -135,17 +136,19 @@ export const OpenLinkButton = props => {
 
 export const LinkInput = props => {
 	const [url, setUrl] = useState('');
+	
+	// TODO: don't use `useSlate` here, this is the configuration.
+	// wrap it into something like `useMMSEditor` and expose it to users,
+	// and use that here instead
+	const editor = useSlate();
 
-	// if selection on an existing link, set the
+	// if selection is on an existing link, set the
 	// set the input value to the existing link,
 	// so insert link input functions as updater
-	// TODO (BUG): when moving cursor from one link to another,
-	// toolbar component doesn't get re-mounted so this doesn't
-	// run and the `url` state variable won't get updated
 	useEffect(() => {
 		const existing = props.functions.getLink() || {};
 		if (existing && existing.href) setUrl(existing.href);
-	}, []);
+	}, [editor.selection]);
 
 	const isPopupScreen = props.screen === SCREEN_LINK_POPUP;
 	const classname = isPopupScreen
