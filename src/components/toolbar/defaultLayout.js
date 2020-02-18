@@ -15,6 +15,7 @@ import ItemSpacer from '@components/toolbar/ItemSpacer';
 
 const SCREEN_DEFAULT = 'default';
 const SCREEN_HEADINGS = 'headings';
+const SCREEN_LINK = 'link';
 
 // Utils
 
@@ -93,9 +94,8 @@ export const StrikeButton = props => (
 );
 
 export default {
-	
-	// default screen
-	default: [
+
+	[SCREEN_DEFAULT]: [
 		HeadingsButton,
 		ItemSpacer,
 		BoldButton,
@@ -104,8 +104,7 @@ export default {
 		StrikeButton,
 	],
 
-	// headings screen
-	headings: [
+	[SCREEN_HEADINGS]: [
 		BackToDefaultScreen,
 		HeadingOneButton,
 		HeadingTwoButton,

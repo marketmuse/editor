@@ -44,18 +44,28 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 Formats api is an object with flags that provides information about the cursors location / selection. They are useful for building custom toolbars (see formats section for more details)
 
+*Mark*: These are styles attached to text nodes, a block could be in multiple states at a time.
+
 * **isBold** *(boolean)* - True if cursor / selection is over bold text.
 * **isItalic** *(boolean)* - True if cursor / selection is over italic text.
 * **isUnderline** *(boolean)* - True if cursor / selection is over underlined text.
 * **isStrikethrough** *(boolean)* - True if cursor / selection is over strike through text.
+
+*Block*: These indicate the type of block within the selection. A block have a single type at a time.
+
 * **isH1** *(boolean)* - True if cursor / selection is in a h1 block.
 * **isH2** *(boolean)* - True if cursor / selection is in a h2 block.
 * **isH3** *(boolean)* - True if cursor / selection is in a h3 block.
 * **isHeading** *(boolean)* - True if cursor / selection is in an heading block.
+* **isLink** *(boolean)* - True if cursor / selection is on a link block.
 * **isParagraph** *(boolean)* - True if cursor / selection is in a paragraph block (which is the default).
 * **isBlockquote** *(boolean)* - True if cursor / selection is in a blockquote block.
 * **isListNumbered** *(boolean)* - True if cursor / selection is in a list item (li) block within a numbered list (ol) block.
 * **isListBulleted** *(boolean)* - True if cursor / selection is in a list item (li) block within a bulleted list (ul) block.
+
+*Misc*:
+
+* **isCollapsed** *(boolean / null)* - Cursor location within a text is referred to as [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection), and is indicated with an anhor point and a focus point. When a text is highlighted, anchor is where the selection begins and focus is the where it ends. A selection is [collapsed](https://developer.mozilla.org/en-US/docs/Web/API/Selection/isCollapsed) when anchor and focus are the same position, meaning, no text is selected. When there is no selection (ie. editor has no focus), this value will be null.
 
 ## Functions api
 

@@ -16,18 +16,18 @@ function App() {
   const [text, setText] = useState('')
   const [url, setUrl] = useState('')
   const [jsx, setJsx] = useState('')
-  const defaultCode = 'api().focus();\napi().moveCursorToStart()\nconsole.log("cursor moved")';
+  const defaultCode = 'functions.focus();\nfunctions.moveCursorToStart()\nconsole.log("cursor moved")';
   const defaultJsx = `<editor>\n\t<block>\n\t\t<text>yo!</text>\n\t</block>\n</editor>`;
 
   return (
     <MMSEditor>
       {({
-        api,
         component,
         toolbar,
         formats,
+        functions,
       }) => {
-        window.api = api;
+        window.functions = functions;
 
         const {
           isBold,
@@ -37,10 +37,12 @@ function App() {
           isH1,
           isH2,
           isH3,
+          isLink,
           isParagraph,
           isBlockquote,
           isListNumbered,
           isListBulleted,
+          isCollapsed,
         } = formats;
 
         return (
@@ -58,56 +60,31 @@ function App() {
             {/* controls */}
             <div className="control-wrapper">
 
-              {/* JS stuff */}
-              <section className="col">
-                <textarea
-                  className="has-item-below"
-                  style={{ borderBottom: 'none' }}
-                  placeholder={defaultCode}
-                  value={code}
-                  onChange={e => setCode(e.target.value)}
-                />
-                <section style={{ margin: 0 }}>
-                  <button
-                    className="has-item-above has-item-right"
-                    onClick={() => {
-                      api()._populateWindow();
-                      eval(code || defaultCode); // eslint-disable-line
-                    }}
-                  >
-                    eval
-                  </button>
-                  <button
-                    className="has-item-above has-item-left"
-                    onClick={() => setCode('')}
-                  >
-                    clear
-                  </button>
-                </section>
-              </section>
-              <section>
-                <button onClick={() => console.log(api()._getEditor())}>log(editor)</button>
-                <button onClick={() => api()._populateWindow()}>populate window</button>
-              </section>
-
               {/* formatters */}
               <Separator text="Formatters" />
               <section className="merge-below">
-                <button className={`has-item-right ${isBold ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleBold(); }}><b>bold</b></button>
-                <button className={`has-item-right has-item-left ${isItalic ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleItalic(); }}><i>italic</i></button>
-                <button className={`has-item-right has-item-left ${isUnderline ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleUnderline(); }}><u>underline</u></button>
-                <button className={`has-item-left ${isStrikethrough ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleStrikethrough(); }}><strike>strike</strike></button>
+                <button className={`has-item-right ${isBold ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleBold(); }}><b>bold</b></button>
+                <button className={`has-item-right has-item-left ${isItalic ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleItalic(); }}><i>italic</i></button>
+                <button className={`has-item-right has-item-left ${isUnderline ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleUnderline(); }}><u>underline</u></button>
+                <button className={`has-item-left ${isStrikethrough ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleStrikethrough(); }}><strike>strike</strike></button>
               </section>
               <section className="merge-below merge-above">
                 <button className={`disabled has-item-right ${isParagraph ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>p</button>
-                <button className={`has-item-right has-item-left ${isH1 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(1); }}>h1</button>
-                <button className={`has-item-right has-item-left ${isH2 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(2); }}>h2</button>
-                <button className={`has-item-left ${isH3 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleHeading(3); }}>h3</button>
+                <button className={`has-item-right has-item-left ${isH1 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleHeading(1); }}>h1</button>
+                <button className={`has-item-right has-item-left ${isH2 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleHeading(2); }}>h2</button>
+                <button className={`has-item-left ${isH3 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleHeading(3); }}>h3</button>
               </section>
               <section className="merge-above">
-                <button className={`has-item-right ${isBlockquote ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleBlockquote(); }}>blockquote</button>
-                <button className={`has-item-right has-item-left ${isListNumbered ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleListNumbered(); }}>list (number)</button>
-                <button className={`has-item-left ${isListBulleted ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); api().toggleListBulleted(); }}>list (bullet)</button>
+                <button className={`has-item-right ${isBlockquote ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleBlockquote(); }}>blockquote</button>
+                <button className={`has-item-right has-item-left ${isListNumbered ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleListNumbered(); }}>list (number)</button>
+                <button className={`has-item-left ${isListBulleted ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleListBulleted(); }}>list (bullet)</button>
+              </section>
+
+              {/* formatters */}
+              <Separator text="Selection" />
+              <section>
+                <button className={`disabled has-item-right ${isCollapsed === true ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>collapsed</button>
+                <button className={`disabled has-item-left ${isCollapsed === false ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>selection</button>
               </section>
 
               {/* links */}
@@ -123,14 +100,20 @@ function App() {
                 />
                 <section style={{ margin: 0 }}>
                   <button
-                    className="has-item-above has-item-right"
-                    onClick={() => api().insertLink(url)}
+                    className={`disabled has-item-above has-item-right ${isLink ? 'active' : ''}`}
+                    onClick={() => {}}
+                  >
+                    is link
+                  </button>
+                  <button
+                    className="has-item-above has-item-left has-item-right"
+                    onClick={() => functions.insertLink(url)}
                   >
                     insert link
                   </button>
                   <button
                     className="has-item-above has-item-left"
-                    onClick={() => api().removeLink()}
+                    onClick={() => functions.removeLink()}
                   >
                     remove link
                   </button>
@@ -140,11 +123,11 @@ function App() {
               {/* focus stuff */}
               <Separator text="Focus" />
               <section>
-                <button onClick={() => api().focus()}>focus</button>
+                <button onClick={() => functions.focus()}>focus</button>
               </section>
               <section>
-                <button onClick={() => api().focusAtStart()}>focus at start</button>
-                <button onClick={() => api().focusAtEnd()}>focus at end</button>
+                <button onClick={() => functions.focusAtStart()}>focus at start</button>
+                <button onClick={() => functions.focusAtEnd()}>focus at end</button>
               </section>
 
               {/* content controls */}
@@ -187,11 +170,46 @@ function App() {
                 </section>
               </section>
               <section>
-                <button onClick={() => api().selectAll()}>select all</button>
+                <button onClick={() => functions.selectAll()}>select all</button>
               </section>
               <section>
-                <button onClick={() => api().clear()}>clear</button>
+                <button onClick={() => functions.clear()}>clear</button>
               </section>
+
+
+              {/* JS stuff */}
+              <Separator text="JS" />
+              <section className="col">
+                <textarea
+                  className="has-item-below"
+                  style={{ borderBottom: 'none' }}
+                  placeholder={defaultCode}
+                  value={code}
+                  onChange={e => setCode(e.target.value)}
+                />
+                <section style={{ margin: 0 }}>
+                  <button
+                    className="has-item-above has-item-right"
+                    onClick={() => {
+                      functions._populateWindow();
+                      eval(code || defaultCode); // eslint-disable-line
+                    }}
+                  >
+                    eval
+                  </button>
+                  <button
+                    className="has-item-above has-item-left"
+                    onClick={() => setCode('')}
+                  >
+                    clear
+                  </button>
+                </section>
+              </section>
+              <section>
+                <button onClick={() => console.log(functions._getEditor())}>log(editor)</button>
+                <button onClick={() => functions._populateWindow()}>populate window</button>
+              </section>
+
 
             </div>
           </div>
