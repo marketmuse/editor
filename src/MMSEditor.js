@@ -27,7 +27,7 @@ const MMSEditor = props => {
   );
 
   let editorClassName = 'mms--editor';
-  if (props.className) editorClassName += ` ${props.className}`;
+  if (props.className) editorClassName += ` ${props.className || ''}`;
   if (props.readOnly) editorClassName += ' mms--disabled';
 
   return (

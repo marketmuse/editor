@@ -8,6 +8,8 @@ import { ReactComponent as IconBold } from '@assets/bold.svg';
 import { ReactComponent as IconItalic } from '@assets/italic.svg';
 import { ReactComponent as IconUnderline } from '@assets/underline.svg';
 import { ReactComponent as IconStrikethrough } from '@assets/strikethrough.svg';
+import { ReactComponent as IconTrash } from '@assets/trash.svg';
+import { ReactComponent as IconShare } from '@assets/share.svg';
 
 import ToolbarButton from '@components/toolbar/ToolbarButton';
 import ItemBack from '@components/toolbar/ItemBack';
@@ -16,6 +18,7 @@ import ItemSpacer from '@components/toolbar/ItemSpacer';
 const SCREEN_DEFAULT = 'default';
 const SCREEN_HEADINGS = 'headings';
 const SCREEN_LINK = 'link';
+const SCREEN_LINK_POPUP = 'link-popup';
 
 // Utils
 
@@ -93,21 +96,90 @@ export const StrikeButton = props => (
 	/>
 );
 
+// links
+
+export const RemoveLinkButton = props => (
+	<ToolbarButton
+		onClick={() => props.functions.removeLink()}
+		children={props.children || <IconTrash />}
+	/>
+);
+
+export const OpenLinkButton = props => {
+	const link = props.functions.getLink() || {};
+	// lowercase
+	let href = (link.href || '').toLowerCase();
+	// add http(s)
+	if (!href.match(/(http(s?)):\/\//gi)) href = `https://${href}`;
+	// validate
+	const isValid = !!href.match(/^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i);
+	return (
+		<ToolbarButton
+			disabled={!isValid}
+			onClick={() => window.open(href)}
+			children={props.children || <IconShare />}
+		/>
+	)
+};
+
+// misc
+
+export const isOpen = ({ formats }) => {
+	// if selection on a link and it is collapsed,
+	// force show the toolbar to allow link editing
+	if (formats.isLink && formats.isCollapsed) return true;
+	// return null for default behaviour
+	return null;
+}
+
+export const forceScreen = ({ formats }) => {
+	// if selection on a link and it is collapsed,
+	// force render the link screen
+	if (formats.isLink && formats.isCollapsed) return SCREEN_LINK_POPUP;
+	// do not force a screen
+	return null;
+}
+
 export default {
 
-	[SCREEN_DEFAULT]: [
-		HeadingsButton,
-		ItemSpacer,
-		BoldButton,
-		ItalicButton,
-		UnderlineButton,
-		StrikeButton,
-	],
+	isOpen,
+	
+	forceScreen,
 
-	[SCREEN_HEADINGS]: [
-		BackToDefaultScreen,
-		HeadingOneButton,
-		HeadingTwoButton,
-		HeadingThreeButton,
-	]
+	inline: true,
+
+	defaultScreen: SCREEN_DEFAULT,
+	
+	screens: {
+		
+		// default screen layout
+		[SCREEN_DEFAULT]: [
+			HeadingsButton,
+			ItemSpacer,
+			BoldButton,
+			ItalicButton,
+			UnderlineButton,
+			StrikeButton,
+		],
+
+		// headings screen layout
+		[SCREEN_HEADINGS]: [
+			BackToDefaultScreen,
+			HeadingOneButton,
+			HeadingTwoButton,
+			HeadingThreeButton,
+		],
+
+		// link screen layout
+		[SCREEN_LINK]: [
+			BackToDefaultScreen,
+			RemoveLinkButton,
+			OpenLinkButton,
+		],
+
+		[SCREEN_LINK_POPUP]: [
+			RemoveLinkButton,
+			OpenLinkButton,
+		]
+	}
 }

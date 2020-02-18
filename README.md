@@ -90,6 +90,7 @@ Functions api consists of an object that holds methods that could be used to con
 
 *Links*:
 
+* **getLinks()** *(object)* - Returns details about the link(s) within the selection.
 * **insertLink( url: string )** *(void)* - Inserts a link to the cursor location. If the selection is collapsed (ie. no text is selected, it's just the cursor), the link will be inserted and the anchor text will become the given url. Otherwise the selected text will become the anchor text. If there exists another link within the selection, it's link will be removed first.
 * **removeLink()** *(void)* - Remove link(s) at the cursor selection. If there are multiple links within selection, all will be removed. Once removed, the anchor text will simply turn into a standard text node.
 
@@ -121,6 +122,8 @@ Text within the editor comes in standard html tags, so this class name could be 
 * `mms--toolbar` - Classname of the default toolbar wrapper (applies to both styles).
 * `mms--toolbar-inline` - Applies to toolbar wrapper for inline style toolbar.
 * `mms--toolbar-embedded` - Applies to toolbar wrapper for embedded style toolbar.
+* `mms--toolbar-visible` - Applies to toolbar when it is visible (ie. reflects the visible state of the inline toolbar as a class name, applies also to embedded toolbars)
+* `mms--toolbar-hidden` - Applies to toolbar when it is hidden (ie. reflects the hidden state of the inline toolbar as a class name, applies also to embedded toolbars)
 * `mms--toolbar-button` - Applies to toolbar buttons. Helpers:
   * `mms--disabled` - When button is disabled
   * `mms--active` - When cursor is over mark / block indicated by the button *(ie. bold button would be appended with this class name when cursor is over bold text)*

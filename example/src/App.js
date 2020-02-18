@@ -192,7 +192,10 @@ function App() {
                     className="has-item-above has-item-right"
                     onClick={() => {
                       functions._populateWindow();
-                      eval(code || defaultCode); // eslint-disable-line
+                      console.log('code', code)
+                      console.log('defaultCode', defaultCode)
+                      const useCode = code || defaultCode;
+                      eval(useCode); // eslint-disable-line
                     }}
                   >
                     eval

@@ -19,9 +19,7 @@ const TooolbarWrapper = props => {
 
 	const hasSelection = !!editor.selection;
 	const hasFocus = ReactEditor.isFocused(editor);
-	const isCollapsed = hasSelection ? Range.isCollapsed(editor.selection) : null;
-	const isSelectionEmpty = hasSelection ? Editor.string(editor, editor.selection) === '' : null;
-
+	const isVisible = hasSelection && hasFocus && props.isOpen;
 	
 	if (props.inline) {
 
@@ -31,7 +29,7 @@ const TooolbarWrapper = props => {
 		inlineProps.left = -1000000;
 
 		// calculations are only needed for inline toolbars
-		if (hasSelection && hasFocus && !isCollapsed && !isSelectionEmpty) {
+		if (isVisible) {
 
 			// calculate position
 			const domSelection = window.getSelection();
@@ -45,14 +43,17 @@ const TooolbarWrapper = props => {
 		}
 	}
 
-	const styleClass = props.inline
-		? 'mms--toolbar-inline'
-		: 'mms--toolbar-embedded';
+	// construct class name
+	let className = 'mms--toolbar';
+	if (props.inline) className += ' mms--toolbar-inline';
+	if (!props.inline) className += ' mms--toolbar-embedded';
+	if (isVisible) className += ' mms--toolbar-visible';
+	if (!isVisible) className += ' mms--toolbar-hidden';
 
 	const toolbar = (
 		<div
 			inline={props.inline}
-			className={`mms--toolbar ${styleClass} ${props.className || ''}`}
+			className={className}
 			style={Object.assign({}, props.style, props.inline ? inlineProps : {})}
 		>
 		  {props.children}
@@ -71,19 +72,12 @@ const TooolbarWrapper = props => {
 	return toolbar;
 };
 
-export const toolbarWrapperPropTypes = {
-
-	// inline styles to wrapper
+TooolbarWrapper.propTypes = {
 	style: PropTypes.object,
-
-	// custom class name
 	className: PropTypes.string,
-	
-	// make this an inline toolbar
 	inline: PropTypes.bool,
-}
-
-TooolbarWrapper.propTypes = toolbarWrapperPropTypes;
+	isOpen: PropTypes.bool,
+};
 
 TooolbarWrapper.defaultProps = {
 	inline: true,
