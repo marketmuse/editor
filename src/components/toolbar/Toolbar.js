@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { useSlate } from 'slate-react'
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import ToolbarWrapper, { toolbarWrapperPropTypes } from '@components/toolbar/ToolbarWrapper';
+import classHasFocus from '@utils/classHasFocus';
+import ToolbarWrapper from '@components/toolbar/ToolbarWrapper';
 import defaultOptions from '@components/toolbar/defaultOptions';
 
 const ToolbarComponent = ({ functions, formats, ...props }) => {
+
+	// grab editor instance
+	const editor = useSlate();
 
 	// toolbar screen state
 	const [screen, setScreen] = useState(null);
 
 	// props to pass toolbar api children / functions
-	const renderProps = { functions, formats, setScreen, screen }
+	const renderProps = { functions, formats, setScreen, screen, editor };
 
 	// should editor be displayed
 	let isOpen = props.isOpen(renderProps);
@@ -39,7 +44,7 @@ const ToolbarComponent = ({ functions, formats, ...props }) => {
 	  	style={props.style}
 	  	className={props.className}
 	  >
-	    {currentScreen.map(ScreenItem => (
+	    {currentScreen.filter(i => !!i).map(ScreenItem => (
 	    	<ScreenItem {...renderProps} />
 	    ))}
 	  </ToolbarWrapper>

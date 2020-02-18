@@ -19,7 +19,7 @@ export default {
   plugins: [
     postcss({
       plugins: [autoprefixer()],
-      sourceMap: 'inline',
+      sourceMap: false,
       extract: `dist/${pkg.name}.css`,
     }),
     external(),

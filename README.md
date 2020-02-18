@@ -127,14 +127,9 @@ Text within the editor comes in standard html tags, so this class name could be 
 * `mms--toolbar-button` - Applies to toolbar buttons. Helpers:
   * `mms--disabled` - When button is disabled
   * `mms--active` - When cursor is over mark / block indicated by the button *(ie. bold button would be appended with this class name when cursor is over bold text)*
-
-* `mms--toolbar-screen` - Applies to toolbar screen, a wrapper around buttons.
+* `mms--toolbar-input` - Applies to toolbar inputs. Helpers:
+  * `mms--disabled` - When input is disabled.
 * `mms--toolbar-spacer` - Applies to toolbar spacers.
-* `mms--toolbar-back` - Applies to previous screen button on toolbar.
-* `mms--toolbar-headings` - Headings button class
-* `mms--toolbar-heading-one` - H1 button class
-* `mms--toolbar-heading-two` - H2 button class
-* `mms--toolbar-heading-three` - H3 button class
 
 *Helper classNames*: Below class names gets appended to DOM elements for indicating the state. They do not represent any particular element, so they shouldn't be styled directly. Ie:
 
@@ -148,6 +143,7 @@ Text within the editor comes in standard html tags, so this class name could be 
 
 * `mms--active` - Active state
 * `mms--disabled` - Disabled state
+* `mms--toolbar-ignore-focus` - Inline toolbar will not render if there is no selection (ie. editor has no focus). Use this class name to prevent toolbar from hiding when main editor loses focus. Currently, this class name is used in text input elements within the toolbar.
 
 
 ## Toolbar

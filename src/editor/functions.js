@@ -5,6 +5,7 @@ import focusAtStart from '@editor/focus/focusAtStart';
 import moveCursorToStart from '@editor/cursor/moveCursorToStart';
 import moveCursorToEnd from '@editor/cursor/moveCursorToEnd';
 import getLink from '@editor/links/getLink';
+import replaceLink from '@editor/links/replaceLink';
 import insertLink from '@editor/links/insertLink';
 import removeLink from '@editor/links/removeLink';
 import selectAll from '@editor/contents/selectAll';
@@ -37,6 +38,7 @@ export default editor => ({
   
   // links
   getLink: () => getLink(editor),
+  replaceLink: url => replaceLink(editor, url),
   insertLink: url => insertLink(editor, url),
   removeLink: () => removeLink(editor),
   

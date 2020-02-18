@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { ReactComponent as IconHeadings } from '@assets/heading.svg';
 import { ReactComponent as IconHeadingOne } from '@assets/heading1.svg';
@@ -10,9 +10,15 @@ import { ReactComponent as IconUnderline } from '@assets/underline.svg';
 import { ReactComponent as IconStrikethrough } from '@assets/strikethrough.svg';
 import { ReactComponent as IconTrash } from '@assets/trash.svg';
 import { ReactComponent as IconShare } from '@assets/share.svg';
+import { ReactComponent as IconTick } from '@assets/tick.svg';
+import { ReactComponent as IconLink } from '@assets/link.svg';
+
+import cleanUrl from '@utils/cleanUrl';
+import isValidUrl from '@utils/isValidUrl';
+import classHasFocus from '@utils/classHasFocus';
 
 import ToolbarButton from '@components/toolbar/ToolbarButton';
-import ItemBack from '@components/toolbar/ItemBack';
+import ToolbarInput from '@components/toolbar/ToolbarInput';
 import ItemSpacer from '@components/toolbar/ItemSpacer';
 
 const SCREEN_DEFAULT = 'default';
@@ -23,8 +29,9 @@ const SCREEN_LINK_POPUP = 'link-popup';
 // Utils
 
 export const BackToDefaultScreen = props => (
-	<ItemBack
+	<ToolbarButton
 		onClick={() => props.setScreen(SCREEN_DEFAULT)}
+		children={props.children || "←"}
 	/>
 );
 
@@ -98,6 +105,14 @@ export const StrikeButton = props => (
 
 // links
 
+export const LinkButton = props => (
+	<ToolbarButton
+		active={props.formats.isLink}
+		onClick={() => props.setScreen(SCREEN_LINK)}
+		children={props.children || <IconLink />}
+	/>
+)
+
 export const RemoveLinkButton = props => (
 	<ToolbarButton
 		onClick={() => props.functions.removeLink()}
@@ -107,20 +122,65 @@ export const RemoveLinkButton = props => (
 
 export const OpenLinkButton = props => {
 	const link = props.functions.getLink() || {};
-	// lowercase
-	let href = (link.href || '').toLowerCase();
-	// add http(s)
-	if (!href.match(/(http(s?)):\/\//gi)) href = `https://${href}`;
-	// validate
-	const isValid = !!href.match(/^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i);
+	const clean = cleanUrl(link.href, { addHttps: true });
+	const isValid = isValidUrl(clean);
 	return (
 		<ToolbarButton
 			disabled={!isValid}
-			onClick={() => window.open(href)}
+			onClick={() => window.open(clean)}
 			children={props.children || <IconShare />}
 		/>
 	)
 };
+
+export const LinkInput = props => {
+	const [url, setUrl] = useState('');
+
+	// if selection on an existing link, set the
+	// set the input value to the existing link,
+	// so insert link input functions as updater
+	// TODO (BUG): when moving cursor from one link to another,
+	// toolbar component doesn't get re-mounted so this doesn't
+	// run and the `url` state variable won't get updated
+	useEffect(() => {
+		const existing = props.functions.getLink() || {};
+		if (existing && existing.href) setUrl(existing.href);
+	}, []);
+
+	const isPopupScreen = props.screen === SCREEN_LINK_POPUP;
+	const classname = isPopupScreen
+		? 'mms--link-popup-input'
+		: 'mms--link-input';
+
+	const clean = cleanUrl(url);
+	const isValid = isValidUrl(clean);
+	
+	return (
+		<form
+			style={{ display: 'flex' }}
+			onSubmit={e => {
+				e.preventDefault();
+				props.functions.replaceLink(clean);
+				// TODO (BUG2): after replacing a link, because of the
+				// appended classname, it keeps stuck at the link
+				// screen until focusing out of the text input
+				if (!isPopupScreen) props.setScreen(SCREEN_DEFAULT);
+			}}
+		>
+			<ToolbarInput
+				value={url}
+				onChange={e => setUrl(e.target.value)}
+				placeholder="Insert URL"
+				className={classname}
+			/>
+			<ToolbarButton
+				disabled={!isValid}
+				type="submit"
+				children={<IconTick />}
+			/>
+		</form>
+	)
+}
 
 // misc
 
@@ -136,6 +196,9 @@ export const forceScreen = ({ formats }) => {
 	// if selection on a link and it is collapsed,
 	// force render the link screen
 	if (formats.isLink && formats.isCollapsed) return SCREEN_LINK_POPUP;
+	// if focused on the link input, keep the relevant screen open
+	if (classHasFocus('mms--link-input')) return SCREEN_LINK;
+	if (classHasFocus('mms--link-popup-input')) return SCREEN_LINK_POPUP;
 	// do not force a screen
 	return null;
 }
@@ -155,6 +218,7 @@ export default {
 		// default screen layout
 		[SCREEN_DEFAULT]: [
 			HeadingsButton,
+			LinkButton,
 			ItemSpacer,
 			BoldButton,
 			ItalicButton,
@@ -173,13 +237,14 @@ export default {
 		// link screen layout
 		[SCREEN_LINK]: [
 			BackToDefaultScreen,
+			LinkInput,
 			RemoveLinkButton,
 			OpenLinkButton,
 		],
-
 		[SCREEN_LINK_POPUP]: [
+			LinkInput,
 			RemoveLinkButton,
 			OpenLinkButton,
-		]
+		],
 	}
 }

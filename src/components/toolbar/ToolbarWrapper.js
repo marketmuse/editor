@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Slate, Editable, ReactEditor, withReact, useSlate } from 'slate-react'
 import { Range, Editor, Transforms, Text, createEditor } from 'slate'
 
 import Portal from '@components/Portal';
+import classHasFocus from '@utils/classHasFocus';
 
 const TooolbarWrapper = props => {
+
+	const inlineTop = useRef(-1000000);
+	const inlineLeft = useRef(-1000000);
 
 	// grab editor instance
 	const editor = useSlate();
@@ -17,9 +21,9 @@ const TooolbarWrapper = props => {
 		zIndex: 1,
 	};
 
-	const hasSelection = !!editor.selection;
-	const hasFocus = ReactEditor.isFocused(editor);
-	const isVisible = hasSelection && hasFocus && props.isOpen;
+	const hasFocus = !!editor.selection && ReactEditor.isFocused(editor);
+	const hasFocusWithin = classHasFocus('mms--toolbar-ignore-focus');
+	const isVisible = (hasFocus || hasFocusWithin) && props.isOpen;
 	
 	if (props.inline) {
 
@@ -31,15 +35,35 @@ const TooolbarWrapper = props => {
 		// calculations are only needed for inline toolbars
 		if (isVisible) {
 
-			// calculate position
-			const domSelection = window.getSelection();
-		  const domRange = domSelection.getRangeAt(0);
-		  const rect = domRange.getBoundingClientRect();
+			// set visible flag
+			inlineProps.opacity = 1;
+			
+			// only calculate position if the text editor has focus
+			// use the last known location if focused within
+			if (classHasFocus('mms--editor')) {	
+				
+				const domSelection = window.getSelection();
+			  const domRange = domSelection.getRangeAt(0);
+			  const rect = domRange.getBoundingClientRect();
+			  
+			  // calculate top and left location of toolbar
+			  const newTop = rect.top + window.pageYOffset;
+			  const newLeft = rect.left + window.pageXOffset + rect.width / 2;
 
-		  // update styles
-		  inlineProps.opacity = 1;
-		  inlineProps.top = rect.top + window.pageYOffset;
-		  inlineProps.left = rect.left + window.pageXOffset + rect.width / 2;	
+			  // set styles
+			  inlineProps.top = newTop;
+				inlineProps.left = newLeft;
+
+				// update state
+			  inlineTop.current = newTop;
+			  inlineLeft.current = newLeft;
+
+			} else {
+				
+				// update styles with last calculated coordinates
+			  inlineProps.top = inlineTop.current;
+				inlineProps.left = inlineLeft.current;
+			}
 		}
 	}
 

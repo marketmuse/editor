@@ -44,8 +44,8 @@
   overflow: auto;
 }
 
-input,
-textarea {
+.control-wrapper input,
+.control-wrapper textarea {
   width: 100%;
   background-color: white;
   border: 4px solid #359ff4;
@@ -55,7 +55,7 @@ textarea {
   resize: none;
 }
 
-textarea {
+.control-wrapper textarea {
   height: 80px;
 }
 

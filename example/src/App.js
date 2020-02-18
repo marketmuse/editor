@@ -14,7 +14,7 @@ function App() {
 
   const [code, setCode] = useState('')
   const [text, setText] = useState('')
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState('google.com')
   const [jsx, setJsx] = useState('')
   const defaultCode = 'functions.focus();\nfunctions.moveCursorToStart()\nconsole.log("cursor moved")';
   const defaultJsx = `<editor>\n\t<block>\n\t\t<text>yo!</text>\n\t</block>\n</editor>`;
