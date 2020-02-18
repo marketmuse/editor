@@ -163,11 +163,4 @@ MMSEditor comes with a built-in toolbar that has primary rich text editing suppo
 
 ### config object
 
-* **className** *(string)* - Applies to the toolbar wrapper.
-* **style** *(object)* - Applies to the toolbar wrapper. 
-* **inline** *(boolean)* - Inline toolbar. Defaults to true.
-* **layout** *(object)* - Configuration for the toolbar (see below)
-
-### layout
-
-* TODO: Write this part
+* TODO
