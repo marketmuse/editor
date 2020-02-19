@@ -31,6 +31,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 * **style** *(object)* - Apply inline styles to the editor container.
 * **autoFocus** *(boolean)* - Focus upon mount.
 * **readOnly** *(boolean)* - Disallow editing.
+* **decorators** *(array)* - Configuration for custom decorators. See decorations section.
 * **children** *(function)* - MMSEditor adopts the [function-as-children pattern](https://reactjs.org/docs/jsx-in-depth.html#functions-as-children) to be able to pass on some editor related data down to its children, including the api and even the editor itself. Therefor, the children provided to this component **must** be a function (see below for arguments).
 
 ### Children args
@@ -104,6 +105,54 @@ Functions api consists of an object that holds methods that could be used to con
 * **toggleBlockquote( status?: bool )** *(void)* - Toggles blockquote state of current block. 
 * **toggleListNumbered( status?: bool )** *(void)* - Toggles numbered list state of current block. 
 * **toggleListBulleted( status?: bool )** *(void)* - Toggles bulleted list state of current block. 
+
+
+## Decorations api
+
+Decorations are a type of text-level formatting that computes at render time based on the content. It allows you to implement things like search highlighting. MMS editor allows you to implement your own **highlight rules**, and provide your own React Components to wrap around the text that matches your rule.
+
+### config
+
+`MMSEditor` component accepts the prop `decoratiors`, an array of configuration for a decorator that accepts the following props:
+
+* **id** *(string)*
+* **match** *(function( helpers: object ) -> bool)*
+* **transform** *(function( text: string ) -> string )*
+* **triggers** *array*
+* **component** *(ReactComponent)*
+* **render** *(function( props: object ) ReactComponent)*
+
+*Example*
+
+#TODO: Add `isDecorator(decoratorId)` to formats api that returns true of cursor on a custom format
+
+```
+const Apple = props => (
+  <span style={{ color: 'red' }}>
+    {props.children}
+  </span>
+);
+
+const decorators = [
+  {
+    id: 'apple',
+    match: ({ matchesRegex }) => matchesRegex(/apple/gi),
+    component: Apple
+  },
+  {
+    id: 'smiley',
+    match: ({ matchesText }) => matchesTexts([':)', ':-)']),
+    render: () => 🙂
+  },
+  {
+    id: 'search-query',
+    transform: text => text.toLowerCase();
+    match: ({ matchesText }) => matchesText(query),
+    style: { backgroundColor: 'yellow' },
+    triggers: [query]
+  }
+]
+```
 
 
 ## Classnames api

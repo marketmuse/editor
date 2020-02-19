@@ -36,10 +36,9 @@ const MMSEditor = props => {
 };
 
 MMSEditor.propTypes = {
-  
   // use editor instead of creating one
   editor: PropTypes.object,
-
+  children: PropTypes.any,
 };
 
 export default MMSEditor;

@@ -20,6 +20,7 @@ MMSEditor.propTypes = {
   id: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.object,
+  editor: PropTypes.object,
 
   // a function that receives a set of attributes managed
   // by the editor component, including the editor itself
@@ -30,6 +31,9 @@ MMSEditor.propTypes = {
 
   // make the editor read only
   readOnly: PropTypes.bool,
+
+  // decorator configuration
+  decorators: PropTypes.array,
 
 };
 

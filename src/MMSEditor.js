@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState, useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Editable, useSlate } from 'slate-react';
 
@@ -8,10 +8,20 @@ import Toolbar from '@components/toolbar/Toolbar';
 
 import getFormats from '@editor/formats';
 import getFunctions from '@editor/functions';
+import getDecorate from '@editor/decorators/getDecorate';
+// import getDecorateTriggers from '@editor/decorators/getDecorateTriggers';
+// import getDecorateComponents from '@editor/decorators/getDecorateComponents';
 
 const MMSEditor = props => {
 
   const editor = useSlate();
+
+  // decorators
+  const decorators = props.decorators || [];
+  const decTriggers = [];
+  // const decTriggers = getDecorateTriggers(decorators);
+  // const decComponents = getDecorateComponents(decorators);
+  const decorate = useCallback(getDecorate(decorators), decTriggers);
   const renderElement = useCallback(props => <Element {...props} />, []);
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
 
@@ -57,6 +67,7 @@ const MMSEditor = props => {
           readOnly={props.readOnly}
           renderElement={renderElement}
           renderLeaf={renderLeaf}
+          decorate={decorate}
         />
       )
     })
@@ -77,6 +88,9 @@ MMSEditor.propTypes = {
 
   // make the editor read only
   readOnly: PropTypes.bool,
+
+  // decorator configuration
+  decorators: PropTypes.array,
 
 };
 

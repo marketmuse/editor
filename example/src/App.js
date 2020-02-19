@@ -19,8 +19,15 @@ function App() {
   const defaultCode = 'functions.focus();\nfunctions.moveCursorToStart()\nconsole.log("cursor moved")';
   const defaultJsx = `<editor>\n\t<block>\n\t\t<text>yo!</text>\n\t</block>\n</editor>`;
 
+  const decorators = [
+    {
+      id: 'fruits',
+      match: ({ matchesRegex }) => matchesRegex(/apple|banana|mango/gi),
+    }
+  ]
+
   return (
-    <MMSEditor>
+    <MMSEditor decorators={decorators}>
       {({
         component,
         toolbar,
