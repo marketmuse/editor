@@ -124,9 +124,9 @@ Decorations are a type of text-level formatting that computes at render time bas
 
 *Example*
 
-#TODO: Add `isDecorator(decoratorId)` to formats api that returns true of cursor on a custom format
+# TODO: Add `isDecorator(decoratorId)` to formats api that returns true of cursor on a custom format
 
-```
+```javascript
 const Apple = props => (
   <span style={{ color: 'red' }}>
     {props.children}
