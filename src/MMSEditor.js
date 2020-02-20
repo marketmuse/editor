@@ -18,27 +18,24 @@ const MMSEditor = props => {
 
   // decorators
   const decorators = props.decorators || [];
-  const decTriggers = [];
   // const decTriggers = getDecorateTriggers(decorators);
   // const decComponents = getDecorateComponents(decorators);
-  const decorate = useCallback(getDecorate(decorators), decTriggers);
+  const decorate = useCallback(getDecorate(decorators), [editor, decorators]);
+
+  // element / leaf renderers
   const renderElement = useCallback(props => <Element {...props} />, []);
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
 
+  // functions and formats
   const functions = getFunctions(editor);
   const formats = getFormats(editor);
 
-  const toolbar = (options = {}) => (
-    <Toolbar
-      {...options}
-      functions={functions}
-      formats={formats}
-    />
-  );
-
+  // construct class name
   let editorClassName = 'mms--editor';
   if (props.className) editorClassName += ` ${props.className || ''}`;
   if (props.readOnly) editorClassName += ' mms--disabled';
+
+  /* eslint-disable react/prop-types */
 
   return (
     props.children({
@@ -49,16 +46,17 @@ const MMSEditor = props => {
       // pass api functions with editor instance in closure
       functions,
 
-      // pass the editor instance
-      editor,
+      // pass down toolbar component
+      toolbar: (options = {}) => (
+        <Toolbar
+          {...options}
+          functions={functions}
+          formats={formats}
+        />
+      ),
 
-      // pass toolbar as a component
-      toolbar,
-
-      // pass editor as a component for children to render manually:
-      // 1. gives the ability to easily add sidebars / toolbars to the editor
-      // 2. blocks direct consumer access to slate's Editable props
-      component: (
+      // pass down editor component
+      editor: (options = {}) => (
         <Editable
           id={props.id}
           className={editorClassName}
@@ -69,10 +67,12 @@ const MMSEditor = props => {
           renderLeaf={renderLeaf}
           decorate={decorate}
         />
-      )
+      ),
     })
   )
 };
+
+/* eslint-enable */
 
 MMSEditor.propTypes = {
   id: PropTypes.string,
@@ -91,7 +91,6 @@ MMSEditor.propTypes = {
 
   // decorator configuration
   decorators: PropTypes.array,
-
 };
 
 export default MMSEditor;

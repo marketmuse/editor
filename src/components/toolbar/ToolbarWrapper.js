@@ -24,7 +24,7 @@ const TooolbarWrapper = props => {
 	const hasFocus = !!editor.selection && ReactEditor.isFocused(editor);
 	const hasFocusWithin = classHasFocus('mms--toolbar-ignore-focus');
 	const isVisible = (hasFocus || hasFocusWithin) && props.isOpen;
-	
+
 	if (props.inline) {
 
 		// set default values for inline styles

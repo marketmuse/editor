@@ -20,19 +20,18 @@ function App() {
   const defaultJsx = `<editor>\n\t<block>\n\t\t<text>yo!</text>\n\t</block>\n</editor>`;
 
   const decorators = [
-    {
-      id: 'fruits',
-      match: ({ matchesRegex }) => matchesRegex(/apple|banana|mango/gi),
-    }
-  ]
+    { id: 'fruits', match: /apple|banana|mango/i },
+    { id: 'cars', match: ['honda', 'toyota'] },
+    { id: 'marketmuse', match: 'marketmuse' },
+  ];
 
   return (
     <MMSEditor decorators={decorators}>
       {({
-        component,
-        toolbar,
         formats,
         functions,
+        toolbar,
+        editor,
       }) => {
         window.functions = functions;
 
@@ -60,7 +59,7 @@ function App() {
             {/* editor */}
             <div className="editor-wrapper">
               <div className="container">
-                {component}
+                {editor()}
               </div>
             </div>
 

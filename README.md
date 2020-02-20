@@ -11,10 +11,10 @@ import 'mms-editor/dist/mms-editor.css';
 
 const App = () => (
   <MMSEditor>
-    {({ toolbar, component }) => (
+    {({ editor, toolbar }) => (
       <div>
         {toolbar()}
-        {component}
+        {editor()}
       </div>
     )}
   </MMSEditor>
@@ -36,9 +36,9 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ### Children args
 
-* **component** *(React Component)* - The editor instance ready to render. It is required to render this, without doing so, the editor will not be mounted which is likely to cause potential crashes. This approach is particularly useful for building toolbars / sidebars / other components that lives under the Editor provider (ie `MMSEditor`) and could consume all editor related data and utilize the api.
 * **formats** *(object)* - Flags that provides information about the cursors location / selection (see formats section for more details).
 * **functions** *(object)* - Object that contains high-level api methods with the editor instance in their closure. Useful for building custom behaviour. See functions api section for more details.
+* **editor( config?: object )** *(function)* - The function that returns the editor component. It is required to render this, without doing so, the editor will not be mounted which is likely to cause potential crashes. This approach is particularly useful for building toolbars / sidebars / other components that lives under the Editor provider (ie `MMSEditor`) and could consume all editor related data and utilize the api.
 * **toolbar( config?: object )** *(function)* - A function that takes in a config object, and returns the toolbar component ready to render. Note that this needs to be rendered for the toolbar to function, even for inline style. See the toolbars section for more details.
 
 ## Formats api
@@ -116,8 +116,12 @@ Decorations are a type of text-level formatting that computes at render time bas
 `MMSEditor` component accepts the prop `decoratiors`, an array of configuration for a decorator that accepts the following props:
 
 * **id** *(string)*
-* **match** *(function( helpers: object ) -> bool)*
-* **transform** *(function( text: string ) -> string )*
+* **transform** *(function( text: string ) -> string )* - Receives the text chunk that'll be matched with (note: that is **not** the full corpus, it'll receive each leaf node of type `text`, so one chunk at a time). Return new value to transform the text to match with before attempting to match. This is useful for things like making the text lowercase.
+* **match** *(string, [string] or regex)* - A string, string array, or a regular expression to match against.
+* **evaluate** *(function( args: object ) -> bool)* - Every term matched based on the `match` configuration above will go through this method. This is where you can write custom logic to discard some of the matches. It receives the term, along with some other stats, to help customize the logic.
+  * **term** *(string)* - Matched term
+  * **terms** *(object)* - A dictionary with keys being matched terms and values being how many times they were matched so far.
+  * **aggregate** *(number)* - Number of matches this decorator has received so far.
 * **triggers** *array*
 * **component** *(ReactComponent)*
 * **render** *(function( props: object ) ReactComponent)*
@@ -136,18 +140,18 @@ const Apple = props => (
 const decorators = [
   {
     id: 'apple',
-    match: ({ matchesRegex }) => matchesRegex(/apple/gi),
+    match: /apple/i,
     component: Apple
   },
   {
     id: 'smiley',
-    match: ({ matchesText }) => matchesTexts([':)', ':-)']),
+    match: [':)', ':-)'],
     render: () => 🙂
   },
   {
     id: 'search-query',
     transform: text => text.toLowerCase();
-    match: ({ matchesText }) => matchesText(query),
+    match: query,
     style: { backgroundColor: 'yellow' },
     triggers: [query]
   }

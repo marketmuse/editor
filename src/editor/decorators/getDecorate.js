@@ -1,7 +1,7 @@
 import { Text } from 'slate'
-import getMatchesText from '@editor/decorators/utils/getMatchesText';
-import getMatchesTexts from '@editor/decorators/utils/getMatchesTexts';
-import getMatchesRegex from '@editor/decorators/utils/getMatchesRegex';
+import regexFromRegex from '@editor/decorators/utils/regexFromRegex';
+import regexFromArray from '@editor/decorators/utils/regexFromArray';
+import regexFromString from '@editor/decorators/utils/regexFromString';
 import getDecoratorKey from '@editor/decorators/utils/getDecoratorKey';
 
 export default (decorators = []) => ([ node, path ]) => {
@@ -17,9 +17,6 @@ export default (decorators = []) => ([ node, path ]) => {
   // walk through decorators
   decorators.forEach(decorator => {
 
-    // if match not provided, exit
-    if (typeof decorator.match !== 'function') return;
-
     const decoratorId = decorator.id;
     const decoratorKey = getDecoratorKey(decoratorId);
 
@@ -32,24 +29,35 @@ export default (decorators = []) => ([ node, path ]) => {
       ? decorator.transform(text)
       : text;
 
-    // create regular expression factories with text in closure
-    const matchesText = getMatchesText(useText);
-    const matchesTexts = getMatchesTexts(useText);
-    const matchesRegex = getMatchesRegex(useText);
+    // get regex
+    let regex = decorator.match;
+    if (regex instanceof RegExp) regex = regexFromRegex(regex);
+    if (typeof regex === 'string') regex = regexFromString(regex);
+    if (Array.isArray(regex)) regex = regexFromArray(regex);
 
-    // generate regular expression
-    const regex = decorator.match({
-      matchesText,
-      matchesTexts,
-      matchesRegex
-    });
+    // if a non-convertible value provided, throw an error
+    if (regex instanceof RegExp !== true) {
+      throw new Error(`Invalid 'match' in decorator "${decorator.id}"`)
+    }
 
     // match here
     let terms = [];
     while ((terms = regex.exec(useText)) !== null) {
-      
+
       // matched term
       const term = (terms[0] || '');
+
+      // do not proceed if custom evaluation fails
+      const { evaluate } = decorator;
+      const valid = typeof evaluate !== 'function' ? true : evaluate({
+        term,
+        terms: matches[decoratorId],
+        aggregate: aggregates[decoratorId]
+      })
+
+      // do not add decorators or keep
+      // counts if match not desired
+      if (!valid) return;
 
       // keep stats of matches
       if (!matches[decoratorId][term]) { matches[decoratorId][term] = 0; }
@@ -63,9 +71,9 @@ export default (decorators = []) => ([ node, path ]) => {
         [decoratorKey]: true,
       })
     }
-  })
 
-  console.log('matches', matches);
-  console.log('aggregates', aggregates);
+  })
+  
+  console.log('>', matches, aggregates)
   return ranges;
 };

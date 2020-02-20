@@ -3,7 +3,6 @@ import { useSlate } from 'slate-react'
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import classHasFocus from '@utils/classHasFocus';
 import ToolbarWrapper from '@components/toolbar/ToolbarWrapper';
 import defaultOptions from '@components/toolbar/defaultOptions';
 
