@@ -74,6 +74,6 @@ export default (decorators = []) => ([ node, path ]) => {
 
   })
 
-  console.log('>', matches, aggregates)
+  console.log('>', matches, aggregates, ranges)
   return ranges;
 };

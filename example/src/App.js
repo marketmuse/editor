@@ -12,17 +12,26 @@ const Separator = props => (
 
 function App() {
 
-  const [code, setCode] = useState('')
-  const [text, setText] = useState('')
-  const [url, setUrl] = useState('google.com')
-  const [jsx, setJsx] = useState('')
+  const [code, setCode] = useState('');
+  const [text, setText] = useState('');
+  const [url, setUrl] = useState('google.com');
+  const [jsx, setJsx] = useState('');
+  const [redHighlights, setRedHighlights] = useState('cat, dog, bird');
+  const [blueHighlights, setBlueHighlights] = useState('toyota, honda');
   const defaultCode = 'functions.focus();\nfunctions.moveCursorToStart()\nconsole.log("cursor moved")';
   const defaultJsx = `<editor>\n\t<block>\n\t\t<text>yo!</text>\n\t</block>\n</editor>`;
 
   const decorators = [
-    { id: 'fruits', match: /apple|banana|mango/i },
-    { id: 'cars', match: ['honda', 'toyota'] },
-    { id: 'marketmuse', match: 'marketmuse' },
+    {
+      id: 'blue',
+      match: blueHighlights.split(','),
+      style: { backgroundColor: 'blue', color: 'white' }
+    },
+    {
+      id: 'red',
+      match: redHighlights.split(','),
+      style: { backgroundColor: 'red', color: 'white' }
+    },
   ];
 
   return (
@@ -66,6 +75,27 @@ function App() {
             {/* controls */}
             <div className="control-wrapper">
 
+              {/* highlights */}
+              <Separator text="Highlights" />
+              <label>Blue</label>
+              <section class="col">
+                <input
+                  disabled
+                  placeholder="Comma separated topics"
+                  value={blueHighlights}
+                  onChange={e => setBlueHighlights(e.target.value)}
+                />
+              </section>
+              <label>Red</label>
+              <section class="col">
+                <input
+                  disabled
+                  placeholder="Comma separated topics"
+                  value={redHighlights}
+                  onChange={e => setRedHighlights(e.target.value)}
+                />
+              </section>
+
               {/* formatters */}
               <Separator text="Formatters" />
               <section className="merge-below">
@@ -86,7 +116,7 @@ function App() {
                 <button className={`has-item-left ${isListBulleted ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleListBulleted(); }}>list (bullet)</button>
               </section>
 
-              {/* formatters */}
+              {/* selections */}
               <Separator text="Selection" />
               <section>
                 <button className={`disabled has-item-right ${isCollapsed === true ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>collapsed</button>
