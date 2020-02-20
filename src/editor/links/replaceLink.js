@@ -7,7 +7,7 @@ import getLink from '@editor/links/getLink';
 import * as l from '@components/editor/core/elements/Link';
 
 export default (editor, href) => {
-  
+
   // if no link exists, insert link
   if (!isLinkActive(editor)) insertLink(editor, href);
 
@@ -22,7 +22,7 @@ export default (editor, href) => {
 
   // update current nodes link
   Transforms.setNodes(editor, l.get({ href }), {
-  	match: n => n.type === l.type
+    match: n => n.type === l.type
   });
 
   // update anchor text

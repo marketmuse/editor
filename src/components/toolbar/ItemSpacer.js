@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 
 const ItemSpacer = props => (
   <div
-  	className="mms--toolbar-spacer"
-  	style={props.style}
+    className='mms--toolbar-spacer'
+    style={props.style}
   />
 );
 
 ItemSpacer.propTypes = {
-	style: PropTypes.object,
+  style: PropTypes.object,
 };
 
 export default ItemSpacer;

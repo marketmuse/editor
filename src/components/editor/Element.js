@@ -5,7 +5,7 @@ import { defaultElement, elementsByType } from '@components/editor/core/elements
 const Element = ({ attributes, children, element = {} }) => {
   const pass = Object.assign({}, attributes, element);
   const el = elementsByType[element.type];
-  const Component = !!el ? el.component : defaultElement.component;
+  const Component = el ? el.component : defaultElement.component;
   return <Component {...pass}>{children}</Component>;
 };
 

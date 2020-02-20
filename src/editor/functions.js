@@ -27,21 +27,21 @@ export default editor => ({
   hasFocus: () => hasFocus(editor),
   focusAtEnd: () => focusAtEnd(editor),
   focusAtStart: () => focusAtStart(editor),
-  
+
   // cursor
   moveCursorToStart: () => moveCursorToStart(editor),
   moveCursorToEnd: () => moveCursorToEnd(editor),
-  
+
   // content
   selectAll: () => selectAll(editor),
   clear: () => clear(editor),
-  
+
   // links
   getLink: () => getLink(editor),
   replaceLink: url => replaceLink(editor, url),
   insertLink: url => insertLink(editor, url),
   removeLink: () => removeLink(editor),
-  
+
   // formatters
   toggleBold: status => toggleBold(editor, status),
   toggleItalic: status => toggleItalic(editor, status),

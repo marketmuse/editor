@@ -17,31 +17,31 @@ import { type as typeListBulleted } from '@components/editor/core/elements/ListB
 
 export default editor => {
 
-	const isH1 = isFormatActive(editor, 'block', typeH1);
-	const isH2 = isFormatActive(editor, 'block', typeH2);
-	const isH3 = isFormatActive(editor, 'block', typeH3);
-	const isHeading = isH1 || isH2 || isH3;
+  const isH1 = isFormatActive(editor, 'block', typeH1);
+  const isH2 = isFormatActive(editor, 'block', typeH2);
+  const isH3 = isFormatActive(editor, 'block', typeH3);
+  const isHeading = isH1 || isH2 || isH3;
 
-	return {
+  return {
 
-		// marks
-		isBold: isFormatActive(editor, 'mark', keyBold),
-		isItalic: isFormatActive(editor, 'mark', keyItalic),
-		isUnderline: isFormatActive(editor, 'mark', keyUnderline),
-		isStrikethrough: isFormatActive(editor, 'mark', keyStrikethrough),
-		
-		// blocks
-		isH1,
-		isH2,
-		isH3,
-		isHeading,
-		isLink: isFormatActive(editor, 'block', typeLink),
-		isParagraph: isFormatActive(editor, 'block', typeP),
-		isBlockquote: isFormatActive(editor, 'block', typeBlockquote),
-		isListNumbered: isFormatActive(editor, 'block', typeListNumbered),
-		isListBulleted: isFormatActive(editor, 'block', typeListBulleted),
-		
-		// misc
-		isCollapsed: isCollapsed(editor),
-	}
+    // marks
+    isBold: isFormatActive(editor, 'mark', keyBold),
+    isItalic: isFormatActive(editor, 'mark', keyItalic),
+    isUnderline: isFormatActive(editor, 'mark', keyUnderline),
+    isStrikethrough: isFormatActive(editor, 'mark', keyStrikethrough),
+
+    // blocks
+    isH1,
+    isH2,
+    isH3,
+    isHeading,
+    isLink: isFormatActive(editor, 'block', typeLink),
+    isParagraph: isFormatActive(editor, 'block', typeP),
+    isBlockquote: isFormatActive(editor, 'block', typeBlockquote),
+    isListNumbered: isFormatActive(editor, 'block', typeListNumbered),
+    isListBulleted: isFormatActive(editor, 'block', typeListBulleted),
+
+    // misc
+    isCollapsed: isCollapsed(editor),
+  }
 };

@@ -4,10 +4,10 @@ import * as strikethrough from '@components/editor/core/leafs/Strikethrough';
 import * as underline from '@components/editor/core/leafs/Underline';
 
 const leafs = [
-	bold,
-	italic,
-	strikethrough,
-	underline,
+  bold,
+  italic,
+  strikethrough,
+  underline,
 ];
 
 export default leafs;

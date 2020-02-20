@@ -5,10 +5,10 @@ import elements, { defaultElement, listTypes } from '@components/editor/core/ele
 import * as listItem from '@components/editor/core/elements/ListItem';
 
 export default (editor, type, format, { status } = {}) => {
-  
-	// toggle to opposite state
+
+  // toggle to opposite state
   const isActive = isFormatActive(editor, type, format)
-  let toggleOn = isActive ? false : true;
+  let toggleOn = !isActive;
 
   // if status specified, toggle to that
   if (!isNil(status)) toggleOn = status;
@@ -19,11 +19,9 @@ export default (editor, type, format, { status } = {}) => {
       editor,
       { [format]: toggleOn || null },
       { match: Text.isText, split: true }
-    );  
-  }
-
-  // block type
-  else {
+    );
+  } else {
+    // block type
 
     // are we toggling a list type ?
     const listTypeTypes = listTypes.map(t => t.type);

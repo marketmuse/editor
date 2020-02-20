@@ -8,7 +8,7 @@ describe('api utils: toggleFormat', () => {
 
   // ****
   test('toggles format off', () => {
-    
+
     const input = withTest(
       <editor>
         <block>
@@ -35,7 +35,7 @@ describe('api utils: toggleFormat', () => {
 
   // ****
   test('toggles format on', () => {
-    
+
     const input = withTest(
       <editor>
         <block>
@@ -62,7 +62,7 @@ describe('api utils: toggleFormat', () => {
 
   // ****
   test('toggles format force on while off', () => {
-    
+
     const input = withTest(
       <editor>
         <block>
@@ -89,7 +89,7 @@ describe('api utils: toggleFormat', () => {
 
   // ****
   test('toggles format force on while on', () => {
-    
+
     const input = withTest(
       <editor>
         <block>
@@ -116,7 +116,7 @@ describe('api utils: toggleFormat', () => {
 
   // ****
   test('toggles format force off while on', () => {
-    
+
     const input = withTest(
       <editor>
         <block>
@@ -143,7 +143,7 @@ describe('api utils: toggleFormat', () => {
 
   // ****
   test('toggles format force off while off', () => {
-    
+
     const input = withTest(
       <editor>
         <block>

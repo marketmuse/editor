@@ -8,7 +8,7 @@ describe('api utils: toggleFormat', () => {
 
   // ****
   test('toggles format off', () => {
-    
+
     const input = withTest(
       <editor>
         <h1>
@@ -31,7 +31,7 @@ describe('api utils: toggleFormat', () => {
 
   // ****
   test('toggles format on', () => {
-    
+
     const input = withTest(
       <editor>
         <p>

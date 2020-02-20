@@ -10,15 +10,15 @@ import * as listItem from '@components/editor/core/elements/ListItem';
 
 // add new elements below
 const elements = [
-	blockquote,
-	paragraph,
-	headingOne,
-	headingTwo,
-	headingThree,
-	link,
-	listBulleted,
-	listNumbered,
-	listItem,
+  blockquote,
+  paragraph,
+  headingOne,
+  headingTwo,
+  headingThree,
+  link,
+  listBulleted,
+  listNumbered,
+  listItem,
 ];
 
 export default elements;
@@ -30,16 +30,15 @@ export const listTypes = elements.filter(el => el.listType);
 
 // elements dict by type
 export const elementsByType = elements.reduce((acc, el) => ({
-	...acc,
-	[el.type]: el
+  ...acc,
+  [el.type]: el
 }), {});
 
 // elements dict by tag
 export const elementsByTag = elements.reduce((acc, el) => ({
   ...acc,
   ...(el.tags || []).reduce((acc2, tag) => ({
-  	...acc2,
-  	[tag]: el
+    ...acc2,
+    [tag]: el
   }), {})
 }), {});
-
