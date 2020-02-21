@@ -22,6 +22,7 @@ const Leaf = ({ decors, attributes, children, leaf } = {}) => {
   }, children);
 
   // apply custom decorator leafs
+  console.log('leaf', leaf)
   Object.keys(decors).forEach(key => {
     if (!leaf[key]) return;
     // wrap children around component

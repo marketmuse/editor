@@ -5,7 +5,7 @@ export default (editor, type, format) => {
   if (type === 'mark') {
 
     // mark type
-    const marks = Editor.marks(editor)
+    const marks = Editor.marks(editor);
     return marks ? marks[format] === true : false;
 
   } else {

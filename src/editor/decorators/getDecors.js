@@ -2,8 +2,6 @@
 // decorator keys, and values being components to wrap the
 // leafs around
 
-// TODO: clean up this file
-
 import React from 'react';
 import getDecoratorKey from '@editor/decorators/utils/getDecoratorKey';
 

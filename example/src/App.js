@@ -25,13 +25,21 @@ function App() {
     {
       id: 'blue',
       match: blueHighlights.split(','),
-      style: { backgroundColor: 'blue', color: 'white' }
+      style: { backgroundColor: 'blue', color: 'white' },
+      triggers: [blueHighlights],
     },
     {
       id: 'red',
       match: redHighlights.split(','),
-      style: { backgroundColor: 'red', color: 'white' }
+      style: { backgroundColor: 'red', color: 'white' },
+      triggers: [redHighlights],
     },
+    // TODO: this breaks
+    {
+      id: 'marketmuse',
+      match: /marketmuse/i,
+      render: ({ children }) => <span>*{children}</span>,
+    }
   ];
 
   return (
@@ -58,7 +66,10 @@ function App() {
           isListNumbered,
           isListBulleted,
           isCollapsed,
+          isDecor,
         } = formats;
+
+        console.log('isDecor', isDecor('blue'))
 
         return (
           <div className="main-wrapper">
@@ -83,6 +94,7 @@ function App() {
                   placeholder="Comma separated topics"
                   value={blueHighlights}
                   onChange={e => setBlueHighlights(e.target.value)}
+                  style={isDecor('blue') ? { borderColor: 'orange' } : {}}
                 />
               </section>
               <label>Red</label>
@@ -91,6 +103,7 @@ function App() {
                   placeholder="Comma separated topics"
                   value={redHighlights}
                   onChange={e => setRedHighlights(e.target.value)}
+                  style={isDecor('red') ? { borderColor: 'orange' } : {}}
                 />
               </section>
 

@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import { Range } from 'slate';
+import getDecoratorKey from '@editor/decorators/utils/getDecoratorKey';
 import isFormatActive from '@editor/formatters/isFormatActive';
 import isCollapsed from '@editor/utils/isCollapsed';
 import { key as keyBold } from '@components/editor/core/leafs/Bold';
@@ -43,5 +42,6 @@ export default editor => {
 
     // misc
     isCollapsed: isCollapsed(editor),
+    isDecor: id => isFormatActive(editor, 'mark', getDecoratorKey(id)),
   }
 };

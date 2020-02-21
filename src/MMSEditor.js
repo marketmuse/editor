@@ -10,7 +10,7 @@ import getFormats from '@editor/formats';
 import getFunctions from '@editor/functions';
 import getDecorate from '@editor/decorators/getDecorate';
 import getDecors from '@editor/decorators/getDecors';
-// import getDecorateTriggers from '@editor/decorators/getDecorateTriggers';
+import getDecorTriggers from '@editor/decorators/getDecorTriggers';
 
 const MMSEditor = props => {
 
@@ -19,12 +19,12 @@ const MMSEditor = props => {
   // decorators
   const decorators = props.decorators || [];
   const decors = getDecors(decorators);
-  // const decTriggers = getDecorateTriggers(decorators);
-  const decorate = useCallback(getDecorate(decorators), [editor, decorators]);
+  const decorTriggers = getDecorTriggers(decorators);
+  const decorate = useCallback(getDecorate(decorators), [decorTriggers]);
 
   // element / leaf renderers
   const renderElement = useCallback(props => <Element {...props} />, []);
-  const renderLeaf = useCallback(props => <Leaf decors={decors} {...props} />, []);
+  const renderLeaf = useCallback(props => <Leaf decors={decors} {...props} />, [decorTriggers]);
 
   // functions and formats
   const functions = getFunctions(editor);
