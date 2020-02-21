@@ -80,7 +80,6 @@ function App() {
               <label>Blue</label>
               <section class="col">
                 <input
-                  disabled
                   placeholder="Comma separated topics"
                   value={blueHighlights}
                   onChange={e => setBlueHighlights(e.target.value)}
@@ -89,7 +88,6 @@ function App() {
               <label>Red</label>
               <section class="col">
                 <input
-                  disabled
                   placeholder="Comma separated topics"
                   value={redHighlights}
                   onChange={e => setRedHighlights(e.target.value)}

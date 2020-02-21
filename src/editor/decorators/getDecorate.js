@@ -36,9 +36,7 @@ export default (decorators = []) => ([ node, path ]) => {
     if (Array.isArray(regex)) regex = regexFromArray(regex);
 
     // if a non-convertible value provided, throw an error
-    if (regex instanceof RegExp !== true) {
-      throw new Error(`Invalid 'match' in decorator "${decorator.id}"`)
-    }
+    if (regex instanceof RegExp !== true) return;
 
     // match here
     let terms = [];
@@ -74,6 +72,5 @@ export default (decorators = []) => ([ node, path ]) => {
 
   })
 
-  console.log('>', matches, aggregates, ranges)
   return ranges;
 };
