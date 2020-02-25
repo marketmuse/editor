@@ -121,11 +121,9 @@ A function that takes a config object returns the editor component. It is requir
 
 ## Decorations api
 
-Decorations are a type of text-level formatting that computes at render time based on the content. It allows you to implement things like search highlighting. MMS editor allows you to implement your own **highlight rules**, and provide your own React Components to wrap around the text that matches your rule.
+Decorations are a type of text-level formatting that computes at render time based on the content. It is useful for implement things that requires dynamic highlighting, such as search or syntax highlighting. MMS editor allows you to implement your own **highlight rules**, and apply styles to or provide your own React Components to wrap around the text that matches your rule. `editor` function accepts `decorations`, an array of configuration objects.
 
-### config
-
-`MMSEditor` component accepts the prop `decoratiors`, an array of configuration for a decorator that accepts the following props:
+### config objects
 
 * **id** *(string)*
 * **transform** *(function( text: string ) -> string )* - Receives the text chunk that'll be matched with (note: that is **not** the full corpus, it'll receive each leaf node of type `text`, so one chunk at a time). Return new value to transform the text to match with before attempting to match. This is useful for things like making the text lowercase.
@@ -169,7 +167,7 @@ Hotkeys api allows you to create custom key bindings, and assign them functional
 
 Hotkeys api accepts an array of keymap objects, order of execution of the commands are dictated by the order of this array. When omitted, the editor will use the [default configuration](/src/config/defaultHotkeys.js), otherwise the provided configuration.
 
-### keymaps
+### keymap objects
 
 * **key** *(string)* - Natural syntax expression that describes the key bindings delaminated by `+` sign. Use `mod` to describe `cmd` on Mac, `ctrl` on Windows. This is the first argument evaluated by [is-hotkey](https://github.com/ianstormtaylor/is-hotkey) library, check out the [api](https://github.com/ianstormtaylor/is-hotkey#api) for more details. 
 * **when** *(function( args: object ) -> bool)* - Contextual awareness for hotkeys, commands will run only when this function returns true. If omitted, commands will run every time. The args it receives is as follows:
