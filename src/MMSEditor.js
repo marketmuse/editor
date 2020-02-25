@@ -22,17 +22,17 @@ const MMSEditor = props => {
 
   const editor = useSlate();
 
-  // get extension function
-  const usePlugins = Array.isArray(props.plugins)
-    ? props.plugins
-    : [props.plugins];
-
   // extension applier function
   const applyPlugins = useCallback(
-    getApplyPlugins(usePlugins), [props.plugins])
+    getApplyPlugins(props.plugins || []), [props.plugins])
 
   // extend functions and formats
-  const { functions, formats } = applyPlugins({
+  const {
+    formats,
+    functions,
+    hotkeys: pluginHotkeys,
+    decorators: pluginDecorators,
+  } = applyPlugins({
     functions: getFunctions(editor),
     formats: getFormats(editor),
   });
@@ -76,17 +76,18 @@ const MMSEditor = props => {
         if (readOnly) editorClassName += ' mms--disabled';
 
         // decorators
-        const decors = getDecors(decorators);
-        const decorTriggers = getDecorTriggers(decorators);
-        const decorate = useCallback(getDecorate(decorators), [decorTriggers]);
+        const useDecorators = [].concat(pluginDecorators || []).concat(decorators || []);
+        const decors = getDecors(useDecorators);
+        const decorTriggers = getDecorTriggers(useDecorators);
+        const decorate = useCallback(getDecorate(useDecorators), [decorTriggers]);
 
         // element / leaf renderers
         const renderElement = useCallback(props => <Element {...props} />, []);
         const renderLeaf = useCallback(props => <Leaf decors={decors} {...props} />, [decorTriggers]);
 
         // hotkeys
-        const useHotkeys = Array.isArray(hotkeys) ? hotkeys : defaultHotkeys;
-        const handleHotkeys = useCallback(getHandleHotkeys(useHotkeys), [hotkeys]);
+        const useHotkeys = pluginHotkeys.concat(Array.isArray(hotkeys) ? hotkeys : defaultHotkeys);
+        const handleHotkeys = useCallback(getHandleHotkeys(useHotkeys), [hotkeys, pluginHotkeys]);
 
         return (
           <Editable

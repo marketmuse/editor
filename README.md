@@ -117,13 +117,13 @@ A function that takes a config object returns the editor component. It is requir
 * **autoFocus** *(boolean)* - Focus upon mount.
 * **readOnly** *(boolean)* - Disallow editing.
 * **onKeyDown** *(function( event: [KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent)) -> void)*
-* **decorators** *(array)* - Configuration for custom decorators. See [decorations](#decorations-api) section.
-* **hotkeys** *(object)* - Configuration for custom hotkeys. See [hotkeys](#hotkeys-api) section below.
+* **decorators** *(array)* - Configuration for custom decorators. See [decorators](#decorators-api) section.
+* **hotkeys** *(array)* - Configuration for custom hotkeys. See [hotkeys](#hotkeys-api) section below.
 
 
-## Decorations api
+## Decorators api
 
-Decorations are a type of text-level formatting that computes at render time based on the content. It is useful for implement things that requires dynamic highlighting, such as search or syntax highlighting. MMS editor allows you to implement your own **highlight rules**, and apply styles to or provide your own React Components to wrap around the text that matches your rule. `editor` function accepts `decorations`, an array of configuration objects.
+Decorators are a type of text-level formatting that computes at render time based on the content. It is useful for implement things that requires dynamic highlighting, such as search or syntax highlighting. MMS editor allows you to implement your own **highlight rules**, and apply styles to or provide your own React Components to wrap around the text that matches your rule. `editor` function accepts `decorators`, an array of configuration objects.
 
 ### config objects
 
@@ -200,7 +200,7 @@ const hotkeys = [
 
 # toolbar( config )
 
-MMSEditor comes with a built-in toolbar that has primary rich text editing support out of the box, and could easily by configured / extended with custom functionality.
+MMS Editor comes with a built-in toolbar that has primary rich text editing support out of the box, and could easily by configured / extended with custom functionality.
 
 ### features
 
@@ -257,9 +257,10 @@ Text within the editor comes in standard html tags, so this class name could be 
 
 # Plugins
 
-MMS editor supports plugins that could enhance the `functions` and `formats` api's, allowing to create custom functions and formats, or extending / modifying the behaviour of the current ones. The `MMSEditor` component accepts `plugins` prop, which should be an array of plugin objects.
+MMS editor supports plugins that could enhance `functions` and `formats` api's, as well as other sub api's such as `hotkeys` and `decorators`. It's a good way of packing an editor feature together and developing it in isolation. It allows creating custom functions and formats, extending / modifying the behaviour of the current ones, adding custom hotkeys, decorators and more. The `MMSEditor` component accepts `plugins` prop, which should be an array of plugin objects.
 
-Plugin object's functions basically receive the api and returns the extended version of of it. Within this function, it's possible to extend the api and modify the behaviour. Once the api is extended with plugins, all sub components / sub api's that receives the formats and functions (ie. such as the toolbar, decorations api, hotkeys api etc.) will receive the extended version of it.
+A plugin object's `functions` and `formats` functions receives the current version of the api, and is expected to return the extended version of it. Within these function, it's possible to extend these apis, and / or modify their behaviour. Once the apis are extended, all sub components / sub api's that receives formats and functions (ie. such as toolbar, decorators api, hotkeys api etc.) will receive the extended version of it. Plugins can also be used to provide `hotkeys` and `decorators` to editor. The hotkeys and decorators provided to the editor via `editor()` will have presendence over the ones provided as hotkeys.
+
 
 ### plugin object
 
@@ -268,7 +269,8 @@ Plugin object's functions basically receive the api and returns the extended ver
 	
 * **functions** *(function( functions: object, args: object ) -> functions)* - A function that receives the current functions and args object, and returns new functions. Args are as follows:
 	* **formats** *(object)* - Formats api (version with current plugin **not applied**, but previous plugin **applied**).
-
+* **hotkeys** *(array)* - Hotkeys configuration provided by this plugin. See [hotkeys](#hotkeys-api) section for more details.
+* **decorators** *(array)* - Decorator configuration provided by this plugin. See [decorators](#decorators-api) section
 	
 *Example*
 

@@ -1,6 +1,9 @@
-// TODO: test this
+import mapReduceFlatten from '@utils/mapReduceFlatten';
 
 export default (plugins = []) => ({ functions, formats }) => {
+
+  const pluginHotkeys = mapReduceFlatten(plugins, 'hotkeys');
+  const pluginDecorators = mapReduceFlatten(plugins, 'decorators');
 
   // first apply plugins to formats api because functions
   // api plugins will make use of the formats api
@@ -13,14 +16,16 @@ export default (plugins = []) => ({ functions, formats }) => {
       : acc.formats;
 
     // extend functions
-    const newFunctions = typeof plugins.functions === 'function'
+    const newFunctions = typeof plugin.functions === 'function'
       ? plugin.functions(acc.functions, { formats: acc.formats })
       : acc.functions
 
     // return formats and functions
     return {
       formats: newFormats,
-      functions: newFunctions
+      functions: newFunctions,
+      hotkeys: pluginHotkeys,
+      decorators: pluginDecorators,
     }
 
   }, {

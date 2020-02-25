@@ -21,51 +21,54 @@ function App() {
   const defaultCode = 'functions.focus();\nfunctions.moveCursorToStart()\nconsole.log("cursor moved")';
   const defaultJsx = `<editor>\n\t<block>\n\t\t<text>yo!</text>\n\t</block>\n</editor>`;
 
-  const decorators = [
-    {
-      id: 'blue',
-      match: blueHighlights.split(','),
-      style: { backgroundColor: 'blue', color: 'white' },
-      triggers: [blueHighlights],
-    },
-    {
-      id: 'red',
-      match: redHighlights.split(','),
-      style: { backgroundColor: 'red', color: 'white' },
-      triggers: [redHighlights],
-    }
-  ];
-
-  const hotkeys = [
-    {
-      key: 'mod+b',
-      when: ({ formats }) => formats.isCollapsed,
-      command: () => alert('select some text for best results!'),
-    },
-    {
-      key: 'mod+b',
-      when: ({ formats }) => !formats.isCollapsed,
-      command: ({ functions }) => functions.toggleBold()
-    },
-    {
-      key: 'mod+i',
-      when: ({ formats }) => !formats.isCollapsed,
-      command: ({ functions }) => functions.toggleItalic()
-    },
-    {
-      key: 'mod+u',
-      when: ({ formats }) => !formats.isCollapsed,
-      command: ({ functions }) => functions.toggleUnderline()
-    },
-    {
-      key: 'mod+s',
-      when: ({ formats }) => !formats.isCollapsed,
-      command: ({ functions }) => functions.toggleStrikethrough()
-    },
-  ];
+  const plugins = [{
+    // add hotkeys
+    hotkeys: [
+      {
+        key: 'mod+b',
+        when: ({ formats }) => formats.isCollapsed,
+        command: () => alert('select some text for best results!'),
+      },
+    ],
+    // add decorators
+    decorators: [
+      {
+        id: 'blue',
+        match: blueHighlights.split(','),
+        style: { backgroundColor: 'blue', color: 'white' },
+        triggers: [blueHighlights],
+      },
+      {
+        id: 'red',
+        match: redHighlights.split(','),
+        style: { backgroundColor: 'red', color: 'white' },
+        triggers: [redHighlights],
+      }
+    ],
+    // extend formats
+    formats: formats => ({
+      ...formats,
+      isStyled: (
+        formats.isBold ||
+        formats.isItalic ||
+        formats.isUnderlined ||
+        formats.isStrikethrough 
+      )
+    }),
+    // extend functions
+    functions: (functions, { formats }) => ({
+      ...functions,
+      toggleBold: (...args) => {
+        // do not make bold if link
+        if (formats.isLink) return;
+        // default behaviour
+        functions.toggleBold(...args);
+      }
+    })
+  }];
 
   return (
-    <MMSEditor>
+    <MMSEditor plugins={plugins}>
       {({
         formats,
         functions,
@@ -98,7 +101,7 @@ function App() {
             {/* editor */}
             <div className="editor-wrapper">
               <div className="container">
-                {editor({ decorators, hotkeys })}
+                {editor()}
               </div>
             </div>
 
