@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
 import ToolbarWrapper from '@components/toolbar/ToolbarWrapper';
-import defaultOptions from '@components/toolbar/defaultOptions';
 
 const ToolbarComponent = ({ functions, formats, ...props }) => {
 
@@ -91,7 +90,5 @@ ToolbarComponent.propTypes = {
   // functions object
   functions: PropTypes.object.isRequired,
 };
-
-ToolbarComponent.defaultProps = defaultOptions;
 
 export default ToolbarComponent;

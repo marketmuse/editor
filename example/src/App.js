@@ -33,17 +33,39 @@ function App() {
       match: redHighlights.split(','),
       style: { backgroundColor: 'red', color: 'white' },
       triggers: [redHighlights],
-    },
-    // TODO: this breaks
-    {
-      id: 'marketmuse',
-      match: /marketmuse/i,
-      render: ({ children }) => <span>*{children}</span>,
     }
   ];
 
+  const hotkeys = [
+    {
+      key: 'mod+b',
+      when: ({ formats }) => formats.isCollapsed,
+      command: () => alert('select some text for best results!'),
+    },
+    {
+      key: 'mod+b',
+      when: ({ formats }) => !formats.isCollapsed,
+      command: ({ functions }) => functions.toggleBold()
+    },
+    {
+      key: 'mod+i',
+      when: ({ formats }) => !formats.isCollapsed,
+      command: ({ functions }) => functions.toggleItalic()
+    },
+    {
+      key: 'mod+u',
+      when: ({ formats }) => !formats.isCollapsed,
+      command: ({ functions }) => functions.toggleUnderline()
+    },
+    {
+      key: 'mod+s',
+      when: ({ formats }) => !formats.isCollapsed,
+      command: ({ functions }) => functions.toggleStrikethrough()
+    },
+  ];
+
   return (
-    <MMSEditor decorators={decorators}>
+    <MMSEditor>
       {({
         formats,
         functions,
@@ -66,10 +88,7 @@ function App() {
           isListNumbered,
           isListBulleted,
           isCollapsed,
-          isDecor,
         } = formats;
-
-        console.log('isDecor', isDecor('blue'))
 
         return (
           <div className="main-wrapper">
@@ -79,7 +98,7 @@ function App() {
             {/* editor */}
             <div className="editor-wrapper">
               <div className="container">
-                {editor()}
+                {editor({ decorators, hotkeys })}
               </div>
             </div>
 
@@ -94,7 +113,6 @@ function App() {
                   placeholder="Comma separated topics"
                   value={blueHighlights}
                   onChange={e => setBlueHighlights(e.target.value)}
-                  style={isDecor('blue') ? { borderColor: 'orange' } : {}}
                 />
               </section>
               <label>Red</label>
@@ -103,7 +121,6 @@ function App() {
                   placeholder="Comma separated topics"
                   value={redHighlights}
                   onChange={e => setRedHighlights(e.target.value)}
-                  style={isDecor('red') ? { borderColor: 'orange' } : {}}
                 />
               </section>
 

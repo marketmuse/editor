@@ -1,6 +1,5 @@
-import getDecoratorKey from '@editor/decorators/utils/getDecoratorKey';
 import isFormatActive from '@editor/formatters/isFormatActive';
-import isCollapsed from '@editor/utils/isCollapsed';
+import isCollapsed from '@editor/cursor/isCollapsed';
 import { key as keyBold } from '@components/editor/core/leafs/Bold';
 import { key as keyItalic } from '@components/editor/core/leafs/Italic';
 import { key as keyUnderline } from '@components/editor/core/leafs/Underline';
@@ -42,6 +41,8 @@ export default editor => {
 
     // misc
     isCollapsed: isCollapsed(editor),
-    isDecor: id => isFormatActive(editor, 'mark', getDecoratorKey(id)),
+
+    // TODO: Editor.marks won't return custom formats
+    // isDecor: id => isFormatActive(editor, 'mark', getDecoratorKey(id)),
   }
 };

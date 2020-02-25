@@ -82,6 +82,7 @@
     "dist"
   ],
   "dependencies": {
+    "is-hotkey": "^0.1.6",
     "is-url": "^1.2.4",
     "lodash": "^4.17.15",
     "slate": "^0.57.1",

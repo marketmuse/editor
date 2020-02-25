@@ -1,4 +1,4 @@
-import { Editor, Transforms } from 'slate';
+import { Editor } from 'slate';
 
 export default (editor, { edge = 'end' } = {}) => {
 

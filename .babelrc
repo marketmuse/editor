@@ -11,10 +11,10 @@
         "@": "./src",
         "@editor": "./src/editor",
         "@components": "./src/components",
-        "@config": "./src/config",
         "@utils": "./src/utils",
-        "@styles": "./src/styles",
-        "@assets": "./src/assets",
+        "@config": "./src/config",
+        "@styles": "./src/config/defaultStyles",
+        "@assets": "./src/assets"
       }
     }]
   ]

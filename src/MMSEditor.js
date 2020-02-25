@@ -11,29 +11,19 @@ import getFunctions from '@editor/functions';
 import getDecorate from '@editor/decorators/getDecorate';
 import getDecors from '@editor/decorators/getDecors';
 import getDecorTriggers from '@editor/decorators/getDecorTriggers';
+import getHandleHotkeys from '@editor/hotkeys/getHandleHotkeys';
+
+// defaults
+import defaultToolbar from '@config/defaultToolbar';
+import defaultHotkeys from '@config/defaultHotkeys';
 
 const MMSEditor = props => {
 
   const editor = useSlate();
 
-  // decorators
-  const decorators = props.decorators || [];
-  const decors = getDecors(decorators);
-  const decorTriggers = getDecorTriggers(decorators);
-  const decorate = useCallback(getDecorate(decorators), [decorTriggers]);
-
-  // element / leaf renderers
-  const renderElement = useCallback(props => <Element {...props} />, []);
-  const renderLeaf = useCallback(props => <Leaf decors={decors} {...props} />, [decorTriggers]);
-
   // functions and formats
   const functions = getFunctions(editor);
   const formats = getFormats(editor);
-
-  // construct class name
-  let editorClassName = 'mms--editor';
-  if (props.className) editorClassName += ` ${props.className || ''}`;
-  if (props.readOnly) editorClassName += ' mms--disabled';
 
   /* eslint-disable react/prop-types */
 
@@ -49,6 +39,7 @@ const MMSEditor = props => {
       // pass down toolbar component
       toolbar: (options = {}) => (
         <Toolbar
+          {...defaultToolbar}
           {...options}
           functions={functions}
           formats={formats}
@@ -56,18 +47,56 @@ const MMSEditor = props => {
       ),
 
       // pass down editor component
-      editor: (options = {}) => (
-        <Editable
-          id={props.id}
-          className={editorClassName}
-          style={props.style}
-          autoFocus={props.autoFocus}
-          readOnly={props.readOnly}
-          renderElement={renderElement}
-          renderLeaf={renderLeaf}
-          decorate={decorate}
-        />
-      ),
+      editor: ({
+        id,
+        style,
+        className,
+        readOnly = false,
+        autoFocus = false,
+        onKeyDown,
+        hotkeys,
+        decorators,
+      } = {}) => {
+
+        // construct class name
+        let editorClassName = 'mms--editor';
+        if (className) editorClassName += ` ${className || ''}`;
+        if (readOnly) editorClassName += ' mms--disabled';
+
+        // decorators
+        const decors = getDecors(decorators);
+        const decorTriggers = getDecorTriggers(decorators);
+        const decorate = useCallback(getDecorate(decorators), [decorTriggers]);
+
+        // element / leaf renderers
+        const renderElement = useCallback(props => <Element {...props} />, []);
+        const renderLeaf = useCallback(props => <Leaf decors={decors} {...props} />, [decorTriggers]);
+
+        // hotkeys
+        const useHotkeys = Array.isArray(hotkeys) ? hotkeys : defaultHotkeys;
+        const handleHotkeys = useCallback(getHandleHotkeys(useHotkeys), [hotkeys]);
+
+        return (
+          <Editable
+            id={id}
+            className={editorClassName}
+            style={style}
+            autoFocus={autoFocus}
+            readOnly={readOnly}
+            renderElement={renderElement}
+            renderLeaf={renderLeaf}
+            decorate={decorate}
+            onKeyDown={event => {
+
+              // custom keydown function
+              if (typeof onKeyDown === 'function') onKeyDown(event);
+
+              // handle hotkeys
+              handleHotkeys({ event, formats, functions })
+            }}
+          />
+        )
+      },
     })
   )
 };
@@ -75,22 +104,7 @@ const MMSEditor = props => {
 /* eslint-enable */
 
 MMSEditor.propTypes = {
-  id: PropTypes.string,
-  className: PropTypes.string,
-  style: PropTypes.object,
-
-  // a function that receives a set of attributes managed
-  // by the editor component, including the editor itself
   children: PropTypes.func,
-
-  // focus at the beginning of the document on mount
-  autoFocus: PropTypes.bool,
-
-  // make the editor read only
-  readOnly: PropTypes.bool,
-
-  // decorator configuration
-  decorators: PropTypes.array,
 };
 
 export default MMSEditor;

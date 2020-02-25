@@ -140,7 +140,7 @@ export const LinkInput = props => {
   const [url, setUrl] = useState('');
 
   // TODO: don't use `useSlate` here, this is the configuration.
-  // wrap it into something like `useMMSEditor` and expose it to users,
+  // wrap it into something like `useMMSEditor` and expose it,
   // and use that here instead
   const editor = useSlate();
 

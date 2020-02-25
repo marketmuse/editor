@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
-import isCollapsed from '@editor/utils/isCollapsed';
+import isCollapsed from '@editor/cursor/isCollapsed';
 
 describe('isCollapsed', () => {
 
