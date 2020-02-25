@@ -12,6 +12,7 @@ import getDecorate from '@editor/decorators/getDecorate';
 import getDecors from '@editor/decorators/getDecors';
 import getDecorTriggers from '@editor/decorators/getDecorTriggers';
 import getHandleHotkeys from '@editor/hotkeys/getHandleHotkeys';
+import getApplyPlugins from '@editor/plugins/getApplyPlugins';
 
 // defaults
 import defaultToolbar from '@config/defaultToolbar';
@@ -21,9 +22,20 @@ const MMSEditor = props => {
 
   const editor = useSlate();
 
-  // functions and formats
-  const functions = getFunctions(editor);
-  const formats = getFormats(editor);
+  // get extension function
+  const usePlugins = Array.isArray(props.plugins)
+    ? props.plugins
+    : [props.plugins];
+
+  // extension applier function
+  const applyPlugins = useCallback(
+    getApplyPlugins(usePlugins), [props.plugins])
+
+  // extend functions and formats
+  const { functions, formats } = applyPlugins({
+    functions: getFunctions(editor),
+    formats: getFormats(editor),
+  });
 
   /* eslint-disable react/prop-types */
 
@@ -87,10 +99,8 @@ const MMSEditor = props => {
             renderLeaf={renderLeaf}
             decorate={decorate}
             onKeyDown={event => {
-
               // custom keydown function
               if (typeof onKeyDown === 'function') onKeyDown(event);
-
               // handle hotkeys
               handleHotkeys({ event, formats, functions })
             }}
@@ -105,6 +115,12 @@ const MMSEditor = props => {
 
 MMSEditor.propTypes = {
   children: PropTypes.func,
+
+  // an object containing extension functions
+  plugins: PropTypes.shape({
+    formats: PropTypes.function,
+    functions: PropTypes.function,
+  })
 };
 
 export default MMSEditor;

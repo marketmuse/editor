@@ -1,7 +1,7 @@
-import { Transforms, Editor, Text } from 'slate';
+import { Transforms, Text } from 'slate';
 import isNil from 'lodash/isNil';
 import isFormatActive from '@editor/formatters/isFormatActive';
-import elements, { defaultElement, listTypes } from '@components/editor/core/elements';
+import { defaultElement, listTypes } from '@components/editor/core/elements';
 import * as listItem from '@components/editor/core/elements/ListItem';
 
 export default (editor, type, format, { status } = {}) => {

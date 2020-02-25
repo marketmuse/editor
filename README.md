@@ -28,6 +28,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 `MMSEditor` is the Editor provider, it's responsible for keeping the state and managing the editor. It accepts the following props.
 
 * **children** *(function)* - MMSEditor adopts the [function-as-children pattern](https://reactjs.org/docs/jsx-in-depth.html#functions-as-children) to be able to pass on some editor related data down to its children, including the api and even the editor itself. Therefor, the children provided to this component **must** be a function (see below for arguments).
+* **plugins** *(array)* - An array of plugin objects that has functions to extend the libraries core api's. See plugins section.
 
 ### Children args
 
@@ -63,6 +64,7 @@ Formats api is an object with flags that provides information about the cursors 
 *Misc*:
 
 * **isCollapsed** *(boolean / null)* - Cursor location within a text is referred to as [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection), and is indicated with an anhor point and a focus point. When a text is highlighted, anchor is where the selection begins and focus is the where it ends. A selection is [collapsed](https://developer.mozilla.org/en-US/docs/Web/API/Selection/isCollapsed) when anchor and focus are the same position, meaning, no text is selected. When there is no selection (ie. editor has no focus), this value will be null.
+
 
 # Functions api
 
@@ -252,3 +254,53 @@ Text within the editor comes in standard html tags, so this class name could be 
 * `mms--active` - Active state
 * `mms--disabled` - Disabled state
 * `mms--toolbar-ignore-focus` - Inline toolbar will not render if there is no selection (ie. editor has no focus). Use this class name to prevent toolbar from hiding when main editor loses focus. Currently, this class name is used in text input elements within the toolbar.
+
+# Plugins
+
+MMS editor supports plugins that could enhance the `functions` and `formats` api's, allowing to create custom functions and formats, or extending / modifying the behaviour of the current ones. The `MMSEditor` component accepts `plugins` prop, which should be an array of plugin objects.
+
+Plugin object's functions basically receive the api and returns the extended version of of it. Within this function, it's possible to extend the api and modify the behaviour. Once the api is extended with plugins, all sub components / sub api's that receives the formats and functions (ie. such as the toolbar, decorations api, hotkeys api etc.) will receive the extended version of it.
+
+### plugin object
+
+* **formats** *(function( formats: object, args: object ) -> formats)* - A function that receives the current formats and args object, and returns new formats. Args are as follows:
+	* **functions** *(object)* - Functions api (version with current plugin **not applied**, but previous plugin **applied**).
+	
+* **functions** *(function( functions: object, args: object ) -> functions)* - A function that receives the current functions and args object, and returns new functions. Args are as follows:
+	* **formats** *(object)* - Formats api (version with current plugin **not applied**, but previous plugin **applied**).
+
+	
+*Example*
+
+Extend `formats` api with `isStyled`:
+
+```javascript
+const plugins = [{
+  formats: formats => ({
+    ...formats,
+    isStyled: (
+      formats.isBold ||
+      formats.isItalic ||
+      formats.isUnderlined ||
+      formats.isStrikethrough 
+    )
+  })
+}]
+```
+
+Modify behaviour of `toggleBold`:
+
+```javascript
+const plugins = [{
+  functions: (functions, { formats }) => ({
+    ...functions,
+    toggleBold: (...args) => {
+      
+      // do not make bold if link
+      if (formats.isLink) return;
+      
+      // default behaviour
+      functions.toggleBold(...args);
+    }
+  })
+}]
