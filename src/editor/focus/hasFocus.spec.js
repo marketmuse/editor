@@ -1,6 +1,6 @@
-/** @jsx jsx */
+/** @jsx deserialize */
 import { ReactEditor } from 'slate-react'
-import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
+import deserialize from '@editor/deserializer/deserializeJsx';
 import mount from '@utils/test/mount';
 import withTest from '@utils/test/withTest';
 import getFunctions from '@editor/functions';

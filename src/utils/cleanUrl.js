@@ -7,7 +7,7 @@ export default (href, { addHttps } = {}) => {
   if (addHttps) {
     // if no http(s), add it to the
     if (!clean.match(/(http(s?)):\/\//gi)) return `https://${clean}`;
-    else return clean;
+    return clean;
   }
 
   // if https(s) found, just return

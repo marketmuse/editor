@@ -13,7 +13,6 @@
         "@components": "./src/components",
         "@utils": "./src/utils",
         "@config": "./src/config",
-        "@styles": "./src/config/defaultStyles",
         "@assets": "./src/assets"
       }
     }]

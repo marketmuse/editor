@@ -1,19 +1,16 @@
 // use this when working with DOM specific tests
-import React, { useEffect } from 'react';
+import React from 'react';
 import { mount } from 'enzyme';
-import { withReact } from 'slate-react';
-import isNil from 'lodash/isNil';
 import MMSEditor from '@';
-import getFunctions from '@editor/functions';
 
 export default (initial) => {
 
   // mount MMSEditor component, pass initial editor
   mount(
     <MMSEditor editor={initial}>
-      {({ component }) => {
-        return component; // render the editor
-      }}
+      {({ editor }) => (
+        <div>{editor()}</div>
+      )}
     </MMSEditor>
   );
 }

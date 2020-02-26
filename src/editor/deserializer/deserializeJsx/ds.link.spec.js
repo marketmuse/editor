@@ -1,21 +1,22 @@
-/** @jsx jsx */
+/** @jsx deserialize */
 import { ReactEditor } from 'slate-react'
-import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
+import deserialize from '@editor/deserializer/deserializeJsx';
 import withTest from '@utils/test/withTest';
 
-describe('deserialize jsx: blockquote', () => {
+describe('deserialize jsx: a', () => {
 
   // ****
   test('deserialize works', () => {
 
     const editor = withTest(
       <editor>
-        <blockquote>test</blockquote>
+        <a href='test.com'>test</a>
       </editor>
     );
 
     expect(editor.children).toEqual([{
-      type: 'blockquote',
+      type: 'link',
+      href: 'test.com',
       children: [{ text: 'test' }]
     }]);
   });

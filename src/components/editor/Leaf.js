@@ -36,7 +36,7 @@ Leaf.propTypes = {
   leaf: PropTypes.object,
   attributes: PropTypes.object,
   children: PropTypes.any,
-  decors: PropTypes.array,
+  decors: PropTypes.object,
 };
 
 export default Leaf;

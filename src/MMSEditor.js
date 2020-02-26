@@ -22,7 +22,7 @@ const MMSEditor = props => {
 
   const editor = useSlate();
 
-  // extension applier function
+  // plugin applier function
   const applyPlugins = useCallback(
     getApplyPlugins(props.plugins || []), [props.plugins])
 
@@ -86,7 +86,7 @@ const MMSEditor = props => {
         const renderLeaf = useCallback(props => <Leaf decors={decors} {...props} />, [decorTriggers]);
 
         // hotkeys
-        const useHotkeys = pluginHotkeys.concat(Array.isArray(hotkeys) ? hotkeys : defaultHotkeys);
+        const useHotkeys = (pluginHotkeys || []).concat(Array.isArray(hotkeys) ? hotkeys : defaultHotkeys);
         const handleHotkeys = useCallback(getHandleHotkeys(useHotkeys), [hotkeys, pluginHotkeys]);
 
         return (
@@ -101,7 +101,9 @@ const MMSEditor = props => {
             decorate={decorate}
             onKeyDown={event => {
               // custom keydown function
-              if (typeof onKeyDown === 'function') onKeyDown(event);
+              if (typeof onKeyDown === 'function') {
+                onKeyDown({ event, formats, functions });
+              }
               // handle hotkeys
               handleHotkeys({ event, formats, functions })
             }}
@@ -118,10 +120,12 @@ MMSEditor.propTypes = {
   children: PropTypes.func,
 
   // an object containing extension functions
-  plugins: PropTypes.shape({
-    formats: PropTypes.function,
-    functions: PropTypes.function,
-  })
+  plugins: PropTypes.arrayOf(
+    PropTypes.shape({
+      formats: PropTypes.function,
+      functions: PropTypes.function,
+    })
+  )
 };
 
 export default MMSEditor;

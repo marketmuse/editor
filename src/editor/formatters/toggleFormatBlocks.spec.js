@@ -1,6 +1,6 @@
-/** @jsx jsx */
+/** @jsx deserialize */
 import { ReactEditor } from 'slate-react'
-import jsx from '@editor/deserializer/deserializeJsx/deserializeJsx';
+import deserialize from '@editor/deserializer/deserializeJsx';
 import withTest from '@utils/test/withTest';
 import toggleFormat from '@editor/formatters/toggleFormat';
 

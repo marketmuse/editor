@@ -1,7 +1,8 @@
 import { withReact } from 'slate-react';
-import { withHistory } from 'slate-history'
-import withLinks from '@editor/enhancer/withLinks';
+import { withHistory } from 'slate-history';
 import withPersistedSelection from '@editor/enhancer/withPersistedSelection';
+import withLinks from '@editor/enhancer/withLinks';
+import withHtml from '@editor/enhancer/withHtml';
 
 export default (editor, { test } = {}) => {
 
@@ -11,6 +12,7 @@ export default (editor, { test } = {}) => {
   useEditor = withPersistedSelection(useEditor);
   useEditor = withHistory(useEditor);
   useEditor = withLinks(useEditor);
+  useEditor = withHtml(useEditor);
 
   return useEditor;
 }

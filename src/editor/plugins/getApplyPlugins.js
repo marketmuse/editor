@@ -5,8 +5,6 @@ export default (plugins = []) => ({ functions, formats }) => {
   const pluginHotkeys = mapReduceFlatten(plugins, 'hotkeys');
   const pluginDecorators = mapReduceFlatten(plugins, 'decorators');
 
-  // first apply plugins to formats api because functions
-  // api plugins will make use of the formats api
   return plugins.reduce((acc, plugin = {}) => {
     if (typeof plugin !== 'object') return acc;
 

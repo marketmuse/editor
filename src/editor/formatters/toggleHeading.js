@@ -1,4 +1,3 @@
-import { Transforms, Editor, Text } from 'slate';
 import { type as typeH1 } from '@components/editor/core/elements/HeadingOne';
 import { type as typeH2 } from '@components/editor/core/elements/HeadingTwo';
 import { type as typeH3 } from '@components/editor/core/elements/HeadingThree';

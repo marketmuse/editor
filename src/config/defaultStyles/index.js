@@ -1,5 +1,5 @@
-import '@styles/editor.css';
-import '@styles/contents.css';
-import '@styles/toolbar.css';
-import '@styles/toolbar-button.css';
-import '@styles/toolbar-input.css';
+import '@config/defaultStyles/editor.css';
+import '@config/defaultStyles/contents.css';
+import '@config/defaultStyles/toolbar.css';
+import '@config/defaultStyles/toolbar-button.css';
+import '@config/defaultStyles/toolbar-input.css';

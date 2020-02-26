@@ -6,7 +6,7 @@ import Provider from '@/MMSEditorProvider';
 
 // bundler will pick up the style import below and
 // turn it into an autoprefixed standalone css file
-import '@styles';
+import '@config/defaultStyles';
 
 const MMSEditor = ({ editor, ...props }) => {
   return (
@@ -17,24 +17,9 @@ const MMSEditor = ({ editor, ...props }) => {
 };
 
 MMSEditor.propTypes = {
-  id: PropTypes.string,
-  className: PropTypes.string,
-  style: PropTypes.object,
   editor: PropTypes.object,
-
-  // a function that receives a set of attributes managed
-  // by the editor component, including the editor itself
+  plugins: PropTypes.array,
   children: PropTypes.func,
-
-  // focus at the beginning of the document on mount
-  autoFocus: PropTypes.bool,
-
-  // make the editor read only
-  readOnly: PropTypes.bool,
-
-  // decorator configuration
-  decorators: PropTypes.array,
-
 };
 
 export default MMSEditor;

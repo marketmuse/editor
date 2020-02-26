@@ -116,9 +116,12 @@ A function that takes a config object returns the editor component. It is requir
 * **className** *(string)* - Apply a class name to the editor container (the render output of `component`). By default, it will already have `mms--editor`, and provided class names will be appended. This also makes styling the editor root with `styled-components` or similar libraries possible.
 * **autoFocus** *(boolean)* - Focus upon mount.
 * **readOnly** *(boolean)* - Disallow editing.
-* **onKeyDown** *(function( event: [KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent)) -> void)*
 * **decorators** *(array)* - Configuration for custom decorators. See [decorators](#decorators-api) section.
 * **hotkeys** *(array)* - Configuration for custom hotkeys. See [hotkeys](#hotkeys-api) section below.
+* **onKeyDown** *(function( args: object ) -> void)* - Args are as follows:
+	* **event** *([KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent))*
+	* **formats** *(object)* - Formats api
+	* **functions** *(object)* - Functions api
 
 
 ## Decorators api
@@ -259,7 +262,7 @@ Text within the editor comes in standard html tags, so this class name could be 
 
 MMS editor supports plugins that could enhance `functions` and `formats` api's, as well as other sub api's such as `hotkeys` and `decorators`. It's a good way of packing an editor feature together and developing it in isolation. It allows creating custom functions and formats, extending / modifying the behaviour of the current ones, adding custom hotkeys, decorators and more. The `MMSEditor` component accepts `plugins` prop, which should be an array of plugin objects.
 
-A plugin object's `functions` and `formats` functions receives the current version of the api, and is expected to return the extended version of it. Within these function, it's possible to extend these apis, and / or modify their behaviour. Once the apis are extended, all sub components / sub api's that receives formats and functions (ie. such as toolbar, decorators api, hotkeys api etc.) will receive the extended version of it. Plugins can also be used to provide `hotkeys` and `decorators` to editor. The hotkeys and decorators provided to the editor via `editor()` will have presendence over the ones provided as hotkeys.
+A plugin object's `functions` and `formats` functions receives the current version of the api, and is expected to return the extended version of it. Within these function, it's possible to extend these apis, and / or modify their behaviour. Once the apis are extended, all sub components / sub api's that receives formats and functions (ie. such as toolbar, decorators api, hotkeys api etc.) will receive the extended version of it. Plugins can also be used to provide `hotkeys` and `decorators` to editor. The hotkeys and decorators provided to the editor via `editor()` will have presendence over the ones provided with plugins.
 
 
 ### plugin object
