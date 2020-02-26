@@ -2,24 +2,25 @@ import deserialize from '@editor/deserializer/deserializeJsx';
 
 const deserializeHtml = el => {
 
-  console.log('-->', el);
-
   // return text content if text node
   if (el.nodeType === window.Node.TEXT_NODE) return el.textContent;
+
   // only evaluate element nodes (ie. <p>, <div> etc.)
   if (el.nodeType !== window.Node.ELEMENT_NODE) return null;
-  // new line for <br />'s
-  if (el.nodeName === 'BR') return '\n';
 
-  let parent = el;
+  // in some cases we'll need to ignore the parent and continue deserializing
+  // children. when that's the case, set current to el.childNodes[0]
+  let current = el;
 
-  const children = Array.from(parent.childNodes)
+  // recurse
+  const children = Array.from(current.childNodes)
     .map(deserializeHtml)
     .flat()
 
-  if (el.nodeName === 'BODY') {
-    return deserialize('fragment', {}, children)
-  }
+  return deserialize(current.nodeName, {}, children)
 }
 
-export default deserializeHtml;
+export default html => {
+  const parsed = new window.DOMParser().parseFromString(html, 'text/html');
+  return deserializeHtml(parsed);
+};

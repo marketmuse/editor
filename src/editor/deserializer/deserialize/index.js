@@ -22,21 +22,17 @@ const listItem = (_, children) => element('list-item', { children });
 const blockQuote = (_, children) => element('blockquote', { children });
 
 // misc
-const fragment = (_, children) => ({
-  children: Array.isArray(children) ? children : [children]
-});
-const text = (attrs = {}, text) => ({
-  ...attrs,
-  text: String(text)
-});
+const fragment = (attrs = {}, children) =>
+  ({ ...attrs, children: Array.isArray(children) ? children : [children] });
+const text = (attrs = {}, text) =>
+  ({ ...attrs, text: String(text) });
 
 // map allowed tags to functions
 export const tags = {
-  TEXT: text,
-  EDITOR: fragment,
   BODY: fragment,
   FRAGMENT: fragment,
-  BLOCK: fragment,
+  BLOCK: fragment, // <- treat br tags as empty paragraphs
+  BR: paragraph,
   P: paragraph,
   BLOCKQUOTE: blockQuote,
   Q: blockQuote,
@@ -60,17 +56,18 @@ export const tags = {
   STRIKE: strikethrough,
 };
 
-export default (tag = '', attrs, children) => {
+export default (tag = '', attrs = {}, ...children) => {
 
   // strip attrs added by babel
   removeBabelProps(attrs);
-  console.log('tag', tag, attrs, children);
+
   const useTag = tag.toUpperCase();
-  const fn = tags[useTag] || fragment;
+  const fn = tags[useTag];
+
+  if (!fn) return {};
 
   // deserialize node
-  const res = fn(attrs, children);
-  console.log('res', res);
+  const res = fn(attrs, ...children);
 
   // if children is string, it's a text node
   if (typeof res.children === 'string') {
@@ -80,11 +77,10 @@ export default (tag = '', attrs, children) => {
   // strings in children array are also text nodes
   if (Array.isArray(res.children)) {
     res.children = res.children.map(c => {
-      if (typeof c === 'string') return text({}, c);
+      if (c && typeof c === 'string') return text({}, c);
       return c;
     })
   }
 
-  console.log('res', res);
   return res;
 };
