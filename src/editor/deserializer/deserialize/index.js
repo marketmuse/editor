@@ -1,26 +1,22 @@
-import * as types from '@config/types';
+import { attrs } from '@config/common';
 import removeBabelProps from '@utils/removeBabelProps';
 
-// base
-const leaf = (attrs = {}) => ({ ...attrs });
-const element = (type, attrs = {}) => ({ type, ...attrs });
-
 // leafs
-const bold = (attrs = {}) => leaf({ ...attrs, [types.BOLD]: true });
-const italic = (attrs = {}) => leaf({ ...attrs, [types.ITALIC]: true });
-const underline = (attrs = {}) => leaf({ ...attrs, [types.UNDERLINE]: true });
-const strikethrough = (attrs = {}) => leaf({ ...attrs, [types.STRIKETHROUGH]: true });
+const bold = (args = {}) => ({ ...args, ...attrs.b() });
+const italic = (args = {}) => ({ ...args, ...attrs.i() });
+const underline = (args = {}) => ({ ...args, ...attrs.u() });
+const strikethrough = (args = {}) => ({ ...args, ...attrs.s() });
 
 // elements
-const paragraph = (_, children) => element(types.PARAGRAPH, { children });
-const headingOne = (_, children) => element(types.HEADING_ONE, { children });
-const headingTwo = (_, children) => element(types.HEADING_TWO, { children });
-const headingThree = (_, children) => element(types.HEADING_THREE, { children });
-const link = ({ href } = {}, children) => element(types.LINK, { href, children });
-const listBulleted = (_, children) => element(types.LIST_BULLETED, { children });
-const listNumbered = (_, children) => element(types.LIST_NUMBERED, { children });
-const listItem = (_, children) => element(types.LIST_ITEM, { children });
-const blockQuote = (_, children) => element(types.BLOCKQUOTE, { children });
+const paragraph = (_, children) => ({ children, ...attrs.p() })
+const headingOne = (_, children) => ({ children, ...attrs.h1() })
+const headingTwo = (_, children) => ({ children, ...attrs.h2() })
+const headingThree = (_, children) => ({ children, ...attrs.h3() });
+const link = ({ href } = {}, children) => ({ children, ...attrs.a({ href }) });
+const listBulleted = (_, children) => ({ children, ...attrs.ul() });
+const listNumbered = (_, children) => ({ children, ...attrs.ol() });
+const listItem = (_, children) => ({ children, ...attrs.li() });
+const blockQuote = (_, children) => ({ children, ...attrs.q() });
 
 // misc
 const fragment = (attrs = {}, children) =>

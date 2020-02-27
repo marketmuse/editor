@@ -1,11 +1,11 @@
 import { Editor } from 'slate';
-import * as l from '@components/editor/core/elements/Link';
+import { types } from '@config/common';
 
 export default editor => {
 
   // find link nodes within selection
   const [link] = Editor.nodes(editor, {
-    match: n => n.type === l.type
+    match: n => n.type === types.a
   });
 
   // if no links within selection, (or no selection), return null

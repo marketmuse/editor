@@ -14,7 +14,3 @@ Bold.propTypes = {
 };
 
 export default Bold;
-export const component = Bold;
-export const tags = ['b', 'strong'];
-export const key = 'bold';
-export const get = () => ({ [key]: true });

@@ -1,10 +1,9 @@
-import { Text, Transforms } from 'slate';
+import { Transforms } from 'slate';
 import get from 'lodash/get';
+import { types, attrs } from '@config/common';
 import isLinkActive from '@editor/links/isLinkActive';
 import insertLink from '@editor/links/insertLink';
-import removeLink from '@editor/links/removeLink';
 import getLink from '@editor/links/getLink';
-import * as l from '@components/editor/core/elements/Link';
 
 export default (editor, href) => {
 
@@ -21,8 +20,8 @@ export default (editor, href) => {
   const newLinkText = (currentLinkText === currentLinkHref) ? href : currentLinkText;
 
   // update current nodes link
-  Transforms.setNodes(editor, l.get({ href }), {
-    match: n => n.type === l.type
+  Transforms.setNodes(editor, attrs.a({ href }), {
+    match: n => n.type === types.a
   });
 
   // update anchor text

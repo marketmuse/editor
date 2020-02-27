@@ -18,7 +18,3 @@ ListItem.propTypes = {
 };
 
 export default ListItem;
-export const component = ListItem;
-export const tags = ['li'];
-export const type = 'list-item';
-export const get = () => ({ type });

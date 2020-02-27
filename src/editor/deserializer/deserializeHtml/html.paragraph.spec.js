@@ -1,4 +1,4 @@
-import * as types from '@config/types';
+import { types } from '@config/common';
 import deserializeHtml from '@editor/deserializer/deserializeHtml';
 
 describe('deserialize html: p', () => {
@@ -11,7 +11,7 @@ describe('deserialize html: p', () => {
     `;
 
     expect(output).toEqual([{
-      type: types.PARAGRAPH,
+      type: types.p,
       children: [{ text: 'test' }]
     }]);
   });
@@ -30,7 +30,7 @@ describe('deserialize html: p', () => {
     `;
 
     expect(output).toEqual([{
-      type: types.PARAGRAPH,
+      type: types.p,
       children: [{ text: 'test' }]
     }]);
   });
@@ -47,9 +47,9 @@ describe('deserialize html: p', () => {
     `;
 
     expect(output).toEqual([
-      { type: types.PARAGRAPH, children: [{ text: 'test1' }] },
-      { type: types.PARAGRAPH, children: [{ text: 'test2' }] },
-      { type: types.PARAGRAPH, children: [{ text: 'test3' }] },
+      { type: types.p, children: [{ text: 'test1' }] },
+      { type: types.p, children: [{ text: 'test2' }] },
+      { type: types.p, children: [{ text: 'test3' }] },
     ]);
   });
 

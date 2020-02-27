@@ -27,7 +27,3 @@ Link.propTypes = {
 };
 
 export default Link;
-export const component = Link;
-export const tags = ['a'];
-export const type = 'link';
-export const get = ({ href } = {}) => ({ type, href });

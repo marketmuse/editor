@@ -18,7 +18,3 @@ HeadingThree.propTypes = {
 };
 
 export default HeadingThree;
-export const component = HeadingThree;
-export const tags = ['h3'];
-export const type = 'heading-three';
-export const get = () => ({ type });

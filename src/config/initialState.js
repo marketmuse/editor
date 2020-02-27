@@ -1,6 +1,6 @@
-import * as types from '@config/types';
+import { types } from '@config/common';
 
 export default [{
-  type: types.PARAGRAPH,
+  type: types.p,
   children: [{ text: '' }]
 }];

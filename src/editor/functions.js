@@ -1,4 +1,4 @@
-import * as types from '@config/types';
+import { types } from '@config/common';
 import focus from '@editor/focus/focus';
 import hasFocus from '@editor/focus/hasFocus';
 import focusAtEnd from '@editor/focus/focusAtEnd';
@@ -38,13 +38,13 @@ export default editor => ({
   removeLink: () => removeLink(editor),
 
   // formatters
-  toggleBold: status => toggleFormat(editor, 'mark', types.BOLD, { status }),
-  toggleItalic: status => toggleFormat(editor, 'mark', types.ITALIC, { status }),
-  toggleUnderline: status => toggleFormat(editor, 'mark', types.UNDERLINE, { status }),
-  toggleStrikethrough: status => toggleFormat(editor, 'mark', types.STRIKETHROUGH, { status }),
-  toggleBlockquote: status => toggleFormat(editor, 'block', types.BLOCKQUOTE, { status }),
-  toggleListBulleted: status => toggleFormat(editor, 'block', types.LIST_BULLETED, { status }),
-  toggleListNumbered: status => toggleFormat(editor, 'block', types.LIST_NUMBERED, { status }),
+  toggleBold: status => toggleFormat(editor, 'mark', types.b, { status }),
+  toggleItalic: status => toggleFormat(editor, 'mark', types.i, { status }),
+  toggleUnderline: status => toggleFormat(editor, 'mark', types.u, { status }),
+  toggleStrikethrough: status => toggleFormat(editor, 'mark', types.s, { status }),
+  toggleBlockquote: status => toggleFormat(editor, 'block', types.q, { status }),
+  toggleListBulleted: status => toggleFormat(editor, 'block', types.ul, { status }),
+  toggleListNumbered: status => toggleFormat(editor, 'block', types.ol, { status }),
   toggleHeading: (level, status) => toggleHeading(editor, level, status),
 
   // internals

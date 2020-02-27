@@ -18,7 +18,3 @@ HeadingOne.propTypes = {
 };
 
 export default HeadingOne;
-export const component = HeadingOne;
-export const tags = ['h1'];
-export const type = 'heading-one';
-export const get = () => ({ type });

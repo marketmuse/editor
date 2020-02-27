@@ -1,5 +1,5 @@
 /** @jsx deserialize */
-import * as types from '@config/types';
+import { types } from '@config/common';
 import deserialize from '@editor/deserializer/deserializeJsx';
 import withTest from '@utils/test/withTest';
 
@@ -15,7 +15,7 @@ describe('deserialize jsx: a', () => {
     );
 
     expect(editor.children).toEqual([{
-      type: types.LINK,
+      type: types.a,
       href: 'test.com',
       children: [{ text: 'test' }]
     }]);

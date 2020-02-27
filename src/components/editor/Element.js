@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { defaultElement, elementsByType } from '@components/editor/core/elements';
+import { types } from '@config/common';
+import elements from '@components/editor/core/elements';
 
 const Element = ({ attributes, children, element = {} }) => {
   const pass = Object.assign({}, attributes, element);
-  const el = elementsByType[element.type];
-  const Component = el ? el.component : defaultElement.component;
+  const Component = elements[element.type] || elements[types.p];
   return <Component {...pass}>{children}</Component>;
 };
 

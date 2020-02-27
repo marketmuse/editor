@@ -11,21 +11,21 @@ const hyperscript = createHyperscript({
     ({ ...acc, [t.toLowerCase()]: {} }), {})
 });
 
-export default (tag, attrs = {}, ...children) => {
-  removeBabelProps(attrs);
+export default (tag, args = {}, ...children) => {
+  removeBabelProps(args);
 
   // do not attempt to deserialize slate-hyperscript specific syntax
   if (tag === 'editor' || tag === 'anchor' || tag === 'focus' || tag === 'cursor') {
-    return hyperscript(tag, attrs, ...children);
+    return hyperscript(tag, args, ...children);
   }
 
   // deserialize tags
-  const useAttrs = isKnown(tag) ? deserialize(tag, attrs, children) : {};
+  const useArgs = isKnown(tag) ? deserialize(tag, args, children) : {};
 
   // to be handled by slate-hyperscript, delete
-  delete useAttrs.children;
-  delete useAttrs.text;
+  delete useArgs.children;
+  delete useArgs.text;
 
   // deserialize with slate-hyperscript
-  return hyperscript(tag, { ...attrs, ...useAttrs }, ...children);
+  return hyperscript(tag, { ...args, ...useArgs }, ...children);
 }

@@ -1,22 +1,18 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import leafs from '@components/editor/core/leafs';
 
 const Leaf = ({ decors, attributes, children, leaf } = {}) => {
 
   // apply built-ins leafs
-  children = leafs.reduce((acc, l) => {
+  children = Object.keys(leafs).reduce((acc, leafKey) => {
 
     // if this leafs key isn't on this node
     // do not wrap around its component
-    if (!leaf[l.key]) return acc;
-
-    // this leafs key is on this node
-    // but the leaf is invalid
-    if (!l || !l.component) return acc;
+    if (!leaf[leafKey]) return acc;
 
     // wrap the accumulator around this leafs component
-    const Component = l.component;
+    const Component = leafs[leafKey];
     return <Component {...attributes}>{acc}</Component>;
 
   }, children);

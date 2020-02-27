@@ -1,5 +1,5 @@
 /** @jsx deserialize */
-import * as types from '@config/types';
+import { types } from '@config/common';
 import deserialize from '@editor/deserializer/deserializeJsx';
 import withTest from '@utils/test/withTest';
 
@@ -20,12 +20,12 @@ describe('deserialize jsx: leafs', () => {
     );
 
     expect(editor.children).toEqual([
-      { text: 'test', [types.BOLD]: true },
-      { text: 'test', [types.ITALIC]: true },
-      { text: 'test', [types.STRIKETHROUGH]: true },
-      { text: 'test', [types.UNDERLINE]: true },
-      { text: 'test', [types.BOLD]: true, [types.ITALIC]: true },
-      { text: 'test', [types.BOLD]: true, [types.ITALIC]: true, [types.UNDERLINE]: true },
+      { text: 'test', [types.b]: true },
+      { text: 'test', [types.i]: true },
+      { text: 'test', [types.s]: true },
+      { text: 'test', [types.u]: true },
+      { text: 'test', [types.b]: true, [types.i]: true },
+      { text: 'test', [types.b]: true, [types.i]: true, [types.u]: true },
     ]);
   });
 

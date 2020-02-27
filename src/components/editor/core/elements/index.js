@@ -1,44 +1,23 @@
-import * as blockquote from '@components/editor/core/elements/Blockquote';
-import * as paragraph from '@components/editor/core/elements/Paragraph';
-import * as headingOne from '@components/editor/core/elements/HeadingOne';
-import * as headingTwo from '@components/editor/core/elements/HeadingTwo';
-import * as headingThree from '@components/editor/core/elements/HeadingThree';
-import * as link from '@components/editor/core/elements/Link';
-import * as listBulleted from '@components/editor/core/elements/ListBulleted';
-import * as listNumbered from '@components/editor/core/elements/ListNumbered';
-import * as listItem from '@components/editor/core/elements/ListItem';
+import { types } from '@config/common';
 
-// add new elements below
-const elements = [
-  blockquote,
-  paragraph,
-  headingOne,
-  headingTwo,
-  headingThree,
-  link,
-  listBulleted,
-  listNumbered,
-  listItem,
-];
+import Paragraph from '@components/editor/core/elements/Paragraph';
+import Blockquote from '@components/editor/core/elements/Blockquote';
+import HeadingOne from '@components/editor/core/elements/HeadingOne';
+import HeadingTwo from '@components/editor/core/elements/HeadingTwo';
+import HeadingThree from '@components/editor/core/elements/HeadingThree';
+import Link from '@components/editor/core/elements/Link';
+import ListBulleted from '@components/editor/core/elements/ListBulleted';
+import ListNumbered from '@components/editor/core/elements/ListNumbered';
+import ListItem from '@components/editor/core/elements/ListItem';
 
-export default elements;
-
-export const defaultElement = paragraph;
-
-// list elements
-export const listTypes = elements.filter(el => el.listType);
-
-// elements dict by type
-export const elementsByType = elements.reduce((acc, el) => ({
-  ...acc,
-  [el.type]: el
-}), {});
-
-// elements dict by tag
-export const elementsByTag = elements.reduce((acc, el) => ({
-  ...acc,
-  ...(el.tags || []).reduce((acc2, tag) => ({
-    ...acc2,
-    [tag]: el
-  }), {})
-}), {});
+export default {
+  [types.p]: Paragraph,
+  [types.q]: Blockquote,
+  [types.h1]: HeadingOne,
+  [types.h2]: HeadingTwo,
+  [types.h3]: HeadingThree,
+  [types.a]: Link,
+  [types.ul]: ListBulleted,
+  [types.ol]: ListNumbered,
+  [types.li]: ListItem,
+};

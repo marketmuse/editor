@@ -1,9 +1,9 @@
 import { Editor } from 'slate';
-import * as l from '@components/editor/core/elements/Link';
+import { types } from '@config/common';
 
 export default editor => {
   const [link] = Editor.nodes(editor, {
-    match: n => n.type === l.type
+    match: n => n.type === types.a
   });
 
   return !!link

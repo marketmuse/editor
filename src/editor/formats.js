@@ -1,32 +1,32 @@
-import * as types from '@config/types';
+import { types } from '@config/common';
 import isFormatActive from '@editor/formatters/isFormatActive';
 import isCollapsed from '@editor/cursor/isCollapsed';
 
 export default editor => {
 
-  const isH1 = isFormatActive(editor, 'block', types.HEADING_ONE);
-  const isH2 = isFormatActive(editor, 'block', types.HEADING_TWO);
-  const isH3 = isFormatActive(editor, 'block', types.HEADING_THREE);
+  const isH1 = isFormatActive(editor, 'block', types.h1);
+  const isH2 = isFormatActive(editor, 'block', types.h2);
+  const isH3 = isFormatActive(editor, 'block', types.h3);
   const isHeading = isH1 || isH2 || isH3;
 
   return {
 
     // marks
-    isBold: isFormatActive(editor, 'mark', types.BOLD),
-    isItalic: isFormatActive(editor, 'mark', types.ITALIC),
-    isUnderline: isFormatActive(editor, 'mark', types.UNDERLINE),
-    isStrikethrough: isFormatActive(editor, 'mark', types.STRIKETHROUGH),
+    isBold: isFormatActive(editor, 'mark', types.b),
+    isItalic: isFormatActive(editor, 'mark', types.i),
+    isUnderline: isFormatActive(editor, 'mark', types.u),
+    isStrikethrough: isFormatActive(editor, 'mark', types.s),
 
     // blocks
     isH1,
     isH2,
     isH3,
     isHeading,
-    isLink: isFormatActive(editor, 'block', types.LINK),
-    isParagraph: isFormatActive(editor, 'block', types.PARAGRAPH),
-    isBlockquote: isFormatActive(editor, 'block', types.BLOCKQUOTE),
-    isListNumbered: isFormatActive(editor, 'block', types.LIST_NUMBERED),
-    isListBulleted: isFormatActive(editor, 'block', types.LIST_BULLETED),
+    isLink: isFormatActive(editor, 'block', types.a),
+    isParagraph: isFormatActive(editor, 'block', types.p),
+    isBlockquote: isFormatActive(editor, 'block', types.q),
+    isListNumbered: isFormatActive(editor, 'block', types.ol),
+    isListBulleted: isFormatActive(editor, 'block', types.ul),
 
     // misc
     isCollapsed: isCollapsed(editor),

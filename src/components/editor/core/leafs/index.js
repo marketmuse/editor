@@ -1,13 +1,13 @@
-import * as bold from '@components/editor/core/leafs/Bold';
-import * as italic from '@components/editor/core/leafs/Italic';
-import * as strikethrough from '@components/editor/core/leafs/Strikethrough';
-import * as underline from '@components/editor/core/leafs/Underline';
+import { types } from '@config/common';
 
-const leafs = [
-  bold,
-  italic,
-  strikethrough,
-  underline,
-];
+import Bold from '@components/editor/core/leafs/Bold';
+import Italic from '@components/editor/core/leafs/Italic';
+import Underline from '@components/editor/core/leafs/Underline';
+import Strikethrough from '@components/editor/core/leafs/Strikethrough';
 
-export default leafs;
+export default {
+  [types.b]: Bold,
+  [types.i]: Italic,
+  [types.u]: Underline,
+  [types.s]: Strikethrough,
+};

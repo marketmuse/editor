@@ -1,8 +1,8 @@
 import { Transforms } from 'slate';
-import * as link from '@components/editor/core/elements/Link';
+import { types } from '@config/common';
 
 export default editor => {
   Transforms.unwrapNodes(editor, {
-    match: n => n.type === link.type
+    match: n => n.type === types.a
   })
 }

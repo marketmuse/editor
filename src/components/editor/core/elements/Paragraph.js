@@ -18,7 +18,3 @@ Paragraph.propTypes = {
 };
 
 export default Paragraph;
-export const component = Paragraph;
-export const tags = ['block', 'p'];
-export const type = 'paragraph';
-export const get = () => ({ type });

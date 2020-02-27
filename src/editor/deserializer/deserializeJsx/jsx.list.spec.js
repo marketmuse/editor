@@ -1,5 +1,5 @@
 /** @jsx deserialize */
-import * as types from '@config/types';
+import { types } from '@config/common';
 import deserialize from '@editor/deserializer/deserializeJsx';
 import withTest from '@utils/test/withTest';
 
@@ -19,11 +19,11 @@ describe('deserialize jsx: list', () => {
     );
 
     expect(editor.children).toEqual([{
-      type: types.LIST_BULLETED,
+      type: types.ul,
       children: [
-        { type: types.LIST_ITEM, children: [{ text: 'test' }] },
-        { type: types.LIST_ITEM, children: [{ text: 'test' }] },
-        { type: types.LIST_ITEM, children: [{ text: 'test' }] },
+        { type: types.li, children: [{ text: 'test' }] },
+        { type: types.li, children: [{ text: 'test' }] },
+        { type: types.li, children: [{ text: 'test' }] },
       ]
     }]);
   });
@@ -42,11 +42,11 @@ describe('deserialize jsx: list', () => {
     );
 
     expect(editor.children).toEqual([{
-      type: types.LIST_NUMBERED,
+      type: types.ol,
       children: [
-        { type: types.LIST_ITEM, children: [{ text: 'test' }] },
-        { type: types.LIST_ITEM, children: [{ text: 'test' }] },
-        { type: types.LIST_ITEM, children: [{ text: 'test' }] },
+        { type: types.li, children: [{ text: 'test' }] },
+        { type: types.li, children: [{ text: 'test' }] },
+        { type: types.li, children: [{ text: 'test' }] },
       ]
     }]);
   });

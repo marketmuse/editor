@@ -1,7 +1,7 @@
 import { Range, Transforms } from 'slate';
+import { attrs } from '@config/common';
 import removeLink from '@editor/links/removeLink';
 import isLinkActive from '@editor/links/isLinkActive';
-import * as l from '@components/editor/core/elements/Link';
 
 export default (editor, href) => {
   if (!editor || !editor.selection) return;
@@ -13,7 +13,7 @@ export default (editor, href) => {
   const { selection } = editor;
   const isCollapsed = selection && Range.isCollapsed(selection)
 
-  const linkConfig = l.get({ href });
+  const linkConfig = attrs.a({ href });
   const link = Object.assign(linkConfig, {
     children: isCollapsed ? [{ text: href }] : [],
   })

@@ -1,12 +1,12 @@
 import isValidUrl from '@utils/isValidUrl';
 import insertLink from '@editor/links/insertLink';
-import * as l from '@components/editor/core/elements/Link';
+import { types } from '@config/common';
 
 export default editor => {
   const { insertData, insertText, isInline } = editor;
 
   editor.isInline = element => {
-    return element.type === l.type ? true : isInline(element)
+    return element.type === types.a ? true : isInline(element)
   }
 
   editor.insertText = text => {

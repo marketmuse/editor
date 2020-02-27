@@ -18,8 +18,3 @@ ListBulleted.propTypes = {
 };
 
 export default ListBulleted;
-export const component = ListBulleted;
-export const tags = ['ul'];
-export const type = 'bulleted-list';
-export const listType = true;
-export const get = () => ({ type });
