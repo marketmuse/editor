@@ -3,7 +3,7 @@
 
 import { createHyperscript } from 'slate-hyperscript';
 import removeBabelProps from '@utils/removeBabelProps';
-import deserialize, { tags } from '@editor/deserializer/deserialize';
+import deserialize, { isKnown, tags } from '@editor/deserializer/deserialize';
 
 // create hyperscript creator
 const hyperscript = createHyperscript({
@@ -20,7 +20,7 @@ export default (tag, attrs = {}, ...children) => {
   }
 
   // deserialize tags
-  const useAttrs = deserialize(tag, attrs, ...children);
+  const useAttrs = isKnown(tag) ? deserialize(tag, attrs, children) : {};
 
   // to be handled by slate-hyperscript, delete
   delete useAttrs.children;

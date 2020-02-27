@@ -1,6 +1,6 @@
-import { type } from '@components/editor/core/elements/Paragraph';
+import * as types from '@config/types';
 
 export default [{
-  type,
+  type: types.PARAGRAPH,
   children: [{ text: '' }]
 }];

@@ -1,5 +1,5 @@
 /** @jsx deserialize */
-import { ReactEditor } from 'slate-react'
+import * as types from '@config/types';
 import deserialize from '@editor/deserializer/deserializeJsx';
 import withTest from '@utils/test/withTest';
 
@@ -19,11 +19,11 @@ describe('deserialize jsx: list', () => {
     );
 
     expect(editor.children).toEqual([{
-      type: 'bulleted-list',
+      type: types.LIST_BULLETED,
       children: [
-        { type: 'list-item', children: [{ text: 'test' }] },
-        { type: 'list-item', children: [{ text: 'test' }] },
-        { type: 'list-item', children: [{ text: 'test' }] },
+        { type: types.LIST_ITEM, children: [{ text: 'test' }] },
+        { type: types.LIST_ITEM, children: [{ text: 'test' }] },
+        { type: types.LIST_ITEM, children: [{ text: 'test' }] },
       ]
     }]);
   });
@@ -42,11 +42,11 @@ describe('deserialize jsx: list', () => {
     );
 
     expect(editor.children).toEqual([{
-      type: 'numbered-list',
+      type: types.LIST_NUMBERED,
       children: [
-        { type: 'list-item', children: [{ text: 'test' }] },
-        { type: 'list-item', children: [{ text: 'test' }] },
-        { type: 'list-item', children: [{ text: 'test' }] },
+        { type: types.LIST_ITEM, children: [{ text: 'test' }] },
+        { type: types.LIST_ITEM, children: [{ text: 'test' }] },
+        { type: types.LIST_ITEM, children: [{ text: 'test' }] },
       ]
     }]);
   });

@@ -1,20 +1,21 @@
 /** @jsx deserialize */
+import * as types from '@config/types';
 import deserialize from '@editor/deserializer/deserializeJsx';
 import withTest from '@utils/test/withTest';
 
-describe('deserialize jsx: blockquote', () => {
+describe('deserialize jsx: p', () => {
 
   // ****
   test('deserialize works', () => {
 
     const editor = withTest(
       <editor>
-        <blockquote>test</blockquote>
+        <p>test</p>
       </editor>
     );
 
     expect(editor.children).toEqual([{
-      type: 'blockquote',
+      type: types.PARAGRAPH,
       children: [{ text: 'test' }]
     }]);
   });

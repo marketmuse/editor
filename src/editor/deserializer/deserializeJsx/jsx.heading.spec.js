@@ -1,4 +1,5 @@
 /** @jsx deserialize */
+import * as types from '@config/types';
 import deserialize from '@editor/deserializer/deserializeJsx';
 import withTest from '@utils/test/withTest';
 
@@ -16,9 +17,9 @@ describe('deserialize jsx: h', () => {
     );
 
     expect(editor.children).toEqual([
-      { type: 'heading-one', children: [{ text: 'test' }] },
-      { type: 'heading-two', children: [{ text: 'test' }] },
-      { type: 'heading-three', children: [{ text: 'test' }] },
+      { type: types.HEADING_ONE, children: [{ text: 'test' }] },
+      { type: types.HEADING_TWO, children: [{ text: 'test' }] },
+      { type: types.HEADING_THREE, children: [{ text: 'test' }] },
     ]);
   });
 

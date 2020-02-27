@@ -1,5 +1,5 @@
 import { Transforms } from 'slate';
-import deserializeHtml from '@editor/deserializer/deserializeHtml/deserializeHtml';
+import deserializeHtml from '@editor/deserializer/deserializeHtml';
 
 export default editor => {
 

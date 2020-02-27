@@ -1,3 +1,4 @@
+import * as types from '@config/types';
 import removeBabelProps from '@utils/removeBabelProps';
 
 // base
@@ -5,21 +6,21 @@ const leaf = (attrs = {}) => ({ ...attrs });
 const element = (type, attrs = {}) => ({ type, ...attrs });
 
 // leafs
-const bold = (attrs = {}) => leaf({ ...attrs, bold: true });
-const italic = (attrs = {}) => leaf({ ...attrs, italic: true });
-const underline = (attrs = {}) => leaf({ ...attrs, underline: true });
-const strikethrough = (attrs = {}) => leaf({ ...attrs, strikethrough: true });
+const bold = (attrs = {}) => leaf({ ...attrs, [types.BOLD]: true });
+const italic = (attrs = {}) => leaf({ ...attrs, [types.ITALIC]: true });
+const underline = (attrs = {}) => leaf({ ...attrs, [types.UNDERLINE]: true });
+const strikethrough = (attrs = {}) => leaf({ ...attrs, [types.STRIKETHROUGH]: true });
 
 // elements
-const paragraph = (_, children) => element('paragraph', { children });
-const headingOne = (_, children) => element('heading-one', { children });
-const headingTwo = (_, children) => element('heading-two', { children });
-const headingThree = (_, children) => element('heading-three', { children });
-const link = ({ href } = {}, children) => element('link', { href, children });
-const listBulleted = (_, children) => element('bulleted-list', { children });
-const listNumbered = (_, children) => element('numbered-list', { children });
-const listItem = (_, children) => element('list-item', { children });
-const blockQuote = (_, children) => element('blockquote', { children });
+const paragraph = (_, children) => element(types.PARAGRAPH, { children });
+const headingOne = (_, children) => element(types.HEADING_ONE, { children });
+const headingTwo = (_, children) => element(types.HEADING_TWO, { children });
+const headingThree = (_, children) => element(types.HEADING_THREE, { children });
+const link = ({ href } = {}, children) => element(types.LINK, { href, children });
+const listBulleted = (_, children) => element(types.LIST_BULLETED, { children });
+const listNumbered = (_, children) => element(types.LIST_NUMBERED, { children });
+const listItem = (_, children) => element(types.LIST_ITEM, { children });
+const blockQuote = (_, children) => element(types.BLOCKQUOTE, { children });
 
 // misc
 const fragment = (attrs = {}, children) =>
@@ -29,45 +30,52 @@ const text = (attrs = {}, text) =>
 
 // map allowed tags to functions
 export const tags = {
-  BODY: fragment,
-  FRAGMENT: fragment,
-  BLOCK: fragment, // <- treat br tags as empty paragraphs
-  BR: paragraph,
-  P: paragraph,
-  BLOCKQUOTE: blockQuote,
-  Q: blockQuote,
-  H1: headingOne,
-  H2: headingTwo,
-  H3: headingThree,
-  H4: headingThree,
-  H5: headingThree,
-  H6: headingThree,
-  A: link,
-  UL: listBulleted,
-  OL: listNumbered,
-  LI: listItem,
-  B: bold,
-  STRONG: bold,
-  I: italic,
-  EM: italic,
-  U: underline,
-  S: strikethrough,
-  DEL: strikethrough,
-  STRIKE: strikethrough,
+  '#TEXT': text,
+  'FRAGMENT': fragment,
+  'BLOCK': fragment,
+  'BR': paragraph, // <- treat br tags as empty paragraphs
+  'P': paragraph,
+  'BLOCKQUOTE': blockQuote,
+  'Q': blockQuote,
+  'H1': headingOne,
+  'H2': headingTwo,
+  'H3': headingThree,
+  'H4': headingThree,
+  'H5': headingThree,
+  'H6': headingThree,
+  'A': link,
+  'UL': listBulleted,
+  'OL': listNumbered,
+  'LI': listItem,
+  'B': bold,
+  'STRONG': bold,
+  'I': italic,
+  'EM': italic,
+  'U': underline,
+  'S': strikethrough,
+  'DEL': strikethrough,
+  'STRIKE': strikethrough,
 };
 
-export default (tag = '', attrs = {}, ...children) => {
+export const isKnown = tag => {
+  const useTag = tag.toUpperCase();
+  return typeof tags[useTag] === 'function';
+}
+
+export default (tag = '', attrs = {}, children) => {
 
   // strip attrs added by babel
   removeBabelProps(attrs);
 
+  if (!isKnown(tag)) return children;
+
   const useTag = tag.toUpperCase();
   const fn = tags[useTag];
 
-  if (!fn) return {};
+  if (!fn) return children;
 
   // deserialize node
-  const res = fn(attrs, ...children);
+  const res = fn(attrs, children);
 
   // if children is string, it's a text node
   if (typeof res.children === 'string') {

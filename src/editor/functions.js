@@ -1,3 +1,4 @@
+import * as types from '@config/types';
 import focus from '@editor/focus/focus';
 import hasFocus from '@editor/focus/hasFocus';
 import focusAtEnd from '@editor/focus/focusAtEnd';
@@ -13,14 +14,6 @@ import clear from '@editor/contents/clear';
 import toggleFormat from '@editor/formatters/toggleFormat';
 import toggleHeading from '@editor/formatters/toggleHeading';
 import populateWindow from '@utils/test/populateWindow';
-
-import { key as keyBold } from '@components/editor/core/leafs/Bold';
-import { key as keyItalic } from '@components/editor/core/leafs/Italic';
-import { key as keyUnderline } from '@components/editor/core/leafs/Underline';
-import { key as keyStrikethrough } from '@components/editor/core/leafs/Strikethrough';
-import { type as typeBlockquote } from '@components/editor/core/elements/Blockquote';
-import { type as typeListBulleted } from '@components/editor/core/elements/ListBulleted';
-import { type as typeListNumbered } from '@components/editor/core/elements/ListNumbered';
 
 export default editor => ({
 
@@ -45,13 +38,13 @@ export default editor => ({
   removeLink: () => removeLink(editor),
 
   // formatters
-  toggleBold: status => toggleFormat(editor, 'mark', keyBold, { status }),
-  toggleItalic: status => toggleFormat(editor, 'mark', keyItalic, { status }),
-  toggleUnderline: status => toggleFormat(editor, 'mark', keyUnderline, { status }),
-  toggleStrikethrough: status => toggleFormat(editor, 'mark', keyStrikethrough, { status }),
-  toggleBlockquote: status => toggleFormat(editor, 'block', typeBlockquote, { status }),
-  toggleListBulleted: status => toggleFormat(editor, 'block', typeListBulleted, { status }),
-  toggleListNumbered: status => toggleFormat(editor, 'block', typeListNumbered, { status }),
+  toggleBold: status => toggleFormat(editor, 'mark', types.BOLD, { status }),
+  toggleItalic: status => toggleFormat(editor, 'mark', types.ITALIC, { status }),
+  toggleUnderline: status => toggleFormat(editor, 'mark', types.UNDERLINE, { status }),
+  toggleStrikethrough: status => toggleFormat(editor, 'mark', types.STRIKETHROUGH, { status }),
+  toggleBlockquote: status => toggleFormat(editor, 'block', types.BLOCKQUOTE, { status }),
+  toggleListBulleted: status => toggleFormat(editor, 'block', types.LIST_BULLETED, { status }),
+  toggleListNumbered: status => toggleFormat(editor, 'block', types.LIST_NUMBERED, { status }),
   toggleHeading: (level, status) => toggleHeading(editor, level, status),
 
   // internals
