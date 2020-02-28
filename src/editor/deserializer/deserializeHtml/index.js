@@ -1,11 +1,22 @@
 import cleanHtml from '@utils/cleanHtml';
 import deserialize from '@editor/deserializer/deserialize';
 
+// extract attributes from NamedNodeMap to plain object
+const extractAttributes = el => {
+  if (!el || !el.attributes) return {};
+  const res = {};
+  const args = el.attributes;
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    res[arg.nodeName] = arg.nodeValue;
+  }
+  return res;
+};
+
 const deserializeHtml = el => {
 
-  // in some cases we'll need to ignore the parent and continue deserializing
-  // children. when that's the case, set current to el.childNodes[0]
-  let current = el;
+  const current = el;
+  const currentAttrs = extractAttributes(el);
 
   const { nodeType, nodeName, childNodes } = current;
 
@@ -23,7 +34,7 @@ const deserializeHtml = el => {
   // if text element, its content is its children
   if (isText) children = current.textContent;
 
-  return deserialize(nodeName, {}, children);
+  return deserialize(nodeName, currentAttrs, children);
 }
 
 export default (...strs) => {
