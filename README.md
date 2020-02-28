@@ -28,7 +28,8 @@ ReactDOM.render(<App />, document.getElementById('root'));
 `MMSEditor` is the Editor provider, it's responsible for keeping the state and managing the editor. It accepts the following props.
 
 * **children** *(function)* - MMSEditor adopts the [function-as-children pattern](https://reactjs.org/docs/jsx-in-depth.html#functions-as-children) to be able to pass on some editor related data down to its children, including the api and even the editor itself. Therefor, the children provided to this component **must** be a function (see below for arguments).
-* **plugins** *(array)* - An array of plugin objects that has functions to extend the libraries core api's. See plugins section.
+* **plugins** *(array)* - An array of plugin objects that has functions to extend the libraries core api's. See [plugins](#plugins) section for details.
+* **htmlParserOptions** *(array)* - Configuration for the built-in HTML parser. See [HTML Parser](#html-parser) section for details.
 
 ### Children args
 
@@ -309,3 +310,57 @@ const plugins = [{
     }
   })
 }]
+```
+
+
+# HTML Parser
+
+MMS Editor comes with a built-in HTML parser. That is, if you import an HTML file or simply copy-paste a chunk of text from a website and paste it into the editor, this parser will deserialize the html markup and turn it into the editors own format. That way, basic formatting as well as some features such as links and lists could be persisted.
+
+## parser options
+
+By default, MMS Editor will try to convert as much HTML as it can, however the behaviour of the HTML parser could be customized if desired. `MMSEditor` component accepts `htmlParserOptions` prop where you can pass the following props:
+
+* **tagSettings** *(array)* - An array of tag settings objects, where you can customize the parsing behaviour for each individual tag. See below for more details.
+
+
+### tag settings
+
+Using this option, you can customize how MMS Editor should parse a given HTML tag. 
+
+* **tag** *(string)* - The tag name 
+* **parse** *(object or function ( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), attrs: object ) -> object)* - You can either provide parse settings object here, or a function that takes in the element and it's attributes as an object. The parse settings object (or the settings object returned from this function) should be as follows:
+	* **text** *(bool)* - Parse this node and all its children as a text node.
+	* **textChildren** *(bool)* - Parse this node normally, parse its children as a single text node.
+	* **continue** *(bool)* - Skip this node and continue parsing it's children.
+	* **skip** *(bool)* - Skip this node and all its children
+
+For instance, let's say you don't support hyperlinks in your editor and you'd like MMS Editor to parse anchor text of the links as plain text nodes. Your configuration in this case would look like this:
+
+```javascript
+htmlParserOptions = {
+  tagSettings = [
+    {
+      tag: 'a',
+      parse: { text: true }
+    }
+  ]
+}
+```
+
+Let's say you wanted to customize this even further and **only allow** hyperlinks pointing to your own website. In that case, you could do the following:
+
+```javascript
+htmlParserOptions = {
+  tagSettings = [
+    {
+      tag: 'a',
+      parse: (el, { href }) => ({
+        text: href.indexOf('domain.com') === -1
+      })
+    }
+  ]
+}
+```
+
+The second argument, `attributes`, is just to simplify interacting with the attributes of the DOM element, but since you have access to the `el`, the [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) instance, you could build such logic on any DOM property.

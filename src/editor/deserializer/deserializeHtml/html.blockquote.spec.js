@@ -17,13 +17,29 @@ describe('deserialize html: blockquote', () => {
   });
 
   // ****
-  test('deserialize works ignores empty blockquotes', () => {
+  test('empty blockquotes should be ignored', () => {
 
     const output = deserializeHtml()`
       <blockquote></blockquote>
     `;
 
     expect(output).toEqual([]);
+  });
+
+  // ****
+  test('parse as text should work for blockquote', () => {
+
+    const output = deserializeHtml({
+      tagSettings: [
+        { tag: 'blockquote', parse: { text: true } }
+      ]
+    })`
+      <blockquote>marketmuse</blockquote>
+    `;
+
+    expect(output).toEqual([
+      { text: 'marketmuse' }
+    ]);
   });
 
 });

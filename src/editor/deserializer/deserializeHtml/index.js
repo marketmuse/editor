@@ -13,18 +13,28 @@ const extractAttributes = el => {
   return res;
 };
 
+// convert tag settings into dictionary grouped by tags
+const tagSettingsToDict = (tagSettings = []) => {
+  if (!Array.isArray(tagSettings)) return {};
+  return tagSettings.reduce((acc, tagSetting) => ({
+    ...acc,
+    [(tagSetting.tag || '').toLowerCase()]: tagSetting.parse
+  }), {});
+}
+
 const deserializeHtml = (options = {}, el) => {
 
   const {
 
     // adjust render behaviour
     // key (string): tag names
-    // value (object: parse setting): settings for this tag
-    //  text: bool - parse node and its children as text
-    //  textChildren: bool - parse node normally, children as text
-    //  continue: bool - skip node, parse children normally
-    //  skip: bool - skip node its children
-    parseSettings = {}
+    // value (object or function( el: HTMLElement, attrs: object ) -> object) - settings
+    // object, or fn that receives el and attributes, and returns the settings
+    // - text: bool - parse node and its children as text
+    // - textChildren: bool - parse node normally, children as text
+    // - continue: bool - skip node, parse children normally
+    // - skip: bool - skip node its children
+    tagSettings = {}
 
   } = options;
 
@@ -33,40 +43,52 @@ const deserializeHtml = (options = {}, el) => {
 
   let { nodeType, nodeName, textContent } = current;
 
-  // deserialize children
-  let children = Array.from(current.childNodes)
-    .map(child => deserializeHtml(options, child))
-    .flat()
+  // extract parse setting
+  let tagSetting = tagSettings[nodeName.toLowerCase()];
+
+  // if parse settings is a function
+  // execute it to get the settings
+  if (typeof tagSetting === 'function') {
+    tagSetting = tagSetting(current, currentAttrs);
+  }
+
+  // no parse settings / invalid parse settings returned from fn
+  if (!tagSetting || typeof tagSetting !== 'object') {
+    tagSetting = {};
+  }
 
   const isText = nodeType === window.Node.TEXT_NODE;
   const isElement = nodeType === window.Node.ELEMENT_NODE;
   const isLink = nodeName === 'A';
   const hasTextContent = !!textContent;
 
-  const parseSetting = (
-    parseSettings[nodeName] ||
-    parseSettings[nodeName.toLowerCase()]
-  ) || {};
-
   // only evaluate element nodes (ie. <p>, <div> etc.)
-  if (!isElement && !isText) parseSetting.skipCurrent = true;
+  if (!isElement && !isText) tagSetting.skipCurrent = true;
   // if an element has nothing in it to render, ignore
-  if (!hasTextContent) parseSetting.skip = true;
-  // if a link has no href or ignoring links, treat it as a text node
-  if (isLink && (!currentAttrs.href)) parseSetting.text = true;
+  if (!hasTextContent) tagSetting.skip = true;
   // if text node, its content is its children
-  if (isText) parseSetting.text = true;
+  if (isText) tagSetting.text = true;
+  // if a link has no href or ignoring links, treat it as a text node
+  if (isLink && !currentAttrs.href) tagSetting.text = true;
+
+  // parse --
 
   // skip node and all its children
-  if (parseSetting.skip) return children;
+  if (tagSetting.skip) return [];
+
+  // deserialize children
+  let children = Array.from(current.childNodes)
+    .map(child => deserializeHtml(options, child))
+    .flat()
+
   // skip current node and continue with children
-  else if (parseSetting.continue) return children;
+  if (tagSetting.continue) return children;
   // parse node and all its children as text node
-  else if (parseSetting.text) return deserialize('#text', {}, textContent);
+  if (tagSetting.text) return deserialize('#text', {}, textContent);
   // parse node normally and its children as text
-  else if (parseSetting.textChildren) return deserialize(nodeName, currentAttrs, textContent);
+  if (tagSetting.textChildren) return deserialize(nodeName, currentAttrs, textContent);
   // parse node and children normally
-  else return deserialize(nodeName, currentAttrs, children);
+  return deserialize(nodeName, currentAttrs, children);
 }
 
 export default (options = {}) => (...strs) => {
@@ -79,5 +101,8 @@ export default (options = {}) => (...strs) => {
   // parse html for deserializing
   const parsed = new window.DOMParser().parseFromString(clean, 'text/html');
 
-  return deserializeHtml(options, parsed);
+  // convert tag settings to dictionary
+  const tagSettings = tagSettingsToDict(options.tagSettings);
+
+  return deserializeHtml({ ...options, tagSettings }, parsed.body);
 };

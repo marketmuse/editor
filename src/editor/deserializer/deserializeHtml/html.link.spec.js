@@ -70,9 +70,13 @@ describe('deserialize html: a', () => {
   });
 
   // ****
-  test('ignore link option forces links to be treated as text nodes', () => {
+  test('parse as test should work', () => {
 
-    const output = deserializeHtml({ ignoreLinks: true })`
+    const output = deserializeHtml({
+      tagSettings: [
+        { tag: 'a', parse: { text: true } }
+      ]
+    })`
       <a href="https://marketmuse.com">marketmuse</a>
     `;
 
@@ -82,20 +86,34 @@ describe('deserialize html: a', () => {
   });
 
   // ****
-  test('ignore link option works for multiple links', () => {
+  test('skip link should ignore it', () => {
 
-    const output = deserializeHtml({ ignoreLinks: true })`
-      <div>
-        <a href="https://marketmuse.com">marketmuse1</a>
-        <a href="https://marketmuse.com">marketmuse2</a>
-        <a href="https://marketmuse.com">marketmuse3</a>
-      </div>
+    const output = deserializeHtml({
+      tagSettings: [
+        { tag: 'a', parse: { skip: true } }
+      ]
+    })`
+      <a href="https://marketmuse.com">marketmuse</a>
+    `;
+
+    expect(output).toEqual([]);
+  });
+
+  // ****
+  test('continue link should render its children', () => {
+
+    const output = deserializeHtml({
+      tagSettings: [
+        { tag: 'a', parse: { continue: true } }
+      ]
+    })`
+      <a href="https://marketmuse.com">
+        <div>marketmuse</div>
+      </a>
     `;
 
     expect(output).toEqual([
-      { text: 'marketmuse1' },
-      { text: 'marketmuse2' },
-      { text: 'marketmuse3' },
+      { text: 'marketmuse' }
     ]);
   });
 

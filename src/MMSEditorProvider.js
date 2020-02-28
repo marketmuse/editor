@@ -10,8 +10,9 @@ import withMarketmuse from '@editor/enhancer/withMarketmuse';
 
 const MMSEditor = props => {
 
+  const htmlParserOptions = props.htmlParserOptions || {};
   const editor = isNil(props.editor)
-    ? useMemo(() => withMarketmuse(createEditor()), [])
+    ? useMemo(() => withMarketmuse(createEditor(), { htmlParserOptions }), [])
     : props.editor;
 
   // Having the editor be uncontrolled seems to make more sense given that the
@@ -39,6 +40,7 @@ MMSEditor.propTypes = {
   // use editor instead of creating one
   editor: PropTypes.object,
   children: PropTypes.any,
+  htmlParserOptions: PropTypes.object,
 };
 
 export default MMSEditor;
