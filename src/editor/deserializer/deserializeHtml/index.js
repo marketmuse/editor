@@ -17,8 +17,14 @@ const deserializeHtml = (options = {}, el) => {
 
   const {
 
-    // parse links as text content
-    ignoreLinks = false,
+    // adjust render behaviour
+    // key (string): tag names
+    // value (object: parse setting): settings for this tag
+    //  text: bool - parse node and its children as text
+    //  textChildren: bool - parse node normally, children as text
+    //  continue: bool - skip node, parse children normally
+    //  skip: bool - skip node its children
+    parseSettings = {}
 
   } = options;
 
@@ -35,26 +41,32 @@ const deserializeHtml = (options = {}, el) => {
   const isText = nodeType === window.Node.TEXT_NODE;
   const isElement = nodeType === window.Node.ELEMENT_NODE;
   const isLink = nodeName === 'A';
-  const hasInnerText = !!textContent;
+  const hasTextContent = !!textContent;
+
+  const parseSetting = (
+    parseSettings[nodeName] ||
+    parseSettings[nodeName.toLowerCase()]
+  ) || {};
 
   // only evaluate element nodes (ie. <p>, <div> etc.)
-  if (!isElement && !isText) return children;
-
-  // if a link has no anchor text, ignore
-  if (isLink && !hasInnerText) return children;
-
+  if (!isElement && !isText) parseSetting.skipCurrent = true;
+  // if an element has nothing in it to render, ignore
+  if (!hasTextContent) parseSetting.skip = true;
   // if a link has no href or ignoring links, treat it as a text node
-  if (isLink && (ignoreLinks || !currentAttrs.href)) {
-    currentAttrs = {};
-    children = textContent;
-    nodeName = '#text';
-  }
+  if (isLink && (!currentAttrs.href)) parseSetting.text = true;
+  // if text node, its content is its children
+  if (isText) parseSetting.text = true;
 
-  // if text element, its content is its children
-  if (isText) children = textContent;
-
-  // deserialize element
-  return deserialize(nodeName, currentAttrs, children);
+  // skip node and all its children
+  if (parseSetting.skip) return children;
+  // skip current node and continue with children
+  else if (parseSetting.continue) return children;
+  // parse node and all its children as text node
+  else if (parseSetting.text) return deserialize('#text', {}, textContent);
+  // parse node normally and its children as text
+  else if (parseSetting.textChildren) return deserialize(nodeName, currentAttrs, textContent);
+  // parse node and children normally
+  else return deserialize(nodeName, currentAttrs, children);
 }
 
 export default (options = {}) => (...strs) => {
