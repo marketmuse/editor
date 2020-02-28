@@ -6,7 +6,7 @@ describe('deserialize html: p', () => {
   // ****
   test('deserialize works with single paragraph', () => {
 
-    const output = deserializeHtml`
+    const output = deserializeHtml()`
       <p>test</p>
     `;
 
@@ -19,7 +19,7 @@ describe('deserialize html: p', () => {
   // ****
   test('deserialize works with nested paragraph', () => {
 
-    const output = deserializeHtml`
+    const output = deserializeHtml()`
       <div>
         <div>
           <div>
@@ -38,7 +38,7 @@ describe('deserialize html: p', () => {
   // ****
   test('deserialize works with multiple nested paragraphs', () => {
 
-    const output = deserializeHtml`
+    const output = deserializeHtml()`
       <div>
         <p>test1</p>
         <p>test2</p>
