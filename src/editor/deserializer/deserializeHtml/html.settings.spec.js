@@ -84,6 +84,36 @@ describe('deserialize html: tag settings', () => {
   });
 
   // ****
+  test('Parse function should receives arguments correctly', () => {
+
+    let didReceiveElement = false;
+    let didReceiveElementCorrectly = false;
+    let didReceiveAttrs = false;
+
+    deserializeHtml({
+      tagSettings: [
+        {
+          tag: 'a',
+          parse: (el, { href }) => {
+            didReceiveElement = !!el;
+            didReceiveElementCorrectly = el instanceof window.HTMLElement;
+            didReceiveAttrs = href === 'marketmuse.com';
+            return 'normal';
+          }
+        }
+      ]
+    })`
+      <a href="marketmuse.com">
+        marketmuse
+      </a>
+    `;
+
+    expect(didReceiveElement).toBe(true);
+    expect(didReceiveElementCorrectly).toBe(true);
+    expect(didReceiveAttrs).toBe(true);
+  });
+
+  // ****
   test('Parse should take a function and receives correct arguments', () => {
     expect(
       deserializeHtml({
@@ -91,10 +121,6 @@ describe('deserialize html: tag settings', () => {
           {
             tag: 'a',
             parse: (el, { href }) => {
-              // `el` should be an instance of HTMLElement.
-              // To test this, simply return something that
-              // will break this test if that isn't the case.
-              if (!(el instanceof window.HTMLElement)) return null;
               return href.indexOf('marketmuse.com') === -1
                 ? 'text'
                 : 'normal'

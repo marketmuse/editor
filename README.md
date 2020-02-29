@@ -330,12 +330,12 @@ Using this option, you can customize how MMS Editor should parse a given HTML ta
 
 * **tag** *(string)* - The tag name 
 * **parse** *(string or function ( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), attrs: object ) -> string)* - You can either provide a configuration, or a function that takes in the HTMLElement instance and returns the configuration. The value (or the value returned from this function) could be one of the following:
-  * **normal** *(default)* - Parse node and it's children normally
-	* **text** - Parse node and children as text.
-	* **textChildren** - Parse node normally, children as text.
-	* **continue** - Skip node, parse children normally.
-	* **continueText** - Skip node, parse children (excluding text nodes) as text.
-	* **skip** - Skip node and children.
+  * **normal** *(default)* - Parse node and children normally
+  * **text** - Parse node and children as text.
+  * **textChildren** - Parse node normally, children as text.
+  * **continue** - Skip node, parse children normally.
+  * **continueText** - Skip node, parse children (excluding text nodes) as text.
+  * **skip** - Skip node and children.
 
 For instance, let's say you don't support hyperlinks in your editor and you'd like MMS Editor to parse anchor text of the links as plain text nodes. Your configuration in this case would look like this:
 
