@@ -341,7 +341,7 @@ For instance, let's say you don't support hyperlinks in your editor and you'd li
 
 ```javascript
 htmlParserOptions = {
-  tagSettings = [
+  tagSettings: [
     { tag: 'a', parse: 'text' }
   ]
 }
@@ -351,16 +351,14 @@ Let's say you wanted to customize this even further and **only allow** hyperlink
 
 ```javascript
 htmlParserOptions = {
-  tagSettings = [
-    {
-      tag: 'a',
-      parse: (el, { href }) => {
-        return href.indexOf('domain.com') === -1
-          ? 'text'
-          : 'normal';
-      }
+  tagSettings: [{
+    tag: 'a',
+    parse: (el, { href }) => {
+      return href.indexOf('domain.com') === -1
+        ? 'text'
+        : 'normal';
     }
-  ]
+  }]
 }
 ```
 
