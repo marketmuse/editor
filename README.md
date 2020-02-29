@@ -351,14 +351,16 @@ Let's say you wanted to customize this even further and **only allow** hyperlink
 
 ```javascript
 htmlParserOptions = {
-  tagSettings: [{
-    tag: 'a',
-    parse: (el, { href }) => {
-      return href.indexOf('domain.com') === -1
-        ? 'text'
-        : 'normal';
+  tagSettings: [
+    {
+      tag: 'a',
+      parse: (el, { href }) => {
+        return href.indexOf('domain.com') === -1
+          ? 'text'
+          : 'normal';
+      }
     }
-  }]
+  ]
 }
 ```
 
