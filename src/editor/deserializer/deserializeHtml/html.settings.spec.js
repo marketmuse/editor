@@ -114,7 +114,7 @@ describe('deserialize html: tag settings', () => {
   });
 
   // ****
-  test('Parse should take a function and receives correct arguments', () => {
+  test('Parse function should work correctly', () => {
     expect(
       deserializeHtml({
         tagSettings: [
