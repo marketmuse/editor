@@ -329,21 +329,20 @@ By default, MMS Editor will try to convert as much HTML as it can, however the b
 Using this option, you can customize how MMS Editor should parse a given HTML tag. 
 
 * **tag** *(string)* - The tag name 
-* **parse** *(object or function ( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), attrs: object ) -> object)* - You can either provide parse settings object here, or a function that takes in the element and it's attributes as an object. The parse settings object (or the settings object returned from this function) should be as follows:
-	* **text** *(bool)* - Parse this node and all its children as a text node.
-	* **textChildren** *(bool)* - Parse this node normally, parse its children as a single text node.
-	* **continue** *(bool)* - Skip this node and continue parsing it's children.
-	* **skip** *(bool)* - Skip this node and all its children
+* **parse** *(string or function ( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), attrs: object ) -> string)* - You can either provide a configuration, or a function that takes in the HTMLElement instance and returns the configuration. The value (or the value returned from this function) could be one of the following:
+  * **normal** *(default)* - Parse node and it's children normally
+	* **text** - Parse node and children as text.
+	* **textChildren** - Parse node normally, children as text.
+	* **continue** - Skip node, parse children normally.
+	* **continueText** - Skip node, parse children (excluding text nodes) as text.
+	* **skip** - Skip node and children.
 
 For instance, let's say you don't support hyperlinks in your editor and you'd like MMS Editor to parse anchor text of the links as plain text nodes. Your configuration in this case would look like this:
 
 ```javascript
 htmlParserOptions = {
   tagSettings = [
-    {
-      tag: 'a',
-      parse: { text: true }
-    }
+    { tag: 'a', parse: 'text' }
   ]
 }
 ```
@@ -355,9 +354,11 @@ htmlParserOptions = {
   tagSettings = [
     {
       tag: 'a',
-      parse: (el, { href }) => ({
-        text: href.indexOf('domain.com') === -1
-      })
+      parse: (el, { href }) => {
+        return href.indexOf('domain.com') === -1
+          ? 'text'
+          : 'normal';
+      }
     }
   ]
 }

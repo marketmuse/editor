@@ -1,5 +1,5 @@
 import { types } from '@config/common';
-import deserializeHtml from '@editor/deserializer/deserializeHtml';
+import deserializeHtml, { TEXT } from '@editor/deserializer/deserializeHtml';
 
 describe('deserialize html: blockquote', () => {
 
@@ -31,7 +31,7 @@ describe('deserialize html: blockquote', () => {
 
     const output = deserializeHtml({
       tagSettings: [
-        { tag: 'blockquote', parse: { text: true } }
+        { tag: 'blockquote', parse: TEXT }
       ]
     })`
       <blockquote>marketmuse</blockquote>

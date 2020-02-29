@@ -22,7 +22,7 @@ const blockQuote = (_, children) => ({ children, ...attrs.q() });
 const fragment = (attrs = {}, children) =>
   ({ ...attrs, children: Array.isArray(children) ? children : [children] });
 const text = (attrs = {}, text) =>
-  ({ ...attrs, text: String(text) });
+  ({ ...attrs, text: String(text).trim() });
 
 // map allowed tags to functions
 export const tags = {

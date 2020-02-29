@@ -9,6 +9,9 @@ export default (html = '') => {
   clean = clean.replace(/>[\t ]+</g, '><');
   // remove whitespace after tags
   clean = clean.replace(/>[\t ]+$/g, '>');
+  // replace multiple spaces with a single space
+  // TODO: is this one a good idea ?
+  clean = clean.replace(/\s\s+/g, ' ');
 
   return clean
 }

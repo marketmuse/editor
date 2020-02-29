@@ -1,5 +1,9 @@
 import { types } from '@config/common';
-import deserializeHtml from '@editor/deserializer/deserializeHtml';
+import deserializeHtml, {
+  SKIP,
+  CONTINUE,
+  TEXT,
+} from '@editor/deserializer/deserializeHtml';
 
 describe('deserialize html: a', () => {
 
@@ -74,7 +78,7 @@ describe('deserialize html: a', () => {
 
     const output = deserializeHtml({
       tagSettings: [
-        { tag: 'a', parse: { text: true } }
+        { tag: 'a', parse: TEXT }
       ]
     })`
       <a href="https://marketmuse.com">marketmuse</a>
@@ -90,7 +94,7 @@ describe('deserialize html: a', () => {
 
     const output = deserializeHtml({
       tagSettings: [
-        { tag: 'a', parse: { skip: true } }
+        { tag: 'a', parse: SKIP }
       ]
     })`
       <a href="https://marketmuse.com">marketmuse</a>
@@ -104,7 +108,7 @@ describe('deserialize html: a', () => {
 
     const output = deserializeHtml({
       tagSettings: [
-        { tag: 'a', parse: { continue: true } }
+        { tag: 'a', parse: CONTINUE }
       ]
     })`
       <a href="https://marketmuse.com">
