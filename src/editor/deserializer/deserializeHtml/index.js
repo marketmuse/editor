@@ -74,17 +74,16 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
   // html deserializer runs from leafs to root.
   // pre-deserialize current node to see if its
   // children should inherit any properties
-  const _insInherit = inherit._instructions || {};
-  const preArgs = { ...htmlAttrs, ..._insInherit };
-  const pre = deserialize(nodeName, preArgs, [], { pre: true });
-  const _insCurrent = pre._instructions || {};
-  const _instructions = merge({}, _insInherit, _insCurrent);
+  const _inherited = inherit._instructions || {};
+  const pre = deserialize(nodeName, htmlAttrs, [], { pre: true });
+  const _instructionsForChildren = merge({}, _inherited, pre._instructions);
+  const _instructionsForCurrentNode = merge({}, _instructionsForChildren, pre._instructionsTag);
+  const isStyleTag = _instructionsForCurrentNode[STYLE_TAG];
+  const childrenArgs = _instructionsForCurrentNode[CHILDREN_ARGS] || {};
+  const childrenLeafArgs = _instructionsForCurrentNode[CHILDREN_LEAF_ARGS];
+  const childrenNodeArgs = _instructionsForCurrentNode[CHILDREN_NODE_ARGS];
 
   // get data on current node
-  const isStyleTag = _instructions[STYLE_TAG];
-  const childrenArgs = _instructions[CHILDREN_ARGS] || {};
-  const childrenLeafArgs = _instructions[CHILDREN_LEAF_ARGS];
-  const childrenNodeArgs = _instructions[CHILDREN_NODE_ARGS];
   const isText = nodeType === window.Node.TEXT_NODE;
   const isElement = nodeType === window.Node.ELEMENT_NODE;
   const isLink = nodeName === 'A';
@@ -133,7 +132,7 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
 
   // deserialize children
   let children = Array.from(current.childNodes)
-    .map(child => deserializeHtml(options, child, { _instructions }))
+    .map(child => deserializeHtml(options, child, { _instructions: _instructionsForChildren }))
     .flat()
 
   // skip current node and continue with children

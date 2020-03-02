@@ -3,6 +3,11 @@ import removeBabelProps from '@utils/removeBabelProps';
 
 // deserializer instructions --
 
+// _instructions (instructions object) -
+// pass these instructions down to further children
+// _instructionsTag (instructions object) -
+// applies only to the current tag, do not pass on
+
 // pass these args to all children
 export const CHILDREN_ARGS = 'children-args';
 // pass these args to all leafs (ie. text nodes)
@@ -17,8 +22,10 @@ const leaf = (args = {}, custom = {}) => ({
   ...args,
   ...custom,
   _instructions: {
-    [STYLE_TAG]: true,
     [CHILDREN_LEAF_ARGS]: custom
+  },
+  _instructionsTag: {
+    [STYLE_TAG]: true,
   }
 })
 

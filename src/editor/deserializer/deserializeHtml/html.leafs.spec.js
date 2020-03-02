@@ -11,16 +11,12 @@ describe('deserialize html: leafs', () => {
         <i>i</i>
         <u>u</u>
         <s>s</s>
-        <b><i>bi</i></b>
-        <b><i><s>bis</s></i></b>
       `
     ).toEqual([
       { text: 'b', [types.b]: true },
       { text: 'i', [types.i]: true },
       { text: 'u', [types.u]: true },
       { text: 's', [types.s]: true },
-      { text: 'bi', [types.b]: true, [types.i]: true },
-      { text: 'bis', [types.b]: true, [types.i]: true, [types.s]: true },
     ]);
   });
 
