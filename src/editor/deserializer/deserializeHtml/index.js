@@ -1,6 +1,7 @@
 import cleanHtml from '@utils/cleanHtml';
 import deserialize from '@editor/deserializer/deserialize';
 
+// strategy constants
 export const TEXT = 'text';
 export const TEXT_CHILDREN = 'textChildren';
 export const CONTINUE = 'continue';
@@ -20,11 +21,11 @@ const extractAttributes = el => {
 };
 
 // convert tag settings into dictionary grouped by tags
-const tagSettingsToDict = (tagSettings = []) => {
-  if (!Array.isArray(tagSettings)) return {};
-  return tagSettings.reduce((acc, tagSetting) => {
-    const t = (tagSetting.tag || '').toLowerCase();
-    return { ...acc, [t]: tagSetting.parse };
+const strategiesToDict = (strategies = []) => {
+  if (!Array.isArray(strategies)) return {};
+  return strategies.reduce((acc, strategy) => {
+    const t = (strategy.tag || '').toLowerCase();
+    return { ...acc, [t]: strategy.strategy };
   }, {});
 }
 
@@ -37,7 +38,7 @@ const deserializeHtml = (options = {}, el) => {
     // value (string or function( el: HTMLElement, attrs: object ) -> string) - parse
     // configuration, or fn that receives el and attributes, and returns configuration
     // possible values: normal (default), text, textChildren, continue, continueText and skip
-    tagSettingsDict = {}
+    strategiesDict = {}
 
   } = options;
 
@@ -46,21 +47,21 @@ const deserializeHtml = (options = {}, el) => {
 
   let { nodeType, nodeName, textContent } = current;
 
-  // extract parse setting
-  let tagSetting = tagSettingsDict[nodeName.toLowerCase()];
+  // extract tag settings
+  let strategy = strategiesDict[nodeName.toLowerCase()];
 
-  // if parse settings is a function
+  // if strategy is a function
   // execute it to get the settings
-  if (typeof tagSetting === 'function') {
-    tagSetting = tagSetting(current, currentAttrs);
+  if (typeof strategy === 'function') {
+    strategy = strategy(current, currentAttrs);
   }
 
-  // get parse configuration for this tag
-  let parseSkip = tagSetting === SKIP;
-  let parseContinue = tagSetting === CONTINUE;
-  let parseContinueText = tagSetting === CONTINUE_TEXT;
-  let parseText = tagSetting === TEXT;
-  let parseTextChildren = tagSetting === TEXT_CHILDREN;
+  // get deserialize strategy for this tag
+  let strategySkip = strategy === SKIP;
+  let strategyContinue = strategy === CONTINUE;
+  let strategyContinueText = strategy === CONTINUE_TEXT;
+  let strategyText = strategy === TEXT;
+  let strategyTextChildren = strategy === TEXT_CHILDREN;
 
   // get data on current node
   const isText = nodeType === window.Node.TEXT_NODE;
@@ -71,34 +72,34 @@ const deserializeHtml = (options = {}, el) => {
   // forced settings
 
   // only evaluate element nodes (ie. <p>, <div> etc.)
-  if (!isElement && !isText) parseContinue = true;
+  if (!isElement && !isText) strategyContinue = true;
   // if an element has nothing in it to render, ignore
-  if (!hasTextContent) parseSkip = true;
+  if (!hasTextContent) strategySkip = true;
   // if text node, its content is its children
-  if (isText) parseText = true;
+  if (isText) strategyText = true;
   // if a link has no href, treat it as a text node
-  if (isLink && !currentAttrs.href) parseText = true;
+  if (isLink && !currentAttrs.href) strategyText = true;
 
   // parse --
 
   // skip node and all its children
-  if (parseSkip) {
+  if (strategySkip) {
     return [];
   }
 
   // skip current node and continue with children as text
-  if (parseContinueText) {
+  if (strategyContinueText) {
     return deserialize('#text', {}, Array.from(current.children)
       .reduce((acc, child) => `${acc} ${child.textContent}`, ''));
   }
 
   // parse node and all its children as text node
-  if (parseText) {
+  if (strategyText) {
     return deserialize('#text', {}, textContent);
   }
 
   // parse node normally and its children as text
-  if (parseTextChildren) {
+  if (strategyTextChildren) {
     return deserialize(nodeName, currentAttrs, textContent);
   }
 
@@ -108,7 +109,7 @@ const deserializeHtml = (options = {}, el) => {
     .flat()
 
   // skip current node and continue with children
-  if (parseContinue) {
+  if (strategyContinue) {
     return children;
   }
 
@@ -127,7 +128,7 @@ export default (options = {}) => (...strs) => {
   const parsed = new window.DOMParser().parseFromString(clean, 'text/html');
 
   // convert tag settings to dictionary
-  const tagSettingsDict = tagSettingsToDict(options.tagSettings);
+  const strategiesDict = strategiesToDict(options.strategies);
 
-  return deserializeHtml({ ...options, tagSettingsDict }, parsed.body);
+  return deserializeHtml({ ...options, strategiesDict }, parsed.body);
 };

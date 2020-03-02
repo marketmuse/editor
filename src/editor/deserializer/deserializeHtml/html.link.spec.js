@@ -77,8 +77,8 @@ describe('deserialize html: a', () => {
   test('parse as test should work', () => {
 
     const output = deserializeHtml({
-      tagSettings: [
-        { tag: 'a', parse: TEXT }
+      strategies: [
+        { tag: 'a', strategy: TEXT }
       ]
     })`
       <a href="https://marketmuse.com">marketmuse</a>
@@ -93,8 +93,8 @@ describe('deserialize html: a', () => {
   test('skip link should ignore it', () => {
 
     const output = deserializeHtml({
-      tagSettings: [
-        { tag: 'a', parse: SKIP }
+      strategies: [
+        { tag: 'a', strategy: SKIP }
       ]
     })`
       <a href="https://marketmuse.com">marketmuse</a>
@@ -107,8 +107,8 @@ describe('deserialize html: a', () => {
   test('continue link should render its children', () => {
 
     const output = deserializeHtml({
-      tagSettings: [
-        { tag: 'a', parse: CONTINUE }
+      strategies: [
+        { tag: 'a', strategy: CONTINUE }
       ]
     })`
       <a href="https://marketmuse.com">

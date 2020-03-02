@@ -29,7 +29,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 * **children** *(function)* - MMSEditor adopts the [function-as-children pattern](https://reactjs.org/docs/jsx-in-depth.html#functions-as-children) to be able to pass on some editor related data down to its children, including the api and even the editor itself. Therefor, the children provided to this component **must** be a function (see below for arguments).
 * **plugins** *(array)* - An array of plugin objects that has functions to extend the libraries core api's. See [plugins](#plugins) section for details.
-* **htmlParserOptions** *(array)* - Configuration for the built-in HTML parser. See [HTML Parser](#html-parser) section for details.
+* **htmlDeserializerOptions** *(array)* - Configuration for the built-in HTML deserializer. See [HTML Deserializer](#html-deserializer) section for details.
 
 ### Children args
 
@@ -313,36 +313,34 @@ const plugins = [{
 ```
 
 
-# HTML Parser
+# HTML Deserializer
 
 MMS Editor comes with a built-in HTML parser. That is, if you import an HTML file or simply copy-paste a chunk of text from a website and paste it into the editor, this parser will deserialize the html markup and turn it into the editors own format. That way, basic formatting as well as some features such as links and lists could be persisted.
 
-## parser options
+By default, MMS Editor will try to convert as much HTML as it can, however the behaviour of the HTML deserializer could be customized if desired. `MMSEditor` component accepts `htmlDeserializerOptions` prop where you can pass the following props:
 
-By default, MMS Editor will try to convert as much HTML as it can, however the behaviour of the HTML parser could be customized if desired. `MMSEditor` component accepts `htmlParserOptions` prop where you can pass the following props:
-
-* **tagSettings** *(array)* - An array of tag settings objects, where you can customize the parsing behaviour for each individual tag. See below for more details.
+* **strategies** *(array)* - An array of strategy objects, where you can customize the deserialize behaviour for each individual tag. See below for more details.
 
 
-### tag settings
+## tag strategy
 
-Using this option, you can customize how MMS Editor should parse a given HTML tag. 
+Using this option, you can customize how MMS Editor should deserialize a given HTML tag. 
 
 * **tag** *(string)* - The tag name 
-* **parse** *(string or function ( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), attrs: object ) -> string)* - You can either provide a configuration, or a function that takes in the HTMLElement instance and returns the configuration. The value (or the value returned from this function) could be one of the following:
-  * **normal** *(default)* - Parse node and children normally
-  * **text** - Parse node and children as text.
-  * **textChildren** - Parse node normally, children as text.
-  * **continue** - Skip node, parse children normally.
-  * **continueText** - Skip node, parse children (excluding text nodes) as text.
+* **strategy** *(string or function ( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), attrs: object ) -> string)* - You can either provide a strategy as string, or a function that takes in the HTMLElement instance and returns the string. The value (or the value returned from this function) could be one of the following:
+  * **normal** *(default)* - Deserialize node and children normally
+  * **text** - Deserialize node and children as text.
+  * **textChildren** - Deserialize node normally, children as text.
+  * **continue** - Skip node, deserialize children normally.
+  * **continueText** - Skip node, deserialize children (excluding text nodes) as text.
   * **skip** - Skip node and children.
 
-For instance, let's say you don't support hyperlinks in your editor and you'd like MMS Editor to parse anchor text of the links as plain text nodes. Your configuration in this case would look like this:
+For instance, let's say you don't support hyperlinks in your editor and you'd like MMS Editor to deserialize anchor text of the links as plain text nodes. Your configuration in this case would look like this:
 
 ```javascript
-htmlParserOptions = {
-  tagSettings: [
-    { tag: 'a', parse: 'text' }
+htmlDeserializerOptions = {
+  strategies: [
+    { tag: 'a', strategy: 'text' }
   ]
 }
 ```
@@ -350,11 +348,11 @@ htmlParserOptions = {
 Let's say you wanted to customize this even further and **only allow** hyperlinks pointing to your own website. In that case, you could do the following:
 
 ```javascript
-htmlParserOptions = {
-  tagSettings: [
+htmlDeserializerOptions = {
+  strategies: [
     {
       tag: 'a',
-      parse: (el, { href }) => {
+      strategy: (el, { href }) => {
         return href.indexOf('domain.com') === -1
           ? 'text'
           : 'normal';

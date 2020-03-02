@@ -8,11 +8,11 @@ import Provider from '@/MMSEditorProvider';
 // turn it into an autoprefixed standalone css file
 import '@config/defaultStyles';
 
-const MMSEditor = ({ editor, htmlParserOptions, ...props }) => {
+const MMSEditor = ({ editor, htmlDeserializerOptions, ...props }) => {
   return (
     <Provider
       editor={editor}
-      htmlParserOptions={htmlParserOptions}
+      htmlDeserializerOptions={htmlDeserializerOptions}
     >
       <Editor {...props} />
     </Provider>
@@ -23,7 +23,7 @@ MMSEditor.propTypes = {
   editor: PropTypes.object,
   children: PropTypes.func,
   plugins: PropTypes.array,
-  htmlParserOptions: PropTypes.object,
+  htmlDeserializerOptions: PropTypes.object,
 };
 
 export default MMSEditor;

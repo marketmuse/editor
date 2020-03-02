@@ -7,11 +7,11 @@ import deserializeHtml, {
   TEXT_CHILDREN,
 } from '@editor/deserializer/deserializeHtml';
 
-const CONFIG_TEXT = { tagSettings: [{ tag: 'h1', parse: TEXT }] };
-const CONFIG_TEXT_CHILDREN = { tagSettings: [{ tag: 'h1', parse: TEXT_CHILDREN }] };
-const CONFIG_CONTINUE = { tagSettings: [{ tag: 'h1', parse: CONTINUE }] };
-const CONFIG_CONTINUE_TEXT = { tagSettings: [{ tag: 'h1', parse: CONTINUE_TEXT }] };
-const CONFIG_SKIP = { tagSettings: [{ tag: 'h1', parse: SKIP }] };
+const CONFIG_TEXT = { strategies: [{ tag: 'h1', strategy: TEXT }] };
+const CONFIG_TEXT_CHILDREN = { strategies: [{ tag: 'h1', strategy: TEXT_CHILDREN }] };
+const CONFIG_CONTINUE = { strategies: [{ tag: 'h1', strategy: CONTINUE }] };
+const CONFIG_CONTINUE_TEXT = { strategies: [{ tag: 'h1', strategy: CONTINUE_TEXT }] };
+const CONFIG_SKIP = { strategies: [{ tag: 'h1', strategy: SKIP }] };
 
 const html = `
 <h1>
@@ -91,10 +91,10 @@ describe('deserialize html: tag settings', () => {
     let didReceiveAttrs = false;
 
     deserializeHtml({
-      tagSettings: [
+      strategies: [
         {
           tag: 'a',
-          parse: (el, { href }) => {
+          strategy: (el, { href }) => {
             didReceiveElement = !!el;
             didReceiveElementCorrectly = el instanceof window.HTMLElement;
             didReceiveAttrs = href === 'marketmuse.com';
@@ -117,10 +117,10 @@ describe('deserialize html: tag settings', () => {
   test('Parse function should work correctly', () => {
     expect(
       deserializeHtml({
-        tagSettings: [
+        strategies: [
           {
             tag: 'a',
-            parse: (el, { href }) => {
+            strategy: (el, { href }) => {
               return href.indexOf('marketmuse.com') === -1
                 ? 'text'
                 : 'normal'

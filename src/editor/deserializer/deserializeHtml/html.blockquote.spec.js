@@ -30,8 +30,8 @@ describe('deserialize html: blockquote', () => {
   test('parse as text should work for blockquote', () => {
 
     const output = deserializeHtml({
-      tagSettings: [
-        { tag: 'blockquote', parse: TEXT }
+      strategies: [
+        { tag: 'blockquote', strategy: TEXT }
       ]
     })`
       <blockquote>marketmuse</blockquote>
