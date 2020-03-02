@@ -50,7 +50,7 @@ const blockQuote = (_, children) => ({ children, ...attrs.q() });
 const fragment = (args = {}, children) =>
   ({ ...args, children: Array.isArray(children) ? children : [children] });
 const text = (args = {}, text) =>
-  ({ ...args, text: String(text).trim() });
+  ({ ...args, text: String(text) });
 
 // map allowed tags to functions
 export const tags = {

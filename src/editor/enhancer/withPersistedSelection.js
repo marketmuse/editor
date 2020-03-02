@@ -1,4 +1,3 @@
-import React, { useRef } from 'react';
 import classHasFocus from '@utils/classHasFocus';
 
 export default editor => {
