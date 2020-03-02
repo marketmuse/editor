@@ -1,11 +1,32 @@
 import { attrs } from '@config/common';
 import removeBabelProps from '@utils/removeBabelProps';
 
+// deserializer instructions --
+
+// pass these args to all children
+export const CHILDREN_ARGS = 'children-args';
+// pass these args to all leafs (ie. text nodes)
+export const CHILDREN_LEAF_ARGS = 'children-leaf-args';
+// pass these args to all non-leaf nodes (ie. element nodes)
+export const CHILDREN_NODE_ARGS = 'children-node-args';
+// this tag is for styling (ie. <b>...</b>). do not
+// wrap, ignore and move on to the children
+export const STYLE_TAG = 'style-tag';
+
+const leaf = (args = {}, custom = {}) => ({
+  ...args,
+  ...custom,
+  _instructions: {
+    [STYLE_TAG]: true,
+    [CHILDREN_LEAF_ARGS]: custom
+  }
+})
+
 // leafs
-const bold = (args = {}) => ({ ...args, ...attrs.b() });
-const italic = (args = {}) => ({ ...args, ...attrs.i() });
-const underline = (args = {}) => ({ ...args, ...attrs.u() });
-const strikethrough = (args = {}) => ({ ...args, ...attrs.s() });
+const bold = (args = {}) => leaf(args, attrs.b());
+const italic = (args = {}) => leaf(args, attrs.i());
+const underline = (args = {}) => leaf(args, attrs.u());
+const strikethrough = (args = {}) => leaf(args, attrs.s());
 
 // elements
 const paragraph = (_, children) => ({ children, ...attrs.p() })
@@ -19,10 +40,10 @@ const listItem = (_, children) => ({ children, ...attrs.li() });
 const blockQuote = (_, children) => ({ children, ...attrs.q() });
 
 // misc
-const fragment = (attrs = {}, children) =>
-  ({ ...attrs, children: Array.isArray(children) ? children : [children] });
-const text = (attrs = {}, text) =>
-  ({ ...attrs, text: String(text).trim() });
+const fragment = (args = {}, children) =>
+  ({ ...args, children: Array.isArray(children) ? children : [children] });
+const text = (args = {}, text) =>
+  ({ ...args, text: String(text).trim() });
 
 // map allowed tags to functions
 export const tags = {
@@ -58,7 +79,12 @@ export const isKnown = tag => {
   return typeof tags[useTag] === 'function';
 }
 
-export default (tag = '', attrs = {}, children) => {
+export default (
+  tag = '',
+  attrs = {},
+  children,
+  options = {},
+) => {
 
   // strip attrs added by babel
   removeBabelProps(attrs);
@@ -85,6 +111,17 @@ export default (tag = '', attrs = {}, children) => {
       return c;
     })
   }
+
+  // this function deserializes a single node. however in
+  // some cases, additional data / attributes needs to be
+  // passed on to the children based on the node. for
+  // those cases, pass `pre: true` to. if pre-deserializing
+  // instructions to the parser will be passed on how to parse
+  // current nodes children
+  const { pre } = options;
+
+  // only pass `pre` data
+  if (!pre) delete res._instructions;
 
   return res;
 };

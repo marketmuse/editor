@@ -1,5 +1,11 @@
+import merge from 'lodash/merge';
 import cleanHtml from '@utils/cleanHtml';
-import deserialize from '@editor/deserializer/deserialize';
+import deserialize, {
+  STYLE_TAG,
+  CHILDREN_ARGS,
+  CHILDREN_LEAF_ARGS,
+  CHILDREN_NODE_ARGS,
+} from '@editor/deserializer/deserialize';
 
 // strategy constants
 export const TEXT = 'text';
@@ -29,7 +35,7 @@ const strategiesToDict = (strategies = []) => {
   }, {});
 }
 
-const deserializeHtml = (options = {}, el) => {
+const deserializeHtml = (options = {}, el, inherit = {}) => {
 
   const {
 
@@ -43,7 +49,7 @@ const deserializeHtml = (options = {}, el) => {
   } = options;
 
   let current = el;
-  let currentAttrs = extractAttributes(el);
+  let htmlAttrs = extractAttributes(el);
 
   let { nodeType, nodeName, textContent } = current;
 
@@ -53,7 +59,7 @@ const deserializeHtml = (options = {}, el) => {
   // if strategy is a function
   // execute it to get the settings
   if (typeof strategy === 'function') {
-    strategy = strategy(current, currentAttrs);
+    strategy = strategy(current, htmlAttrs);
   }
 
   // get deserialize strategy for this tag
@@ -63,14 +69,36 @@ const deserializeHtml = (options = {}, el) => {
   let strategyText = strategy === TEXT;
   let strategyTextChildren = strategy === TEXT_CHILDREN;
 
+  // parser instructions ---
+
+  // html deserializer runs from leafs to root.
+  // pre-deserialize current node to see if its
+  // children should inherit any properties
+  const _insInherit = inherit._instructions || {};
+  const preArgs = { ...htmlAttrs, ..._insInherit };
+  const pre = deserialize(nodeName, preArgs, [], { pre: true });
+  const _insCurrent = pre._instructions || {};
+  const _instructions = merge({}, _insInherit, _insCurrent);
+
   // get data on current node
+  const isStyleTag = _instructions[STYLE_TAG];
+  const childrenArgs = _instructions[CHILDREN_ARGS] || {};
+  const childrenLeafArgs = _instructions[CHILDREN_LEAF_ARGS];
+  const childrenNodeArgs = _instructions[CHILDREN_NODE_ARGS];
   const isText = nodeType === window.Node.TEXT_NODE;
   const isElement = nodeType === window.Node.ELEMENT_NODE;
   const isLink = nodeName === 'A';
   const hasTextContent = !!textContent;
 
-  // forced settings
+  // enhance current nodes args
+  let instructionArgs = { ...childrenArgs }
+  if (isText) instructionArgs = { ...instructionArgs, ...childrenLeafArgs }
+  if (isElement) instructionArgs = { ...instructionArgs, ...childrenNodeArgs }
 
+  // forced settings ---
+
+  // do not parse style tags as individual tags
+  if (isStyleTag) strategyContinue = true;
   // only evaluate element nodes (ie. <p>, <div> etc.)
   if (!isElement && !isText) strategyContinue = true;
   // if an element has nothing in it to render, ignore
@@ -78,9 +106,9 @@ const deserializeHtml = (options = {}, el) => {
   // if text node, its content is its children
   if (isText) strategyText = true;
   // if a link has no href, treat it as a text node
-  if (isLink && !currentAttrs.href) strategyText = true;
+  if (isLink && !htmlAttrs.href) strategyText = true;
 
-  // parse --
+  // deserialize --
 
   // skip node and all its children
   if (strategySkip) {
@@ -89,23 +117,23 @@ const deserializeHtml = (options = {}, el) => {
 
   // skip current node and continue with children as text
   if (strategyContinueText) {
-    return deserialize('#text', {}, Array.from(current.children)
+    return deserialize('#text', { ...instructionArgs }, Array.from(current.children)
       .reduce((acc, child) => `${acc} ${child.textContent}`, ''));
   }
 
   // parse node and all its children as text node
   if (strategyText) {
-    return deserialize('#text', {}, textContent);
+    return deserialize('#text', { ...instructionArgs }, textContent);
   }
 
   // parse node normally and its children as text
   if (strategyTextChildren) {
-    return deserialize(nodeName, currentAttrs, textContent);
+    return deserialize(nodeName, { ...htmlAttrs, ...instructionArgs }, textContent);
   }
 
   // deserialize children
   let children = Array.from(current.childNodes)
-    .map(child => deserializeHtml(options, child))
+    .map(child => deserializeHtml(options, child, { _instructions }))
     .flat()
 
   // skip current node and continue with children
@@ -114,7 +142,7 @@ const deserializeHtml = (options = {}, el) => {
   }
 
   // parse node and children normally
-  return deserialize(nodeName, currentAttrs, children);
+  return deserialize(nodeName, { ...htmlAttrs, ...instructionArgs }, children);
 }
 
 export default (options = {}) => (...strs) => {
@@ -130,5 +158,5 @@ export default (options = {}) => (...strs) => {
   // convert tag settings to dictionary
   const strategiesDict = strategiesToDict(options.strategies);
 
-  return deserializeHtml({ ...options, strategiesDict }, parsed.body);
+  return deserializeHtml({ ...options, strategiesDict }, parsed.body, {});
 };

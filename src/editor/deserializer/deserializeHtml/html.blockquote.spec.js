@@ -5,12 +5,13 @@ describe('deserialize html: blockquote', () => {
 
   // ****
   test('deserialize works for blockquote', () => {
-
-    const output = deserializeHtml()`
-      <blockquote>marketmuse</blockquote>
-    `;
-
-    expect(output).toEqual([{
+    expect(
+      deserializeHtml()`
+        <blockquote>
+          marketmuse
+        </blockquote>
+      `
+    ).toEqual([{
       type: types.q,
       children: [{ text: 'marketmuse' }]
     }]);
@@ -18,26 +19,26 @@ describe('deserialize html: blockquote', () => {
 
   // ****
   test('empty blockquotes should be ignored', () => {
-
-    const output = deserializeHtml()`
-      <blockquote></blockquote>
-    `;
-
-    expect(output).toEqual([]);
+    expect(
+      deserializeHtml()`
+        <blockquote></blockquote>
+      `
+    ).toEqual([]);
   });
 
   // ****
   test('parse as text should work for blockquote', () => {
-
-    const output = deserializeHtml({
-      strategies: [
-        { tag: 'blockquote', strategy: TEXT }
-      ]
-    })`
-      <blockquote>marketmuse</blockquote>
-    `;
-
-    expect(output).toEqual([
+    expect(
+      deserializeHtml({
+        strategies: [
+          { tag: 'blockquote', strategy: TEXT }
+        ]
+      })`
+        <blockquote>
+          marketmuse
+        </blockquote>
+      `
+    ).toEqual([
       { text: 'marketmuse' }
     ]);
   });
