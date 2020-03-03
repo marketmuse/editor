@@ -6,6 +6,7 @@ import url from 'rollup-plugin-url';
 import svgr from '@svgr/rollup';
 import postcss from 'rollup-plugin-postcss';
 import autoprefixer from 'autoprefixer';
+import syncToExample from './syncToExample';
 // import svg from 'rollup-plugin-svg';
 
 export default {
@@ -30,5 +31,6 @@ export default {
         'esrever': ['reverse']
       }
     }),
+    syncToExample()
   ]
 }
