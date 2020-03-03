@@ -1,5 +1,5 @@
 import React, { useState } from 'mms-editor/node_modules/react';
-import MMSEditor from 'mms-editor';
+import MMSEditor, { useFormats, useFunctions } from 'mms-editor';
 import 'mms-editor/dist/mms-editor.css';
 
 import './App.css';
@@ -9,6 +9,23 @@ const Separator = props => (
     <span>{props.text}</span>
   </separator>
 );
+
+function HooksTest() {
+  const formatsHookTest = useFormats();
+  const functionsHookTest = useFunctions();
+  
+  return (
+    <button
+      style={{ position: 'absolute' }}
+      onMouseDown={e => {
+        e.preventDefault();
+        functionsHookTest.toggleBold();
+      }}
+    >
+      {formatsHookTest.isBold ? 'bold' : 'not bold'}
+    </button>
+  );
+}
 
 function App() {
 
@@ -95,6 +112,9 @@ function App() {
 
         return (
           <div className="main-wrapper">
+            {/* to test the hooks */}
+            <HooksTest />
+
             {/* toolbar */}
             {toolbar()}
 

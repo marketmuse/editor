@@ -11,9 +11,7 @@ describe('deserialize html: a', () => {
   test('deserialize works for links', () => {
     expect(
       deserializeHtml()`
-        <a href="https://marketmuse.com">
-          marketmuse
-        </a>
+        <a href="https://marketmuse.com">marketmuse</a>
       `
     ).toEqual([{
       type: types.a,

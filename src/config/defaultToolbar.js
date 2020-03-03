@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { useState, useEffect } from 'react';
-import { useSlate } from 'slate-react'
+import useEditor from '@editor/hooks/useEditor';
 
 import { ReactComponent as IconHeadings } from '@assets/heading.svg';
 import { ReactComponent as IconHeadingOne } from '@assets/heading1.svg';
@@ -114,7 +114,7 @@ export const LinkButton = props => (
     onClick={() => props.setScreen(SCREEN_LINK)}
     children={props.children || <IconLink />}
   />
-)
+);
 
 export const RemoveLinkButton = props => (
   <ToolbarButton
@@ -139,10 +139,7 @@ export const OpenLinkButton = props => {
 export const LinkInput = props => {
   const [url, setUrl] = useState('');
 
-  // TODO: don't use `useSlate` here, this is the configuration.
-  // wrap it into something like `useMMSEditor` and expose it,
-  // and use that here instead
-  const editor = useSlate();
+  const editor = useEditor();
 
   // if selection is on an existing link, set the
   // set the input value to the existing link,

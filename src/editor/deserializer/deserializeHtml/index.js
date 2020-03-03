@@ -94,6 +94,8 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
   if (isText) instructionArgs = { ...instructionArgs, ...childrenLeafArgs }
   if (isElement) instructionArgs = { ...instructionArgs, ...childrenNodeArgs }
 
+  // TODO: user provided args for tags!!
+
   // forced settings ---
 
   // do not parse style tags as individual tags
@@ -117,7 +119,8 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
   // skip current node and continue with children as text
   if (strategyContinueText) {
     return deserialize('#text', { ...instructionArgs }, Array.from(current.children)
-      .reduce((acc, child) => `${acc} ${child.textContent}`, ''));
+      .map(child => child.textContent)
+      .join(' '));
   }
 
   // parse node and all its children as text node

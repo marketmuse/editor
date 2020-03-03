@@ -9,9 +9,7 @@ describe('deserialize html: inheritance', () => {
       deserializeHtml()`
         <i>
           <b>
-            <a href="marketmuse.com">
-              marketmuse
-            </a>
+            <a href="marketmuse.com">marketmuse</a>
           </b>
         </i>
       `
@@ -34,9 +32,7 @@ describe('deserialize html: inheritance', () => {
       deserializeHtml()`
         <a href="marketmuse.com">
           <b>
-            <i>
-              marketmuse
-            </i>
+            <i>marketmuse</i>
           </b>
         </a>
         

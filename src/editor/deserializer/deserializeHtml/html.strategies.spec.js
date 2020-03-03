@@ -13,12 +13,7 @@ const CONFIG_CONTINUE = { strategies: [{ tag: 'h1', strategy: CONTINUE }] };
 const CONFIG_CONTINUE_TEXT = { strategies: [{ tag: 'h1', strategy: CONTINUE_TEXT }] };
 const CONFIG_SKIP = { strategies: [{ tag: 'h1', strategy: SKIP }] };
 
-const html = `
-<h1>
-  test
-  <a href="marketmuse.com"> marketmuse</a>
-</h1>
-`;
+const html = `<h1>test <a href="marketmuse.com">marketmuse</a></h1>`;
 
 describe('deserialize html: tag settings', () => {
 
@@ -27,7 +22,7 @@ describe('deserialize html: tag settings', () => {
     expect(deserializeHtml()(html)).toEqual([{
       type: types.h1,
       children: [
-        { text: 'test' },
+        { text: 'test ' },
         {
           type: types.a,
           href: 'marketmuse.com',
@@ -59,7 +54,7 @@ describe('deserialize html: tag settings', () => {
   // ****
   test('CONTINUE should skip node and parse children normally', () => {
     expect(deserializeHtml(CONFIG_CONTINUE)(html)).toEqual([
-      { text: 'test' },
+      { text: 'test ' },
       {
         type: types.a,
         href: 'marketmuse.com',

@@ -41,7 +41,49 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 # Formats api
 
-Formats api is an object with flags that provides information about the cursors location / selection. They are useful for building custom toolbars (see formats section for more details)
+Formats api is an object with flags that provides information about the cursors location / selection. They are useful for building custom toolbars. 
+
+### Usage
+
+The `formats` object is passed as an argument to `MMSEditor`'s children function as well as several other api functions. It is also possible to receive it by using `useFormats` hook, as long as the component is inside `MMSEditor`'s context. 
+
+Example:
+
+```javascript
+import MMSEditor, { useFormats, useFunctions } from 'mms-editor';
+
+const MakeBoldButton = () => {
+  const formats = useFormats();
+  const functions = useFunctions();
+  
+  return (
+    <button
+      disabled={formats.isBold}
+      onMouseDown={e => {
+        e.preventDefault();
+        functions.toggleBold();
+      }}
+    >
+      toggle bold
+    </button>
+  )
+}
+
+const App = () => {
+  return (
+    <MMSEditor>
+      {({ editor }) => (
+        <div>
+          <MakeBoldButton />
+          {editor()}
+        </div>
+      )}
+    </MMSEditor>
+  )
+}
+```
+
+### Docs
 
 *Mark*: These are styles attached to text nodes, a block could be in multiple states at a time.
 
@@ -70,6 +112,12 @@ Formats api is an object with flags that provides information about the cursors 
 # Functions api
 
 Functions api consists of an object that holds methods that could be used to control the editor programmatically. These functions already has the editor instance wrapped within their closures, so they could be used directly. It exposes MMS Editor's higher-level api built on top of Slate JS, without even needing to interact with Slate editors instance.
+
+### Usage
+
+The `functions` object is passed as an argument to `MMSEditor`'s children function as well as several other api functions. It is also possible to receive it by using `useFunctions` hook, as long as the component is inside `MMSEditor`'s context. See example usage above under [Formats api](#formats-api) section.
+
+### Docs
 
 *Focus*:
 

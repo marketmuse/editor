@@ -7,9 +7,7 @@ describe('deserialize html: blockquote', () => {
   test('deserialize works for blockquote', () => {
     expect(
       deserializeHtml()`
-        <blockquote>
-          marketmuse
-        </blockquote>
+        <blockquote>marketmuse</blockquote>
       `
     ).toEqual([{
       type: types.q,
@@ -34,9 +32,7 @@ describe('deserialize html: blockquote', () => {
           { tag: 'blockquote', strategy: TEXT }
         ]
       })`
-        <blockquote>
-          marketmuse
-        </blockquote>
+        <blockquote>marketmuse</blockquote>
       `
     ).toEqual([
       { text: 'marketmuse' }
