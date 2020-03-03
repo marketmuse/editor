@@ -8,19 +8,17 @@ import postcss from 'rollup-plugin-postcss';
 import autoprefixer from 'autoprefixer';
 // import svg from 'rollup-plugin-svg';
 
-import pkg from './package.json'
-
 export default {
   input: 'src/index.js',
   output: [
-    { file: `dist/${pkg.name}.js`, format: 'cjs', sourcemap: true },
-    { file: `dist/${pkg.name}.es.js`, format: 'es', sourcemap: true }
+    { file: `dist/mms-editor.js`, format: 'cjs', sourcemap: true },
+    { file: `dist/mms-editor.es.js`, format: 'es', sourcemap: true }
   ],
   plugins: [
     postcss({
       plugins: [autoprefixer()],
       sourceMap: false,
-      extract: `dist/${pkg.name}.css`,
+      extract: `dist/mms-editor.css`,
     }),
     external(),
     url(),

@@ -1,5 +1,5 @@
-import React from 'mms-editor/node_modules/react';
-import ReactDOM from 'mms-editor/node_modules/react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';

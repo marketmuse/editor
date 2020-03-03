@@ -1,6 +1,6 @@
-import React, { useState } from 'mms-editor/node_modules/react';
-import MMSEditor, { useFormats, useFunctions } from 'mms-editor';
-import 'mms-editor/dist/mms-editor.css';
+import React, { useState } from 'react';
+import MMSEditor, { useFormats, useFunctions } from '@marketmuse/editor';
+import '@marketmuse/editor/dist/mms-editor.css';
 
 import './App.css';
 
