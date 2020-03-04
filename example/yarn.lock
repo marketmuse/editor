@@ -1165,18 +1165,9 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@marketmuse/editor@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@marketmuse/editor/-/editor-0.0.1.tgz#07de0a32a684f236562184e8635c0dd70c3b34a3"
-  integrity sha512-iNjRYkmYMHFyl4aAGz8Sc+hfSDBG2DVF8TGTm+Za1tEqY9g8j/rbEhHi5tylu+gnQ7m2McAqJxodEuKBwiCmrQ==
-  dependencies:
-    is-hotkey "^0.1.6"
-    is-url "^1.2.4"
-    lodash "^4.17.15"
-    slate "^0.57.1"
-    slate-history "^0.57.1"
-    slate-hyperscript "^0.57.1"
-    slate-react "^0.57.1"
+"@marketmuse/editor@link:..":
+  version "0.0.0"
+  uid ""
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -3622,17 +3613,6 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
-
-"editor-linked@file:..":
-  version "0.0.1"
-  dependencies:
-    is-hotkey "^0.1.6"
-    is-url "^1.2.4"
-    lodash "^4.17.15"
-    slate "^0.57.1"
-    slate-history "^0.57.1"
-    slate-hyperscript "^0.57.1"
-    slate-react "^0.57.1"
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -8380,15 +8360,9 @@ react-dev-utils@^10.2.0:
     strip-ansi "6.0.0"
     text-table "0.2.0"
 
-react-dom@^16.13.0:
-  version "16.13.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.0.tgz#cdde54b48eb9e8a0ca1b3dc9943d9bb409b81866"
-  integrity sha512-y09d2c4cG220DzdlFkPTnVvGTszVvNpC73v+AaLGLHbkpy3SSgvYq8x0rNwPJ/Rk/CicTNgk0hbHNw1gMEZAXg==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    scheduler "^0.19.0"
+"react-dom@link:../node_modules/react-dom":
+  version "0.0.0"
+  uid ""
 
 react-error-overlay@^6.0.6:
   version "6.0.6"
@@ -8460,14 +8434,9 @@ react-scripts@^3.4.0:
   optionalDependencies:
     fsevents "2.1.2"
 
-react@^16.13.0:
-  version "16.13.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.13.0.tgz#d046eabcdf64e457bbeed1e792e235e1b9934cf7"
-  integrity sha512-TSavZz2iSLkq5/oiE7gnFzmURKZMltmi193rm5HEoUDAXpzT9Kzw6oNZnGoai/4+fUnm7FqS5dwgUL34TujcWQ==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
+"react@link:../node_modules/react":
+  version "0.0.0"
+  uid ""
 
 read-pkg-up@^2.0.0:
   version "2.0.0"
@@ -8943,10 +8912,10 @@ saxes@^3.1.9:
   dependencies:
     xmlchars "^2.1.1"
 
-scheduler@^0.19.0:
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.19.0.tgz#a715d56302de403df742f4a9be11975b32f5698d"
-  integrity sha512-xowbVaTPe9r7y7RUejcK73/j8tt2jfiyTednOvHbA8JoClvMYCp+r8QegLwK/n8zWQAtZb1fFnER4XLBZXrCxA==
+scheduler@^0.18.0:
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.18.0.tgz#5901ad6659bc1d8f3fdaf36eb7a67b0d6746b1c4"
+  integrity sha512-agTSHR1Nbfi6ulI0kYNK0203joW2Y5W4po4l+v03tOoiJKpTBbxpNhWDvqc/4IcOw+KLmSiQLTasZ4cab2/UWQ==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

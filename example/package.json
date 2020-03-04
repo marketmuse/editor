@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@marketmuse/editor": "^0.0.1",
-    "editor-linked": "file:../",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "@marketmuse/editor": "link:../",
+    "react": "link:../node_modules/react",
+    "react-dom": "link:../node_modules/react-dom"
   },
   "scripts": {
     "start": "react-scripts start",
