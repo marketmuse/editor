@@ -21,12 +21,8 @@ export const STYLE_TAG = 'style-tag';
 const leaf = (args = {}, custom = {}) => ({
   ...args,
   ...custom,
-  _instructions: {
-    [CHILDREN_LEAF_ARGS]: custom
-  },
-  _instructionsTag: {
-    [STYLE_TAG]: true,
-  }
+  _instructions: { [CHILDREN_LEAF_ARGS]: custom },
+  _instructionsTag: { [STYLE_TAG]: true },
 })
 
 // leafs

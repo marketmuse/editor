@@ -367,6 +367,36 @@ MMS Editor comes with a built-in HTML parser. That is, if you import an HTML fil
 
 By default, MMS Editor will try to convert as much HTML as it can, however the behaviour of the HTML deserializer could be customized if desired. `MMSEditor` component accepts `htmlDeserializerOptions` prop where you can pass the following props:
 
+* **transform** ( function( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) ) -> newEl: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) ) - This is a low level function that lets you transform an HTMLElement into another before it or it's children gets evaluated. The return value should be the new HTMLElement. It is also possible to manipulate the children of this element via the `childNodes` property. Ex:
+
+```javascript
+htmlDeserializerOptions = {
+  transform: el => {
+    
+    // if the element is a span that contains '.bold' class
+    if (el.nodeName === "SPAN" && el.classList.contains('bold')) {
+      
+      // create a new <b> node
+      const newEl = document.createElement('b');
+      
+      // Make sure to pass on the contents
+      newEl.innerHTML = el.innerHTML;
+      
+      // or to manipulate the children:
+      // el.childNodes
+      //  .filter(n => /* whatever */)
+      //  .forEach(n => newEl.appendChild(n.cloneNode(true)))
+      
+      // return new element
+      return newEl;
+    }
+    
+    return el;
+  }
+}
+
+```
+
 * **strategies** *(array)* - An array of strategy objects, where you can customize the deserialize behaviour for each individual tag. See below for more details.
 
 

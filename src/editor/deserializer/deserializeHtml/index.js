@@ -44,12 +44,24 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
     // value (string or function( el: HTMLElement, attrs: object ) -> string) - parse
     // configuration, or fn that receives el and attributes, and returns configuration
     // possible values: normal (default), text, textChildren, continue, continueText and skip
-    strategiesDict = {}
+    strategiesDict = {},
+
+    // transform HTMLElement
+    transform,
 
   } = options;
 
   let current = el;
   let htmlAttrs = extractAttributes(el);
+
+  // if a transform function provided, re-set
+  // current to the HTMLElement returned from it
+  if (typeof transform === 'function') {
+    current = transform(current);
+  }
+
+  // if invalid node returned from transform function, return
+  if (!current) return [];
 
   let { nodeType, nodeName, textContent } = current;
 
@@ -93,8 +105,6 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
   let instructionArgs = { ...childrenArgs }
   if (isText) instructionArgs = { ...instructionArgs, ...childrenLeafArgs }
   if (isElement) instructionArgs = { ...instructionArgs, ...childrenNodeArgs }
-
-  // TODO: user provided args for tags!!
 
   // forced settings ---
 
@@ -147,7 +157,12 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
   return deserialize(nodeName, { ...htmlAttrs, ...instructionArgs }, children);
 }
 
-export default (options = {}) => (...strs) => {
+export default ({
+  // deserialize strategies
+  strategies,
+  // transform nodes
+  transform,
+} = {}) => (...strs) => {
 
   // cover tag function usage (ie. invocation with template literals)
   const html = Array.isArray(strs[0]) ? String.raw(...strs) : strs[0];
@@ -158,7 +173,7 @@ export default (options = {}) => (...strs) => {
   const parsed = new window.DOMParser().parseFromString(clean, 'text/html');
 
   // convert tag settings to dictionary
-  const strategiesDict = strategiesToDict(options.strategies);
+  const strategiesDict = strategiesToDict(strategies);
 
-  return deserializeHtml({ ...options, strategiesDict }, parsed.body, {});
+  return deserializeHtml({ transform, strategiesDict }, parsed.body, {});
 };
