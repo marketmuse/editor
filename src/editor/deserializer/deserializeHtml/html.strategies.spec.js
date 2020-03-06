@@ -7,11 +7,11 @@ import deserializeHtml, {
   TEXT_CHILDREN,
 } from '@editor/deserializer/deserializeHtml';
 
-const CONFIG_TEXT = { strategies: [{ tag: 'h1', strategy: TEXT }] };
-const CONFIG_TEXT_CHILDREN = { strategies: [{ tag: 'h1', strategy: TEXT_CHILDREN }] };
-const CONFIG_CONTINUE = { strategies: [{ tag: 'h1', strategy: CONTINUE }] };
-const CONFIG_CONTINUE_TEXT = { strategies: [{ tag: 'h1', strategy: CONTINUE_TEXT }] };
-const CONFIG_SKIP = { strategies: [{ tag: 'h1', strategy: SKIP }] };
+const CONFIG_TEXT = [{ strategies: [{ tag: 'h1', strategy: TEXT }] }];
+const CONFIG_TEXT_CHILDREN = [{ strategies: [{ tag: 'h1', strategy: TEXT_CHILDREN }] }];
+const CONFIG_CONTINUE = [{ strategies: [{ tag: 'h1', strategy: CONTINUE }] }];
+const CONFIG_CONTINUE_TEXT = [{ strategies: [{ tag: 'h1', strategy: CONTINUE_TEXT }] }];
+const CONFIG_SKIP = [{ strategies: [{ tag: 'h1', strategy: SKIP }] }];
 
 const html = `<h1>test <a href="marketmuse.com">marketmuse</a></h1>`;
 
@@ -85,7 +85,7 @@ describe('deserialize html: tag settings', () => {
     let didReceiveElementCorrectly = false;
     let didReceiveAttrs = false;
 
-    deserializeHtml({
+    deserializeHtml([{
       strategies: [
         {
           tag: 'a',
@@ -97,7 +97,7 @@ describe('deserialize html: tag settings', () => {
           }
         }
       ]
-    })`
+    }])`
       <a href="marketmuse.com">
         marketmuse
       </a>
@@ -111,7 +111,7 @@ describe('deserialize html: tag settings', () => {
   // ****
   test('Parse function should work correctly', () => {
     expect(
-      deserializeHtml({
+      deserializeHtml([{
         strategies: [
           {
             tag: 'a',
@@ -122,7 +122,7 @@ describe('deserialize html: tag settings', () => {
             }
           }
         ]
-      })`
+      }])`
       <div>
         <a href="google.com">google</a>
         <a href="marketmuse.com">marketmuse</a>

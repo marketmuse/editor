@@ -1,5 +1,10 @@
 import merge from 'lodash/merge';
 import cleanHtml from '@utils/cleanHtml';
+
+import strategiesToDict from '@editor/deserializer/deserializeHtml/utils/strategiesToDict';
+import extractAttributes from '@editor/deserializer/deserializeHtml/utils/extractAttributes';
+import combineOptions from '@editor/deserializer/deserializeHtml/utils/combineOptions';
+
 import deserialize, {
   STYLE_TAG,
   CHILDREN_ARGS,
@@ -13,27 +18,6 @@ export const TEXT_CHILDREN = 'textChildren';
 export const CONTINUE = 'continue';
 export const CONTINUE_TEXT = 'continueText';
 export const SKIP = 'skip';
-
-// extract attributes from NamedNodeMap to plain object
-const extractAttributes = el => {
-  if (!el || !el.attributes) return {};
-  const res = {};
-  const args = el.attributes;
-  for (let i = 0; i < args.length; i++) {
-    const arg = args[i];
-    res[arg.nodeName] = arg.nodeValue;
-  }
-  return res;
-};
-
-// convert tag settings into dictionary grouped by tags
-const strategiesToDict = (strategies = []) => {
-  if (!Array.isArray(strategies)) return {};
-  return strategies.reduce((acc, strategy) => {
-    const t = (strategy.tag || '').toLowerCase();
-    return { ...acc, [t]: strategy.strategy };
-  }, {});
-}
 
 const deserializeHtml = (options = {}, el, inherit = {}) => {
 
@@ -161,23 +145,20 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
   return deserialize(nodeName, { ...htmlAttrs, ...instructionArgs }, children);
 }
 
-export default ({
-  // deserialize strategies
-  strategies,
-  // transform nodes
-  transforms,
-} = {}) => (...strs) => {
+export default (options = []) => (...strs) => {
 
   // cover tag function usage (ie. invocation with template literals)
   const html = Array.isArray(strs[0]) ? String.raw(...strs) : strs[0];
-
   const clean = cleanHtml(html);
-
-  // parse html for deserializing
   const parsed = new window.DOMParser().parseFromString(clean, 'text/html');
 
-  // convert tag settings to dictionary
-  const strategiesDict = strategiesToDict(strategies);
+  const {
+    transforms,
+    strategies,
+  } = combineOptions(options);
 
-  return deserializeHtml({ transforms, strategiesDict }, parsed.body, {});
+  return deserializeHtml({
+    transforms,
+    strategiesDict: strategiesToDict(strategies)
+  }, parsed.body, {});
 };

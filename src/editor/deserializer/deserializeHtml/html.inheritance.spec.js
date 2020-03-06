@@ -35,7 +35,6 @@ describe('deserialize html: inheritance', () => {
             <i>marketmuse</i>
           </b>
         </a>
-        
       `
     ).toEqual([
       {
