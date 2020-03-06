@@ -6,8 +6,8 @@ describe('deserialize html: transform', () => {
   // ****
   test('transform function should work', () => {
     expect(
-      deserializeHtml({
-        transform: [
+      deserializeHtml([{
+        transforms: [
           el => {
             if (el.nodeName === 'DIV') {
               const newEl = document.createElement('p');
@@ -18,7 +18,7 @@ describe('deserialize html: transform', () => {
             return el;
           }
         ]
-      })`
+      }])`
         <div>
           <b>text</b>
         </div>

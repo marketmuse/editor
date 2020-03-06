@@ -4,7 +4,7 @@ import withPersistedSelection from '@editor/enhancer/withPersistedSelection';
 import withLinks from '@editor/enhancer/withLinks';
 import withHtml from '@editor/enhancer/withHtml';
 
-export default (editor, { htmlDeserializerOptions, test } = {}) => {
+export default (editor, { htmlDeserializerOptions = [], test } = {}) => {
 
   let useEditor = editor;
 
@@ -12,7 +12,7 @@ export default (editor, { htmlDeserializerOptions, test } = {}) => {
   useEditor = withPersistedSelection(useEditor);
   useEditor = withHistory(useEditor);
   useEditor = withLinks(useEditor);
-  useEditor = withHtml(useEditor, { htmlDeserializerOptions });
+  useEditor = withHtml(useEditor, htmlDeserializerOptions);
 
   return useEditor;
 }

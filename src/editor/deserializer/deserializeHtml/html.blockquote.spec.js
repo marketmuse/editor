@@ -27,11 +27,11 @@ describe('deserialize html: blockquote', () => {
   // ****
   test('parse as text should work for blockquote', () => {
     expect(
-      deserializeHtml({
+      deserializeHtml([{
         strategies: [
           { tag: 'blockquote', strategy: TEXT }
         ]
-      })`
+      }])`
         <blockquote>marketmuse</blockquote>
       `
     ).toEqual([

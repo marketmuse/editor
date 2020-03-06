@@ -1,33 +1,46 @@
 import mapReduceFlatten from '@utils/mapReduceFlatten';
 
-export default (plugins = []) => ({ functions, formats }) => {
+export default (plugins = []) => () => {
 
-  const pluginHotkeys = mapReduceFlatten(plugins, 'hotkeys');
-  const pluginDecorators = mapReduceFlatten(plugins, 'decorators');
+  // flatten hotkeys from plugins
+  const hotkeys = mapReduceFlatten(plugins, 'hotkeys');
 
-  return plugins.reduce((acc, plugin = {}) => {
-    if (typeof plugin !== 'object') return acc;
+  // flatten decorators from plugins
+  const decorators = mapReduceFlatten(plugins, 'decorators');
 
-    // extend formats
-    const newFormats = typeof plugin.formats === 'function'
-      ? plugin.formats(acc.formats, { functions: acc.functions })
-      : acc.formats;
+  // combine all html deserializer options into one array
+  const htmlDeserializerOptionsArr = plugins.map(p => p.htmlDeserializerOptions);
 
-    // extend functions
-    const newFunctions = typeof plugin.functions === 'function'
-      ? plugin.functions(acc.functions, { formats: acc.formats })
-      : acc.functions
+  // generate function to extend core api's
+  const extendCore = ({ functions, formats }) => {
+    return plugins.reduce((acc, plugin = {}) => {
+      if (typeof plugin !== 'object') return acc;
 
-    // return formats and functions
-    return {
-      formats: newFormats,
-      functions: newFunctions,
-      hotkeys: pluginHotkeys,
-      decorators: pluginDecorators,
-    }
+      // extend formats
+      const newFormats = typeof plugin.formats === 'function'
+        ? plugin.formats(acc.formats, { functions: acc.functions })
+        : acc.formats;
 
-  }, {
-    formats,
-    functions,
-  });
-};
+      // extend functions
+      const newFunctions = typeof plugin.functions === 'function'
+        ? plugin.functions(acc.functions, { formats: acc.formats })
+        : acc.functions
+
+      // return formats and functions
+      return {
+        formats: newFormats,
+        functions: newFunctions
+      }
+    }, {
+      formats,
+      functions,
+    });
+  }
+
+  return {
+    hotkeys,
+    decorators,
+    htmlDeserializerOptionsArr,
+    extendCore,
+  }
+}

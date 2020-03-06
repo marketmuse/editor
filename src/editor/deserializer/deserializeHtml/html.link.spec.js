@@ -73,11 +73,11 @@ describe('deserialize html: a', () => {
   // ****
   test('parse as test should work', () => {
     expect(
-      deserializeHtml({
+      deserializeHtml([{
         strategies: [
           { tag: 'a', strategy: TEXT }
         ]
-      })`
+      }])`
         <a href="https://marketmuse.com">marketmuse</a>
       `
     ).toEqual([
@@ -88,11 +88,11 @@ describe('deserialize html: a', () => {
   // ****
   test('skip link should ignore it', () => {
     expect(
-      deserializeHtml({
+      deserializeHtml([{
         strategies: [
           { tag: 'a', strategy: SKIP }
         ]
-      })`
+      }])`
         <a href="https://marketmuse.com">marketmuse</a>
       `
     ).toEqual([
@@ -102,11 +102,11 @@ describe('deserialize html: a', () => {
   // ****
   test('continue link should render its children', () => {
     expect(
-      deserializeHtml({
+      deserializeHtml([{
         strategies: [
           { tag: 'a', strategy: CONTINUE }
         ]
-      })`
+      }])`
         <a href="https://marketmuse.com">
           <div>marketmuse</div>
         </a>

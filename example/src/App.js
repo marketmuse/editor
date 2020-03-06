@@ -40,6 +40,7 @@ function App() {
 
   const plugins = [{
     // add hotkeys
+    /*
     hotkeys: [
       {
         key: 'mod+b',
@@ -47,6 +48,7 @@ function App() {
         command: () => alert('select some text for best results!'),
       },
     ],
+    */
     // add decorators
     decorators: [
       {
