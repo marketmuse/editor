@@ -23,13 +23,12 @@ const App = () => (
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-# MMSEditor
+# MMSEditor component
 
 `MMSEditor` is the Editor provider, it's responsible for keeping the state and managing the editor. It accepts the following props.
 
 * **children** *(function)* - MMSEditor adopts the [function-as-children pattern](https://reactjs.org/docs/jsx-in-depth.html#functions-as-children) to be able to pass on some editor related data down to its children, including the api and even the editor itself. Therefor, the children provided to this component **must** be a function (see below for arguments).
 * **plugins** *(array)* - An array of plugin objects that has functions to extend the libraries core api's. See [plugins](#plugins) section for details.
-* **htmlDeserializerOptions** *(object)* - Configuration for the built-in HTML deserializer. See [HTML Deserializer](#html-deserializer) section for details.
 
 ### Children args
 
@@ -39,7 +38,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 * **toolbar( config?: object )** *(function)* - A function that takes in a config object and returns the toolbar component. Note that this needs to be rendered for the toolbar to function, even for inline style. See the toolbars section for more details.
 
 
-# Formats api
+# Formats
 
 Formats api is an object with flags that provides information about the cursors location / selection. They are useful for building custom toolbars. 
 
@@ -109,13 +108,13 @@ const App = () => {
 * **isCollapsed** *(boolean / null)* - Cursor location within a text is referred to as [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection), and is indicated with an anhor point and a focus point. When a text is highlighted, anchor is where the selection begins and focus is the where it ends. A selection is [collapsed](https://developer.mozilla.org/en-US/docs/Web/API/Selection/isCollapsed) when anchor and focus are the same position, meaning, no text is selected. When there is no selection (ie. editor has no focus), this value will be null.
 
 
-# Functions api
+# Functions
 
 Functions api consists of an object that holds methods that could be used to control the editor programmatically. These functions already has the editor instance wrapped within their closures, so they could be used directly. It exposes MMS Editor's higher-level api built on top of Slate JS, without even needing to interact with Slate editors instance.
 
 ### Usage
 
-The `functions` object is passed as an argument to `MMSEditor`'s children function as well as several other api functions. It is also possible to receive it by using `useFunctions` hook, as long as the component is inside `MMSEditor`'s context. See example usage above under [Formats api](#formats-api) section.
+The `functions` object is passed as an argument to `MMSEditor`'s children function as well as several other api functions. It is also possible to receive it by using `useFunctions` hook, as long as the component is inside `MMSEditor`'s context. See example usage above under [Formats](#formats) section.
 
 ### Docs
 
@@ -165,17 +164,70 @@ A function that takes a config object returns the editor component. It is requir
 * **className** *(string)* - Apply a class name to the editor container (the render output of `component`). By default, it will already have `mms--editor`, and provided class names will be appended. This also makes styling the editor root with `styled-components` or similar libraries possible.
 * **autoFocus** *(boolean)* - Focus upon mount.
 * **readOnly** *(boolean)* - Disallow editing.
-* **decorators** *(array)* - Configuration for custom decorators. See [decorators](#decorators-api) section.
-* **hotkeys** *(array)* - Configuration for custom hotkeys. See [hotkeys](#hotkeys-api) section below.
-* **onKeyDown** *(function( args: object ) -> void)* - Args are as follows:
+* **onKeyDown** *(function( args: object ) -> void)* - **(TODO: move this into plugins)** Args are as follows:
 	* **event** *([KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent))*
 	* **formats** *(object)* - Formats api
 	* **functions** *(object)* - Functions api
 
 
-## Decorators api
+# Plugins
 
-Decorators are a type of text-level formatting that computes at render time based on the content. It is useful for implement things that requires dynamic highlighting, such as search or syntax highlighting. MMS editor allows you to implement your own **highlight rules**, and apply styles to or provide your own React Components to wrap around the text that matches your rule. `editor` function accepts `decorators`, an array of configuration objects.
+MMS editor supports plugins that could enhance `functions` and `formats` api's, as well as other sub api's such as `hotkeys` and `decorators`. It's a good way of packing an editor feature together and developing it in isolation. It allows creating custom functions and formats, extending / modifying the behaviour of the current ones, adding custom hotkeys, decorators and more. 
+
+The `MMSEditor` component accepts `plugins` prop, which should be an array of plugin objects. A plugin object's `functions` and `formats` functions receives the current version of the api, and is expected to return the extended version of it. Within these function, it's possible to extend these apis, and / or modify their behaviour. Once the apis are extended, all sub components / sub api's that receives formats and functions (ie. such as toolbar, decorators api, hotkeys api etc.) will receive the extended version of it.
+
+
+### plugin object
+
+* **formats** *(function( formats: object, args: object ) -> formats)* - A function that receives the current formats and args object, and returns new formats. Args are as follows:
+	* **functions** *(object)* - Functions api (version with current plugin **not applied**, but previous plugin **applied**).
+	
+* **functions** *(function( functions: object, args: object ) -> functions)* - A function that receives the current functions and args object, and returns new functions. Args are as follows:
+	* **formats** *(object)* - Formats api (version with current plugin **not applied**, but previous plugin **applied**).
+* **hotkeys** *(array)* - see [Hotkeys](#hotkeys).
+* **decorators** *(array)* - see [Decorators](#decorators).
+* **htmlDeserializerOptions** *(object)* - see [HTML Deserializer](#html-deserializer).
+	
+*Example*
+
+Extend `formats` api with `isStyled`:
+
+```javascript
+const plugins = [{
+  formats: formats => ({
+    ...formats,
+    isStyled: (
+      formats.isBold ||
+      formats.isItalic ||
+      formats.isUnderlined ||
+      formats.isStrikethrough 
+    )
+  })
+}]
+```
+
+Modify behaviour of `toggleBold`:
+
+```javascript
+const plugins = [{
+  functions: (functions, { formats }) => ({
+    ...functions,
+    toggleBold: (...args) => {
+      
+      // do not make bold if link
+      if (formats.isLink) return;
+      
+      // default behaviour
+      functions.toggleBold(...args);
+    }
+  })
+}]
+```
+
+
+## Decorators
+
+Decorators are a type of text-level formatting that computes at render time based on the content. It is useful for implement things that requires dynamic highlighting, such as search or syntax highlighting. MMS editor allows you to implement your own **highlight rules**, and apply styles to or provide your own React Components to wrap around the text that matches your rule.
 
 ### config objects
 
@@ -198,8 +250,9 @@ const Apple = props => (
     {props.children}
   </span>
 );
-
-const decorators = [
+```
+```javascript
+decorators: [
   {
     id: 'apple',
     match: /apple/i,
@@ -215,7 +268,7 @@ const decorators = [
 ]
 ```
 
-## Hotkeys api
+## Hotkeys
 
 Hotkeys api allows you to create custom key bindings, and assign them functionality using the `formats` and `functions` apis. It allows you to assign multiple commands to the same hotkeys, and run them in different contexts.
 
@@ -235,7 +288,7 @@ Hotkeys api accepts an array of keymap objects, order of execution of the comman
 Example:
 
 ```javascript
-const hotkeys = [
+hotkeys: [
   {
     key: 'mod+b',
     when: ({ formats }) => formats.isParagraph(),
@@ -248,6 +301,90 @@ const hotkeys = [
   },
 ]
 ```
+
+
+# HTML Deserializer
+
+MMS Editor comes with a built-in HTML deserializer. That is, if you import an HTML file or simply copy-paste a chunk of text from a website and paste it into the editor, this parser will deserialize the html markup and turn it into the editors own format. That way, basic formatting as well as some features such as links and lists could be persisted.
+
+By default, MMS Editor will try to convert as much HTML as it can, however the behaviour of the HTML deserializer could be customized if desired. Below are the props `htmlDeserializerOptions` accepts:
+
+* **transforms** ( array[ function( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) ) -> newEl: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) ] ) - This is a low level array of functions that lets you transform an HTMLElement into another before it or it's children gets evaluated. The return value should be the new HTMLElement. It is also possible to manipulate the children of this element via the `childNodes` property. Ex:
+
+```javascript
+htmlDeserializerOptions: {
+  transforms: [
+    el => {
+    
+      // if the element is a span that contains '.bold' class
+      if (el.nodeName === "SPAN" && el.classList.contains('bold')) {
+        
+        // create a new <b> node
+        const newEl = document.createElement('b');
+      
+        // Make sure to pass on the contents
+        newEl.innerHTML = el.innerHTML;
+      
+        // or to manipulate the children:
+        // el.childNodes
+        //  .filter(n => /* whatever */)
+        //  .forEach(n => newEl.appendChild(n.cloneNode(true)))
+      
+        // return new element
+        return newEl;
+      }
+    
+      return el;
+    }
+  ]
+}
+
+```
+
+* **strategies** *(array)* - An array of strategy objects, where you can customize the deserialize behaviour for each individual tag. See below for more details.
+
+
+## strategy object
+
+Using this option, you can customize how MMS Editor should deserialize a given HTML tag. 
+
+* **tag** *(string)* - The tag name 
+* **strategy** *(string or function ( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), attrs: object ) -> string)* - You can either provide a strategy as string, or a function that takes in the HTMLElement instance and returns the string. The value (or the value returned from this function) could be one of the following:
+  * **normal** *(default)* - Deserialize node and children normally
+  * **text** - Deserialize node and children as text.
+  * **textChildren** - Deserialize node normally, children as text.
+  * **continue** - Skip node, deserialize children normally.
+  * **continueText** - Skip node, deserialize children (excluding text nodes) as text.
+  * **skip** - Skip node and children.
+
+For instance, let's say you don't support hyperlinks in your editor and you'd like MMS Editor to deserialize anchor text of the links as plain text nodes. Your configuration in this case would look like this:
+
+```javascript
+htmlDeserializerOptions: {
+  strategies: [
+    { tag: 'a', strategy: 'text' }
+  ]
+}
+```
+
+Let's say you wanted to customize this even further and **only allow** hyperlinks pointing to your own website. In that case, you could do the following:
+
+```javascript
+htmlDeserializerOptions: {
+  strategies: [
+    {
+      tag: 'a',
+      strategy: (el, { href }) => {
+        return href.indexOf('domain.com') === -1
+          ? 'text'
+          : 'normal';
+      }
+    }
+  ]
+}
+```
+
+The second argument, `attributes`, is just to simplify interacting with the attributes of the DOM element, but since you have access to the `el`, the [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) instance, you could build such logic on any DOM property.
 
 
 # toolbar( config )
@@ -265,7 +402,6 @@ MMS Editor comes with a built-in toolbar that has primary rich text editing supp
 
 * TODO
 * Example: see the [default configuration](/src/config/defaultToolbar.js) as an example.
-
 
 
 # Styling
@@ -306,141 +442,3 @@ Text within the editor comes in standard html tags, so this class name could be 
 * `mms--active` - Active state
 * `mms--disabled` - Disabled state
 * `mms--toolbar-ignore-focus` - Inline toolbar will not render if there is no selection (ie. editor has no focus). Use this class name to prevent toolbar from hiding when main editor loses focus. Currently, this class name is used in text input elements within the toolbar.
-
-
-# HTML Deserializer
-
-MMS Editor comes with a built-in HTML parser. That is, if you import an HTML file or simply copy-paste a chunk of text from a website and paste it into the editor, this parser will deserialize the html markup and turn it into the editors own format. That way, basic formatting as well as some features such as links and lists could be persisted.
-
-By default, MMS Editor will try to convert as much HTML as it can, however the behaviour of the HTML deserializer could be customized if desired. `MMSEditor` component accepts `htmlDeserializerOptions` prop where you can pass the following props:
-
-* **transforms** ( array[ function( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) ) -> newEl: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) ] ) - This is a low level array of functions that lets you transform an HTMLElement into another before it or it's children gets evaluated. The return value should be the new HTMLElement. It is also possible to manipulate the children of this element via the `childNodes` property. Ex:
-
-```javascript
-htmlDeserializerOptions = {
-  transforms: [
-    el => {
-    
-      // if the element is a span that contains '.bold' class
-      if (el.nodeName === "SPAN" && el.classList.contains('bold')) {
-        
-        // create a new <b> node
-        const newEl = document.createElement('b');
-      
-        // Make sure to pass on the contents
-        newEl.innerHTML = el.innerHTML;
-      
-        // or to manipulate the children:
-        // el.childNodes
-        //  .filter(n => /* whatever */)
-        //  .forEach(n => newEl.appendChild(n.cloneNode(true)))
-      
-        // return new element
-        return newEl;
-      }
-    
-      return el;
-    }
-  ]
-}
-
-```
-
-* **strategies** *(array)* - An array of strategy objects, where you can customize the deserialize behaviour for each individual tag. See below for more details.
-
-
-## tag strategy
-
-Using this option, you can customize how MMS Editor should deserialize a given HTML tag. 
-
-* **tag** *(string)* - The tag name 
-* **strategy** *(string or function ( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), attrs: object ) -> string)* - You can either provide a strategy as string, or a function that takes in the HTMLElement instance and returns the string. The value (or the value returned from this function) could be one of the following:
-  * **normal** *(default)* - Deserialize node and children normally
-  * **text** - Deserialize node and children as text.
-  * **textChildren** - Deserialize node normally, children as text.
-  * **continue** - Skip node, deserialize children normally.
-  * **continueText** - Skip node, deserialize children (excluding text nodes) as text.
-  * **skip** - Skip node and children.
-
-For instance, let's say you don't support hyperlinks in your editor and you'd like MMS Editor to deserialize anchor text of the links as plain text nodes. Your configuration in this case would look like this:
-
-```javascript
-htmlDeserializerOptions = {
-  strategies: [
-    { tag: 'a', strategy: 'text' }
-  ]
-}
-```
-
-Let's say you wanted to customize this even further and **only allow** hyperlinks pointing to your own website. In that case, you could do the following:
-
-```javascript
-htmlDeserializerOptions = {
-  strategies: [
-    {
-      tag: 'a',
-      strategy: (el, { href }) => {
-        return href.indexOf('domain.com') === -1
-          ? 'text'
-          : 'normal';
-      }
-    }
-  ]
-}
-```
-
-The second argument, `attributes`, is just to simplify interacting with the attributes of the DOM element, but since you have access to the `el`, the [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) instance, you could build such logic on any DOM property.
-
-
-# Plugins
-
-MMS editor supports plugins that could enhance `functions` and `formats` api's, as well as other sub api's such as `hotkeys` and `decorators`. It's a good way of packing an editor feature together and developing it in isolation. It allows creating custom functions and formats, extending / modifying the behaviour of the current ones, adding custom hotkeys, decorators and more. The `MMSEditor` component accepts `plugins` prop, which should be an array of plugin objects.
-
-A plugin object's `functions` and `formats` functions receives the current version of the api, and is expected to return the extended version of it. Within these function, it's possible to extend these apis, and / or modify their behaviour. Once the apis are extended, all sub components / sub api's that receives formats and functions (ie. such as toolbar, decorators api, hotkeys api etc.) will receive the extended version of it. Plugins can also be used to provide `hotkeys` and `decorators` to editor. The hotkeys and decorators provided to the editor via `editor()` will have presendence over the ones provided with plugins.
-
-
-### plugin object
-
-* **formats** *(function( formats: object, args: object ) -> formats)* - A function that receives the current formats and args object, and returns new formats. Args are as follows:
-	* **functions** *(object)* - Functions api (version with current plugin **not applied**, but previous plugin **applied**).
-	
-* **functions** *(function( functions: object, args: object ) -> functions)* - A function that receives the current functions and args object, and returns new functions. Args are as follows:
-	* **formats** *(object)* - Formats api (version with current plugin **not applied**, but previous plugin **applied**).
-* **hotkeys** *(array)* - Hotkeys configuration provided by this plugin. See [hotkeys](#hotkeys-api) section for more details.
-* **decorators** *(array)* - Decorator configuration provided by this plugin. See [decorators](#decorators-api) section
-	
-*Example*
-
-Extend `formats` api with `isStyled`:
-
-```javascript
-const plugins = [{
-  formats: formats => ({
-    ...formats,
-    isStyled: (
-      formats.isBold ||
-      formats.isItalic ||
-      formats.isUnderlined ||
-      formats.isStrikethrough 
-    )
-  })
-}]
-```
-
-Modify behaviour of `toggleBold`:
-
-```javascript
-const plugins = [{
-  functions: (functions, { formats }) => ({
-    ...functions,
-    toggleBold: (...args) => {
-      
-      // do not make bold if link
-      if (formats.isLink) return;
-      
-      // default behaviour
-      functions.toggleBold(...args);
-    }
-  })
-}]
-```
