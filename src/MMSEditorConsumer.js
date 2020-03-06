@@ -124,6 +124,9 @@ MMSEditor.propTypes = {
     PropTypes.shape({
       formats: PropTypes.function,
       functions: PropTypes.function,
+      hotkeys: PropTypes.array,
+      decorators: PropTypes.array,
+      htmlDeserializerOptions: PropTypes.object,
     })
   )
 };

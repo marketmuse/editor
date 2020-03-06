@@ -29,7 +29,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 * **children** *(function)* - MMSEditor adopts the [function-as-children pattern](https://reactjs.org/docs/jsx-in-depth.html#functions-as-children) to be able to pass on some editor related data down to its children, including the api and even the editor itself. Therefor, the children provided to this component **must** be a function (see below for arguments).
 * **plugins** *(array)* - An array of plugin objects that has functions to extend the libraries core api's. See [plugins](#plugins) section for details.
-* **htmlDeserializerOptions** *(array)* - Configuration for the built-in HTML deserializer. See [HTML Deserializer](#html-deserializer) section for details.
+* **htmlDeserializerOptions** *(object)* - Configuration for the built-in HTML deserializer. See [HTML Deserializer](#html-deserializer) section for details.
 
 ### Children args
 
@@ -307,6 +307,91 @@ Text within the editor comes in standard html tags, so this class name could be 
 * `mms--disabled` - Disabled state
 * `mms--toolbar-ignore-focus` - Inline toolbar will not render if there is no selection (ie. editor has no focus). Use this class name to prevent toolbar from hiding when main editor loses focus. Currently, this class name is used in text input elements within the toolbar.
 
+
+# HTML Deserializer
+
+MMS Editor comes with a built-in HTML parser. That is, if you import an HTML file or simply copy-paste a chunk of text from a website and paste it into the editor, this parser will deserialize the html markup and turn it into the editors own format. That way, basic formatting as well as some features such as links and lists could be persisted.
+
+By default, MMS Editor will try to convert as much HTML as it can, however the behaviour of the HTML deserializer could be customized if desired. `MMSEditor` component accepts `htmlDeserializerOptions` prop where you can pass the following props:
+
+* **transforms** ( array[ function( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) ) -> newEl: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) ] ) - This is a low level array of functions that lets you transform an HTMLElement into another before it or it's children gets evaluated. The return value should be the new HTMLElement. It is also possible to manipulate the children of this element via the `childNodes` property. Ex:
+
+```javascript
+htmlDeserializerOptions = {
+  transforms: [
+    el => {
+    
+      // if the element is a span that contains '.bold' class
+      if (el.nodeName === "SPAN" && el.classList.contains('bold')) {
+        
+        // create a new <b> node
+        const newEl = document.createElement('b');
+      
+        // Make sure to pass on the contents
+        newEl.innerHTML = el.innerHTML;
+      
+        // or to manipulate the children:
+        // el.childNodes
+        //  .filter(n => /* whatever */)
+        //  .forEach(n => newEl.appendChild(n.cloneNode(true)))
+      
+        // return new element
+        return newEl;
+      }
+    
+      return el;
+    }
+  ]
+}
+
+```
+
+* **strategies** *(array)* - An array of strategy objects, where you can customize the deserialize behaviour for each individual tag. See below for more details.
+
+
+## tag strategy
+
+Using this option, you can customize how MMS Editor should deserialize a given HTML tag. 
+
+* **tag** *(string)* - The tag name 
+* **strategy** *(string or function ( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), attrs: object ) -> string)* - You can either provide a strategy as string, or a function that takes in the HTMLElement instance and returns the string. The value (or the value returned from this function) could be one of the following:
+  * **normal** *(default)* - Deserialize node and children normally
+  * **text** - Deserialize node and children as text.
+  * **textChildren** - Deserialize node normally, children as text.
+  * **continue** - Skip node, deserialize children normally.
+  * **continueText** - Skip node, deserialize children (excluding text nodes) as text.
+  * **skip** - Skip node and children.
+
+For instance, let's say you don't support hyperlinks in your editor and you'd like MMS Editor to deserialize anchor text of the links as plain text nodes. Your configuration in this case would look like this:
+
+```javascript
+htmlDeserializerOptions = {
+  strategies: [
+    { tag: 'a', strategy: 'text' }
+  ]
+}
+```
+
+Let's say you wanted to customize this even further and **only allow** hyperlinks pointing to your own website. In that case, you could do the following:
+
+```javascript
+htmlDeserializerOptions = {
+  strategies: [
+    {
+      tag: 'a',
+      strategy: (el, { href }) => {
+        return href.indexOf('domain.com') === -1
+          ? 'text'
+          : 'normal';
+      }
+    }
+  ]
+}
+```
+
+The second argument, `attributes`, is just to simplify interacting with the attributes of the DOM element, but since you have access to the `el`, the [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) instance, you could build such logic on any DOM property.
+
+
 # Plugins
 
 MMS editor supports plugins that could enhance `functions` and `formats` api's, as well as other sub api's such as `hotkeys` and `decorators`. It's a good way of packing an editor feature together and developing it in isolation. It allows creating custom functions and formats, extending / modifying the behaviour of the current ones, adding custom hotkeys, decorators and more. The `MMSEditor` component accepts `plugins` prop, which should be an array of plugin objects.
@@ -359,85 +444,3 @@ const plugins = [{
   })
 }]
 ```
-
-
-# HTML Deserializer
-
-MMS Editor comes with a built-in HTML parser. That is, if you import an HTML file or simply copy-paste a chunk of text from a website and paste it into the editor, this parser will deserialize the html markup and turn it into the editors own format. That way, basic formatting as well as some features such as links and lists could be persisted.
-
-By default, MMS Editor will try to convert as much HTML as it can, however the behaviour of the HTML deserializer could be customized if desired. `MMSEditor` component accepts `htmlDeserializerOptions` prop where you can pass the following props:
-
-* **transform** ( function( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) ) -> newEl: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) ) - This is a low level function that lets you transform an HTMLElement into another before it or it's children gets evaluated. The return value should be the new HTMLElement. It is also possible to manipulate the children of this element via the `childNodes` property. Ex:
-
-```javascript
-htmlDeserializerOptions = {
-  transform: el => {
-    
-    // if the element is a span that contains '.bold' class
-    if (el.nodeName === "SPAN" && el.classList.contains('bold')) {
-      
-      // create a new <b> node
-      const newEl = document.createElement('b');
-      
-      // Make sure to pass on the contents
-      newEl.innerHTML = el.innerHTML;
-      
-      // or to manipulate the children:
-      // el.childNodes
-      //  .filter(n => /* whatever */)
-      //  .forEach(n => newEl.appendChild(n.cloneNode(true)))
-      
-      // return new element
-      return newEl;
-    }
-    
-    return el;
-  }
-}
-
-```
-
-* **strategies** *(array)* - An array of strategy objects, where you can customize the deserialize behaviour for each individual tag. See below for more details.
-
-
-## tag strategy
-
-Using this option, you can customize how MMS Editor should deserialize a given HTML tag. 
-
-* **tag** *(string)* - The tag name 
-* **strategy** *(string or function ( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), attrs: object ) -> string)* - You can either provide a strategy as string, or a function that takes in the HTMLElement instance and returns the string. The value (or the value returned from this function) could be one of the following:
-  * **normal** *(default)* - Deserialize node and children normally
-  * **text** - Deserialize node and children as text.
-  * **textChildren** - Deserialize node normally, children as text.
-  * **continue** - Skip node, deserialize children normally.
-  * **continueText** - Skip node, deserialize children (excluding text nodes) as text.
-  * **skip** - Skip node and children.
-
-For instance, let's say you don't support hyperlinks in your editor and you'd like MMS Editor to deserialize anchor text of the links as plain text nodes. Your configuration in this case would look like this:
-
-```javascript
-htmlDeserializerOptions = {
-  strategies: [
-    { tag: 'a', strategy: 'text' }
-  ]
-}
-```
-
-Let's say you wanted to customize this even further and **only allow** hyperlinks pointing to your own website. In that case, you could do the following:
-
-```javascript
-htmlDeserializerOptions = {
-  strategies: [
-    {
-      tag: 'a',
-      strategy: (el, { href }) => {
-        return href.indexOf('domain.com') === -1
-          ? 'text'
-          : 'normal';
-      }
-    }
-  ]
-}
-```
-
-The second argument, `attributes`, is just to simplify interacting with the attributes of the DOM element, but since you have access to the `el`, the [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) instance, you could build such logic on any DOM property.

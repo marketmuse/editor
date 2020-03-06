@@ -47,7 +47,7 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
     strategiesDict = {},
 
     // transform HTMLElement
-    transform,
+    transforms,
 
   } = options;
 
@@ -56,8 +56,12 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
 
   // if a transform function provided, re-set
   // current to the HTMLElement returned from it
-  if (typeof transform === 'function') {
-    current = transform(current);
+  if (Array.isArray(transforms)) {
+    transforms.forEach(transform => {
+      if (typeof transform === 'function') {
+        current = transform(current);
+      }
+    })
   }
 
   // if invalid node returned from transform function, return
@@ -161,7 +165,7 @@ export default ({
   // deserialize strategies
   strategies,
   // transform nodes
-  transform,
+  transforms,
 } = {}) => (...strs) => {
 
   // cover tag function usage (ie. invocation with template literals)
@@ -175,5 +179,5 @@ export default ({
   // convert tag settings to dictionary
   const strategiesDict = strategiesToDict(strategies);
 
-  return deserializeHtml({ transform, strategiesDict }, parsed.body, {});
+  return deserializeHtml({ transforms, strategiesDict }, parsed.body, {});
 };
