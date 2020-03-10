@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { types } from '@config/common';
-import elements from '@components/editor/core/elements';
+import elements from '@components/editor/elements';
 
 const Element = ({ attributes, children, element = {} }) => {
   const pass = Object.assign({}, attributes, element);

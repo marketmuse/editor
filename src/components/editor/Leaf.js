@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import leafs from '@components/editor/core/leafs';
+import leafs from '@components/editor/leafs';
 
 const Leaf = ({ decors, attributes, children, leaf } = {}) => {
 
