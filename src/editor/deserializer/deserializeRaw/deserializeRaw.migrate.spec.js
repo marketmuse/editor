@@ -54,8 +54,8 @@ describe('deserialize raw migrations', () => {
       },
       {
         text: 'marketmuse',
-        bold: true,
-        italic: true,
+        [types.b]: true,
+        [types.i]: true,
       },
       {
         type: types.a,
