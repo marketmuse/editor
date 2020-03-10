@@ -24,8 +24,8 @@ const MMSEditor = props => {
   const {
     hotkeys,
     decorators,
-    htmlDeserializerOptionsArr: htmlDeserializerOptions,
     extendCore,
+    htmlDeserializerOptionsArr: htmlDeserializerOptions,
   } = applyPlugins();
 
   const editor = isNil(props.editor)

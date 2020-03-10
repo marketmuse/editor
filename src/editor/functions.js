@@ -12,6 +12,7 @@ import removeLink from '@editor/links/removeLink';
 import selectAll from '@editor/contents/selectAll';
 import clear from '@editor/contents/clear';
 import toggleFormat from '@editor/formatters/toggleFormat';
+import exportFn from '@editor/data/export';
 import toggleHeading from '@editor/formatters/toggleHeading';
 import populateWindow from '@utils/test/populateWindow';
 
@@ -46,6 +47,9 @@ export default editor => ({
   toggleListBulleted: status => toggleFormat(editor, 'block', types.ul, { status }),
   toggleListNumbered: status => toggleFormat(editor, 'block', types.ol, { status }),
   toggleHeading: (level, status) => toggleHeading(editor, level, status),
+
+  // data
+  export: (options) => exportFn(editor, options),
 
   // internals
   _getEditor: () => editor,
