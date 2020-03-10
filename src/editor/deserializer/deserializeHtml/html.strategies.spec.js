@@ -5,7 +5,7 @@ import deserializeHtml, {
   CONTINUE_TEXT,
   TEXT,
   TEXT_CHILDREN,
-} from '@editor/deserializer/deserializeHtml';
+} from '@editor/deserializer/deserializeHtml/deserializeHtml';
 
 const CONFIG_TEXT = [{ strategies: [{ tag: 'h1', strategy: TEXT }] }];
 const CONFIG_TEXT_CHILDREN = [{ strategies: [{ tag: 'h1', strategy: TEXT_CHILDREN }] }];

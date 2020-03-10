@@ -3,7 +3,7 @@ import deserializeHtml, {
   SKIP,
   CONTINUE,
   TEXT,
-} from '@editor/deserializer/deserializeHtml';
+} from '@editor/deserializer/deserializeHtml/deserializeHtml';
 
 describe('deserialize html: a', () => {
 

@@ -13,11 +13,11 @@
     "npm": ">=5"
   },
   "scripts": {
-    "test": "cross-env CI=1 react-scripts test --env=jsdom --moduleNameMapper='{\"@(.*)\":\"<rootDir>/src/$1\"}'",
-    "test:watch": "react-scripts test --env=jsdom --moduleNameMapper='{\"@(.*)\":\"<rootDir>/src/$1\"}'",
-    "build": "rollup -c",
+    "test": "cross-env LIB_VERSION=$npm_package_version CI=1 react-scripts test --env=jsdom --moduleNameMapper='{\"@(.*)\":\"<rootDir>/src/$1\"}'",
+    "test:watch": "cross-env LIB_VERSION=$npm_package_version react-scripts test --env=jsdom --moduleNameMapper='{\"@(.*)\":\"<rootDir>/src/$1\"}'",
+    "build": "cross-env LIB_VERSION=$npm_package_version rollup -c",
     "build:example": "yarn predeploy",
-    "start": "rollup -c -w",
+    "start": "cross-env LIB_VERSION=$npm_package_version rollup -c -w",
     "prepare": "yarn run build",
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build"

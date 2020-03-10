@@ -1,5 +1,5 @@
 import { types } from '@config/common';
-import deserializeHtml, { TEXT } from '@editor/deserializer/deserializeHtml';
+import deserializeHtml, { TEXT } from '@editor/deserializer/deserializeHtml/deserializeHtml';
 
 describe('deserialize html: options', () => {
 

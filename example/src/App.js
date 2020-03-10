@@ -239,32 +239,6 @@ function App() {
                   <button className="has-item-above has-item-left">clear</button>
                 </section>
               </section>
-              {/* jsx content */}
-              <label>
-                <a href="https://github.com/ianstormtaylor/slate/tree/master/packages/slate-hyperscript" target="_new">
-                  Hyperscript
-                </a>
-              </label>
-              <section class="col">
-                <textarea
-                  className="has-item-below"
-                  style={{ borderBottom: 'none' }}
-                  placeholder={defaultJsx}
-                  value={jsx}
-                  onChange={e => setJsx(e.target.value)}
-                />
-                <section style={{ margin: 0 }}>
-                  <button className="has-item-above has-item-right">replace</button>
-                  <button className="has-item-above has-item-left">clear</button>
-                </section>
-              </section>
-              <section>
-                <button onClick={() => functions.selectAll()}>select all</button>
-              </section>
-              <section>
-                <button onClick={() => functions.clear()}>clear</button>
-              </section>
-
 
               {/* JS stuff */}
               <Separator text="JS" />

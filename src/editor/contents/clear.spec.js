@@ -1,5 +1,5 @@
 /** @jsx deserialize */
-import deserialize from '@editor/deserializer/deserializeJsx';
+import deserialize from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
 import getFunctions from '@editor/functions';
 

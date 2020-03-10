@@ -1,6 +1,6 @@
 import { types } from '@config/common';
 import { Transforms } from 'slate';
-import deserializeHtml from '@editor/deserializer/deserializeHtml';
+import deserializeHtml from '@editor/deserializer/deserializeHtml/deserializeHtml';
 
 export default (editor, options = []) => {
 

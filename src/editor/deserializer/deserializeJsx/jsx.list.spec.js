@@ -1,6 +1,6 @@
 /** @jsx deserialize */
 import { types } from '@config/common';
-import deserialize from '@editor/deserializer/deserializeJsx';
+import deserialize from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
 
 describe('deserialize jsx: list', () => {
