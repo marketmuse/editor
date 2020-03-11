@@ -13,10 +13,11 @@ import selectAll from '@editor/contents/selectAll';
 import clear from '@editor/contents/clear';
 import toggleFormat from '@editor/formatters/toggleFormat';
 import exportFn from '@editor/data/export';
+import importFn from '@editor/data/import';
 import toggleHeading from '@editor/formatters/toggleHeading';
 import populateWindow from '@utils/test/populateWindow';
 
-export default editor => ({
+export default (editor, setValue) => ({
 
   // focus
   focus: () => focus(editor),
@@ -49,7 +50,8 @@ export default editor => ({
   toggleHeading: (level, status) => toggleHeading(editor, level, status),
 
   // data
-  export: (options) => exportFn(editor, options),
+  export: options => exportFn(editor, options),
+  import: raw => importFn(editor, setValue, raw),
 
   // internals
   _getEditor: () => editor,

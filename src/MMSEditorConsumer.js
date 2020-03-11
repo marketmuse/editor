@@ -25,11 +25,12 @@ const MMSEditor = props => {
     hotkeys,
     decorators,
     extendCore,
+    setValue,
   } = props;
 
   // extend functions and formats
   const { formats, functions } = extendCore({
-    functions: getFunctions(editor),
+    functions: getFunctions(editor, setValue),
     formats: getFormats(editor),
   });
 

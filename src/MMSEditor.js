@@ -52,6 +52,7 @@ const MMSEditor = props => {
         hotkeys={hotkeys}
         decorators={decorators}
         extendCore={extendCore}
+        setValue={setValue}
       >
         {props.children}
       </MMSEditorConsumer>
