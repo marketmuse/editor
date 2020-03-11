@@ -1,26 +1,25 @@
 /** @jsx deserialize */
-import { ReactEditor } from 'slate-react'
 import deserialize from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import mount from '@utils/test/mount';
 import withTest from '@utils/test/withTest';
-import getFunctions from '@editor/functions';
+import focus from '@editor/focus/focus';
+import hasFocus from '@editor/focus/hasFocus';
 
 describe('api: hasFocus', () => {
   test('hasFocus working', () => {
 
     const input = withTest(<editor />);
-    const api = getFunctions(input);
 
     // initially it shouldn't have focus
-    expect(api.hasFocus()).toBe(false);
+    expect(hasFocus(input)).toBe(false);
 
     // mount the editor
     mount(input);
 
     // focus
-    api.focus();
+    focus(input);
 
     // it should have received focus now
-    expect(api.hasFocus()).toBe(true);
+    expect(hasFocus(input)).toBe(true);
   })
 })

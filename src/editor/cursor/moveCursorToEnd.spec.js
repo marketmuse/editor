@@ -1,9 +1,7 @@
 /** @jsx deserialize */
-import { ReactEditor } from 'slate-react'
 import deserialize from '@editor/deserializer/deserializeJsx/deserializeJsx';
-import mount from '@utils/test/mount';
 import withTest from '@utils/test/withTest';
-import getFunctions from '@editor/functions';
+import moveCursorToEnd from '@editor/cursor/moveCursorToEnd';
 
 describe('api: moveCursorToEnd', () => {
   test('moving cursor to end', () => {
@@ -24,7 +22,7 @@ describe('api: moveCursorToEnd', () => {
       </editor>
     );
 
-    getFunctions(initial).moveCursorToEnd();
+    moveCursorToEnd(initial);
     expect(initial.selection).toEqual(expected.selection)
   })
 })

@@ -1,9 +1,8 @@
 /** @jsx deserialize */
 import { ReactEditor } from 'slate-react'
 import deserialize from '@editor/deserializer/deserializeJsx/deserializeJsx';
-import mount from '@utils/test/mount';
 import withTest from '@utils/test/withTest';
-import getFunctions from '@editor/functions';
+import selectAll from '@editor/contents/selectAll';
 
 describe('api: selectAll', () => {
 
@@ -26,7 +25,7 @@ describe('api: selectAll', () => {
       </editor>
     );
 
-    getFunctions(initial).selectAll();
+    selectAll(initial);
     expect(initial.selection).toEqual(expected.selection)
   })
 
@@ -49,7 +48,7 @@ describe('api: selectAll', () => {
       </editor>
     );
 
-    getFunctions(initial).selectAll();
+    selectAll(initial);
     expect(initial.selection).toEqual(expected.selection)
   })
 
@@ -72,7 +71,7 @@ describe('api: selectAll', () => {
       </editor>
     );
 
-    getFunctions(initial).selectAll();
+    selectAll(initial);
     expect(initial.selection).toEqual(expected.selection)
   })
 })

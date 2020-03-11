@@ -1,11 +1,11 @@
 /** @jsx deserialize */
 import deserialize from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
-import getFunctions from '@editor/functions';
+import clear from '@editor/contents/clear';
 
 const run = (input, expected) => {
   const mockSetValue = c => { input.children = c };
-  getFunctions(input, mockSetValue).clear();
+  clear(input, mockSetValue);
   return [ input.children, expected.children ];
 }
 

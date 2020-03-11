@@ -3,7 +3,7 @@ import { ReactEditor } from 'slate-react'
 import deserialize from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import mount from '@utils/test/mount';
 import withTest from '@utils/test/withTest';
-import getFunctions from '@editor/functions';
+import focusAtStart from '@editor/focus/focusAtStart';
 
 describe('api: focus at start', () => {
   test('is focus at start working', () => {
@@ -28,13 +28,11 @@ describe('api: focus at start', () => {
       </editor>
     );
 
-    const api = getFunctions(initial);
-
     // mount the editor
     mount(initial);
 
     // focus
-    api.focusAtStart();
+    focusAtStart(initial);
 
     expect(initial.selection).toEqual(expected.selection)
   })
