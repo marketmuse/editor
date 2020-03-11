@@ -4,7 +4,8 @@ import withTest from '@utils/test/withTest';
 import getFunctions from '@editor/functions';
 
 const run = (input, expected) => {
-  getFunctions(input).clear();
+  const mockSetValue = c => { input.children = c };
+  getFunctions(input, mockSetValue).clear();
   return [ input.children, expected.children ];
 }
 

@@ -31,7 +31,7 @@ export default (editor, setValue) => ({
 
   // content
   selectAll: () => selectAll(editor),
-  clear: () => clear(editor),
+  clear: () => clear(editor, setValue),
 
   // links
   getLink: () => getLink(editor),
@@ -50,8 +50,8 @@ export default (editor, setValue) => ({
   toggleHeading: (level, status) => toggleHeading(editor, level, status),
 
   // data
-  export: options => exportFn(editor, options),
   import: raw => importFn(editor, setValue, raw),
+  export: options => exportFn(editor, options),
 
   // internals
   _getEditor: () => editor,
