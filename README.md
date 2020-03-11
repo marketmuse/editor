@@ -156,7 +156,7 @@ The `functions` object is passed as an argument to `MMSEditor`'s children functi
 
 * **export( options: object )** - Export raw editor data. Options are as follows:
   * **history** *(bool)* - Include history in the export (ie. use this to persist undo's and redo's).
-
+* **import( raw: object )** - Import editor data. It takes the output of `export` function. This replaces the editor content.
 
 # editor()
 

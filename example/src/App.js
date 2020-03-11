@@ -115,8 +115,9 @@ function App() {
 
         return (
           <div className="main-wrapper">
-            {/* to test the hooks */}
+            {/* to test the hooks 
             <HooksTest />
+            */}
 
             {/* toolbar */}
             {toolbar()}
@@ -130,6 +131,43 @@ function App() {
 
             {/* controls */}
             <div className="control-wrapper">
+
+              {/* data controls */}
+              <Separator text="Import / Export" />
+              <label>Raw Data</label>
+              <section class="col">
+                <textarea
+                  className="has-item-below"
+                  style={{ borderBottom: 'none' }}
+                  placeholder="Enter raw data..."
+                  value={raw}
+                  onChange={e => setRaw(e.target.value)}
+                />
+                <section style={{ margin: 0 }}>
+                  <button
+                    className="has-item-above has-item-right"
+                    onClick={() => {
+                      const parsed = JSON.parse(raw);
+                      console.log('parsed', parsed);
+                      functions.import(parsed);
+                    }}
+                  >
+                    import
+                  </button>
+                  <button
+                    className="has-item-above has-item-right has-item-left"
+                    onClick={() => setRaw(JSON.stringify(functions.export()))}
+                  >
+                    export
+                  </button>
+                  <button
+                    className="has-item-above has-item-left"
+                    onClick={() => setRaw(JSON.stringify(functions.export({ history: true })))}
+                  >
+                    export with history
+                  </button>
+                </section>
+              </section>
 
               {/* highlights */}
               <Separator text="Highlights" />
@@ -237,37 +275,6 @@ function App() {
                   <button className="has-item-above has-item-right has-item-left">+cursor</button>
                   <button className="has-item-above has-item-right has-item-left">replace</button>
                   <button className="has-item-above has-item-left">clear</button>
-                </section>
-              </section>
-
-              {/* data controls */}
-              <Separator text="Import / Export" />
-              <label>Raw Data</label>
-              <section class="col">
-                <textarea
-                  className="has-item-below"
-                  style={{ borderBottom: 'none' }}
-                  placeholder="Enter raw data..."
-                  value={raw}
-                  onChange={e => setRaw(e.target.value)}
-                />
-                <section style={{ margin: 0 }}>
-                  <button
-                    className="has-item-above has-item-right"
-                    onClick={() => {
-                      const parsed = JSON.parse(raw);
-                      console.log('parsed', parsed);
-                      functions.import(parsed);
-                    }}
-                  >
-                    import
-                  </button>
-                  <button
-                    className="has-item-above has-item-left"
-                    onClick={() => setRaw(JSON.stringify(functions.export()))}
-                  >
-                    export
-                  </button>
                 </section>
               </section>
 
