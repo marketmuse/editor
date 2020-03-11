@@ -1,9 +1,6 @@
-// versioning of the data formats
-// this version gets attached when serializing / deserializing
-// raw editor data. if a breaking change to the data format is made,
-// this version should be increased, and a migration script should
-// be implemented in `@editor/deserializer/deserializeRaw/migrations`.
-export const DATA_VERSION = 1;
+// if a breaking change to the data format is made, `data-version`
+// field in package.json should be increased, and a migration script should
+// be implemented in `@editor/deserializer/deserializeRaw/migrations`
 
 export const types = {
   p: 'paragraph',

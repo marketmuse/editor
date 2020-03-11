@@ -1,6 +1,7 @@
 {
   "name": "@marketmuse/editor",
   "version": "0.0.2",
+  "data-version": 1,
   "description": "",
   "author": "Oguz Gelal <oguz@marketmuse.com>",
   "license": "MIT",
@@ -13,11 +14,11 @@
     "npm": ">=5"
   },
   "scripts": {
-    "test": "cross-env LIB_VERSION=$npm_package_version CI=1 react-scripts test --env=jsdom --moduleNameMapper='{\"@(.*)\":\"<rootDir>/src/$1\"}'",
-    "test:watch": "cross-env LIB_VERSION=$npm_package_version react-scripts test --env=jsdom --moduleNameMapper='{\"@(.*)\":\"<rootDir>/src/$1\"}'",
-    "build": "cross-env LIB_VERSION=$npm_package_version rollup -c",
+    "test": "cross-env CI=1 react-scripts test --env=jsdom --moduleNameMapper='{\"@(.*)\":\"<rootDir>/src/$1\"}'",
+    "test:watch": "react-scripts test --env=jsdom --moduleNameMapper='{\"@(.*)\":\"<rootDir>/src/$1\"}'",
+    "build": "rollup -c",
     "build:example": "yarn predeploy",
-    "start": "cross-env LIB_VERSION=$npm_package_version rollup -c -w",
+    "start": "rollup -c -w",
     "prepare": "yarn run build",
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build"
@@ -48,6 +49,7 @@
     "@babel/plugin-syntax-import-meta": "^7.7.4",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
+    "@rollup/plugin-json": "^4.0.2",
     "@svgr/rollup": "^2.4.1",
     "autoprefixer": "^9.7.4",
     "babel-plugin-module-resolver": "^4.0.0",

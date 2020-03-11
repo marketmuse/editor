@@ -1,4 +1,5 @@
-import { types, DATA_VERSION } from '@config/common';
+import versions from '@config/versions';
+import { types } from '@config/common';
 import exportFn from '@editor/data/export';
 
 describe('export', () => {
@@ -14,8 +15,7 @@ describe('export', () => {
     };
 
     const expected = {
-      version: process.env.LIB_VERSION,
-      data_version: DATA_VERSION,
+      ...versions,
       data: [{
         type: types.p,
         children: [{ text: 'marketmuse' }]
@@ -41,8 +41,7 @@ describe('export', () => {
     };
 
     const expected = {
-      version: process.env.LIB_VERSION,
-      data_version: DATA_VERSION,
+      ...versions,
       data: [{
         type: types.p,
         children: [{ text: 'marketmuse' }]

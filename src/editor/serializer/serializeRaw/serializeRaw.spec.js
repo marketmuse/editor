@@ -1,5 +1,7 @@
-import { types, DATA_VERSION } from '@config/common';
+import versions from '@config/versions';
+import { types } from '@config/common';
 import serializeRaw from '@editor/serializer/serializeRaw/serializeRaw';
+import packageJson from '@/package.symlink.json';
 
 describe('serialize raw', () => {
 
@@ -12,8 +14,7 @@ describe('serialize raw', () => {
     }];
 
     const expected = {
-      version: process.env.LIB_VERSION,
-      data_version: DATA_VERSION,
+      ...versions,
       data: [{
         type: types.p,
         children: [{ text: 'marketmuse' }]

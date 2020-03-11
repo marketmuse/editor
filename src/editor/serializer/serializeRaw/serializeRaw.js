@@ -1,8 +1,7 @@
-import { DATA_VERSION } from '@config/common';
+import versions from '@config/versions';
 
 export default (data, metadata = {}) => ({
   ...metadata,
-  version: process.env.LIB_VERSION,
-  data_version: DATA_VERSION,
+  ...versions,
   data,
 });

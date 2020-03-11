@@ -32,11 +32,12 @@ function App() {
   const [code, setCode] = useState('');
   const [text, setText] = useState('');
   const [url, setUrl] = useState('google.com');
-  const [jsx, setJsx] = useState('');
+  const [raw, setRaw] = useState('');
+
   const [redHighlights, setRedHighlights] = useState('cat, dog, bird');
   const [blueHighlights, setBlueHighlights] = useState('toyota, honda');
   const defaultCode = 'functions.focus();\nfunctions.moveCursorToStart()\nconsole.log("cursor moved")';
-  const defaultJsx = `<editor>\n\t<block>\n\t\t<text>yo!</text>\n\t</block>\n</editor>`;
+
 
   const plugins = [{
     // add hotkeys
@@ -221,7 +222,6 @@ function App() {
 
               {/* content controls */}
               <Separator text="Content" />
-              {/* text content */}
               <label>Text</label>
               <section class="col">
                 <textarea
@@ -237,6 +237,37 @@ function App() {
                   <button className="has-item-above has-item-right has-item-left">+cursor</button>
                   <button className="has-item-above has-item-right has-item-left">replace</button>
                   <button className="has-item-above has-item-left">clear</button>
+                </section>
+              </section>
+
+              {/* data controls */}
+              <Separator text="Import / Export" />
+              <label>Raw Data</label>
+              <section class="col">
+                <textarea
+                  className="has-item-below"
+                  style={{ borderBottom: 'none' }}
+                  placeholder="Enter raw data..."
+                  value={raw}
+                  onChange={e => setRaw(e.target.value)}
+                />
+                <section style={{ margin: 0 }}>
+                  <button
+                    className="has-item-above has-item-right"
+                    onClick={() => {
+                      const parsed = JSON.parse(raw);
+                      console.log('parsed', parsed);
+                      functions.import(parsed);
+                    }}
+                  >
+                    import
+                  </button>
+                  <button
+                    className="has-item-above has-item-left"
+                    onClick={() => setRaw(JSON.stringify(functions.export()))}
+                  >
+                    export
+                  </button>
                 </section>
               </section>
 
