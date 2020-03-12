@@ -14,6 +14,8 @@ import clear from '@editor/contents/clear';
 import toggleFormat from '@editor/formatters/toggleFormat';
 import exportFn from '@editor/data/export';
 import importFn from '@editor/data/import';
+import insertHtml from '@editor/data/insertHtml';
+import insertText from '@editor/data/insertText';
 import toggleHeading from '@editor/formatters/toggleHeading';
 import populateWindow from '@utils/test/populateWindow';
 
@@ -52,6 +54,8 @@ export default (editor, setValue) => ({
   // data
   import: raw => importFn(editor, setValue, raw),
   export: options => exportFn(editor, options),
+  insertHtml: (html, options) => insertHtml(editor, html, options),
+  insertText: text => insertText(editor, text),
 
   // internals
   _getEditor: () => editor,

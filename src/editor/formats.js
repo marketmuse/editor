@@ -1,6 +1,7 @@
 import { types } from '@config/common';
 import isFormatActive from '@editor/formatters/isFormatActive';
 import isCollapsed from '@editor/cursor/isCollapsed';
+import isFocused from '@editor/focus/hasFocus';
 
 export default editor => {
 
@@ -30,6 +31,7 @@ export default editor => {
 
     // misc
     isCollapsed: isCollapsed(editor),
+    isFocused: isFocused(editor),
 
     // TODO: Editor.marks won't return custom formats
     // isDecor: id => isFormatActive(editor, 'mark', getDecoratorKey(id)),

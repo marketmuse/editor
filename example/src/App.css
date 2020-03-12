@@ -95,10 +95,10 @@
   border-radius: 3px;
 }
 
-.control-wrapper button.disabled { opacity: 0.9; }
-.control-wrapper button.disabled:hover { cursor: default !important;  }
+.control-wrapper button:disabled { opacity: 0.9; }
+.control-wrapper button:disabled:hover { cursor: default !important;  }
 
-.control-wrapper button:not(.disabled):hover {
+.control-wrapper button:not(:disabled):hover {
   cursor: pointer;
   background-color: #0881e2;
 }
@@ -106,7 +106,7 @@
 .control-wrapper button.active {
   background-color: orange;
 }
-.control-wrapper button:not(.disabled).active:hover {
+.control-wrapper button:not(:disabled).active:hover {
   background-color: darkorange;
 }
 

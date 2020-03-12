@@ -33,6 +33,7 @@ function App() {
   const [text, setText] = useState('');
   const [url, setUrl] = useState('google.com');
   const [raw, setRaw] = useState('');
+  const [html, setHtml] = useState('');
 
   const [redHighlights, setRedHighlights] = useState('cat, dog, bird');
   const [blueHighlights, setBlueHighlights] = useState('toyota, honda');
@@ -41,7 +42,6 @@ function App() {
 
   const plugins = [{
     // add hotkeys
-    /*
     hotkeys: [
       {
         key: 'mod+b',
@@ -49,7 +49,6 @@ function App() {
         command: () => alert('select some text for best results!'),
       },
     ],
-    */
     // add decorators
     decorators: [
       {
@@ -111,28 +110,12 @@ function App() {
           isListNumbered,
           isListBulleted,
           isCollapsed,
+          isFocused,
         } = formats;
 
-        return (
-          <div className="main-wrapper">
-            {/* to test the hooks 
-            <HooksTest />
-            */}
-
-            {/* toolbar */}
-            {toolbar()}
-
-            {/* editor */}
-            <div className="editor-wrapper">
-              <div className="container">
-                {editor()}
-              </div>
-            </div>
-
-            {/* controls */}
-            <div className="control-wrapper">
-
-              {/* data controls */}
+        const renderImportsExports = () => {
+          return (
+            <>
               <Separator text="Import / Export" />
               <label>Raw Data</label>
               <section class="col">
@@ -168,8 +151,13 @@ function App() {
                   </button>
                 </section>
               </section>
+            </>
+          )
+        };
 
-              {/* highlights */}
+        const renderHighlights = () => {
+          return (
+            <>
               <Separator text="Highlights" />
               <label>Blue</label>
               <section class="col">
@@ -187,37 +175,14 @@ function App() {
                   onChange={e => setRedHighlights(e.target.value)}
                 />
               </section>
+            </>
+          )
+        };
 
-              {/* formatters */}
-              <Separator text="Formatters" />
-              <section className="merge-below">
-                <button className={`has-item-right ${isBold ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleBold(); }}><b>bold</b></button>
-                <button className={`has-item-right has-item-left ${isItalic ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleItalic(); }}><i>italic</i></button>
-                <button className={`has-item-right has-item-left ${isUnderline ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleUnderline(); }}><u>underline</u></button>
-                <button className={`has-item-left ${isStrikethrough ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleStrikethrough(); }}><strike>strike</strike></button>
-              </section>
-              <section className="merge-below merge-above">
-                <button className={`disabled has-item-right ${isParagraph ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>p</button>
-                <button className={`has-item-right has-item-left ${isH1 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleHeading(1); }}>h1</button>
-                <button className={`has-item-right has-item-left ${isH2 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleHeading(2); }}>h2</button>
-                <button className={`has-item-left ${isH3 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleHeading(3); }}>h3</button>
-              </section>
-              <section className="merge-above">
-                <button className={`has-item-right ${isBlockquote ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleBlockquote(); }}>blockquote</button>
-                <button className={`has-item-right has-item-left ${isListNumbered ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleListNumbered(); }}>list (number)</button>
-                <button className={`has-item-left ${isListBulleted ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleListBulleted(); }}>list (bullet)</button>
-              </section>
-
-              {/* selections */}
-              <Separator text="Selection" />
-              <section>
-                <button className={`disabled has-item-right ${isCollapsed === true ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>collapsed</button>
-                <button className={`disabled has-item-left ${isCollapsed === false ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>selection</button>
-              </section>
-
-              {/* links */}
+        const renderLinks = () => {
+          return (
+            <>
               <Separator text="Link" />
-              <label>Url</label>
               <section class="col">
                 <input
                   className="has-item-below"
@@ -228,7 +193,8 @@ function App() {
                 />
                 <section style={{ margin: 0 }}>
                   <button
-                    className={`disabled has-item-above has-item-right ${isLink ? 'active' : ''}`}
+                    disabled
+                    className={`has-item-above has-item-right ${isLink ? 'active' : ''}`}
                     onClick={() => {}}
                   >
                     is link
@@ -247,18 +213,58 @@ function App() {
                   </button>
                 </section>
               </section>
+            </>
+          )
+        };
 
-              {/* focus stuff */}
-              <Separator text="Focus" />
-              <section>
-                <button onClick={() => functions.focus()}>focus</button>
+        const renderFormatters = () => {
+          return (
+            <>
+              <Separator text="Formatters" />
+              <section className="merge-below">
+                <button className={`has-item-right ${isBold ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleBold(); }}><b>bold</b></button>
+                <button className={`has-item-right has-item-left ${isItalic ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleItalic(); }}><i>italic</i></button>
+                <button className={`has-item-right has-item-left ${isUnderline ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleUnderline(); }}><u>underline</u></button>
+                <button className={`has-item-left ${isStrikethrough ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleStrikethrough(); }}><strike>strike</strike></button>
+              </section>
+              <section className="merge-below merge-above">
+                <button disabled className={`has-item-right ${isParagraph ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>p</button>
+                <button className={`has-item-right has-item-left ${isH1 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleHeading(1); }}>h1</button>
+                <button className={`has-item-right has-item-left ${isH2 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleHeading(2); }}>h2</button>
+                <button className={`has-item-left ${isH3 ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleHeading(3); }}>h3</button>
+              </section>
+              <section className="merge-above">
+                <button className={`has-item-right ${isBlockquote ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleBlockquote(); }}>blockquote</button>
+                <button className={`has-item-right has-item-left ${isListNumbered ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleListNumbered(); }}>list (number)</button>
+                <button className={`has-item-left ${isListBulleted ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); functions.toggleListBulleted(); }}>list (bullet)</button>
+              </section>
+            </>
+          )
+        };
+
+        const renderSelections = () => {
+          return (
+            <>
+              <Separator text="Selection" />
+              <section className="merge-below">
+                <button disabled className={`has-item-right ${isFocused === true ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>focused</button>
+                <button disabled className={`has-item-left has-item-right ${isCollapsed === true ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>collapsed</button>
+                <button disabled className={`has-item-left ${isCollapsed === false ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>selection</button>
+              </section>
+              <section className="merge-below">
+                <button className="has-item-above has-item-below" onClick={() => functions.focus()}>focus</button>
               </section>
               <section>
-                <button onClick={() => functions.focusAtStart()}>focus at start</button>
-                <button onClick={() => functions.focusAtEnd()}>focus at end</button>
+                <button className="has-item-above has-item-right" onClick={() => functions.focusAtStart()}>focus at start</button>
+                <button className="has-item-above has-item-left" onClick={() => functions.focusAtEnd()}>focus at end</button>
               </section>
+            </>
+          )
+        };
 
-              {/* content controls */}
+        const renderContentControls = () => {
+          return (
+            <>
               <Separator text="Content" />
               <label>Text</label>
               <section class="col">
@@ -270,15 +276,49 @@ function App() {
                   onChange={e => setText(e.target.value)}
                 />
                 <section style={{ margin: 0 }}>
-                  <button className="has-item-above has-item-right">+start</button>
-                  <button className="has-item-above has-item-right has-item-left">+end</button>
-                  <button className="has-item-above has-item-right has-item-left">+cursor</button>
-                  <button className="has-item-above has-item-right has-item-left">replace</button>
-                  <button className="has-item-above has-item-left">clear</button>
+                  <button
+                    disabled={!isFocused}
+                    className="has-item-above"
+                    onMouseDown={e => {
+                      e.preventDefault();
+                      functions.insertText(text);
+                      setText('');
+                    }}
+                  >
+                    insert
+                  </button>
                 </section>
               </section>
+              <label>HTML</label>
+              <section class="col">
+                <textarea
+                  className="has-item-below"
+                  style={{ borderBottom: 'none' }}
+                  placeholder="Enter html..."
+                  value={html}
+                  onChange={e => setHtml(e.target.value)}
+                />
+                <section style={{ margin: 0 }}>
+                  <button
+                    disabled={!isFocused}
+                    className="has-item-above"
+                    onMouseDown={e => {
+                      e.preventDefault();
+                      functions.insertHtml(html);
+                      setHtml('');
+                    }}
+                  >
+                    insert
+                  </button>
+                </section>
+              </section>
+            </>
+          )
+        };
 
-              {/* JS stuff */}
+        const renderJsPanel = () => {
+          return (
+            <>
               <Separator text="JS" />
               <section className="col">
                 <textarea
@@ -313,8 +353,35 @@ function App() {
                 <button onClick={() => console.log(functions._getEditor())}>log(editor)</button>
                 <button onClick={() => functions._populateWindow()}>populate window</button>
               </section>
+            </>
+          );
+        };
 
+        return (
+          <div className="main-wrapper">
+            
+            {/* to test the hooks */}
+            {/* <HooksTest /> */}
 
+            {/* toolbar */}
+            {toolbar()}
+
+            {/* editor */}
+            <div className="editor-wrapper">
+              <div className="container">
+                {editor()}
+              </div>
+            </div>
+
+            {/* controls */}
+            <div className="control-wrapper">
+              {renderFormatters()}
+              {renderLinks()}
+              {renderSelections()}
+              {renderContentControls()}
+              {renderHighlights()}
+              {renderImportsExports()}
+              {renderJsPanel()}
             </div>
           </div>
         );

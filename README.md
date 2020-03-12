@@ -106,6 +106,7 @@ const App = () => {
 *Misc*:
 
 * **isCollapsed** *(boolean / null)* - Cursor location within a text is referred to as [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection), and is indicated with an anhor point and a focus point. When a text is highlighted, anchor is where the selection begins and focus is the where it ends. A selection is [collapsed](https://developer.mozilla.org/en-US/docs/Web/API/Selection/isCollapsed) when anchor and focus are the same position, meaning, no text is selected. When there is no selection (ie. editor has no focus), this value will be null.
+* **isFocused** *(boolean)* - True if editor has focus.
 
 
 # Functions
@@ -157,6 +158,8 @@ The `functions` object is passed as an argument to `MMSEditor`'s children functi
 * **export( options: object )** - Export raw editor data. Options are as follows:
   * **history** *(bool)* - Include history in the export (ie. use this to persist undo's and redo's).
 * **import( raw: object )** - Import editor data. It takes the output of `export` function. This replaces the editor content.
+* **insertHtml( html: string, htmlDeserializerOptions: object )** *(void)* - Deserialize html and insert it to the location of the cursor. See (HTML Deserializer)[#html-deserializer] for options and more details.
+* **insertText( text: string )** *(void)* - Insert text to the cursor location.
 
 # editor()
 
