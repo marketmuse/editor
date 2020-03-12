@@ -54,8 +54,8 @@ export default (editor, setValue) => ({
   // data
   import: raw => importFn(editor, setValue, raw),
   export: options => exportFn(editor, options),
-  insertHtml: (html, options) => insertHtml(editor, html, options),
-  insertText: text => insertText(editor, text),
+  insertHtml: (html, options) => insertHtml(editor, setValue, html, options),
+  insertText: text => insertText(editor, setValue, text),
 
   // internals
   _getEditor: () => editor,

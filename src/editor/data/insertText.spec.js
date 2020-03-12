@@ -25,7 +25,33 @@ describe('insertText', () => {
       </editor>
     );
 
-    insertText(editor, 'test', {});
+    const mockSetValue = val => { editor.children = val; }
+
+    insertText(editor, mockSetValue, 'test', {});
+    expect(editor.children).toEqual(expected.children)
+  });
+
+  // ****
+  test('insertText works without focus', () => {
+
+    const editor = withTest(
+      <editor>
+        <block />
+      </editor>
+    );
+
+    const expected = withTest(
+      <editor>
+        <block>
+          <text>test</text>
+          <cursor />
+        </block>
+      </editor>
+    );
+
+    const mockSetValue = val => { editor.children = val; }
+
+    insertText(editor, mockSetValue, 'test', {});
     expect(editor.children).toEqual(expected.children)
   });
 
