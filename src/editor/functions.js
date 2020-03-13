@@ -11,6 +11,7 @@ import insertLink from '@editor/links/insertLink';
 import removeLink from '@editor/links/removeLink';
 import selectAll from '@editor/contents/selectAll';
 import clear from '@editor/contents/clear';
+import isEmpty from '@editor/contents/isEmpty';
 import toggleFormat from '@editor/formatters/toggleFormat';
 import exportFn from '@editor/data/export';
 import importFn from '@editor/data/import';
@@ -33,6 +34,7 @@ export default (editor, setValue) => ({
 
   // content
   selectAll: () => selectAll(editor),
+  isEmpty: () => isEmpty(editor),
   clear: () => clear(editor, setValue),
 
   // links

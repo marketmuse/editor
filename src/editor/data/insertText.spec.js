@@ -10,18 +10,16 @@ describe('insertText', () => {
 
     const editor = withTest(
       <editor>
-        <block>
-          <cursor />
-        </block>
+        <cursor />
       </editor>
     );
 
     const expected = withTest(
       <editor>
-        <block>
+        <p>
           <text>test</text>
           <cursor />
-        </block>
+        </p>
       </editor>
     );
 
@@ -35,17 +33,14 @@ describe('insertText', () => {
   test('insertText works without focus', () => {
 
     const editor = withTest(
-      <editor>
-        <block />
-      </editor>
+      <editor />
     );
 
     const expected = withTest(
       <editor>
-        <block>
+        <p>
           <text>test</text>
-          <cursor />
-        </block>
+        </p>
       </editor>
     );
 

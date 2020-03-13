@@ -299,7 +299,6 @@ function App() {
                 />
                 <section style={{ margin: 0 }}>
                   <button
-                    disabled={!isFocused}
                     className="has-item-above"
                     onMouseDown={e => {
                       e.preventDefault();

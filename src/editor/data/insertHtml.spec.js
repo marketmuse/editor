@@ -10,24 +10,21 @@ describe('insertHtml', () => {
 
     const editor = withTest(
       <editor>
-        <block>
-          <cursor />
-        </block>
+        <cursor />
       </editor>
     );
 
     const expected = withTest(
       <editor>
-        <block>
+        <p>
           <text bold>test</text>
-          <cursor />
-        </block>
+        </p>
       </editor>
     );
 
     const mockSetValue = val => { editor.children = val; }
 
-    insertHtml(editor, mockSetValue, '<div><b>test</b></div>', {});
+    insertHtml(editor, mockSetValue, '<p><b>test</b></p>', {});
     expect(editor.children).toEqual(expected.children)
   });
 
@@ -35,22 +32,20 @@ describe('insertHtml', () => {
   test('insertHtml works without focus', () => {
 
     const editor = withTest(
-      <editor>
-        <block />
-      </editor>
+      <editor />
     );
 
     const expected = withTest(
       <editor>
-        <block>
+        <p>
           <text bold>test</text>
-        </block>
+        </p>
       </editor>
     );
 
     const mockSetValue = val => { editor.children = val; }
 
-    insertHtml(editor, mockSetValue, '<div><b>test</b></div>', {});
+    insertHtml(editor, mockSetValue, '<p><b>test</b></p>', {});
     expect(editor.children).toEqual(expected.children)
   });
 
