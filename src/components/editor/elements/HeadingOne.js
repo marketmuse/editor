@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const HeadingOne = React.forwardRef(({ children, style, className, ...rest } = {}, ref) => (
-  <h1
-    style={style}
-    className={className}
-    {...rest}
-  >
+const HeadingOne = ({ children, attributes = {} }) => (
+  <h1 {...attributes}>
     {children}
   </h1>
-));
+);
 
 HeadingOne.propTypes = {
   children: PropTypes.any,
-  className: PropTypes.string,
-  style: PropTypes.object,
+  attributes: PropTypes.object,
 };
 
 export default HeadingOne;

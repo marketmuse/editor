@@ -1,29 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Link = React.forwardRef(({
-  children,
-  className,
-  style,
-  href,
-  ...rest
-}, ref) => (
-  <a
-    href={href}
-    target='_new'
-    style={style}
-    className={className}
-    {...rest}
-  >
+const Link = ({ children, attributes = {}, element = {} }) => (
+  <a href={element.href} target='_new' {...attributes}>
     {children}
   </a>
-));
+);
 
 Link.propTypes = {
   children: PropTypes.any,
-  className: PropTypes.string,
-  style: PropTypes.object,
-  href: PropTypes.string,
+  attributes: PropTypes.object,
+  element: PropTypes.object,
 };
 
 export default Link;

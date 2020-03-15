@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ListBulleted = React.forwardRef(({ children, style, className, ...rest }, ref) => (
-  <ul
-    style={style}
-    className={className}
-    {...rest}
-  >
+const ListBulleted = ({ children, attributes = {} }) => (
+  <ul {...attributes}>
     {children}
   </ul>
-));
+);
 
 ListBulleted.propTypes = {
   children: PropTypes.any,
-  className: PropTypes.string,
-  style: PropTypes.object,
+  attributes: PropTypes.object,
 };
 
 export default ListBulleted;

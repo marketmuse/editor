@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Blockquote = React.forwardRef(({ children, style, className, ...rest } = {}, ref) => (
-  <blockquote
-    style={style}
-    className={className}
-    {...rest}
-  >
+const Blockquote = ({ children, attributes = {} }) => (
+  <blockquote {...attributes}>
     {children}
   </blockquote>
-));
+);
 
 Blockquote.propTypes = {
   children: PropTypes.any,
-  className: PropTypes.string,
-  style: PropTypes.object,
+  attributes: PropTypes.object,
 };
 
 export default Blockquote;

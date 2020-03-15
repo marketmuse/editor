@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ListItem = React.forwardRef(({ children, style, className, ...rest }, ref) => (
-  <li
-    style={style}
-    className={className}
-    {...rest}
-  >
+const ListItem = ({ children, attributes = {} }) => (
+  <li {...attributes}>
     {children}
   </li>
-));
+);
 
 ListItem.propTypes = {
   children: PropTypes.any,
-  className: PropTypes.string,
-  style: PropTypes.object,
+  attributes: PropTypes.object,
 };
 
 export default ListItem;

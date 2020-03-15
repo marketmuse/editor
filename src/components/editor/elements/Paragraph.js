@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Paragraph = React.forwardRef(({ children, style, className, ...rest }, ref) => (
-  <p
-    style={style}
-    className={className}
-    {...rest}
-  >
+const Paragraph = ({ children, attributes = {} }) => (
+  <p {...attributes}>
     {children}
   </p>
-));
+);
 
 Paragraph.propTypes = {
   children: PropTypes.any,
-  className: PropTypes.string,
-  style: PropTypes.object,
+  attributes: PropTypes.object,
 };
 
 export default Paragraph;

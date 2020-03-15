@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ListNumbered = React.forwardRef(({ children, style, className, ...rest }, ref) => (
-  <ol
-    style={style}
-    className={className}
-    {...rest}
-  >
+const ListNumbered = ({ children, attributes = {} }) => (
+  <ol {...attributes}>
     {children}
   </ol>
-));
+);
 
 ListNumbered.propTypes = {
   children: PropTypes.any,
-  className: PropTypes.string,
-  style: PropTypes.object,
+  attributes: PropTypes.object,
 };
 
 export default ListNumbered;
