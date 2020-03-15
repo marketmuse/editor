@@ -369,7 +369,7 @@ function App() {
             {/* editor */}
             <div className="editor-wrapper">
               <div className="container">
-                {editor()}
+                {editor({ placeholder: 'Enter text' })}
               </div>
             </div>
 

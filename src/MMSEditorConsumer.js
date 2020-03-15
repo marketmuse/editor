@@ -62,6 +62,7 @@ const MMSEditor = props => {
         className,
         readOnly = false,
         autoFocus = false,
+        placeholder,
         // TODO: move onKeyDown and other events into plugins
         onKeyDown,
       } = {}) => {
@@ -94,6 +95,7 @@ const MMSEditor = props => {
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             decorate={decorate}
+            placeholder={placeholder}
             onKeyDown={event => {
               // custom keydown function
               if (typeof onKeyDown === 'function') {

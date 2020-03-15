@@ -173,6 +173,7 @@ A function that takes a config object returns the editor component. It is requir
 * **className** *(string)* - Apply a class name to the editor container (the render output of `component`). By default, it will already have `mms--editor`, and provided class names will be appended. This also makes styling the editor root with `styled-components` or similar libraries possible.
 * **autoFocus** *(boolean)* - Focus upon mount.
 * **readOnly** *(boolean)* - Disallow editing.
+* **placeholder** *(string)*
 * **onKeyDown** *(function( args: object ) -> void)* - **(TODO: move this into plugins)** Args are as follows:
 	* **event** *([KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent))*
 	* **formats** *(object)* - Formats api
