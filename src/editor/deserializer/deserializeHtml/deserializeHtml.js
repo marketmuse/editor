@@ -145,7 +145,7 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
   return deserialize(nodeName, { ...htmlAttrs, ...instructionArgs }, children);
 }
 
-export default (options = []) => (...strs) => {
+export default (htmlDeserializerOptionsList = []) => (...strs) => {
 
   // cover tag function usage (ie. invocation with template literals)
   const html = Array.isArray(strs[0]) ? String.raw(...strs) : strs[0];
@@ -155,7 +155,8 @@ export default (options = []) => (...strs) => {
   const {
     transforms,
     strategies,
-  } = combineOptions(options);
+  } = combineOptions(
+    htmlDeserializerOptionsList);
 
   return deserializeHtml({
     transforms,

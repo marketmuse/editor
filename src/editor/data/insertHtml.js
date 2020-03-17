@@ -5,7 +5,12 @@ import isEmpty from '@editor/contents/isEmpty';
 import deserializeHtml from '@editor/deserializer/deserializeHtml/deserializeHtml';
 
 export default (editor, setValue, html, htmlDeserializerOptions) => {
-  const fragment = deserializeHtml([htmlDeserializerOptions])(html);
+  console.log('htmlDeserializerOptions', htmlDeserializerOptions);
+  const fragment = deserializeHtml(
+    Array.isArray(htmlDeserializerOptions)
+      ? htmlDeserializerOptions
+      : [htmlDeserializerOptions]
+  )(html);
 
   if (isNil(fragment)) {
     throw new Error('Failed to insert: cannot deserialize');

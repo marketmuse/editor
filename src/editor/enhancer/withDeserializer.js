@@ -3,14 +3,14 @@ import { Transforms } from 'slate';
 import deserializeHtml from '@editor/deserializer/deserializeHtml/deserializeHtml';
 import deserializeText from '@editor/deserializer/deserializeText/deserializeText';
 
-export default (editor, options = []) => {
+export default (editor, htmlDeserializerOptionsList = []) => {
 
   editor.insertData = data => {
     const htmlString = data.getData('text/html');
     const textString = data.getData('text/plain');
 
     if (htmlString) {
-      const fragment = deserializeHtml(options)(htmlString);
+      const fragment = deserializeHtml(htmlDeserializerOptionsList)(htmlString);
 
       // TODO: for some reason slate always inserts the first node as
       // type paragraph. For now as a workaround, insert an empty paragraph

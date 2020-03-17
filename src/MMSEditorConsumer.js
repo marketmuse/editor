@@ -22,15 +22,16 @@ const MMSEditor = props => {
   const editor = useSlate();
 
   const {
+    setValue,
     hotkeys,
     decorators,
     extendCore,
-    setValue,
+    htmlDeserializerOptionsList,
   } = props;
 
   // extend functions and formats
   const { formats, functions } = extendCore({
-    functions: getFunctions(editor, setValue),
+    functions: getFunctions(editor, setValue, { htmlDeserializerOptionsList }),
     formats: getFormats(editor),
   });
 
@@ -118,7 +119,7 @@ MMSEditor.propTypes = {
   extendCore: PropTypes.func,
   hotkeys: PropTypes.array,
   decorators: PropTypes.array,
-
+  htmlDeserializerOptionsList: PropTypes.array,
 };
 
 export default MMSEditor;

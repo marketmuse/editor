@@ -9,7 +9,7 @@ export default (plugins = []) => () => {
   const decorators = mapReduceFlatten(plugins, 'decorators');
 
   // combine all html deserializer options into one array
-  const htmlDeserializerOptionsArr = plugins.map(p => p.htmlDeserializerOptions);
+  const htmlDeserializerOptionsList = plugins.map(p => p.htmlDeserializerOptions);
 
   // generate function to extend core api's
   const extendCore = ({ functions, formats }) => {
@@ -40,7 +40,7 @@ export default (plugins = []) => () => {
   return {
     hotkeys,
     decorators,
-    htmlDeserializerOptionsArr,
     extendCore,
+    htmlDeserializerOptionsList,
   }
 }

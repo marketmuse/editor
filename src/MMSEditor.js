@@ -25,11 +25,11 @@ const MMSEditor = props => {
     hotkeys,
     decorators,
     extendCore,
-    htmlDeserializerOptionsArr: htmlDeserializerOptions,
+    htmlDeserializerOptionsList,
   } = applyPlugins();
 
   const editor = isNil(props.editor)
-    ? useMemo(() => withMarketmuse(createEditor(), { htmlDeserializerOptions }), [])
+    ? useMemo(() => withMarketmuse(createEditor(), { htmlDeserializerOptionsList }), [])
     : props.editor;
 
   // Having the editor be uncontrolled seems to make more sense given that the
@@ -53,6 +53,7 @@ const MMSEditor = props => {
         decorators={decorators}
         extendCore={extendCore}
         setValue={setValue}
+        htmlDeserializerOptionsList={htmlDeserializerOptionsList}
       >
         {props.children}
       </MMSEditorConsumer>

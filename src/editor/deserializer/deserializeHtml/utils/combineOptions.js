@@ -1,9 +1,9 @@
 import mapReduceFlatten from '@utils/mapReduceFlatten';
 
 // combine a list of htmlDeserializerOption objects
-export default (options = []) => {
-  const transforms = mapReduceFlatten(options, 'transforms');
-  const strategies = mapReduceFlatten(options, 'strategies');
+export default (htmlDeserializerOptionsList = []) => {
+  const transforms = mapReduceFlatten(htmlDeserializerOptionsList, 'transforms');
+  const strategies = mapReduceFlatten(htmlDeserializerOptionsList, 'strategies');
 
   return {
     transforms,
