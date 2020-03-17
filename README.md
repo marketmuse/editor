@@ -1,7 +1,7 @@
 # Install
 
 ```
-npm i @marketmuse/editor
+npm install @marketmuse/editor --save
 yarn add @marketmuse/editor
 ```
 
@@ -249,6 +249,7 @@ import { MMSEditor, plugins } from '@marketmuse/editor';
 
 const App = () => (
   <MMSEditor
+    useDefaultPlugins={false}
     plugins={[
       // Pass default options for hotkeys
       plugins.defaultHotkeys,
