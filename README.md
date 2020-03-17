@@ -1,7 +1,7 @@
 # Install
 
 ```
-npm i @marketmuse/editor
+npm install @marketmuse/editor --save
 yarn add @marketmuse/editor
 ```
 
