@@ -9,8 +9,7 @@ describe('api: hasFocus', () => {
     mount({
       fn: ({ functions }) => {
         functions.focus();
-        const e = functions._getEditor();
-        isFocused = functions.hasFocus(e);
+        isFocused = functions.hasFocus();
       },
     });
 

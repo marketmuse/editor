@@ -140,6 +140,7 @@ The `functions` object is passed as an argument to `MMSEditor`'s children functi
 * **selectAll()** *(void)* - Programmatically highlight all the text / contents in the editor.
 * **clear()** *(void)* - Clear contents of the editor.
 * **isEmpty()** *(boolean)* - True if plain text value of the editor is an empty string.
+* **getPlainText()** *(string)* - Returns plain text contents of the editor.
 
 *Links*:
 

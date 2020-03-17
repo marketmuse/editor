@@ -10,6 +10,7 @@ import removeLink from '@editor/links/removeLink';
 import selectAll from '@editor/contents/selectAll';
 import clear from '@editor/contents/clear';
 import isEmpty from '@editor/contents/isEmpty';
+import getPlainText from '@editor/contents/getPlainText';
 import toggleFormat from '@editor/formatters/toggleFormat';
 import exportFn from '@editor/data/export';
 import importFn from '@editor/data/import';
@@ -32,6 +33,7 @@ export default (editor, setValue, { htmlDeserializerOptionsList } = {}) => ({
   selectAll: () => selectAll(editor),
   isEmpty: () => isEmpty(editor),
   clear: () => clear(editor, setValue),
+  getPlainText: () => getPlainText(editor),
 
   // links
   getLink: () => getLink(editor),

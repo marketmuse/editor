@@ -23,12 +23,9 @@ describe('api: moveCursorToEnd', () => {
     );
 
     const editor = mount({
-      fn: ({ functions }) => {
-        const e = functions._getEditor();
-        e.children = initial.children;
-        e.selection = initial.selection;
-        functions.moveCursorToEnd();
-      }
+      children: initial.children,
+      selection: initial.selection,
+      fn: ({ functions }) => functions.moveCursorToEnd(),
     })
 
     expect(editor.selection).toEqual(expected.selection)

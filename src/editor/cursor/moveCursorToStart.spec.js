@@ -17,18 +17,15 @@ describe('api: moveCursorToStart', () => {
     const expected = withTest(
       <editor>
         <block>
-        <cursor />test
+          <cursor />test
         </block>
       </editor>
     );
 
     const editor = mount({
-      fn: ({ functions }) => {
-        const e = functions._getEditor();
-        e.children = initial.children;
-        e.selection = initial.selection;
-        functions.moveCursorToStart();
-      }
+      children: initial.children,
+      selection: initial.selection,
+      fn: ({ functions }) => functions.moveCursorToStart(),
     })
 
     expect(editor.selection).toEqual(expected.selection)

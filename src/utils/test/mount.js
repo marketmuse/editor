@@ -4,8 +4,15 @@ import { mount } from 'enzyme';
 import MMSEditor from '@';
 
 export default ({
-  fn,
+  // props to pass to `MMSEditor` component
   mmsEditorProps = {},
+  // set editor children to this value before executing fn
+  children,
+  // set editor selection to this value before executing fn
+  selection,
+  // function to run once editor is mounted
+  // receives `functions` and `formats`
+  fn,
 }) => {
 
   let editorMounted = null;
@@ -16,13 +23,15 @@ export default ({
       {({ functions, editor }) => {
         useEffect(() => {
 
-          // run test functions on mount
-          if (typeof fn === 'function') {
-            fn({ functions });
-          }
-
-          // fetch editor instance after test functions
+          // get a ref to editor instance
           editorMounted = functions._getEditor();
+
+          // set children or selection to a custom value
+          if (children) editorMounted.children = children;
+          if (selection) editorMounted.selection = selection;
+
+          // run test functions on mount
+          if (typeof fn === 'function') fn({ functions });
 
         }, []);
 
