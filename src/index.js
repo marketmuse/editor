@@ -1,3 +1,5 @@
+import * as plugins from '@plugins';
+
 // core api's
 export { default as functions } from '@editor/functions';
 export { default as formats } from '@editor/formats';
@@ -23,6 +25,9 @@ export { ReactComponent as IconTrash } from '@assets/trash.svg';
 export { ReactComponent as IconShare } from '@assets/share.svg';
 export { ReactComponent as IconTick } from '@assets/tick.svg';
 export { ReactComponent as IconLink } from '@assets/link.svg';
+
+// plugins
+export { plugins };
 
 // default
 export { default } from '@/MMSEditor';

@@ -1,0 +1,35 @@
+export default {
+  htmlDeserializerOptions: {
+    strategies: [
+      { tag: 'head', strategy: 'skip' },
+      { tag: 'meta', strategy: 'skip' },
+      { tag: 'base', strategy: 'skip' },
+      { tag: 'basefont', strategy: 'skip' },
+      { tag: 'title', strategy: 'skip' },
+      { tag: 'data', strategy: 'skip' },
+      { tag: 'style', strategy: 'skip' },
+      { tag: 'link', strategy: 'skip' },
+      { tag: 'script', strategy: 'skip' },
+      { tag: 'noscript', strategy: 'skip' },
+      { tag: 'applet', strategy: 'skip' },
+      { tag: 'embed', strategy: 'skip' },
+      { tag: 'object', strategy: 'skip' },
+      { tag: 'param', strategy: 'skip' },
+      { tag: 'frame', strategy: 'skip' },
+      { tag: 'iframe', strategy: 'skip' },
+      { tag: 'frameset', strategy: 'skip' },
+      { tag: 'img', strategy: 'skip' },
+      { tag: 'map', strategy: 'skip' },
+      { tag: 'area', strategy: 'skip' },
+      { tag: 'canvas', strategy: 'skip' },
+      { tag: 'figcaption', strategy: 'skip' },
+      { tag: 'figure', strategy: 'skip' },
+      { tag: 'picture', strategy: 'skip' },
+      { tag: 'svg', strategy: 'skip' },
+      { tag: 'audio', strategy: 'skip' },
+      { tag: 'source', strategy: 'skip' },
+      { tag: 'track', strategy: 'skip' },
+      { tag: 'video', strategy: 'skip' },
+    ]
+  }
+};

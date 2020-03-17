@@ -1,20 +1,25 @@
-# Docs
+# Install
 
-Basic usage:
+```
+npm i @marketmuse/editor
+yarn add @marketmuse/editor
+```
+
+# Basic Usage
 
 ```javascript
 import React from 'react';
-import MMSEditor from 'mms-editor';
+import MMSEditor from '@marketmuse/editor';
 
 // import styles
-import 'mms-editor/dist/mms-editor.css';
+import '@marketmuse/editor/dist/mms-editor.css';
 
 const App = () => (
   <MMSEditor>
     {({ editor, toolbar }) => (
       <div>
         {toolbar()}
-        {editor()}
+        {editor({ placeholder: 'Enter content...' })}
       </div>
     )}
   </MMSEditor>
@@ -29,6 +34,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 * **children** *(function)* - MMSEditor adopts the [function-as-children pattern](https://reactjs.org/docs/jsx-in-depth.html#functions-as-children) to be able to pass on some editor related data down to its children, including the api and even the editor itself. Therefor, the children provided to this component **must** be a function (see below for arguments).
 * **plugins** *(array)* - An array of plugin objects that has functions to extend the libraries core api's. See [plugins](#plugins) section for details.
+* **useDefaultPlugins** *(bool)* - Apply [default plugins](/src/plugins). Defaults to `true`.
 
 ### Children args
 
@@ -49,7 +55,7 @@ The `formats` object is passed as an argument to `MMSEditor`'s children function
 Example:
 
 ```javascript
-import MMSEditor, { useFormats, useFunctions } from 'mms-editor';
+import MMSEditor, { useFormats, useFunctions } from '@marketmuse/editor';
 
 const MakeBoldButton = () => {
   const formats = useFormats();
@@ -180,9 +186,7 @@ A function that takes a config object returns the editor component. It is requir
 
 # Plugins
 
-MMS editor supports plugins that could enhance `functions` and `formats` api's, as well as other sub api's such as `hotkeys` and `decorators`. It's a good way of packing an editor feature together and developing it in isolation. It allows creating custom functions and formats, extending / modifying the behaviour of the current ones, adding custom hotkeys, decorators and more. 
-
-The `MMSEditor` component accepts `plugins` prop, which should be an array of plugin objects. A plugin object's `functions` and `formats` functions receives the current version of the api, and is expected to return the extended version of it. Within these function, it's possible to extend these apis, and / or modify their behaviour. Once the apis are extended, all sub components / sub api's that receives formats and functions (ie. such as toolbar, decorators api, hotkeys api etc.) will receive the extended version of it.
+MMS editor supports plugins that could enhance `functions` and `formats` api's, as well as other sub api's such as `hotkeys` and `decorators`. It's a good way of packing an editor feature together and developing it in isolation. It allows creating custom functions and formats, extending / modifying the behaviour of the current ones, adding custom hotkeys, decorators and more. The `MMSEditor` component accepts `plugins` prop, which should be an array of plugin objects.
 
 
 ### plugin object
@@ -230,6 +234,31 @@ const plugins = [{
     }
   })
 }]
+```
+
+### default plugins
+
+MMS editor comes with some default plugins, which could be found [here](/src/plugins). By default, these plugins will be applied, however it is possible to selectively apply the default plugins like so:
+
+```javascript
+
+import { MMSEditor, plugins } from '@marketmuse/editor';
+
+// ...
+
+const App = () => (
+  <MMSEditor
+    plugins={[
+      // Pass default options for hotkeys
+      plugins.defaultHotkeys,
+      // Do not pass default options for html serializer
+      // plugins.defaultHtmlSerializerOptions
+    ]}
+  >
+    {({ editor, toolbar }) => /* ... */}
+  </MMSEditor>
+);
+
 ```
 
 

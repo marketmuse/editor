@@ -15,7 +15,6 @@ import getFunctions from '@editor/functions';
 
 // defaults
 import defaultToolbar from '@config/defaultToolbar';
-import defaultHotkeys from '@config/defaultHotkeys';
 
 const MMSEditor = props => {
 
@@ -83,8 +82,7 @@ const MMSEditor = props => {
         const renderLeaf = useCallback(props => <Leaf decors={decors} {...props} />, [decorTriggers]);
 
         // hotkeys
-        const useHotkeys = (Array.isArray(hotkeys) && hotkeys.length > 0) ? hotkeys : defaultHotkeys;
-        const handleHotkeys = useCallback(getHandleHotkeys(useHotkeys), [useHotkeys]);
+        const handleHotkeys = useCallback(getHandleHotkeys(hotkeys), [hotkeys]);
 
         return (
           <Editable
