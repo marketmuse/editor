@@ -35,6 +35,11 @@ global.window.getSelection = () => {
   return {
     addRange: () => {},
     removeAllRanges: () => {},
+    getRangeAt: () => {
+      return {
+        startContainer: {},
+      }
+    },
   };
 }
 

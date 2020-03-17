@@ -1,25 +1,20 @@
-/** @jsx deserialize */
-import deserialize from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import mount from '@utils/test/mount';
-import withTest from '@utils/test/withTest';
-import focus from '@editor/focus/focus';
-import hasFocus from '@editor/focus/hasFocus';
 
 describe('api: hasFocus', () => {
+
   test('hasFocus working', () => {
 
-    const input = withTest(<editor />);
+    let isFocused = false;
 
-    // initially it shouldn't have focus
-    expect(hasFocus(input)).toBe(false);
-
-    // mount the editor
-    mount(input);
-
-    // focus
-    focus(input);
+    mount({
+      fn: ({ functions }) => {
+        functions.focus();
+        const e = functions._getEditor();
+        isFocused = functions.hasFocus(e);
+      },
+    });
 
     // it should have received focus now
-    expect(hasFocus(input)).toBe(true);
+    expect(isFocused).toBe(true);
   })
 })

@@ -1,7 +1,7 @@
 /** @jsx deserialize */
 import deserialize from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
-import moveCursorToStart from '@editor/cursor/moveCursorToStart';
+import mount from '@utils/test/mount';
 
 describe('api: moveCursorToStart', () => {
   test('moving cursor to start', () => {
@@ -17,12 +17,20 @@ describe('api: moveCursorToStart', () => {
     const expected = withTest(
       <editor>
         <block>
-          <cursor />test
+        <cursor />test
         </block>
       </editor>
     );
 
-    moveCursorToStart(initial);
-    expect(initial.selection).toEqual(expected.selection)
+    const editor = mount({
+      fn: ({ functions }) => {
+        const e = functions._getEditor();
+        e.children = initial.children;
+        e.selection = initial.selection;
+        functions.moveCursorToStart();
+      }
+    })
+
+    expect(editor.selection).toEqual(expected.selection)
   })
 })

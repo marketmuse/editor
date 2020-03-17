@@ -257,8 +257,8 @@ function App() {
                 <button className="has-item-above has-item-below" onClick={() => functions.focus()}>focus</button>
               </section>
               <section>
-                <button className="has-item-above has-item-right" onClick={() => functions.focusAtStart()}>focus at start</button>
-                <button className="has-item-above has-item-left" onClick={() => functions.focusAtEnd()}>focus at end</button>
+                <button className="has-item-above has-item-right" onClick={() => { functions.focus(); functions.moveCursorToStart(); }}>focus at start</button>
+                <button className="has-item-above has-item-left" onClick={() => { functions.focus(); functions.moveCursorToEnd(); }}>focus at end</button>
               </section>
             </>
           )

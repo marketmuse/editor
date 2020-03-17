@@ -1,7 +1,7 @@
 /** @jsx deserialize */
 import deserialize from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
-import moveCursorToEnd from '@editor/cursor/moveCursorToEnd';
+import mount from '@utils/test/mount';
 
 describe('api: moveCursorToEnd', () => {
   test('moving cursor to end', () => {
@@ -22,7 +22,15 @@ describe('api: moveCursorToEnd', () => {
       </editor>
     );
 
-    moveCursorToEnd(initial);
-    expect(initial.selection).toEqual(expected.selection)
+    const editor = mount({
+      fn: ({ functions }) => {
+        const e = functions._getEditor();
+        e.children = initial.children;
+        e.selection = initial.selection;
+        functions.moveCursorToEnd();
+      }
+    })
+
+    expect(editor.selection).toEqual(expected.selection)
   })
 })

@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
-import { mount } from 'enzyme';
+import mount from '@utils/test/mount';
 import { types } from '@config/common';
-import MMSEditor from '@';
 
 describe('insertHtml options', () => {
 
@@ -20,27 +18,14 @@ describe('insertHtml options', () => {
       </div>
     `;
 
-    let editorMounted = null;
+    const editor = mount({
+      mmsEditorProps: { plugins },
+      fn: ({ functions }) => {
+        functions.insertHtml(testHtml);
+      }
+    });
 
-    mount(
-      <MMSEditor plugins={plugins}>
-        {({ functions, editor }) => {
-
-          useEffect(() => {
-            functions.insertHtml(testHtml);
-            editorMounted = functions._getEditor();
-          }, []);
-
-          return (
-            <React.Fragment>
-              {editor()}
-            </React.Fragment>
-          );
-        }}
-      </MMSEditor>
-    );
-
-    expect(editorMounted.children).toEqual(
+    expect(editor.children).toEqual(
       [{ text: 'marketmuse' }]
     );
   });
@@ -64,27 +49,14 @@ describe('insertHtml options', () => {
       </div>
     `;
 
-    let editorMounted = null;
+    const editor = mount({
+      mmsEditorProps: { plugins },
+      fn: ({ functions }) => {
+        functions.insertHtml(testHtml, optionsOverride);
+      }
+    });
 
-    mount(
-      <MMSEditor plugins={plugins}>
-        {({ functions, editor }) => {
-
-          useEffect(() => {
-            functions.insertHtml(testHtml, optionsOverride);
-            editorMounted = functions._getEditor();
-          }, []);
-
-          return (
-            <React.Fragment>
-              {editor()}
-            </React.Fragment>
-          );
-        }}
-      </MMSEditor>
-    );
-
-    expect(editorMounted.children).toEqual(
+    expect(editor.children).toEqual(
       [{ text: 'test', [types.b]: true }]
     );
   });

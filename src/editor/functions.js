@@ -1,8 +1,6 @@
 import { types } from '@config/common';
 import focus from '@editor/focus/focus';
 import hasFocus from '@editor/focus/hasFocus';
-import focusAtEnd from '@editor/focus/focusAtEnd';
-import focusAtStart from '@editor/focus/focusAtStart';
 import moveCursorToStart from '@editor/cursor/moveCursorToStart';
 import moveCursorToEnd from '@editor/cursor/moveCursorToEnd';
 import getLink from '@editor/links/getLink';
@@ -25,8 +23,6 @@ export default (editor, setValue, { htmlDeserializerOptionsList } = {}) => ({
   // focus
   focus: () => focus(editor),
   hasFocus: () => hasFocus(editor),
-  focusAtEnd: () => focusAtEnd(editor),
-  focusAtStart: () => focusAtStart(editor),
 
   // cursor
   moveCursorToStart: () => moveCursorToStart(editor),
@@ -60,6 +56,7 @@ export default (editor, setValue, { htmlDeserializerOptionsList } = {}) => ({
   insertText: text => insertText(editor, setValue, text),
 
   // internals
+  _setValue: setValue,
   _getEditor: () => editor,
   _populateWindow: () => populateWindow(editor),
 });

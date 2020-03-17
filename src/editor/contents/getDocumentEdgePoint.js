@@ -9,7 +9,6 @@ export default (editor, { edge = 'end' } = {}) => {
     reverse: edge === 'end', // reverse order for end
   });
 
-  let position = null;
   try {
     // yield and get the first item
     return positionsGen.next().value || null;

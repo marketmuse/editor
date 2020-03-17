@@ -122,8 +122,6 @@ The `functions` object is passed as an argument to `MMSEditor`'s children functi
 *Focus*:
 
 * **focus()** *(void)* - Focus on the editor programmatically
-* **focusAtEnd()** *(void)* - Focus on the editor programmatically at the end
-* **focusAtStart()** *(void)* - Focus on the editor programmatically at the start
 * **hasFocus()** *(boolean)* - Programmatically decide if the editor has focus
 
 *Cursor*:

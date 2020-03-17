@@ -5,7 +5,7 @@ import isEmpty from '@editor/contents/isEmpty';
 import deserializeHtml from '@editor/deserializer/deserializeHtml/deserializeHtml';
 
 export default (editor, setValue, html, htmlDeserializerOptions) => {
-  console.log('htmlDeserializerOptions', htmlDeserializerOptions);
+
   const fragment = deserializeHtml(
     Array.isArray(htmlDeserializerOptions)
       ? htmlDeserializerOptions
