@@ -248,6 +248,7 @@ import { MMSEditor, plugins } from '@marketmuse/editor';
 
 const App = () => (
   <MMSEditor
+    useDefaultPlugins={false}
     plugins={[
       // Pass default options for hotkeys
       plugins.defaultHotkeys,
