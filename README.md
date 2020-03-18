@@ -176,32 +176,50 @@ A function that takes a config object returns the editor component. It is requir
 * **id** *(string)* - Applies an ID to the editor container.
 * **style** *(object)* - Apply inline styles to the editor container.
 * **className** *(string)* - Apply a class name to the editor container (the render output of `component`). By default, it will already have `mms--editor`, and provided class names will be appended. This also makes styling the editor root with `styled-components` or similar libraries possible.
-* **autoFocus** *(boolean)* - Focus upon mount.
-* **readOnly** *(boolean)* - Disallow editing.
+* **spellCheck** *(boolean)*
+* **autoCorrect** *(boolean)*
+* **autoCapitalize** *(boolean)*
+* **autoFocus** *(boolean)*
+* **readOnly** *(boolean)*
 * **placeholder** *(string)*
-* **onKeyDown** *(function( args: object ) -> void)* - **(TODO: move this into plugins)** Args are as follows:
-	* **event** *([KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent))*
-	* **formats** *(object)* - Formats api
-	* **functions** *(object)* - Functions api
 
 
 # Plugins
 
-MMS editor supports plugins that could enhance `functions` and `formats` api's, as well as other sub api's such as `hotkeys` and `decorators`. It's a good way of packing an editor feature together and developing it in isolation. It allows creating custom functions and formats, extending / modifying the behaviour of the current ones, adding custom hotkeys, decorators and more. The `MMSEditor` component accepts `plugins` prop, which should be an array of plugin objects.
+Certain functionality could be provided to MMS editor via plugins. It is possible to enhance the `functions` and `formats` api's, provide configurations such as `hotkeys` and `decorators`, and hook up to native events. It's a good to pack an editor feature together and developing it in isolation. `MMSEditor` component accepts `plugins` prop, which should be an array of plugin objects.
 
 
-### plugin object
+### Plugin object
 
-* **formats** *(function( formats: object, args: object ) -> formats)* - A function that receives the current formats and args object, and returns new formats. Args are as follows:
-	* **functions** *(object)* - Functions api (version with current plugin **not applied**, but previous plugin **applied**).
-	
-* **functions** *(function( functions: object, args: object ) -> functions)* - A function that receives the current functions and args object, and returns new functions. Args are as follows:
-	* **formats** *(object)* - Formats api (version with current plugin **not applied**, but previous plugin **applied**).
+*Extensions*
+
+* **formats** *(function( formats: object, args: object ) -> formats)* - A function that receives the current formats and args object, and returns new formats.
+* **functions** *(function( functions: object, args: object ) -> functions)* - A function that receives the current functions and args object, and returns new functions.
+
+*Configurations*
+
 * **hotkeys** *(array)* - see [Hotkeys](#hotkeys).
 * **decorators** *(array)* - see [Decorators](#decorators).
 * **htmlDeserializerOptions** *(object)* - see [HTML Deserializer](#html-deserializer).
-	
-*Example*
+
+*Events*
+
+* **onKeyDown** *(function( event: React.KeyboardEvent ))*
+* **onCut** *(function( event: React.ClipboardEvent ))*
+* **onCopy** *(function( event: React.ClipboardEvent ))*
+* **onPaste** *(function( event: React.ClipboardEvent ))*
+* **onBeforeInput** *(function( event: React.FormEvent ))*
+* **onBlur** *(function( event: React.FocusEvent ))*
+* **onFocus** *(function( event: React.FocusEvent ))*
+* **onClick** *(function( event: React.MouseEvent ))*
+* **onCompositionStart** *(function( event: React.CompositionEvent ))*
+* **onCompositionEnd** *(function( event: React.CompositionEvent ))*
+* **onDragOver** *(function( event: React.DragEvent ))*
+* **onDragStart** *(function( event: React.DragEvent ))*
+* **onDrop** *(function( event: React.DragEvent ))*
+
+
+### Example
 
 Extend `formats` api with `isStyled`:
 
@@ -237,9 +255,9 @@ const plugins = [{
 }]
 ```
 
-### default plugins
+### Default plugins
 
-MMS editor comes with some default plugins, which could be found [here](/src/plugins). By default, these plugins will be applied, however it is possible to selectively apply the default plugins like so:
+MMS editor comes with some default plugins, which could be found [here](/src/plugins). By default, these plugins will be applied, however it is possible to selectively apply them like so:
 
 ```javascript
 

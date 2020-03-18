@@ -11,6 +11,19 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
     hotkeys,
     decorators,
     htmlDeserializerOptions: htmlDeserializerOptionsList,
+    onKeyDown,
+    onCut,
+    onCopy,
+    onPaste,
+    onBeforeInput,
+    onBlur,
+    onFocus,
+    onClick,
+    onCompositionStart,
+    onCompositionEnd,
+    onDragOver,
+    onDragStart,
+    onDrop,
   } = mapReduceFlattenDict(usePlugins);
 
   // generate function to extend core api's
@@ -44,5 +57,20 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
     decorators,
     extendCore,
     htmlDeserializerOptionsList,
+    events: {
+      onKeyDown,
+      onCut,
+      onCopy,
+      onPaste,
+      onBeforeInput,
+      onBlur,
+      onFocus,
+      onClick,
+      onCompositionStart,
+      onCompositionEnd,
+      onDragOver,
+      onDragStart,
+      onDrop,
+    }
   }
 }

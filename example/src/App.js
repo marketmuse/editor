@@ -43,17 +43,17 @@ function App() {
   const [blueHighlights, setBlueHighlights] = useState('toyota, honda');
   const defaultCode = 'functions.focus();\nfunctions.moveCursorToStart()\nconsole.log("cursor moved")';
 
+  // add hotkeys
+  const hotkeyPlugin = {
+    hotkeys: [{
+      key: 'mod+b',
+      when: ({ formats }) => formats.isCollapsed,
+      command: () => alert('select some text for best results!'),
+    }],
+  };
 
-  const plugins = [{
-    // add hotkeys
-    hotkeys: [
-      {
-        key: 'mod+b',
-        when: ({ formats }) => formats.isCollapsed,
-        command: () => alert('select some text for best results!'),
-      },
-    ],
-    // add decorators
+  // add decorators
+  const decoratorPlugin = {
     decorators: [
       {
         id: 'blue',
@@ -68,7 +68,10 @@ function App() {
         triggers: [redHighlights],
       }
     ],
-    // extend formats
+  };
+
+  // extend formats api
+  const extendFormatsPlugin = {
     formats: formats => ({
       ...formats,
       isStyled: (
@@ -78,7 +81,10 @@ function App() {
         formats.isStrikethrough 
       )
     }),
-    // extend functions
+  }
+
+  // extend functions api
+  const extendFunctionsPlugin = {
     functions: (functions, { formats }) => ({
       ...functions,
       toggleBold: (...args) => {
@@ -88,10 +94,17 @@ function App() {
         functions.toggleBold(...args);
       }
     })
-  }];
+  };
 
   return (
-    <MMSEditor plugins={plugins}>
+    <MMSEditor
+      plugins={[
+        hotkeyPlugin,
+        decoratorPlugin,
+        extendFormatsPlugin,
+        extendFunctionsPlugin
+      ]}
+    >
       {({
         formats,
         functions,

@@ -10,6 +10,7 @@ import getDecorate from '@editor/decorators/getDecorate';
 import getDecors from '@editor/decorators/getDecors';
 import getDecorTriggers from '@editor/decorators/getDecorTriggers';
 import getHandleHotkeys from '@editor/hotkeys/getHandleHotkeys';
+import getExecuteEvent from '@utils/getExecuteEvent';
 
 // defaults
 import defaultToolbar from '@config/defaultToolbar';
@@ -19,9 +20,12 @@ const MMSEditorConsumer = props => {
   const {
     hotkeys,
     decorators,
+    events,
     formats,
     functions
   } = props;
+
+  const executeEvent = getExecuteEvent(events);
 
   /* eslint-disable react/prop-types */
 
@@ -49,11 +53,12 @@ const MMSEditorConsumer = props => {
         id,
         style,
         className,
+        placeholder,
+        spellCheck = true,
+        autoCorrect = false,
+        autoCapitalize = false,
         readOnly = false,
         autoFocus = false,
-        placeholder,
-        // TODO: move onKeyDown and other events into plugins
-        onKeyDown,
       } = {}) => {
 
         // construct class name
@@ -78,18 +83,29 @@ const MMSEditorConsumer = props => {
             id={id}
             className={editorClassName}
             style={style}
+            spellCheck={spellCheck}
             autoFocus={autoFocus}
+            autoCorrect={autoCorrect}
+            autoCapitalize={autoCapitalize}
             readOnly={readOnly}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             decorate={decorate}
             placeholder={placeholder}
+            onCut={event => executeEvent('onCut', event, { formats, functions })}
+            onCopy={event => executeEvent('onCopy', event, { formats, functions })}
+            onPaste={event => executeEvent('onPaste', event, { formats, functions })}
+            onBeforeInput={event => executeEvent('onBeforeInput', event, { formats, functions })}
+            onBlur={event => executeEvent('onBlur', event, { formats, functions })}
+            onFocus={event => executeEvent('onFocus', event, { formats, functions })}
+            onClick={event => executeEvent('onClick', event, { formats, functions })}
+            onCompositionStart={event => executeEvent('onCompositionStart', event, { formats, functions })}
+            onCompositionEnd={event => executeEvent('onCompositionEnd', event, { formats, functions })}
+            onDragOver={event => executeEvent('onDragOver', event, { formats, functions })}
+            onDragStart={event => executeEvent('onDragStart', event, { formats, functions })}
+            onDrop={event => executeEvent('onDrop', event, { formats, functions })}
             onKeyDown={event => {
-              // custom keydown function
-              if (typeof onKeyDown === 'function') {
-                onKeyDown({ event, formats, functions });
-              }
-              // handle hotkeys
+              executeEvent('onKeyDown', event, { formats, functions })
               handleHotkeys({ event, formats, functions })
             }}
           />
@@ -107,6 +123,7 @@ MMSEditorConsumer.propTypes = {
   decorators: PropTypes.array,
   formats: PropTypes.object,
   functions: PropTypes.object,
+  events: PropTypes.object,
 };
 
 export default MMSEditorConsumer;
