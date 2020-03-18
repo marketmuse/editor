@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Editable, useSlate } from 'slate-react';
+import { Editable } from 'slate-react';
 
 import Leaf from '@components/editor/Leaf';
 import Element from '@components/editor/Element';

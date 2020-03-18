@@ -24,7 +24,7 @@ describe('getPlainText', () => {
       }
     });
 
-    expect(plainText).toEqual('marketmusetest');
+    expect(plainText).toEqual('marketmuse\ntest');
   });
 
 });
