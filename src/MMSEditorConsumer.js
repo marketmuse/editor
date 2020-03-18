@@ -25,7 +25,9 @@ const MMSEditorConsumer = props => {
     functions
   } = props;
 
-  const executeEvent = getExecuteEvent(events);
+  // execute event fn
+  const execEventArgs = { functions, formats };
+  const execEvent = getExecuteEvent(events, execEventArgs);
 
   /* eslint-disable react/prop-types */
 
@@ -92,20 +94,20 @@ const MMSEditorConsumer = props => {
             renderLeaf={renderLeaf}
             decorate={decorate}
             placeholder={placeholder}
-            onCut={event => executeEvent('onCut', event, { formats, functions })}
-            onCopy={event => executeEvent('onCopy', event, { formats, functions })}
-            onPaste={event => executeEvent('onPaste', event, { formats, functions })}
-            onBeforeInput={event => executeEvent('onBeforeInput', event, { formats, functions })}
-            onBlur={event => executeEvent('onBlur', event, { formats, functions })}
-            onFocus={event => executeEvent('onFocus', event, { formats, functions })}
-            onClick={event => executeEvent('onClick', event, { formats, functions })}
-            onCompositionStart={event => executeEvent('onCompositionStart', event, { formats, functions })}
-            onCompositionEnd={event => executeEvent('onCompositionEnd', event, { formats, functions })}
-            onDragOver={event => executeEvent('onDragOver', event, { formats, functions })}
-            onDragStart={event => executeEvent('onDragStart', event, { formats, functions })}
-            onDrop={event => executeEvent('onDrop', event, { formats, functions })}
+            onCut={event => execEvent('onCut', event)}
+            onCopy={event => execEvent('onCopy', event)}
+            onPaste={event => execEvent('onPaste', event)}
+            onBeforeInput={event => execEvent('onBeforeInput', event)}
+            onBlur={event => execEvent('onBlur', event)}
+            onFocus={event => execEvent('onFocus', event)}
+            onClick={event => execEvent('onClick', event)}
+            onCompositionStart={event => execEvent('onCompositionStart', event)}
+            onCompositionEnd={event => execEvent('onCompositionEnd', event)}
+            onDragOver={event => execEvent('onDragOver', event)}
+            onDragStart={event => execEvent('onDragStart', event)}
+            onDrop={event => execEvent('onDrop', event)}
             onKeyDown={event => {
-              executeEvent('onKeyDown', event, { formats, functions })
+              execEvent('onKeyDown', event)
               handleHotkeys({ event, formats, functions })
             }}
           />

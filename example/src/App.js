@@ -97,14 +97,14 @@ function App() {
   };
 
   // showcase event plugins
-  const enterPlugin = {
+  const eventExamplePlugin = {
     onKeyDown: (event, { functions, formats }) => {
       if (event.key === 'Enter') {
         // block keypress
-        event.preventDefault();
+        // event.preventDefault();
         // use formats api like so
-        if (formats.isBold) alert('This is bold!');
-        else alert('This is not bold!');
+        if (formats.isBold) console.log('This is bold!');
+        else console.log('This is not bold!');
       }
     }
   };
@@ -116,7 +116,7 @@ function App() {
         decoratorPlugin,
         extendFormatsPlugin,
         extendFunctionsPlugin,
-        // enterPlugin,
+        eventExamplePlugin,
       ]}
     >
       {({
