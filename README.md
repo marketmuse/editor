@@ -204,19 +204,21 @@ Certain functionality could be provided to MMS editor via plugins. It is possibl
 
 *Events*
 
-* **onKeyDown** *(function( event: React.KeyboardEvent ))*
-* **onCut** *(function( event: React.ClipboardEvent ))*
-* **onCopy** *(function( event: React.ClipboardEvent ))*
-* **onPaste** *(function( event: React.ClipboardEvent ))*
-* **onBeforeInput** *(function( event: React.FormEvent ))*
-* **onBlur** *(function( event: React.FocusEvent ))*
-* **onFocus** *(function( event: React.FocusEvent ))*
-* **onClick** *(function( event: React.MouseEvent ))*
-* **onCompositionStart** *(function( event: React.CompositionEvent ))*
-* **onCompositionEnd** *(function( event: React.CompositionEvent ))*
-* **onDragOver** *(function( event: React.DragEvent ))*
-* **onDragStart** *(function( event: React.DragEvent ))*
-* **onDrop** *(function( event: React.DragEvent ))*
+All event functions receives two arguments. First argument, `event`, is the event object. For all functions below, second argument, `arg` object holds `functions` and `formats` api's.
+
+* **onKeyDown** *(function( event: React.KeyboardEvent, args: object ))*
+* **onCut** *(function( event: React.ClipboardEvent, args: object ))*
+* **onCopy** *(function( event: React.ClipboardEvent, args: object ))*
+* **onPaste** *(function( event: React.ClipboardEvent, args: object ))*
+* **onBeforeInput** *(function( event: React.FormEvent, args: object ))*
+* **onBlur** *(function( event: React.FocusEvent, args: object ))*
+* **onFocus** *(function( event: React.FocusEvent, args: object ))*
+* **onClick** *(function( event: React.MouseEvent, args: object ))*
+* **onCompositionStart** *(function( event: React.CompositionEvent, args: object ))*
+* **onCompositionEnd** *(function( event: React.CompositionEvent, args: object ))*
+* **onDragOver** *(function( event: React.DragEvent, args: object ))*
+* **onDragStart** *(function( event: React.DragEvent, args: object ))*
+* **onDrop** *(function( event: React.DragEvent, args: object ))*
 
 
 ### Example
@@ -224,7 +226,7 @@ Certain functionality could be provided to MMS editor via plugins. It is possibl
 Extend `formats` api with `isStyled`:
 
 ```javascript
-const plugins = [{
+plugins: [{
   formats: formats => ({
     ...formats,
     isStyled: (
@@ -240,18 +242,32 @@ const plugins = [{
 Modify behaviour of `toggleBold`:
 
 ```javascript
-const plugins = [{
+plugins: [{
   functions: (functions, { formats }) => ({
     ...functions,
     toggleBold: (...args) => {
-      
       // do not make bold if link
       if (formats.isLink) return;
-      
       // default behaviour
       functions.toggleBold(...args);
     }
   })
+}]
+```
+
+Using event functions:
+
+```javascript
+plugins: [{
+  onKeyDown: (event, { functions, formats }) => {
+    if (event.key === 'enter') {
+      // block keypress
+      event.preventDefault();
+      // use functions and formats like so
+      if (formats.isBold) alert('This is bold!');
+      else alert('This is not bold!');
+    }
+  }
 }]
 ```
 

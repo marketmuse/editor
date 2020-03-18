@@ -96,13 +96,27 @@ function App() {
     })
   };
 
+  // showcase event plugins
+  const enterPlugin = {
+    onKeyDown: (event, { functions, formats }) => {
+      if (event.key === 'Enter') {
+        // block keypress
+        event.preventDefault();
+        // use formats api like so
+        if (formats.isBold) alert('This is bold!');
+        else alert('This is not bold!');
+      }
+    }
+  };
+
   return (
     <MMSEditor
       plugins={[
         hotkeyPlugin,
         decoratorPlugin,
         extendFormatsPlugin,
-        extendFunctionsPlugin
+        extendFunctionsPlugin,
+        // enterPlugin,
       ]}
     >
       {({
