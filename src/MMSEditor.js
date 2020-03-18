@@ -7,38 +7,27 @@ import { Slate } from 'slate-react';
 // turn it into an autoprefixed standalone css file
 import '@config/defaultStyles';
 
+import { FormatsApiContext } from '@editor/hooks/useFormats';
+import { FunctionsApiContext } from '@editor/hooks/useFunctions';
 import MMSEditorConsumer from '@/MMSEditorConsumer';
 import initialState from '@config/initialState';
 import withMarketmuse from '@editor/enhancer/withMarketmuse';
-import getApplyPlugins from '@editor/plugins/getApplyPlugins';
-
-import * as plugins from '@plugins';
+import applyPlugins from '@editor/plugins/applyPlugins';
+import getFormats from '@editor/formats';
+import getFunctions from '@editor/functions';
 
 const MMSEditor = props => {
 
-  let usePlugins = [];
+  const { plugins, useDefaultPlugins } = props;
 
-  // apply default plugins
-  if (props.useDefaultPlugins) {
-    usePlugins = usePlugins.concat(
-      Object.values(plugins)
-    );
-  }
-
-  // apply provided plugins
-  usePlugins = usePlugins.concat(props.plugins || []);
-
-  // plugin applier function
-  const applyPlugins = useCallback(
-    getApplyPlugins(usePlugins), [props.plugins])
-
-  // merge all provided plugins into one
+  // merge plugins
+  const mergePlugins = () => applyPlugins(plugins, { useDefaultPlugins });
   const {
     hotkeys,
     decorators,
-    extendCore,
     htmlDeserializerOptionsList,
-  } = applyPlugins();
+    extendCore,
+  } = useMemo(mergePlugins, [plugins])
 
   const editor = useMemo(() => withMarketmuse(
     createEditor(), { htmlDeserializerOptionsList }), [])
@@ -50,26 +39,33 @@ const MMSEditor = props => {
   // keep its own internal state.
   const [value, setValue] = useState(initialState);
 
+  // extend functions and formats
+  const { formats, functions } = extendCore({
+    formats: getFormats(editor, {}),
+    functions: getFunctions(editor, { setValue, htmlDeserializerOptionsList }),
+  });
+
   return (
-    <Slate
-      editor={editor}
-      value={value}
-      onChange={setValue}
-    >
-      <MMSEditorConsumer
-        hotkeys={hotkeys}
-        decorators={decorators}
-        extendCore={extendCore}
-        setValue={setValue}
-        htmlDeserializerOptionsList={htmlDeserializerOptionsList}
-      >
-        {props.children}
-      </MMSEditorConsumer>
+    <Slate editor={editor} value={value} onChange={setValue}>
+      <FormatsApiContext.Provider value={formats}>
+        <FunctionsApiContext.Provider value={functions}>
+          <MMSEditorConsumer
+            hotkeys={hotkeys}
+            decorators={decorators}
+            extendCore={extendCore}
+            formats={formats}
+            functions={functions}
+          >
+            {props.children}
+          </MMSEditorConsumer>
+        </FunctionsApiContext.Provider>
+      </FormatsApiContext.Provider>
     </Slate>
   );
 };
 
 MMSEditor.propTypes = {
+
   // to use editor instead of creating one
   children: PropTypes.any,
 

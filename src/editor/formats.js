@@ -3,7 +3,7 @@ import isFormatActive from '@editor/formatters/isFormatActive';
 import isCollapsed from '@editor/cursor/isCollapsed';
 import isFocused from '@editor/focus/hasFocus';
 
-export default editor => {
+export default (editor, _) => {
 
   const isH1 = isFormatActive(editor, 'block', types.h1);
   const isH2 = isFormatActive(editor, 'block', types.h2);

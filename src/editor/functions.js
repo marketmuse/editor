@@ -19,7 +19,7 @@ import insertText from '@editor/data/insertText';
 import toggleHeading from '@editor/formatters/toggleHeading';
 import populateWindow from '@utils/test/populateWindow';
 
-export default (editor, setValue, { htmlDeserializerOptionsList } = {}) => ({
+export default (editor, { setValue, htmlDeserializerOptionsList } = {}) => ({
 
   // focus
   focus: () => focus(editor),

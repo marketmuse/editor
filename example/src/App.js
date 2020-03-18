@@ -15,15 +15,19 @@ function HooksTest() {
   const functionsHookTest = useFunctions();
   
   return (
-    <button
-      style={{ position: 'absolute' }}
-      onMouseDown={e => {
-        e.preventDefault();
-        functionsHookTest.toggleBold();
-      }}
-    >
-      {formatsHookTest.isBold ? 'bold' : 'not bold'}
-    </button>
+    <div style={{ position: 'absolute', display: 'flex' }}>
+      <button
+        onMouseDown={e => {
+          e.preventDefault();
+          functionsHookTest.toggleBold();
+        }}
+      >
+        {formatsHookTest.isBold ? 'bold' : 'not bold'}
+      </button>
+      <button onClick={() => functionsHookTest.clear()}>
+        clear
+      </button>
+    </div>
   );
 }
 
@@ -359,7 +363,7 @@ function App() {
           <div className="main-wrapper">
             
             {/* to test the hooks */}
-            {/* <HooksTest /> */}
+            <HooksTest />
 
             {/* toolbar */}
             {toolbar()}
