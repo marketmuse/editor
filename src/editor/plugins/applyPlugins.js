@@ -1,20 +1,17 @@
-import mapReduceFlatten from '@utils/mapReduceFlatten';
 import * as defaultPlugins from '@plugins';
+import mapReduceFlattenDict from '@utils/mapReduceFlattenDict';
 
 export default (plugins = [], { useDefaultPlugins } = {}) => {
 
   // apply plugins
-  const usePlugins = (useDefaultPlugins ? Object.values(defaultPlugins) : [])
-    .concat(plugins || []);
+  const useDefaults = useDefaultPlugins ? Object.values(defaultPlugins) : [];
+  const usePlugins = useDefaults.concat(plugins || []);
 
-  // flatten hotkeys from plugins
-  const hotkeys = mapReduceFlatten(usePlugins, 'hotkeys');
-
-  // flatten decorators from plugins
-  const decorators = mapReduceFlatten(usePlugins, 'decorators');
-
-  // combine all html deserializer options into one array
-  const htmlDeserializerOptionsList = usePlugins.map(p => p.htmlDeserializerOptions);
+  const {
+    hotkeys,
+    decorators,
+    htmlDeserializerOptions: htmlDeserializerOptionsList,
+  } = mapReduceFlattenDict(usePlugins);
 
   // generate function to extend core api's
   const extendCore = ({ functions, formats }) => {

@@ -18,7 +18,7 @@ import getFunctions from '@editor/functions';
 
 const MMSEditor = props => {
 
-  const { plugins, useDefaultPlugins } = props;
+  const { children, plugins, useDefaultPlugins } = props;
 
   // merge plugins
   const mergePlugins = () => applyPlugins(plugins, { useDefaultPlugins });
@@ -27,7 +27,7 @@ const MMSEditor = props => {
     decorators,
     htmlDeserializerOptionsList,
     extendCore,
-  } = useMemo(mergePlugins, [plugins])
+  } = useMemo(mergePlugins, [plugins]);
 
   const editor = useMemo(() => withMarketmuse(
     createEditor(), { htmlDeserializerOptionsList }), [])
@@ -56,7 +56,7 @@ const MMSEditor = props => {
             formats={formats}
             functions={functions}
           >
-            {props.children}
+            {children}
           </MMSEditorConsumer>
         </FunctionsApiContext.Provider>
       </FormatsApiContext.Provider>
