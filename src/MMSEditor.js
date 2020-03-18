@@ -7,14 +7,10 @@ import { Slate } from 'slate-react';
 // turn it into an autoprefixed standalone css file
 import '@config/defaultStyles';
 
-import { FormatsApiContext } from '@editor/hooks/useFormats';
-import { FunctionsApiContext } from '@editor/hooks/useFunctions';
-import MMSEditorConsumer from '@/MMSEditorConsumer';
 import initialState from '@config/initialState';
 import withMarketmuse from '@editor/enhancer/withMarketmuse';
 import applyPlugins from '@editor/plugins/applyPlugins';
-import getFormats from '@editor/formats';
-import getFunctions from '@editor/functions';
+import MMSEditorProvider from '@/MMSEditorProvider';
 
 const MMSEditor = props => {
 
@@ -22,15 +18,10 @@ const MMSEditor = props => {
 
   // merge plugins
   const mergePlugins = () => applyPlugins(plugins, { useDefaultPlugins });
-  const {
-    hotkeys,
-    decorators,
-    htmlDeserializerOptionsList,
-    extendCore,
-  } = useMemo(mergePlugins, [plugins]);
+  const pluginsDict = useMemo(mergePlugins, [plugins]);
 
-  const editor = useMemo(() => withMarketmuse(
-    createEditor(), { htmlDeserializerOptionsList }), [])
+  // create editor
+  const editor = useMemo(() => withMarketmuse(createEditor(), pluginsDict), [])
 
   // Having the editor be uncontrolled seems to make more sense given that the
   // value will be slate-specific JSON syntax and won't mean much without further
@@ -39,27 +30,11 @@ const MMSEditor = props => {
   // keep its own internal state.
   const [value, setValue] = useState(initialState);
 
-  // extend functions and formats
-  const { formats, functions } = extendCore({
-    formats: getFormats(editor, {}),
-    functions: getFunctions(editor, { setValue, htmlDeserializerOptionsList }),
-  });
-
   return (
     <Slate editor={editor} value={value} onChange={setValue}>
-      <FormatsApiContext.Provider value={formats}>
-        <FunctionsApiContext.Provider value={functions}>
-          <MMSEditorConsumer
-            hotkeys={hotkeys}
-            decorators={decorators}
-            extendCore={extendCore}
-            formats={formats}
-            functions={functions}
-          >
-            {children}
-          </MMSEditorConsumer>
-        </FunctionsApiContext.Provider>
-      </FormatsApiContext.Provider>
+      <MMSEditorProvider setValue={setValue} pluginsDict={pluginsDict}>
+        {children}
+      </MMSEditorProvider>
     </Slate>
   );
 };

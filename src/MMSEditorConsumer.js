@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Editable } from 'slate-react';
+import { Editable, useSlate } from 'slate-react';
 
 import Leaf from '@components/editor/Leaf';
 import Element from '@components/editor/Element';
@@ -14,7 +14,7 @@ import getHandleHotkeys from '@editor/hotkeys/getHandleHotkeys';
 // defaults
 import defaultToolbar from '@config/defaultToolbar';
 
-const MMSEditor = props => {
+const MMSEditorConsumer = props => {
 
   const {
     hotkeys,
@@ -101,13 +101,12 @@ const MMSEditor = props => {
 
 /* eslint-enable */
 
-MMSEditor.propTypes = {
+MMSEditorConsumer.propTypes = {
   children: PropTypes.func,
-  extendCore: PropTypes.func,
   hotkeys: PropTypes.array,
   decorators: PropTypes.array,
-  formatsApiArgs: PropTypes.object,
-  functionsApiArgs: PropTypes.object,
+  formats: PropTypes.object,
+  functions: PropTypes.object,
 };
 
-export default MMSEditor;
+export default MMSEditorConsumer;
