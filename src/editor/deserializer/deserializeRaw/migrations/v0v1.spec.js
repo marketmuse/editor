@@ -20,8 +20,8 @@ describe('migrations from data version 0 to 1', () => {
       type: types.p,
       children: [{
         text: 'marketmuse',
-        bold: true,
-        italic: true,
+        [types.b]: true,
+        [types.i]: true,
       }]
     }]
 

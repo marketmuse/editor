@@ -85,11 +85,11 @@ const MMSEditorConsumer = props => {
             id={id}
             className={editorClassName}
             style={style}
-            spellCheck={spellCheck}
-            autoFocus={autoFocus}
-            autoCorrect={autoCorrect}
-            autoCapitalize={autoCapitalize}
-            readOnly={readOnly}
+            spellCheck={spellCheck ? 1 : 0}
+            autoFocus={autoFocus ? 1 : 0}
+            autoCorrect={autoCorrect ? 1 : 0}
+            autoCapitalize={autoCapitalize ? 1 : 0}
+            readOnly={readOnly ? 1 : 0}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             decorate={decorate}
