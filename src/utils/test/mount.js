@@ -20,7 +20,7 @@ export default ({
   // mount MMSEditor component
   mount(
     <MMSEditor {...mmsEditorProps}>
-      {({ functions, editor }) => {
+      {({ formats, functions, editor }) => {
         useEffect(() => {
 
           // get a ref to editor instance
@@ -31,7 +31,9 @@ export default ({
           if (selection) editorMounted.selection = selection;
 
           // run test functions on mount
-          if (typeof fn === 'function') fn({ functions });
+          if (typeof fn === 'function') {
+            fn({ formats, functions });
+          }
 
         }, []);
 
