@@ -16,7 +16,9 @@ export default editor => {
     // when focused on an ignore-focus type element
     // set the selection to its latest value
     if (classHasFocus('mms--toolbar-ignore-focus')) {
-      editor.selection = lastSelection;
+      if (lastSelection) {
+        editor.selection = lastSelection;
+      }
     }
 
     // if onChange provided, call it
