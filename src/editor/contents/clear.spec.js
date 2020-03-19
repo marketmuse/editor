@@ -1,12 +1,20 @@
 /** @jsx deserialize */
 import deserialize from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
-import clear from '@editor/contents/clear';
+import mount from '@utils/test/mount';
 
 const run = (input, expected) => {
-  const mockSetValue = c => { input.children = c };
-  clear(input, mockSetValue);
-  return [ input.children, expected.children ];
+
+  const result = mount({
+    children: input.children,
+    selection: input.selection,
+    fn: ({ functions }) => functions.clear(),
+  })
+
+  return [
+    { children: result.children, selection: result.selection },
+    { children: expected.children, selection: expected.selection },
+  ];
 }
 
 describe('api: clear', () => {
@@ -18,83 +26,6 @@ describe('api: clear', () => {
         <editor>
           <p>
             <text>test</text>
-          </p>
-        </editor>
-      ),
-      withTest(
-        <editor>
-          <p>
-            <text />
-          </p>
-        </editor>
-      )
-    );
-
-    expect(actual).toEqual(expected);
-  });
-
-  // ****
-  test('clear works with multiple blocks', () => {
-    const [actual, expected] = run(
-      withTest(
-        <editor>
-          <p><text>test</text></p>
-          <p><text>test</text></p>
-          <p><text>test</text></p>
-        </editor>
-      ),
-      withTest(
-        <editor>
-          <p>
-            <text />
-          </p>
-        </editor>
-      )
-    );
-
-    expect(actual).toEqual(expected);
-  });
-
-  // ****
-  test('clear works with nested blocks', () => {
-    const [actual, expected] = run(
-      withTest(
-        <editor>
-          <p>
-            <p>
-              <text>test</text>
-            </p>
-          </p>
-        </editor>
-      ),
-      withTest(
-        <editor>
-          <p>
-            <text />
-          </p>
-        </editor>
-      ),
-    );
-
-    expect(actual).toEqual(expected);
-  });
-
-  // ****
-  test('clear works with multiple nested blocks', () => {
-    const [actual, expected] = run(
-      withTest(
-        <editor>
-          <p><p><p><text>test</text></p></p></p>
-          <p><p><p><text>test</text></p></p></p>
-          <p><p><p><text>test</text></p></p></p>
-          <p>
-            <p><p><text>test</text></p></p>
-            <p><p><text>test</text></p></p>
-            <p>
-              <p><text>test</text></p>
-              <p><text>test</text></p>
-              <p><text>test</text></p>
-            </p>
           </p>
         </editor>
       ),
