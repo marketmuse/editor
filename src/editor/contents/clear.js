@@ -9,6 +9,6 @@ export default (editor, setValue) => {
     editor.selection = initialRange;
   }
 
-  // set editor state
+  // set editor state.
   setValue(initialState);
 }
