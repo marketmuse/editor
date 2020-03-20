@@ -109,6 +109,14 @@ function App() {
     }
   };
 
+  // test onValueChange
+  const onValueChangePlugin = {
+    onValueChange: ({ functions, formats }) => {
+      if (formats.isBold) console.log('This is bold!');
+      else console.log('This is not bold!');
+    }
+  }
+
   return (
     <MMSEditor
       plugins={[
@@ -117,6 +125,7 @@ function App() {
         extendFormatsPlugin,
         extendFunctionsPlugin,
         eventExamplePlugin,
+        onValueChangePlugin,
       ]}
     >
       {({

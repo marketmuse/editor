@@ -220,6 +220,12 @@ All event functions receives two arguments. First argument, `event`, is the even
 * **onDragStart** *(function( event: React.DragEvent, args: object ))*
 * **onDrop** *(function( event: React.DragEvent, args: object ))*
 
+*Callbacks*
+
+Callbacks are like events, however they do not have a synthetic event object. They get invoked with a single argument, `args`, which is an object that holds `functions` and `formats` api's like in the events. 
+
+* **onValueChange** *(function( args: object ))* - This function gets invoked on editor state change. It should be used as a replacement to the `onChange` event. Note that changes to the editor state under this callback should be made conditionally, otherwise it will cause an infinite loop.
+
 
 ### Example
 

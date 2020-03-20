@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Editable } from 'slate-react';
 
@@ -18,6 +18,7 @@ import defaultToolbar from '@config/defaultToolbar';
 const MMSEditorConsumer = props => {
 
   const {
+    value,
     hotkeys,
     decorators,
     events,
@@ -28,6 +29,9 @@ const MMSEditorConsumer = props => {
   // execute event fn
   const execEventArgs = { functions, formats };
   const execEvent = getExecuteEvent(events, execEventArgs);
+
+  // handle onChange events on value change
+  useEffect(() => execEvent('onValueChange', null, { noEvent: true }), [value])
 
   /* eslint-disable react/prop-types */
 
@@ -121,6 +125,7 @@ const MMSEditorConsumer = props => {
 
 MMSEditorConsumer.propTypes = {
   children: PropTypes.func,
+  value: PropTypes.object,
   hotkeys: PropTypes.array,
   decorators: PropTypes.array,
   formats: PropTypes.object,

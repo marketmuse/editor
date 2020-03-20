@@ -32,7 +32,7 @@ const MMSEditor = props => {
 
   return (
     <Slate editor={editor} value={value} onChange={setValue}>
-      <MMSEditorProvider setValue={setValue} pluginsDict={pluginsDict}>
+      <MMSEditorProvider value={value} setValue={setValue} pluginsDict={pluginsDict}>
         {children}
       </MMSEditorProvider>
     </Slate>
