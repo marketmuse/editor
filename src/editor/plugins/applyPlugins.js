@@ -11,6 +11,7 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
     hotkeys,
     decorators,
     htmlDeserializerOptions: htmlDeserializerOptionsList,
+    onValueChange,
     onKeyDown,
     onCut,
     onCopy,
@@ -57,6 +58,9 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
     decorators,
     extendCore,
     htmlDeserializerOptionsList,
+    callbacks: {
+      onValueChange,
+    },
     events: {
       onKeyDown,
       onCut,

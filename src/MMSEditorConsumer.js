@@ -11,6 +11,7 @@ import getDecors from '@editor/decorators/getDecors';
 import getDecorTriggers from '@editor/decorators/getDecorTriggers';
 import getHandleHotkeys from '@editor/hotkeys/getHandleHotkeys';
 import getExecuteEvent from '@utils/getExecuteEvent';
+import getExecuteCallback from '@utils/getExecuteCallback';
 
 // defaults
 import defaultToolbar from '@config/defaultToolbar';
@@ -22,16 +23,18 @@ const MMSEditorConsumer = props => {
     hotkeys,
     decorators,
     events,
+    callbacks,
     formats,
     functions
   } = props;
 
-  // execute event fn
-  const execEventArgs = { functions, formats };
-  const execEvent = getExecuteEvent(events, execEventArgs);
+  // execute event / callback fns
+  const execArgs = { functions, formats };
+  const execEvent = getExecuteEvent(events, execArgs);
+  const execCallback = getExecuteCallback(callbacks, execArgs);
 
   // handle onChange events on value change
-  useEffect(() => execEvent('onValueChange', null, { noEvent: true }), [value])
+  useEffect(() => { execCallback('onValueChange') }, [value])
 
   /* eslint-disable react/prop-types */
 
