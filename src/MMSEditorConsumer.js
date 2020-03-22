@@ -1,17 +1,8 @@
-import React, { useEffect, useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Editable } from 'slate-react';
 
-import Leaf from '@components/editor/Leaf';
-import Element from '@components/editor/Element';
 import Toolbar from '@components/toolbar/Toolbar';
-
-import getDecorate from '@editor/decorators/getDecorate';
-import getDecors from '@editor/decorators/getDecors';
-import getDecorTriggers from '@editor/decorators/getDecorTriggers';
-import getHandleHotkeys from '@editor/hotkeys/getHandleHotkeys';
-import getExecuteEvent from '@utils/getExecuteEvent';
-import getExecuteCallback from '@utils/getExecuteCallback';
 
 // defaults
 import defaultToolbar from '@config/defaultToolbar';
@@ -19,41 +10,29 @@ import defaultToolbar from '@config/defaultToolbar';
 const MMSEditorConsumer = props => {
 
   const {
-    value,
-    hotkeys,
-    decorators,
-    events,
-    callbacks,
-    formats,
-    functions
+    children,
+    decorate,
+    renderElement,
+    renderLeaf,
+    handleHotkeys,
+    execEvent,
+    apiArgs,
   } = props;
-
-  // execute event / callback fns
-  const execArgs = { functions, formats };
-  const execEvent = getExecuteEvent(events, execArgs);
-  const execCallback = getExecuteCallback(callbacks, execArgs);
-
-  // handle onChange events on value change
-  useEffect(() => { execCallback('onValueChange') }, [value])
 
   /* eslint-disable react/prop-types */
 
   return (
-    props.children({
+    children({
 
-      // pass active state of formats
-      formats,
-
-      // pass api functions with editor instance in closure
-      functions,
+      // functions, formats and other apis
+      ...apiArgs,
 
       // pass down toolbar component
       toolbar: (options = {}) => (
         <Toolbar
           {...defaultToolbar}
           {...options}
-          functions={functions}
-          formats={formats}
+          {...apiArgs}
         />
       ),
 
@@ -74,18 +53,6 @@ const MMSEditorConsumer = props => {
         let editorClassName = 'mms--editor';
         if (className) editorClassName += ` ${className || ''}`;
         if (readOnly) editorClassName += ' mms--disabled';
-
-        // decorators
-        const decors = getDecors(decorators);
-        const decorTriggers = getDecorTriggers(decorators);
-        const decorate = useCallback(getDecorate(decorators), [decorTriggers]);
-
-        // element / leaf renderers
-        const renderElement = useCallback(props => <Element {...props} />, []);
-        const renderLeaf = useCallback(props => <Leaf decors={decors} {...props} />, [decorTriggers]);
-
-        // hotkeys
-        const handleHotkeys = useCallback(getHandleHotkeys(hotkeys), [hotkeys]);
 
         return (
           <Editable
@@ -115,7 +82,7 @@ const MMSEditorConsumer = props => {
             onDrop={event => execEvent('onDrop', event)}
             onKeyDown={event => {
               execEvent('onKeyDown', event)
-              handleHotkeys({ event, formats, functions })
+              handleHotkeys({ event, ...apiArgs })
             }}
           />
         )
@@ -127,13 +94,13 @@ const MMSEditorConsumer = props => {
 /* eslint-enable */
 
 MMSEditorConsumer.propTypes = {
+  apiArgs: PropTypes.object,
   children: PropTypes.func,
-  value: PropTypes.object,
-  hotkeys: PropTypes.array,
-  decorators: PropTypes.array,
-  formats: PropTypes.object,
-  functions: PropTypes.object,
-  events: PropTypes.object,
+  decorate: PropTypes.func,
+  renderElement: PropTypes.func,
+  renderLeaf: PropTypes.func,
+  handleHotkeys: PropTypes.func,
+  execEvent: PropTypes.func,
 };
 
 export default MMSEditorConsumer;

@@ -40,6 +40,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 * **formats** *(object)* - Flags that provides information about the cursors location / selection (see formats section for more details).
 * **functions** *(object)* - Object that contains high-level api methods with the editor instance in their closure. Useful for building custom behaviour. See functions api section for more details.
+* **decors** *(object)* - see [Decorators](#decorators) section.
 * **editor( config?: object )** *(function)* - A function that takes a config object returns the editor component. See next section for configuration options.
 * **toolbar( config?: object )** *(function)* - A function that takes in a config object and returns the toolbar component. Note that this needs to be rendered for the toolbar to function, even for inline style. See the toolbars section for more details.
 
@@ -346,6 +347,102 @@ decorators: [
   }
 ]
 ```
+
+### decorator stats
+
+Often times when decorators are used, it might be useful to know how many matches each decorator received, and in some cases the aggregate breakdown of matched terms. MMS Editor automatically keeps track and provides this data. There are two ways to access this, either by the `decor` argument received by MMSEditor component's children function, or by using the `useDecor` hook.
+
+The `decor` object comes with two properties, `aggregates` and `matches`. The `aggregates` holds an object with keys being decorator id's, and values being total number of matches received by that decorator. `matches` on the other hand is a dynamic breakdown of how many times each term received a match, grouped by their decorators.
+
+Here is a small example text editor that highlights foods and displays the statistics:
+
+```javascript
+const foodPlugin = {
+  decorators: [
+    {
+      id: 'fruits',
+      match: ['apple', 'banana', 'peach'],
+      style: { backgroundColor: 'red' },
+    },
+    {
+      id: 'vegetables',
+      match: ['tomato', 'corn', 'carrot'],
+      style: { backgroundColor: 'green' },
+    }
+  ]
+}
+
+<MMSEditor plugins={[ foodPlugin ]}>
+  {({ editor, /* decors */ }) => (
+    <>
+      <FoodStats />
+      {editor({ placeholder: "Insert food..." })}
+    </>
+  )}
+</MMSEditor>
+```
+
+We created a simple plugin that decorates some fruits and vegetables, and applies some styles to the matches. The generated `decor` object would look something like this:
+
+```javascript
+{
+  aggregates: {
+    fruits: 8,
+    vegetables: 5,
+  }
+  matches: {
+    fruits: {
+      apple: 5,
+      banana: 1,
+      peach: 2,
+    },
+    vegetables: {
+      tomato: 1,
+      corn: 3,
+      carrot: 1,
+    }
+  },
+}
+```
+
+Next, we need to create `FoodStats` component, which displays how many of each food item were found in our text editor. We can use the `decors` argument (commented out above), or since our `FoodStats` components is being rendered inside the `MMSEditor` provider, we can also use the `useDecors` hook to receive the same data.
+
+```javascript
+import { useDecors } from '@marketmuse/editor';
+
+export default props => {
+  
+  // get decor object using `useDecors` hook.
+  const decors = useDecors();
+  
+  // fruit stats
+  const fTotal = decors.aggregates?.fruits || 0;
+  const fMatches = decors.matches?.fruits || {};
+  
+  // vegetable stats
+  const vTotal = decors.aggregates?.vegetables || 0;
+  const vMatches = decors.matches?.vegetables || {};
+  
+  return (
+    <>
+      <h3>Fruits: {fTotal}</h3>
+      <ul>
+        {Object.keys(fMatches).map(fruit => (
+          <li key={fruit}>{fruit}: {fMatches[fruit]}</li>
+        )}
+      </ul>
+      <h3>Vegetables: {vTotal}</h3>
+      <ul>
+        {Object.keys(vMatches).map(veg => (
+          <li key={veg}>{veg}: {vMatches[veg]}</li>
+        )}
+      </ul>
+    </>
+  )
+}
+
+```
+
 
 ## Hotkeys
 

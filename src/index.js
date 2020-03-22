@@ -8,6 +8,7 @@ export { default as formats } from '@editor/formats';
 export { default as useEditor } from '@editor/hooks/useEditor';
 export { default as useFormats } from '@editor/hooks/useFormats';
 export { default as useFunctions } from '@editor/hooks/useFunctions';
+export { default as useDecors } from '@editor/hooks/useDecors';
 
 // toolbar
 export { default as ToolbarButton } from '@components/toolbar/ToolbarButton';

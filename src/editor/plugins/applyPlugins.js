@@ -28,8 +28,8 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
   } = mapReduceFlattenDict(usePlugins);
 
   // generate function to extend core api's
-  const extendCore = ({ functions, formats }) => {
-    return usePlugins.reduce((acc, plugin = {}) => {
+  const extendCore = ({ functionsRaw, formatsRaw }) => (
+    usePlugins.reduce((acc, plugin = {}) => {
       if (typeof plugin !== 'object') return acc;
 
       // extend formats
@@ -48,10 +48,10 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
         functions: newFunctions
       }
     }, {
-      formats,
-      functions,
-    });
-  }
+      formats: formatsRaw,
+      functions: functionsRaw,
+    })
+  )
 
   return {
     hotkeys,

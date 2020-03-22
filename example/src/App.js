@@ -129,12 +129,15 @@ function App() {
       ]}
     >
       {({
+        decors,
         formats,
         functions,
         toolbar,
         editor,
       }) => {
         window.functions = functions;
+
+        console.log('decors', decors);
 
         const {
           isBold,

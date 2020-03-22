@@ -4,7 +4,11 @@ import regexFromArray from '@editor/decorators/utils/regexFromArray';
 import regexFromString from '@editor/decorators/utils/regexFromString';
 import getDecoratorKey from '@editor/decorators/utils/getDecoratorKey';
 
-export default (decorators = []) => ([ node, path ]) => {
+export default (
+  decorators = [],
+  matchesRef,
+  aggregatesRef,
+) => ([ node, path ]) => {
 
   // only decorate text nodes
   if (!Text.isText(node)) return [];
@@ -72,6 +76,9 @@ export default (decorators = []) => ([ node, path ]) => {
 
   })
 
-  // console.log('>', matches, aggregates);
+  // set match / aggregate stats
+  matchesRef.current = matches;
+  aggregatesRef.current = aggregates;
+
   return ranges;
 }
