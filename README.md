@@ -1,3 +1,7 @@
+# Demo
+
+Click [here](https://editor.marketmuse.com) for demo, and [here](/example/src) for the source codes of the demo.
+
 # Install
 
 ```
