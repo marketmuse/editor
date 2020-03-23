@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import get from 'lodash/get';
 import MMSEditor, { useFormats, useFunctions } from '@marketmuse/editor';
 import '@marketmuse/editor/dist/mms-editor.css';
 
@@ -103,8 +104,8 @@ function App() {
         // block keypress
         // event.preventDefault();
         // use formats api like so
-        if (formats.isBold) console.log('This is bold!');
-        else console.log('This is not bold!');
+        // if (formats.isBold) console.log('This is bold!');
+        // else console.log('This is not bold!');
       }
     }
   };
@@ -112,8 +113,8 @@ function App() {
   // test onValueChange
   const onValueChangePlugin = {
     onValueChange: ({ functions, formats }) => {
-      if (formats.isBold) console.log('This is bold!');
-      else console.log('This is not bold!');
+      // if (formats.isBold) console.log('This is bold!');
+      // else console.log('This is not bold!');
     }
   }
 
@@ -136,8 +137,7 @@ function App() {
         editor,
       }) => {
         window.functions = functions;
-
-        console.log('decors', decors);
+        window.decors = decors;
 
         const {
           isBold,
@@ -155,6 +155,12 @@ function App() {
           isCollapsed,
           isFocused,
         } = formats;
+
+        const dTotal = get(decors, 'total') || 0;
+        const aBlue = get(decors, 'aggregates.blue') || 0;
+        const mBlue = get(decors, 'matches.blue') || {};
+        const aRed = get(decors, 'aggregates.red') || 0;
+        const mRed = get(decors, 'matches.red') || {};
 
         const renderImportsExports = () => {
           return (
@@ -201,8 +207,11 @@ function App() {
         const renderHighlights = () => {
           return (
             <>
-              <Separator text="Highlights" />
-              <label>Blue</label>
+              <Separator text={`Highlights (${dTotal})`} />
+              <label>Blue ({aBlue})</label>
+              {Object.keys(mBlue).map(k => (
+                <label key={k} style={{ border: 'none' }}>{k}: {mBlue[k]}</label>
+              ))}
               <section class="col">
                 <input
                   placeholder="Comma separated topics"
@@ -210,7 +219,10 @@ function App() {
                   onChange={e => setBlueHighlights(e.target.value)}
                 />
               </section>
-              <label>Red</label>
+              <label>Red ({aRed})</label>
+              {Object.keys(mRed).map(k => (
+                <label key={k} style={{ border: 'none' }}>{k}: {mRed[k]}</label>
+              ))}
               <section class="col">
                 <input
                   placeholder="Comma separated topics"
@@ -294,11 +306,9 @@ function App() {
                 <button disabled className={`has-item-left has-item-right ${isCollapsed === true ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>collapsed</button>
                 <button disabled className={`has-item-left ${isCollapsed === false ? 'active' : ''}`} onMouseDown={e => { e.preventDefault(); }}>selection</button>
               </section>
-              <section className="merge-below">
-                <button className="has-item-above has-item-below" onClick={() => functions.focus()}>focus</button>
-              </section>
-              <section>
+              <section className="merge-above">
                 <button className="has-item-above has-item-right" onClick={() => { functions.focus(); functions.moveCursorToStart(); }}>focus at start</button>
+                <button className="has-item-above has-item-right has-item-left" onClick={() => functions.focus()}>focus</button>
                 <button className="has-item-above has-item-left" onClick={() => { functions.focus(); functions.moveCursorToEnd(); }}>focus at end</button>
               </section>
             </>
@@ -416,11 +426,11 @@ function App() {
 
             {/* controls */}
             <div className="control-wrapper">
+              {renderHighlights()}
               {renderFormatters()}
               {renderLinks()}
               {renderSelections()}
               {renderContentControls()}
-              {renderHighlights()}
               {renderImportsExports()}
               {renderJsPanel()}
             </div>

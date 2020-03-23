@@ -4,81 +4,80 @@ import regexFromArray from '@editor/decorators/utils/regexFromArray';
 import regexFromString from '@editor/decorators/utils/regexFromString';
 import getDecoratorKey from '@editor/decorators/utils/getDecoratorKey';
 
-export default (
-  decorators = [],
-  matchesRef,
-  aggregatesRef,
-) => ([ node, path ]) => {
+export default (decorators = [], { total, matches, aggregates, setVals }) => {
 
-  // only decorate text nodes
-  if (!Text.isText(node)) return [];
+  return ([ node, path ]) => {
 
-  const ranges = [];
-  const matches = {};
-  const aggregates = {};
-  const { text } = node;
+    // only decorate text nodes
+    if (!Text.isText(node)) return [];
 
-  // walk through decorators
-  decorators.forEach(decorator => {
+    const ranges = [];
+    const { text } = node;
 
-    const decoratorId = decorator.id;
-    const decoratorKey = getDecoratorKey(decoratorId);
+    // walk through decorators
+    decorators.forEach(decorator => {
 
-    // initiate aggregates
-    matches[decoratorId] = {};
-    aggregates[decoratorId] = 0;
+      const decoratorId = decorator.id;
+      const decoratorKey = getDecoratorKey(decoratorId);
 
-    // transform text according to decorator configuraton
-    const useText = typeof decorator.transform === 'function'
-      ? decorator.transform(text)
-      : text;
+      // initiate aggregates
+      if (!matches[decoratorId]) {
+        matches[decoratorId] = {};
+      }
+      if (!aggregates[decoratorId]) {
+        aggregates[decoratorId] = 0;
+      }
 
-    // get regex
-    let regex = decorator.match;
-    if (regex instanceof RegExp) regex = regexFromRegex(regex);
-    if (typeof regex === 'string') regex = regexFromString(regex);
-    if (Array.isArray(regex)) regex = regexFromArray(regex);
+      // transform text according to decorator configuraton
+      const useText = typeof decorator.transform === 'function'
+        ? decorator.transform(text)
+        : text;
 
-    // if a non-convertible value provided, throw an error
-    if (regex instanceof RegExp !== true) return;
+      // get regex
+      let regex = decorator.match;
+      if (regex instanceof RegExp) regex = regexFromRegex(regex);
+      if (typeof regex === 'string') regex = regexFromString(regex);
+      if (Array.isArray(regex)) regex = regexFromArray(regex);
 
-    // match here
-    let terms = [];
-    while ((terms = regex.exec(useText)) !== null) {
+      // if a non-convertible value provided, ignore
+      if (regex instanceof RegExp !== true) return;
 
-      // matched term
-      const term = (terms[0] || '');
+      // match here
+      let terms = [];
+      while ((terms = regex.exec(useText)) !== null) {
 
-      // do not proceed if custom evaluation fails
-      const { evaluate } = decorator;
-      const valid = typeof evaluate !== 'function' ? true : evaluate({
-        term,
-        terms: matches[decoratorId],
-        aggregate: aggregates[decoratorId]
-      })
+        // matched term
+        const term = (terms[0] || '');
 
-      // do not add decorators or keep
-      // counts if match not desired
-      if (!valid) return;
+        // do not proceed if custom evaluation fails
+        const { evaluate } = decorator;
+        const valid = typeof evaluate !== 'function' ? true : evaluate({
+          term,
+          terms: matches[decoratorId],
+          aggregate: aggregates[decoratorId]
+        })
 
-      // keep stats of matches
-      if (!matches[decoratorId][term]) { matches[decoratorId][term] = 0; }
-      matches[decoratorId][term] += 1;
-      aggregates[decoratorId] += 1;
+        // do not add decorators or keep
+        // counts if match not desired
+        if (!valid) return;
 
-      // add decorators here
-      ranges.push({
-        anchor: { path, offset: terms.index },
-        focus: { path, offset: terms.index + term.length },
-        [decoratorKey]: true,
-      })
-    }
+        // keep stats of matches
+        if (!matches[decoratorId][term]) { matches[decoratorId][term] = 0; }
+        matches[decoratorId][term] += 1;
+        aggregates[decoratorId] += 1;
+        total += 1;
 
-  })
+        // add decorators here
+        ranges.push({
+          anchor: { path, offset: terms.index },
+          focus: { path, offset: terms.index + term.length },
+          [decoratorKey]: true,
+        })
+      }
+    })
 
-  // set match / aggregate stats
-  matchesRef.current = matches;
-  aggregatesRef.current = aggregates;
+    setVals([ matches, aggregates, total ]);
 
-  return ranges;
-}
+    return ranges;
+  }
+};

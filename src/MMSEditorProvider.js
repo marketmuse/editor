@@ -38,7 +38,7 @@ const MMSEditorProvider = props => {
     decorStats,
     decorTriggers,
     decorComponents,
-  } = useDecorators(decorators);
+  } = useDecorators(decorators, value);
 
   // api's packed together in a single object.
   // destructure before passing on

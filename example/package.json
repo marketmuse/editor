@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@marketmuse/editor": "link:../",
+    "lodash": "^4.17.15",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom"
   },
