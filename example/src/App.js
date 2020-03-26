@@ -309,7 +309,8 @@ function App() {
               <section className="merge-above">
                 <button className="has-item-above has-item-right" onClick={() => { functions.focus(); functions.moveCursorToStart(); }}>focus at start</button>
                 <button className="has-item-above has-item-right has-item-left" onClick={() => functions.focus()}>focus</button>
-                <button className="has-item-above has-item-left" onClick={() => { functions.focus(); functions.moveCursorToEnd(); }}>focus at end</button>
+                <button className="has-item-above has-item-right has-item-left" onClick={() => { functions.focus(); functions.moveCursorToEnd(); }}>focus at end</button>
+                <button className="has-item-above has-item-left" onMouseDown={e => { e.preventDefault(); functions.selectAll(); }}>select all</button>
               </section>
             </>
           )

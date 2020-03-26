@@ -11,6 +11,7 @@ const ToolbarButton = props => {
 
   return (
     <button
+      id={props.id}
       className={className}
       style={props.style}
       disabled={props.disabled}
@@ -29,6 +30,7 @@ const ToolbarButton = props => {
 };
 
 ToolbarButton.propTypes = {
+  id: PropTypes.string,
   children: PropTypes.any,
   className: PropTypes.string,
   style: PropTypes.object,

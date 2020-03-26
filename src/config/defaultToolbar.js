@@ -33,6 +33,7 @@ const SCREEN_LINK_POPUP = 'link-popup';
 
 export const BackToDefaultScreen = props => (
   <ToolbarButton
+    id='mms--toolbar-button-back'
     onClick={() => props.setScreen(SCREEN_DEFAULT)}
     children={props.children || '←'}
   />
@@ -42,6 +43,7 @@ export const BackToDefaultScreen = props => (
 
 export const HeadingsButton = props => (
   <ToolbarButton
+    id='mms--toolbar-button-h'
     active={props.formats.isHeading}
     onClick={() => props.setScreen(SCREEN_HEADINGS)}
     children={props.children || <IconHeadings />}
@@ -50,6 +52,7 @@ export const HeadingsButton = props => (
 
 export const HeadingOneButton = props => (
   <ToolbarButton
+    id='mms--toolbar-button-h1'
     active={props.formats.isH1}
     onClick={() => props.functions.toggleHeading(1)}
     children={props.children || <IconHeadingOne />}
@@ -58,6 +61,7 @@ export const HeadingOneButton = props => (
 
 export const HeadingTwoButton = props => (
   <ToolbarButton
+    id='mms--toolbar-button-h2'
     active={props.formats.isH2}
     onClick={() => props.functions.toggleHeading(2)}
     children={props.children || <IconHeadingTwo />}
@@ -66,6 +70,7 @@ export const HeadingTwoButton = props => (
 
 export const HeadingThreeButton = props => (
   <ToolbarButton
+    id='mms--toolbar-button-h3'
     active={props.formats.isH3}
     onClick={() => props.functions.toggleHeading(3)}
     children={props.children || <IconHeadingThree />}
@@ -76,6 +81,7 @@ export const HeadingThreeButton = props => (
 
 export const BoldButton = props => (
   <ToolbarButton
+    id='mms--toolbar-button-bold'
     active={props.formats.isBold}
     onClick={() => props.functions.toggleBold()}
     children={props.children || <IconBold />}
@@ -84,6 +90,7 @@ export const BoldButton = props => (
 
 export const ItalicButton = props => (
   <ToolbarButton
+    id='mms--toolbar-button-italic'
     active={props.formats.isItalic}
     onClick={() => props.functions.toggleItalic()}
     children={props.children || <IconItalic />}
@@ -92,6 +99,7 @@ export const ItalicButton = props => (
 
 export const UnderlineButton = props => (
   <ToolbarButton
+    id='mms--toolbar-button-underline'
     active={props.formats.isUnderline}
     onClick={() => props.functions.toggleUnderline()}
     children={props.children || <IconUnderline />}
@@ -100,6 +108,7 @@ export const UnderlineButton = props => (
 
 export const StrikeButton = props => (
   <ToolbarButton
+    id='mms--toolbar-button-strikethrough'
     active={props.formats.isStrikethrough}
     onClick={() => props.functions.toggleStrikethrough()}
     children={props.children || <IconStrikethrough />}
@@ -110,6 +119,7 @@ export const StrikeButton = props => (
 
 export const LinkButton = props => (
   <ToolbarButton
+    id='mms--toolbar-button-addlink'
     active={props.formats.isLink}
     onClick={() => props.setScreen(SCREEN_LINK)}
     children={props.children || <IconLink />}
@@ -118,6 +128,7 @@ export const LinkButton = props => (
 
 export const RemoveLinkButton = props => (
   <ToolbarButton
+    id='mms--toolbar-button-removelink'
     onClick={() => props.functions.removeLink()}
     children={props.children || <IconTrash />}
   />
@@ -129,6 +140,7 @@ export const OpenLinkButton = props => {
   const isValid = isValidUrl(clean);
   return (
     <ToolbarButton
+      id='mms--toolbar-button-openlink'
       disabled={!isValid}
       onClick={() => window.open(clean)}
       children={props.children || <IconShare />}
@@ -171,11 +183,13 @@ export const LinkInput = props => {
     >
       <ToolbarInput
         value={url}
+        id='mms--toolbar-input-link'
         onChange={e => setUrl(e.target.value)}
         placeholder='Insert URL'
         className={classname}
       />
       <ToolbarButton
+        id='mms--toolbar-button-submitlink'
         disabled={!isValid}
         type='submit'
         children={<IconTick />}
