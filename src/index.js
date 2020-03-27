@@ -26,6 +26,9 @@ export { ReactComponent as IconTrash } from '@assets/trash.svg';
 export { ReactComponent as IconShare } from '@assets/share.svg';
 export { ReactComponent as IconTick } from '@assets/tick.svg';
 export { ReactComponent as IconLink } from '@assets/link.svg';
+export { ReactComponent as IconListNumbered } from '@assets/listnum.svg';
+export { ReactComponent as IconListBulleted } from '@assets/listbul.svg';
+export { ReactComponent as IconQuote } from '@assets/quote.svg';
 
 // plugins
 export { plugins };

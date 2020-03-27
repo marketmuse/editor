@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import useEditor from '@editor/hooks/useEditor';
 
+// icons from -
+// https://blueprintjs.com/docs/#icons
 import { ReactComponent as IconHeadings } from '@assets/heading.svg';
 import { ReactComponent as IconHeadingOne } from '@assets/heading1.svg';
 import { ReactComponent as IconHeadingTwo } from '@assets/heading2.svg';
@@ -15,6 +17,9 @@ import { ReactComponent as IconTrash } from '@assets/trash.svg';
 import { ReactComponent as IconShare } from '@assets/share.svg';
 import { ReactComponent as IconTick } from '@assets/tick.svg';
 import { ReactComponent as IconLink } from '@assets/link.svg';
+import { ReactComponent as IconListNumbered } from '@assets/listnum.svg';
+import { ReactComponent as IconListBulleted } from '@assets/listbul.svg';
+import { ReactComponent as IconQuote } from '@assets/quote.svg';
 
 import cleanUrl from '@utils/cleanUrl';
 import isValidUrl from '@utils/isValidUrl';
@@ -74,6 +79,37 @@ export const HeadingThreeButton = props => (
     active={props.formats.isH3}
     onClick={() => props.functions.toggleHeading(3)}
     children={props.children || <IconHeadingThree />}
+  />
+);
+
+// lists
+
+export const ListNumberedButton = props => (
+  <ToolbarButton
+    id='mms--toolbar-button-ol'
+    active={props.formats.isListNumbered}
+    onClick={() => props.functions.toggleListNumbered()}
+    children={props.children || <IconListNumbered />}
+  />
+);
+
+export const ListBulletedButton = props => (
+  <ToolbarButton
+    id='mms--toolbar-button-ul'
+    active={props.formats.isListBulleted}
+    onClick={() => props.functions.toggleListBulleted()}
+    children={props.children || <IconListBulleted />}
+  />
+);
+
+// misc
+
+export const BlockquoteButton = props => (
+  <ToolbarButton
+    id='mms--toolbar-button-blockquote'
+    active={props.formats.isBlockquote}
+    onClick={() => props.functions.toggleBlockquote()}
+    children={props.children || <IconQuote />}
   />
 );
 
@@ -234,7 +270,10 @@ export default {
     // default screen layout
     [SCREEN_DEFAULT]: [
       HeadingsButton,
+      ListNumberedButton,
+      ListBulletedButton,
       LinkButton,
+      BlockquoteButton,
       ItemSpacer,
       BoldButton,
       ItalicButton,

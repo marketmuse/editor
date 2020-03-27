@@ -30,5 +30,12 @@
  * .mms--editor blockquote {}
  */
 
+ .mms--editor blockquote {
+   margin: 0;
+   padding: 10px 18px;
+   background-color: whitesmoke;
+   border-radius: 4px;
+ }
+
 .mms--editor *:first-child { margin-top: 0; }
 .mms--editor *:last-child { margin-bottom: 0; }
