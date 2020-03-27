@@ -116,6 +116,7 @@ const App = () => {
 
 *Misc*:
 
+* **state** *(object)* - Internal state accessible through functions / formats api's. This is useful for building stateful logic through a plugins. Also it could be used to have multiple plugins rely on a single state.
 * **isCollapsed** *(boolean / null)* - Cursor location within a text is referred to as [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection), and is indicated with an anhor point and a focus point. When a text is highlighted, anchor is where the selection begins and focus is the where it ends. A selection is [collapsed](https://developer.mozilla.org/en-US/docs/Web/API/Selection/isCollapsed) when anchor and focus are the same position, meaning, no text is selected. When there is no selection (ie. editor has no focus), this value will be null.
 * **isFocused** *(boolean)* - True if editor has focus.
 
@@ -163,6 +164,10 @@ The `functions` object is passed as an argument to `MMSEditor`'s children functi
 * **toggleBlockquote( status?: bool )** *(void)* - Toggles blockquote state of current block. 
 * **toggleListNumbered( status?: bool )** *(void)* - Toggles numbered list state of current block. 
 * **toggleListBulleted( status?: bool )** *(void)* - Toggles bulleted list state of current block. 
+
+*State*:
+
+* **setState( object )** *(void)* - Set a state value accessible through functions / formats api's. This is useful for building stateful logic through a plugins. Also it could be used to have multiple plugins rely on a single state.
 
 *Data*
 
