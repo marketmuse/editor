@@ -17,10 +17,18 @@ import getFunctions from '@editor/functions';
 const MMSEditorProvider = props => {
   const editor = useSlate();
 
-  const { children, value, setValue, pluginsDict } = props;
+  const {
+    children,
+    value,
+    state,
+    setValue,
+    setState,
+    pluginsDict,
+  } = props;
   const {
     events,
     callbacks,
+    toolbar,
     hotkeys,
     decorators,
     extendCore,
@@ -28,8 +36,8 @@ const MMSEditorProvider = props => {
   } = pluginsDict;
 
   // extend functions and formats
-  const formatsRaw = getFormats(editor, {});
-  const functionsRaw = getFunctions(editor, { setValue, htmlDeserializerOptionsList });
+  const formatsRaw = getFormats(editor, { state });
+  const functionsRaw = getFunctions(editor, { setState, setValue, htmlDeserializerOptionsList });
   const { formats, functions } = extendCore({ formatsRaw, functionsRaw });
 
   // decorators
@@ -60,6 +68,7 @@ const MMSEditorProvider = props => {
       <FunctionsApiContext.Provider value={functions}>
         <DecoratorContext.Provider value={decorStats}>
           <MMSEditorConsumer
+            toolbar={toolbar}
             decorate={decorate}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
@@ -80,7 +89,9 @@ MMSEditorProvider.propTypes = {
   pluginsDict: PropTypes.object,
   children: PropTypes.func,
   value: PropTypes.array,
+  state: PropTypes.object,
   setValue: PropTypes.func,
+  setState: PropTypes.func,
 };
 
 export default MMSEditorProvider;

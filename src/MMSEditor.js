@@ -7,7 +7,7 @@ import { Slate } from 'slate-react';
 // turn it into an autoprefixed standalone css file
 import '@config/defaultStyles';
 
-import initialState from '@config/initialState';
+import initialValue from '@config/initialValue';
 import withMarketmuse from '@editor/enhancer/withMarketmuse';
 import applyPlugins from '@editor/plugins/applyPlugins';
 import MMSEditorProvider from '@/MMSEditorProvider';
@@ -28,11 +28,18 @@ const MMSEditor = props => {
   // processing / parsing. Editor component should take that responsibility, so
   // the data should be exposed through an api in a meaningful way, and it should
   // keep its own internal state.
-  const [value, setValue] = useState(initialState);
+  const [value, setValue] = useState(initialValue);
+  const [state, setState] = useState({});
 
   return (
     <Slate editor={editor} value={value} onChange={setValue}>
-      <MMSEditorProvider value={value} setValue={setValue} pluginsDict={pluginsDict}>
+      <MMSEditorProvider
+        value={value}
+        state={state}
+        setValue={setValue}
+        setState={setState}
+        pluginsDict={pluginsDict}
+      >
         {children}
       </MMSEditorProvider>
     </Slate>

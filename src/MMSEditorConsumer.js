@@ -4,12 +4,10 @@ import { Editable } from 'slate-react';
 
 import Toolbar from '@components/toolbar/Toolbar';
 
-// defaults
-import defaultToolbar from '@config/defaultToolbar';
-
 const MMSEditorConsumer = props => {
 
   const {
+    toolbar,
     children,
     decorate,
     renderElement,
@@ -30,7 +28,7 @@ const MMSEditorConsumer = props => {
       // pass down toolbar component
       toolbar: (options = {}) => (
         <Toolbar
-          {...defaultToolbar}
+          {...(toolbar || {})}
           {...options}
           {...apiArgs}
         />
@@ -94,6 +92,7 @@ const MMSEditorConsumer = props => {
 /* eslint-enable */
 
 MMSEditorConsumer.propTypes = {
+  toolbar: PropTypes.object,
   apiArgs: PropTypes.object,
   children: PropTypes.func,
   decorate: PropTypes.func,

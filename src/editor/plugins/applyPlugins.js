@@ -8,6 +8,7 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
   const usePlugins = useDefaults.concat(plugins || []);
 
   const {
+    toolbar,
     hotkeys,
     decorators,
     htmlDeserializerOptions: htmlDeserializerOptionsList,
@@ -54,6 +55,7 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
   )
 
   return {
+    toolbar: toolbar.length > 0 ? toolbar[0] : null,
     hotkeys,
     decorators,
     extendCore,

@@ -256,50 +256,52 @@ export const forceScreen = ({ formats }) => {
 }
 
 export default {
+  toolbar: {
 
-  isOpen,
+    isOpen,
 
-  forceScreen,
+    forceScreen,
 
-  inline: true,
+    inline: true,
 
-  defaultScreen: SCREEN_DEFAULT,
+    defaultScreen: SCREEN_DEFAULT,
 
-  screens: {
+    screens: {
 
-    // default screen layout
-    [SCREEN_DEFAULT]: [
-      HeadingsButton,
-      ListNumberedButton,
-      ListBulletedButton,
-      LinkButton,
-      BlockquoteButton,
-      ItemSpacer,
-      BoldButton,
-      ItalicButton,
-      UnderlineButton,
-      StrikeButton,
-    ],
+      // default screen layout
+      [SCREEN_DEFAULT]: [
+        HeadingsButton,
+        ListNumberedButton,
+        ListBulletedButton,
+        LinkButton,
+        BlockquoteButton,
+        ItemSpacer,
+        BoldButton,
+        ItalicButton,
+        UnderlineButton,
+        StrikeButton,
+      ],
 
-    // headings screen layout
-    [SCREEN_HEADINGS]: [
-      BackToDefaultScreen,
-      HeadingOneButton,
-      HeadingTwoButton,
-      HeadingThreeButton,
-    ],
+      // headings screen layout
+      [SCREEN_HEADINGS]: [
+        BackToDefaultScreen,
+        HeadingOneButton,
+        HeadingTwoButton,
+        HeadingThreeButton,
+      ],
 
-    // link screen layout
-    [SCREEN_LINK]: [
-      BackToDefaultScreen,
-      LinkInput,
-      RemoveLinkButton,
-      OpenLinkButton,
-    ],
-    [SCREEN_LINK_POPUP]: [
-      LinkInput,
-      RemoveLinkButton,
-      OpenLinkButton,
-    ],
+      // link screen layout
+      [SCREEN_LINK]: [
+        BackToDefaultScreen,
+        LinkInput,
+        RemoveLinkButton,
+        OpenLinkButton,
+      ],
+      [SCREEN_LINK_POPUP]: [
+        LinkInput,
+        RemoveLinkButton,
+        OpenLinkButton,
+      ],
+    }
   }
 }

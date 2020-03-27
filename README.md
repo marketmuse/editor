@@ -206,6 +206,7 @@ Certain functionality could be provided to MMS editor via plugins. It is possibl
 * **hotkeys** *(array)* - see [Hotkeys](#hotkeys).
 * **decorators** *(array)* - see [Decorators](#decorators).
 * **htmlDeserializerOptions** *(object)* - see [HTML Deserializer](#html-deserializer).
+* **toolbar** *(object)* - see [Toolbar](#toolbar()).
 
 *Events*
 
@@ -567,7 +568,7 @@ htmlDeserializerOptions: {
 The second argument, `attributes`, is just to simplify interacting with the attributes of the DOM element, but since you have access to the `el`, the [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) instance, you could build such logic on any DOM property.
 
 
-# toolbar( config )
+# toolbar()
 
 MMS Editor comes with a built-in toolbar that has primary rich text editing support out of the box, and could easily by configured / extended with custom functionality.
 
@@ -580,8 +581,10 @@ MMS Editor comes with a built-in toolbar that has primary rich text editing supp
 
 ### config object
 
+Toolbar configuration could either be provided via a plugin, or as an argument to the `toolbar()` function. The latter has presedence over the former, so arguments provided to this function will override to plugin-provided configuration.
+
 * TODO
-* Example: see the [default configuration](/src/config/defaultToolbar.js) as an example.
+* Example: see the [default configuration](/src/plugins/defaultToolbar.js) as an example.
 
 
 # Styling

@@ -1,14 +1,14 @@
 import isNil from 'lodash/isNil';
-import initialState, { initialRange } from '@config/initialState';
+import initialValue, { initialRange } from '@config/initialValue';
 
 export default (editor, setValue) => {
 
   // set editor children and selection
-  editor.children = initialState;
+  editor.children = initialValue;
   if (!isNil(editor.selection)) {
     editor.selection = initialRange;
   }
 
   // set editor state.
-  setValue(initialState);
+  setValue(initialValue);
 }

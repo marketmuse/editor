@@ -1,5 +1,5 @@
 /** @jsx deserialize */
-import { initialRange } from '@config/initialState';
+import { initialRange } from '@config/initialValue';
 import mount from '@utils/test/mount';
 import deserialize from '@editor/deserializer/deserializeJsx/deserializeJsx';
 import withTest from '@utils/test/withTest';
