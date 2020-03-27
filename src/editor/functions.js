@@ -61,6 +61,9 @@ export default (editor, {
   insertHtml: (html, options) => insertHtml(editor, setValue, html, options || htmlDeserializerOptionsList),
   insertText: text => insertText(editor, setValue, text),
 
+  // state
+  setState,
+
   // internals
   _setValue: setValue,
   _getEditor: () => editor,

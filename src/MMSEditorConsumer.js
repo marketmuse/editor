@@ -78,6 +78,7 @@ const MMSEditorConsumer = props => {
             onDragOver={event => execEvent('onDragOver', event)}
             onDragStart={event => execEvent('onDragStart', event)}
             onDrop={event => execEvent('onDrop', event)}
+            onMouseDown={event => execEvent('onMouseDown', event)}
             onKeyDown={event => {
               execEvent('onKeyDown', event)
               handleHotkeys({ event, ...apiArgs })

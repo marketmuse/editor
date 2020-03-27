@@ -220,6 +220,7 @@ All event functions receives two arguments. First argument, `event`, is the even
 * **onBlur** *(function( event: React.FocusEvent, args: object ))*
 * **onFocus** *(function( event: React.FocusEvent, args: object ))*
 * **onClick** *(function( event: React.MouseEvent, args: object ))*
+* **onMouseDown** *(function( event: React.MouseEvent, args: object ))*
 * **onCompositionStart** *(function( event: React.CompositionEvent, args: object ))*
 * **onCompositionEnd** *(function( event: React.CompositionEvent, args: object ))*
 * **onDragOver** *(function( event: React.DragEvent, args: object ))*

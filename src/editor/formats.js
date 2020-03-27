@@ -33,6 +33,9 @@ export default (editor, { state }) => {
     isCollapsed: isCollapsed(editor),
     isFocused: isFocused(editor),
 
+    // state
+    state,
+
     // TODO: Editor.marks won't return custom formats
     // isDecor: id => isFormatActive(editor, 'mark', getDecoratorKey(id)),
   }
