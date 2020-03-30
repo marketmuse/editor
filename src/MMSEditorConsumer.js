@@ -65,6 +65,25 @@ const MMSEditorConsumer = props => {
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             // decorate={decorate}
+            decorate={() => [
+
+              // TODO:
+              // 1. postMessage to web worker on change
+              // 2. web worker picks up children, does the computation, sends back ranges
+              // 3. onmessage callback saves the ranges returned from the web worker in a mutable ref (no re-renders!)
+              // 4. decorate function returns to saved range array as if it computed
+
+              // TODO2: is there way to apply range array as decorations without
+              // using the decorate function at all ?
+
+              /*
+                {
+                  anchor: { path: [0, 0], offset: 0 },
+                  focus: { path: [0, 0], offset: 3 },
+                  bold: true,
+                }
+              */
+            ]}
             placeholder={placeholder}
             onCut={event => execEvent('onCut', event)}
             onCopy={event => execEvent('onCopy', event)}
