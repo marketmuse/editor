@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import get from 'lodash/get';
-import MMSEditor, { useFormats, useFunctions } from '@marketmuse/editor';
+import MMSEditor, { types, slate, useFormats, useFunctions } from '@marketmuse/editor';
 import '@marketmuse/editor/dist/mms-editor.css';
 
 import './App.css';
@@ -118,6 +118,36 @@ function App() {
     }
   }
 
+  // plugin that will make first block hading
+  // and the second block a paragraph 
+  const forcedLayoutPlugin = {
+    normalizerOptions: {
+      normalize: (editor, [ node, path ]) => {
+        const isTopLevel = path.length === 1;
+        const isFirst = path[0] === 0;
+        const isSecond = path[0] === 1;
+        const isHeading = node.type === types.h1;
+        const isParagraph = node.type === types.p;
+
+        // make first block heading
+        if (isTopLevel && isFirst && !isHeading) {
+          slate.Transforms.unwrapNodes(editor, { at: path });
+          slate.Transforms.wrapNodes(editor, { children: [], type: types.h1 }, { at: path })
+          return true;
+        }
+
+        // make second block paragraph
+        if (isTopLevel && isSecond && !isParagraph) {
+          slate.Transforms.unwrapNodes(editor, { at: path });
+          slate.Transforms.wrapNodes(editor, { children: [], type: types.p }, { at: path })
+          return true;
+        }
+
+        return false;
+      }
+    }
+  }
+
   return (
     <MMSEditor
       plugins={[
@@ -127,6 +157,7 @@ function App() {
         extendFunctionsPlugin,
         eventExamplePlugin,
         onValueChangePlugin,
+        // forcedLayoutPlugin,
       ]}
     >
       {({

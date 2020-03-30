@@ -581,7 +581,12 @@ MMS Editor allows you to add normalizers via plugins, using `normalizerOptions`.
 
 ### normalizerOptions
 
-* **normalize** *(function( editor, [ node, path ] ) -> boolean)* - This function allows you to pass your own normalization rules along with the [default one](/src/plugins/defaultNormalizationOptions). However, this is a low level function; which requires an understanding of the editor data model and interaction with Slate's api. MMS Editor exposes slate's exports under `slate`. Please read [Slate's documentation on Normalizations](https://docs.slatejs.org/concepts/10-normalizing). The return value of this function indicates whether or not you have made a change to the editor within the normalize function. See example below:
+* **normalize** *(function( editor, [ node, path ] ) -> boolean)* - This function allows you to pass your own normalization rules along with the [default one](/src/plugins/defaultNormalizerOptions.js). However, this is a low level function; which requires an understanding of the editor data model and interaction with Slate's api. MMS Editor exposes slate's exports under `slate`. Please read [Slate's documentation on Normalizations](https://docs.slatejs.org/concepts/10-normalizing). The return value of this function indicates whether or not you have made a change to the editor within the normalize function. 
+
+
+### Example 
+
+Below is an example to implement a forced layout, which will make the first block a heading and second block a paragraph.
 
 ```javascript
 import { slate, types } from '@marketmuse/editor';
@@ -590,20 +595,31 @@ const normalizePlugin = {
   normalizationOptions: {
     normalize: (editor, [ node, path ]) => {
       
-      // top-level nodes cannot be text nodes,
-      // they have to be a block-level node
-      if (path.length === 1 && node.hasOwnProperty('text')) {
-
-        // wrap node within a paragraph
-        slate.Transforms.wrapNodes(editor, { children: [], type: types.p }, { at: path })
-
-        // change occured, return true
+      // details about the current path / node
+      const isTopLevel = path.length === 1;
+      const isFirstBlock = path[0] === 0;
+      const isSecondBlock = path[0] === 1;
+      const isHeading = node.type === types.h1;
+      const isParagraph = node.type === types.p;
+      
+      // make first block a heading
+      if (isTopLevel && isFirstBlock && !isHeading) {
+        slate.Transforms.unwrapNodes(editor, { at: path });
+        slate.Transforms.wrapNodes(editor, { children: [], type: types.h1 }, { at: path })
+        // we made a change, return true
         return true;
       }
-
-      // no change occured, return false
-      return false;
-    }
+      
+      // make second block a paragraph
+      if (isTopLevel && isSecondBlock && !isParagraph) {
+        slate.Transforms.unwrapNodes(editor, { at: path });
+        slate.Transforms.wrapNodes(editor, { children: [], type: types.p }, { at: path })
+        // we made a change, return true
+        return true;
+      }
+     
+     // no changes were made, return false
+     return false;
   }
 }
 ```
