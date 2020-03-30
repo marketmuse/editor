@@ -258,21 +258,20 @@ export const forceScreen = ({ formats }) => {
 }
 
 export default {
-
   // toggle "force show" toolbar when clicked on the editor
-  onMouseDown: (e, { functions, formats }) => {
+  onMouseDown: (_, { functions, formats }) => {
     functions.setState({
       forceShowToolbar: !formats.state.forceShowToolbar
     });
   },
 
   // on key down (ie. while typing) toggle off "force show"
-  onKeyDown: (e, { functions }) => {
+  onKeyDown: (_, { functions }) => {
     functions.setState({ forceShowToolbar: false });
   },
 
   // when editor loses focus, toggle "force show" off
-  onBlur: (e, { functions }) => {
+  onBlur: (_, { functions }) => {
     functions.setState({ forceShowToolbar: false });
   },
 

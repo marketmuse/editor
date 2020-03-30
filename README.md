@@ -211,6 +211,7 @@ Certain functionality could be provided to MMS editor via plugins. It is possibl
 * **hotkeys** *(array)* - see [Hotkeys](#hotkeys).
 * **decorators** *(array)* - see [Decorators](#decorators).
 * **htmlDeserializerOptions** *(object)* - see [HTML Deserializer](#html-deserializer).
+* **normalizerOptions** *(object)* - see [Normalizer](#normalizer)
 * **toolbar** *(object)* - see [Toolbar](#toolbar()).
 
 *Events*
@@ -478,7 +479,7 @@ Example:
 hotkeys: [
   {
     key: 'mod+b',
-    when: ({ formats }) => formats.isParagraph(),
+    when: ({ formats }) => !formats.isCollapsed(),
     command: ({ functions }) => functions.toggleBold(),
   },
   {
@@ -572,6 +573,41 @@ htmlDeserializerOptions: {
 ```
 
 The second argument, `attributes`, is just to simplify interacting with the attributes of the DOM element, but since you have access to the `el`, the [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) instance, you could build such logic on any DOM property.
+
+
+# Normalizer
+
+MMS Editor allows you to add normalizers via plugins, using `normalizerOptions`.
+
+### normalizerOptions
+
+* **normalize** *(function( editor, [ node, path ] ) -> boolean)* - This function allows you to pass your own normalization rules along with the [default one](/src/plugins/defaultNormalizationOptions). However, this is a low level function; which requires an understanding of the editor data model and interaction with Slate's api. MMS Editor exposes slate's exports under `slate`. Please read [Slate's documentation on Normalizations](https://docs.slatejs.org/concepts/10-normalizing). The return value of this function indicates whether or not you have made a change to the editor within the normalize function. See example below:
+
+```javascript
+import { slate, types } from '@marketmuse/editor';
+
+const normalizePlugin = {
+  normalizationOptions: {
+    normalize: (editor, [ node, path ]) => {
+      
+      // top-level nodes cannot be text nodes,
+      // they have to be a block-level node
+      if (path.length === 1 && node.hasOwnProperty('text')) {
+
+        // wrap node within a paragraph
+        slate.Transforms.wrapNodes(editor, { children: [], type: types.p }, { at: path })
+
+        // change occured, return true
+        return true;
+      }
+
+      // no change occured, return false
+      return false;
+    }
+  }
+}
+```
+
 
 
 # toolbar()

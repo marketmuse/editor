@@ -11,6 +11,7 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
     toolbar,
     hotkeys,
     decorators,
+    normalizerOptions: normalizerOptionsList,
     htmlDeserializerOptions: htmlDeserializerOptionsList,
     onValueChange,
     onKeyDown,
@@ -60,6 +61,7 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
     hotkeys,
     decorators,
     extendCore,
+    normalizerOptionsList,
     htmlDeserializerOptionsList,
     callbacks: {
       onValueChange,

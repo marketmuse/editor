@@ -1,4 +1,8 @@
+import * as slate from 'slate';
+import * as slateReact from 'slate-react';
 import * as plugins from '@plugins';
+
+export { types, attrs } from '@config/common'
 
 // core api's
 export { default as functions } from '@editor/functions';
@@ -32,6 +36,9 @@ export { ReactComponent as IconQuote } from '@assets/quote.svg';
 
 // plugins
 export { plugins };
+
+// expose slate's api
+export { slate, slateReact };
 
 // default
 export { default } from '@/MMSEditor';
