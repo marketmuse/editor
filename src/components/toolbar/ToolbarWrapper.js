@@ -99,12 +99,12 @@ const TooolbarWrapper = props => {
 TooolbarWrapper.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
-  inline: PropTypes.bool,
+  inline: PropTypes.number,
   isOpen: PropTypes.bool,
 };
 
 TooolbarWrapper.defaultProps = {
-  inline: true,
+  inline: 1,
 }
 
 export default TooolbarWrapper;

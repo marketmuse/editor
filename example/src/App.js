@@ -6,9 +6,9 @@ import '@marketmuse/editor/dist/mms-editor.css';
 import './App.css';
 
 const Separator = props => (
-  <separator>
+  <div className="separator">
     <span>{props.text}</span>
-  </separator>
+  </div>
 );
 
 function HooksTest() {
@@ -198,7 +198,7 @@ function App() {
             <>
               <Separator text="Import / Export" />
               <label>Raw Data</label>
-              <section class="col">
+              <section className="col">
                 <textarea
                   className="has-item-below"
                   style={{ borderBottom: 'none' }}
@@ -243,7 +243,7 @@ function App() {
               {Object.keys(mBlue).map(k => (
                 <label key={k} style={{ border: 'none' }}>{k}: {mBlue[k]}</label>
               ))}
-              <section class="col">
+              <section className="col">
                 <input
                   placeholder="Comma separated topics"
                   value={blueHighlights}
@@ -254,7 +254,7 @@ function App() {
               {Object.keys(mRed).map(k => (
                 <label key={k} style={{ border: 'none' }}>{k}: {mRed[k]}</label>
               ))}
-              <section class="col">
+              <section className="col">
                 <input
                   placeholder="Comma separated topics"
                   value={redHighlights}
@@ -269,7 +269,7 @@ function App() {
           return (
             <>
               <Separator text="Link" />
-              <section class="col">
+              <section className="col">
                 <input
                   className="has-item-below"
                   style={{ borderBottom: 'none' }}
@@ -352,7 +352,7 @@ function App() {
             <>
               <Separator text="Content" />
               <label>Text</label>
-              <section class="col">
+              <section className="col">
                 <textarea
                   className="has-item-below"
                   style={{ borderBottom: 'none' }}
@@ -374,7 +374,7 @@ function App() {
                 </section>
               </section>
               <label>HTML</label>
-              <section class="col">
+              <section className="col">
                 <textarea
                   className="has-item-below"
                   style={{ borderBottom: 'none' }}

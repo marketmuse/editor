@@ -38,12 +38,12 @@ const ToolbarComponent = ({ functions, formats, ...props }) => {
   return (
     <ToolbarWrapper
       isOpen={isOpen}
-      inline={props.inline}
+      inline={props.inline ? 1 : 0}
       style={props.style}
       className={props.className}
     >
-      {currentScreen.filter(i => !!i).map(ScreenItem => (
-        <ScreenItem {...renderProps} />
+      {currentScreen.filter(i => !!i).map((ScreenItem, n) => (
+        <ScreenItem key={`toolbar-item-${n}`} {...renderProps} />
       ))}
     </ToolbarWrapper>
   )
