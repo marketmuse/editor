@@ -11,7 +11,7 @@ export default (editor, htmlDeserializerOptionsList = []) => {
 
     if (htmlString) {
       const fragment = deserializeHtml(htmlDeserializerOptionsList)(htmlString);
-      Transforms.insertFragment(fragment);
+      Transforms.insertFragment(editor, fragment);
       Editor.normalize(editor, { force: true });
       return;
     }
