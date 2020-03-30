@@ -152,7 +152,7 @@ function App() {
     <MMSEditor
       plugins={[
         hotkeyPlugin,
-        decoratorPlugin,
+        // decoratorPlugin,
         extendFormatsPlugin,
         extendFunctionsPlugin,
         eventExamplePlugin,

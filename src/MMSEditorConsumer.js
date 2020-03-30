@@ -64,7 +64,7 @@ const MMSEditorConsumer = props => {
             readOnly={readOnly ? 1 : 0}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
-            decorate={decorate}
+            // decorate={decorate}
             placeholder={placeholder}
             onCut={event => execEvent('onCut', event)}
             onCopy={event => execEvent('onCopy', event)}

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import leafs from '@components/editor/leafs';
 
-const Leaf = ({ decors, attributes, children, leaf } = {}) => {
+const Leaf = ({ decors = {}, attributes, children, leaf } = {}) => {
 
   // apply built-ins leafs
   children = Object.keys(leafs).reduce((acc, leafKey) => {

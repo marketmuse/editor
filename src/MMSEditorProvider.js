@@ -41,19 +41,26 @@ const MMSEditorProvider = props => {
   const { formats, functions } = extendCore({ formatsRaw, functionsRaw });
 
   // decorators
+  /*
   const {
     decorate,
     decorStats,
     decorTriggers,
     decorComponents,
   } = useDecorators(decorators, value);
+  */
 
   // api's packed together in a single object.
   // destructure before passing on
-  const apiArgs = { formats, functions, decors: decorStats };
+  const apiArgs = {
+    formats,
+    functions,
+    // decors: decorStats,
+  };
 
   // element / leaf renderers
-  const useRendererArgs = { decorTriggers, decorComponents };
+  // const useRendererArgs = { decorTriggers, decorComponents };
+  const useRendererArgs = {};
   const { renderLeaf, renderElement } = useRenderers(useRendererArgs);
 
   // hotkeys
@@ -66,10 +73,10 @@ const MMSEditorProvider = props => {
   return (
     <FormatsApiContext.Provider value={formats}>
       <FunctionsApiContext.Provider value={functions}>
-        <DecoratorContext.Provider value={decorStats}>
+        <DecoratorContext.Provider value={{}}>
           <MMSEditorConsumer
             toolbar={toolbar}
-            decorate={decorate}
+            // decorate={decorate}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             handleHotkeys={handleHotkeys}

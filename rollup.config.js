@@ -7,6 +7,8 @@ import svgr from '@svgr/rollup';
 import postcss from 'rollup-plugin-postcss';
 import autoprefixer from 'autoprefixer';
 import json from '@rollup/plugin-json';
+
+import bundleWorker from 'rollup-plugin-bundle-worker';
 // import svg from 'rollup-plugin-svg';
 
 export default {
@@ -16,6 +18,7 @@ export default {
     { file: `dist/mms-editor.es.js`, format: 'es', sourcemap: true }
   ],
   plugins: [
+    bundleWorker(),
     postcss({
       plugins: [autoprefixer()],
       sourceMap: false,
