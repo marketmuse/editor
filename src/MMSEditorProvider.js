@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSlate } from 'slate-react';
 import { FormatsApiContext } from '@editor/hooks/useFormats';
@@ -7,9 +7,10 @@ import { DecoratorContext } from '@editor/hooks/useDecors';
 import MMSEditorConsumer from '@/MMSEditorConsumer';
 
 import useRenderers from '@components/editor/useRenderers';
-import useDecorators from '@editor/decorators/useDecorators';
 import useHotkeys from '@editor/hotkeys/useHotkeys';
 import useEvents from '@editor/events/useEvents';
+// import useDecorators from '@editor/decorators/useDecorators';
+import decorator from '@editor/decorators/decorator';
 
 import getFormats from '@editor/formats';
 import getFunctions from '@editor/functions';
@@ -30,7 +31,7 @@ const MMSEditorProvider = props => {
     callbacks,
     toolbar,
     hotkeys,
-    decorators,
+    // decorators,
     extendCore,
     htmlDeserializerOptionsList,
   } = pluginsDict;
@@ -39,6 +40,8 @@ const MMSEditorProvider = props => {
   const formatsRaw = getFormats(editor, { state });
   const functionsRaw = getFunctions(editor, { setState, setValue, htmlDeserializerOptionsList });
   const { formats, functions } = extendCore({ formatsRaw, functionsRaw });
+
+  const decorateRanges = useRef([]);
 
   // decorators
   /*
@@ -66,9 +69,28 @@ const MMSEditorProvider = props => {
   // hotkeys
   const handleHotkeys = useHotkeys(hotkeys);
 
+  // register decorator
+  useEffect(() => {
+    decorator.onGenerateRanges(({ ranges }) => {
+      decorator.applyRanges(editor, ranges);
+      // decorateRanges.current = ranges || [];
+    });
+    decorator.onApplyRanges(res => {
+      console.log('ranges applied', res);
+    })
+  }, []);
+
   // events
-  const { execEvent, execCallback } = useEvents(events, callbacks, apiArgs);
-  useEffect(() => { execCallback('onValueChange') }, [value])
+  const {
+    execEvent,
+    execCallback
+  } = useEvents(events, callbacks, apiArgs);
+
+  // on change
+  useEffect(() => {
+    execCallback('onValueChange');
+    decorator.generateRanges(editor);
+  }, [value]);
 
   return (
     <FormatsApiContext.Provider value={formats}>
@@ -77,6 +99,7 @@ const MMSEditorProvider = props => {
           <MMSEditorConsumer
             toolbar={toolbar}
             // decorate={decorate}
+            decorateRanges={decorateRanges.current}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             handleHotkeys={handleHotkeys}

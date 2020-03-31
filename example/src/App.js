@@ -202,7 +202,7 @@ function App() {
                 <textarea
                   className="has-item-below"
                   style={{ borderBottom: 'none' }}
-                  placeholder="Enter raw data..."
+                  // placeholder="Enter raw data..."
                   value={raw}
                   onChange={e => setRaw(e.target.value)}
                 />

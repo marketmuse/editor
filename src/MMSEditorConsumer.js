@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Editable } from 'slate-react';
 
@@ -10,6 +10,7 @@ const MMSEditorConsumer = props => {
     toolbar,
     children,
     decorate,
+    decorateRanges,
     renderElement,
     renderLeaf,
     handleHotkeys,
@@ -52,6 +53,8 @@ const MMSEditorConsumer = props => {
         if (className) editorClassName += ` ${className || ''}`;
         if (readOnly) editorClassName += ' mms--disabled';
 
+        // console.log('ranges: ', decorateRanges);
+
         return (
           <Editable
             id={id}
@@ -64,26 +67,22 @@ const MMSEditorConsumer = props => {
             readOnly={readOnly ? 1 : 0}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
+
+            // TODO:
+            // 1. postMessage to web worker on change
+            // 2. web worker picks up children, does the computation, sends back ranges
+            // 3. onmessage callback saves the ranges returned from the web worker in a mutable ref (no re-renders!)
+            // 4. decorate function returns to saved range array as if it computed
+            // TODO2: is there way to apply range array as decorations without
+            // using the decorate function at all ?
+            /*
+              decorate={([ node, path ]) => {
+                if (path.length === 0) return decorateRanges;
+                else return [];
+              }}
+            */
             // decorate={decorate}
-            decorate={() => [
 
-              // TODO:
-              // 1. postMessage to web worker on change
-              // 2. web worker picks up children, does the computation, sends back ranges
-              // 3. onmessage callback saves the ranges returned from the web worker in a mutable ref (no re-renders!)
-              // 4. decorate function returns to saved range array as if it computed
-
-              // TODO2: is there way to apply range array as decorations without
-              // using the decorate function at all ?
-
-              /*
-                {
-                  anchor: { path: [0, 0], offset: 0 },
-                  focus: { path: [0, 0], offset: 3 },
-                  bold: true,
-                }
-              */
-            ]}
             placeholder={placeholder}
             onCut={event => execEvent('onCut', event)}
             onCopy={event => execEvent('onCopy', event)}
@@ -116,6 +115,7 @@ MMSEditorConsumer.propTypes = {
   apiArgs: PropTypes.object,
   children: PropTypes.func,
   decorate: PropTypes.func,
+  decorateRanges: PropTypes.array,
   renderElement: PropTypes.func,
   renderLeaf: PropTypes.func,
   handleHotkeys: PropTypes.func,
