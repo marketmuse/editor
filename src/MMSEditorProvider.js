@@ -73,11 +73,7 @@ const MMSEditorProvider = props => {
   useEffect(() => {
     decorator.onGenerateRanges(({ ranges }) => {
       decorator.applyRanges(editor, ranges);
-      // decorateRanges.current = ranges || [];
     });
-    decorator.onApplyRanges(res => {
-      console.log('ranges applied', res);
-    })
   }, []);
 
   // events
@@ -89,7 +85,7 @@ const MMSEditorProvider = props => {
   // on change
   useEffect(() => {
     execCallback('onValueChange');
-    decorator.generateRanges(editor);
+    // decorator.generateRanges(editor);
   }, [value]);
 
   return (
@@ -98,8 +94,7 @@ const MMSEditorProvider = props => {
         <DecoratorContext.Provider value={{}}>
           <MMSEditorConsumer
             toolbar={toolbar}
-            // decorate={decorate}
-            decorateRanges={decorateRanges.current}
+            generateRanges={() => decorator.generateRanges(editor)}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             handleHotkeys={handleHotkeys}

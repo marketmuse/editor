@@ -1,3 +1,4 @@
+const GENERATE_DEBOUNCE = 300;
 const regex = /toyota|honda|cat|dog|bird/gi;
 
 const walkAcc = (node, path, fn) => {
@@ -32,26 +33,15 @@ const generateRanges = children => {
       ranges.push({
         anchor: { path, offset: terms.index },
         focus: { path, offset: terms.index + term.length },
-        decorated: true,
-        bold: true,
+        decorations: {
+          bold: true
+        }
       })
     }
   })
 
   return ranges;
 }
-
-const unhighlight = children => {
-  console.log('unhighlight', children);
-};
-
-const highlight = (children, ranges) => {
-};
-
-const applyRanges = (children, ranges) => {
-  unhighlight(children);
-  highlight(children, ranges);
-};
 
 // worker is invoked
 this.self.onmessage = function(e) {
@@ -62,15 +52,11 @@ this.self.onmessage = function(e) {
   // generate ranges command
   if (command === commands.generate) {
     const children = data.children;
-    const ranges = generateRanges(children);
-    this.self.postMessage({ command, ranges });
-  }
 
-  // apply ranges command
-  if (command === commands.apply) {
-    const children = data.children;
-    const ranges = data.ranges;
-    const newChildren = applyRanges(children, ranges);
-    this.self.postMessage({ command, children: newChildren });
+    // wait for some time for debounce effect
+    setTimeout(() => {
+      const ranges = generateRanges(children);
+      this.self.postMessage({ command, ranges });
+    }, GENERATE_DEBOUNCE)
   }
 };

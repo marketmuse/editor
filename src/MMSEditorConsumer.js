@@ -9,8 +9,6 @@ const MMSEditorConsumer = props => {
   const {
     toolbar,
     children,
-    decorate,
-    decorateRanges,
     renderElement,
     renderLeaf,
     handleHotkeys,
@@ -53,8 +51,6 @@ const MMSEditorConsumer = props => {
         if (className) editorClassName += ` ${className || ''}`;
         if (readOnly) editorClassName += ' mms--disabled';
 
-        // console.log('ranges: ', decorateRanges);
-
         return (
           <Editable
             id={id}
@@ -67,22 +63,6 @@ const MMSEditorConsumer = props => {
             readOnly={readOnly ? 1 : 0}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
-
-            // TODO:
-            // 1. postMessage to web worker on change
-            // 2. web worker picks up children, does the computation, sends back ranges
-            // 3. onmessage callback saves the ranges returned from the web worker in a mutable ref (no re-renders!)
-            // 4. decorate function returns to saved range array as if it computed
-            // TODO2: is there way to apply range array as decorations without
-            // using the decorate function at all ?
-            /*
-              decorate={([ node, path ]) => {
-                if (path.length === 0) return decorateRanges;
-                else return [];
-              }}
-            */
-            // decorate={decorate}
-
             placeholder={placeholder}
             onCut={event => execEvent('onCut', event)}
             onCopy={event => execEvent('onCopy', event)}
@@ -100,6 +80,7 @@ const MMSEditorConsumer = props => {
             onKeyDown={event => {
               execEvent('onKeyDown', event)
               handleHotkeys({ event, ...apiArgs })
+              props.generateRanges();
             }}
           />
         )
@@ -114,8 +95,6 @@ MMSEditorConsumer.propTypes = {
   toolbar: PropTypes.object,
   apiArgs: PropTypes.object,
   children: PropTypes.func,
-  decorate: PropTypes.func,
-  decorateRanges: PropTypes.array,
   renderElement: PropTypes.func,
   renderLeaf: PropTypes.func,
   handleHotkeys: PropTypes.func,
