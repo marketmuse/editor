@@ -1,6 +1,9 @@
 /* eslint-disable import/no-webpack-loader-syntax */
 import DecorateWorker from 'worker!./decorateWorker.js';
 import { Text, Editor, Transforms } from 'slate';
+// import { HistoryEditor } from 'slate-history';
+import getDecorComponents from '@editor/decorators/getDecorComponents';
+import getDecorTriggers from '@editor/decorators/getDecorTriggers';
 
 // commands dict
 const commands = {
@@ -13,6 +16,24 @@ class Decorator {
   // instantiate worker
   constructor() {
     this.initiate();
+    this.editor = null;
+    this.lock = false;
+    this.triggers = [];
+    this.components = {};
+    this.ranges = [];
+    this.total = 0;
+    this.matches = {};
+    this.aggregates = {};
+  }
+
+  setEditor(editor) {
+    this.editor = editor;
+  }
+
+  // extract values from decorator list
+  applyPlugins(decorators) {
+    this.triggers = getDecorTriggers(decorators);
+    this.components = getDecorComponents(decorators);
   }
 
   // start web worker
@@ -38,59 +59,61 @@ class Decorator {
     this.initiate();
   }
 
+  // start the worker
+  generateRanges() {
+    if (!this.worker) return;
+    if (!this.editor) return;
+
+    // if locked, unlock and abort
+    if (this.lock) {
+      this.lock = false;
+      return;
+    }
+
+    // kill old process and start a new one
+    this.restart();
+
+    // send signal to worker
+    this.worker.postMessage({
+      command: commands.generate,
+      children: this.editor.children,
+      commands,
+    });
+  }
+
   // response received from webworker
   onResponse(res = {}) {
 
     // generate callback
     if (res.command === commands.generate) {
-      if (typeof this.rangesCallback === 'function') {
-        this.rangesCallback({ ranges: res.ranges });
-      }
-    }
-
-    // apply callback
-    if (res.command === commands.apply) {
-      if (typeof this.applyCallback === 'function') {
-        this.applyCallback();
-      }
+      this.ranges = res.ranges;
+      this.applyRanges();
     }
   }
 
-  // register callbacks
-  onGenerateRanges(fn) { this.rangesCallback = fn; }
-  onApplyRanges(fn) { this.applyCallback = fn; }
+  // apply calculated ranges to the editor
+  applyRanges() {
+    if (!this.editor) return;
 
-  // start the worker
-  generateRanges(editor) {
-    if (!this.worker) return;
+    // lock the decorator internally as it triggers
+    // on change and applying ranges will cause a
+    // change, causing an infinite loop
+    this.lock = true;
 
-    // kill old process and start a new one
-    this.restart();
-
-    const children = editor.children;
-    this.worker.postMessage({
-      command: commands.generate,
-      commands,
-      children,
-    });
-  }
-
-  // apply
-  applyRanges(editor, ranges) {
-    Editor.withoutNormalizing(editor, () => {
+    Editor.withoutNormalizing(this.editor, () => {
 
       // remove previous decorations
       // this is a bit slow for very long articles
-      Transforms.setNodes(editor, { decorations: null }, {
+      Transforms.setNodes(this.editor, { decorations: null }, {
         match: Text.isText,
         mode: 'all',
         split: true,
       });
 
       // remove previous decorations
-      ranges.forEach(({ anchor, focus, decorations }) => {
+      this.ranges.forEach(({ anchor, focus, decorations }) => {
         try {
-          Transforms.setNodes(editor, { decorations }, {
+          Transforms.setNodes(this.editor, { decorations }, {
             match: Text.isText,
             at: { anchor, focus },
             split: true,
@@ -99,7 +122,7 @@ class Decorator {
           // since the decorations are running async
           // within web workers, the editor contents
           // might have changed and previously calculated
-          // ranges might be irrelevant. in this situation,
+          // ranges might not exist. in this situation,
           // it is okay to ignore errors and let the ranges
           // be recalculated on the next decoration cycle
         }

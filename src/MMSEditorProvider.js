@@ -9,7 +9,6 @@ import MMSEditorConsumer from '@/MMSEditorConsumer';
 import useRenderers from '@components/editor/useRenderers';
 import useHotkeys from '@editor/hotkeys/useHotkeys';
 import useEvents from '@editor/events/useEvents';
-// import useDecorators from '@editor/decorators/useDecorators';
 import decorator from '@editor/decorators/decorator';
 
 import getFormats from '@editor/formats';
@@ -26,12 +25,13 @@ const MMSEditorProvider = props => {
     setState,
     pluginsDict,
   } = props;
+
   const {
     events,
     callbacks,
     toolbar,
     hotkeys,
-    // decorators,
+    decorators,
     extendCore,
     htmlDeserializerOptionsList,
   } = pluginsDict;
@@ -41,17 +41,10 @@ const MMSEditorProvider = props => {
   const functionsRaw = getFunctions(editor, { setState, setValue, htmlDeserializerOptionsList });
   const { formats, functions } = extendCore({ formatsRaw, functionsRaw });
 
-  const decorateRanges = useRef([]);
-
   // decorators
-  /*
-  const {
-    decorate,
-    decorStats,
-    decorTriggers,
-    decorComponents,
-  } = useDecorators(decorators, value);
-  */
+  useEffect(() => {
+    decorator.applyPlugins(decorators);
+  }, [decorators])
 
   // api's packed together in a single object.
   // destructure before passing on
@@ -69,23 +62,20 @@ const MMSEditorProvider = props => {
   // hotkeys
   const handleHotkeys = useHotkeys(hotkeys);
 
-  // register decorator
-  useEffect(() => {
-    decorator.onGenerateRanges(({ ranges }) => {
-      decorator.applyRanges(editor, ranges);
-    });
-  }, []);
-
   // events
   const {
     execEvent,
     execCallback
   } = useEvents(events, callbacks, apiArgs);
 
+  useEffect(() => {
+    decorator.setEditor(editor);
+  }, [])
+
   // on change
   useEffect(() => {
     execCallback('onValueChange');
-    // decorator.generateRanges(editor);
+    decorator.generateRanges();
   }, [value]);
 
   return (

@@ -80,7 +80,6 @@ const MMSEditorConsumer = props => {
             onKeyDown={event => {
               execEvent('onKeyDown', event)
               handleHotkeys({ event, ...apiArgs })
-              props.generateRanges();
             }}
           />
         )
