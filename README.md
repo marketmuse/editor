@@ -324,15 +324,22 @@ Decorators are a type of text-level formatting that computes at render time base
 ### config objects
 
 * **id** *(string)*
-* **transform** *(function( text: string ) -> string )* - Receives the text chunk that'll be matched with (note: that is **not** the full corpus, it'll receive each leaf node of type `text`, so one chunk at a time). Return new value to transform the text to match with before attempting to match. This is useful for things like making the text lowercase.
+* TODO: removed? **transform** *(function( text: string ) -> string )* - Receives the text chunk that'll be matched with (note: that is **not** the full corpus, it'll receive each leaf node of type `text`, so one chunk at a time). Return new value to transform the text to match with before attempting to match. This is useful for things like making the text lowercase.
 * **match** *(string, [string] or regex)* - A string, string array, or a regular expression to match against.
-* **evaluate** *(function( args: object ) -> bool)* - Every term matched based on the `match` configuration above will go through this method. This is where you can write custom logic to discard some of the matches. It receives the term, along with some other stats, to help customize the logic.
+* TODO: removed? **evaluate** *(function( args: object ) -> bool)* - Every term matched based on the `match` configuration above will go through this method. This is where you can write custom logic to discard some of the matches. It receives the term, along with some other stats, to help customize the logic.
   * **term** *(string)* - Matched term
   * **terms** *(object)* - A dictionary with keys being matched terms and values being how many times they were matched so far.
   * **aggregate** *(number)* - Number of matches this decorator has received so far.
 * **triggers** *array*
 * **component** *(ReactComponent)*
 * **render** *(function( props: object ) ReactComponent)*
+
+The highlighted items will receive data attribute `decorator-id` with the value id. Ie:
+
+
+```html
+<span data-decorator-id="fruits">apple</span>
+```
 
 *Example*
 

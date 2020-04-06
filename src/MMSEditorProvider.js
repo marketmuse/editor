@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSlate } from 'slate-react';
 import { FormatsApiContext } from '@editor/hooks/useFormats';
@@ -16,6 +16,7 @@ import getFunctions from '@editor/functions';
 
 const MMSEditorProvider = props => {
   const editor = useSlate();
+  const [updater, setUpdater] = useState(0);
 
   const {
     children,
@@ -42,7 +43,7 @@ const MMSEditorProvider = props => {
   const { formats, functions } = extendCore({ formatsRaw, functionsRaw });
 
   // initiate decorator
-  useEffect(() => { decorator.setEditor(editor); }, [])
+  useEffect(() => { decorator.setEditor(editor); }, []);
   useEffect(() => { decorator.applyPlugins(decorators); }, [decorators])
 
   // api's packed together in a single object.
@@ -54,7 +55,6 @@ const MMSEditorProvider = props => {
   };
 
   // element / leaf renderers
-  // const useRendererArgs = { decorTriggers, decorComponents };
   const {
     renderLeaf,
     renderElement

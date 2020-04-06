@@ -68,6 +68,9 @@ class Decorator {
     // extract components
     this.triggers = getDecorTriggers(decorators);
     this.components = getDecorComponents(decorators);
+
+    // trigger generate ranges cycle with timeout
+    this.generateRanges();
   }
 
   // start web worker
@@ -138,14 +141,17 @@ class Decorator {
     // change, causing an infinite loop
     this.lock = true;
 
+    // TODO: setNodes / unsetNodes doesn't seem to be working without focus!
+
+    // this won't work without focus
     Editor.withoutNormalizing(this.editor, () => {
 
       // remove previous decorations
-      // this is a bit slow for very long articles
-      Transforms.setNodes(this.editor, { decorations: null }, {
+      // this may be a bit slow for very long articles
+      Transforms.unsetNodes(this.editor, 'decorations', {
         match: Text.isText,
-        mode: 'all',
         split: true,
+        mode: 'all',
       });
 
       // remove previous decorations

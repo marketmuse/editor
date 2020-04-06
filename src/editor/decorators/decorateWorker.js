@@ -49,10 +49,11 @@ const generateRanges = ({ children, decorators = [] }) => {
 
         // matched term
         const term = (terms[0] || '');
+        const termSafe = term.toLowerCase();
 
         // keep stats of matches
-        if (!matches[d.id][term]) defineProp(matches[d.id], term, 0);
-        defineProp(matches[d.id], term, (matches[d.id][term] || 0) + 1);
+        if (!matches[d.id][termSafe]) defineProp(matches[d.id], termSafe, 0);
+        defineProp(matches[d.id], termSafe, (matches[d.id][termSafe] || 0) + 1);
         defineProp(aggregates, d.id, aggregates[d.id] + 1);
         total += 1;
 
