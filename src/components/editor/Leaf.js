@@ -11,7 +11,7 @@ const Leaf = ({ decors = {}, attributes, children, leaf } = {}) => {
 
     // if this leafs key isn't on this node
     // do not wrap around its component
-    if (!leaf[leafKey] && !leafDecorations[leafKey]) return acc;
+    if (!leaf[leafKey]) return acc;
 
     // wrap the accumulator around this leafs component
     const Component = leafs[leafKey];
@@ -20,14 +20,15 @@ const Leaf = ({ decors = {}, attributes, children, leaf } = {}) => {
   }, children);
 
   // apply custom decorator leafs
-  /*
   Object.keys(decors).forEach(key => {
-    if (!leaf[key]) return;
+
+    // decorator doesn't exist
+    if (!leafDecorations[key]) return;
+
     // wrap children around component
     const Component = decors[key];
-    children = <Component {...attributes}>{children}</Component>;
+    children = <Component dkey={key} {...attributes}>{children}</Component>;
   })
-  */
 
   return <span {...attributes}>{children}</span>;
 };

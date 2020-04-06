@@ -41,23 +41,27 @@ const MMSEditorProvider = props => {
   const functionsRaw = getFunctions(editor, { setState, setValue, htmlDeserializerOptionsList });
   const { formats, functions } = extendCore({ formatsRaw, functionsRaw });
 
-  // decorators
-  useEffect(() => {
-    decorator.applyPlugins(decorators);
-  }, [decorators])
+  // initiate decorator
+  useEffect(() => { decorator.setEditor(editor); }, [])
+  useEffect(() => { decorator.applyPlugins(decorators); }, [decorators])
 
   // api's packed together in a single object.
   // destructure before passing on
   const apiArgs = {
     formats,
     functions,
-    // decors: decorStats,
+    decors: decorator.getDecors(),
   };
 
   // element / leaf renderers
   // const useRendererArgs = { decorTriggers, decorComponents };
-  const useRendererArgs = {};
-  const { renderLeaf, renderElement } = useRenderers(useRendererArgs);
+  const {
+    renderLeaf,
+    renderElement
+  } = useRenderers({
+    decorComponents: decorator.components,
+    decorTriggers: decorator.triggers,
+  });
 
   // hotkeys
   const handleHotkeys = useHotkeys(hotkeys);
@@ -67,10 +71,6 @@ const MMSEditorProvider = props => {
     execEvent,
     execCallback
   } = useEvents(events, callbacks, apiArgs);
-
-  useEffect(() => {
-    decorator.setEditor(editor);
-  }, [])
 
   // on change
   useEffect(() => {
@@ -84,7 +84,6 @@ const MMSEditorProvider = props => {
         <DecoratorContext.Provider value={{}}>
           <MMSEditorConsumer
             toolbar={toolbar}
-            generateRanges={() => decorator.generateRanges(editor)}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             handleHotkeys={handleHotkeys}

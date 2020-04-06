@@ -1,5 +1,4 @@
-const GENERATE_DEBOUNCE = 300;
-const regex = /toyota|honda|cat|dog|bird/gi;
+const GENERATE_DEBOUNCE = 200;
 
 const walkAcc = (node, path, fn) => {
   fn(node, path);
@@ -7,14 +6,29 @@ const walkAcc = (node, path, fn) => {
     walkAcc(child, path.concat(i), fn)
   })
 }
+
 const walk = (children, fn) => {
   children.map((child, i) => {
     walkAcc(child, [i], fn);
   })
 }
 
+// ridiculous workaround for web worker
+// "_defineProperty$1 not defined" issue
+const defineProp = (object, key, value) => {
+  Object.defineProperty(object, key, {
+    value,
+    writable: true,
+    enumerable: true,
+    configurable: true,
+  });
+}
+
 // generate ranges from editor children
-const generateRanges = children => {
+const generateRanges = ({ children, decorators = [] }) => {
+  let total = 0;
+  const matches = {};
+  const aggregates = {};
   const ranges = [];
 
   walk(children, (node, path) => {
@@ -22,25 +36,46 @@ const generateRanges = children => {
     // only run for text nodes
     if (!node.text) return;
 
-    // match here
-    let terms = [];
-    while ((terms = regex.exec(node.text)) !== null) {
+    // loop through decorators
+    decorators.filter(d => d.regex).forEach(d => {
 
-      // matched term
-      const term = (terms[0] || '');
+      // initiate matches and aggregates
+      if (!matches[d.id]) defineProp(matches, d.id, {})
+      if (!aggregates[d.id]) defineProp(aggregates, d.id, 0)
 
-      // add decorators here
-      ranges.push({
-        anchor: { path, offset: terms.index },
-        focus: { path, offset: terms.index + term.length },
-        decorations: {
-          bold: true
-        }
-      })
-    }
+      // match here
+      let terms = [];
+      while ((terms = d.regex.exec(node.text)) !== null) {
+
+        // matched term
+        const term = (terms[0] || '');
+
+        // keep stats of matches
+        if (!matches[d.id][term]) defineProp(matches[d.id], term, 0);
+        defineProp(matches[d.id], term, (matches[d.id][term] || 0) + 1);
+        defineProp(aggregates, d.id, aggregates[d.id] + 1);
+        total += 1;
+
+        // create range object
+        const range = {
+          anchor: { path, offset: terms.index },
+          focus: { path, offset: terms.index + term.length },
+          decorations: {},
+        };
+
+        // insert range
+        defineProp(range.decorations, d.key, true)
+        ranges.push(range);
+      }
+    })
   })
 
-  return ranges;
+  return {
+    ranges,
+    matches,
+    aggregates,
+    total,
+  };
 }
 
 // worker is invoked
@@ -52,11 +87,12 @@ this.self.onmessage = function(e) {
   // generate ranges command
   if (command === commands.generate) {
     const children = data.children;
+    const decorators = data.decorators || [];
 
     // wait for some time for debounce effect
     setTimeout(() => {
-      const ranges = generateRanges(children);
-      this.self.postMessage({ command, ranges });
+      const res = generateRanges({ children, decorators });
+      this.self.postMessage(Object.assign({}, { command }, res));
     }, GENERATE_DEBOUNCE)
   }
 };

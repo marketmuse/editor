@@ -18,7 +18,6 @@ export default {
     { file: `dist/mms-editor.es.js`, format: 'es', sourcemap: true }
   ],
   plugins: [
-    bundleWorker(),
     postcss({
       plugins: [autoprefixer()],
       sourceMap: false,
@@ -28,6 +27,7 @@ export default {
     url(),
     svgr(),
     babel(),
+    bundleWorker(),
     resolve(),
     json(),
     commonjs({

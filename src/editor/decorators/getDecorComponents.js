@@ -14,13 +14,17 @@ export default (decorators = []) => {
 
     // if a component is provided, use it
     if (decorator.component) {
-      Component = decorator.component;
+      Component = () => (
+        <span data-decorator={decorator.id}>
+          {decorator.component}
+        </span>
+      );
     }
 
     // component styles are provided
     if (decorator.style) {
       Component = props => (
-        <span style={decorator.style}>
+        <span data-decorator={decorator.id} style={decorator.style}>
           {props.children}
         </span>
       );
@@ -29,7 +33,7 @@ export default (decorators = []) => {
     // a render function is provided
     if (decorator.render) {
       Component = props => (
-        <span>
+        <span data-decorator={decorator.id}>
           {decorator.render(props)}
         </span>
       )

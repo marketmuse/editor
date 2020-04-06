@@ -4,6 +4,10 @@ import { Text, Editor, Transforms } from 'slate';
 // import { HistoryEditor } from 'slate-history';
 import getDecorComponents from '@editor/decorators/getDecorComponents';
 import getDecorTriggers from '@editor/decorators/getDecorTriggers';
+import getDecoratorKey from '@editor/decorators/utils/getDecoratorKey';
+import regexFromRegex from '@editor/decorators/utils/regexFromRegex';
+import regexFromArray from '@editor/decorators/utils/regexFromArray';
+import regexFromString from '@editor/decorators/utils/regexFromString';
 
 // commands dict
 const commands = {
@@ -26,12 +30,42 @@ class Decorator {
     this.aggregates = {};
   }
 
+  // set a ref to the editor object
   setEditor(editor) {
     this.editor = editor;
   }
 
+  // return object to be passed as decors
+  getDecors() {
+    return {
+      matches: this.matches,
+      aggregates: this.aggregates,
+      total: this.total,
+    }
+  }
+
   // extract values from decorator list
-  applyPlugins(decorators) {
+  applyPlugins(decorators = []) {
+
+    // pre-calculate decorator values
+    this.decoratorsSerializable = decorators.map(d => {
+
+      // create regex
+      let regex = d.match;
+      if (regex instanceof RegExp) regex = regexFromRegex(regex);
+      if (typeof regex === 'string') regex = regexFromString(regex);
+      if (Array.isArray(regex)) regex = regexFromArray(regex);
+      if (regex instanceof RegExp !== true) regex = null;
+
+      const id = d.id;
+      const key = getDecoratorKey(id);
+
+      // return a serializable object
+      // to pass on to the worker
+      return { regex, id, key };
+    });
+
+    // extract components
     this.triggers = getDecorTriggers(decorators);
     this.components = getDecorComponents(decorators);
   }
@@ -77,6 +111,7 @@ class Decorator {
     this.worker.postMessage({
       command: commands.generate,
       children: this.editor.children,
+      decorators: this.decoratorsSerializable,
       commands,
     });
   }
@@ -87,6 +122,9 @@ class Decorator {
     // generate callback
     if (res.command === commands.generate) {
       this.ranges = res.ranges;
+      this.matches = res.matches;
+      this.aggregates = res.aggregates;
+      this.total = res.total;
       this.applyRanges();
     }
   }
