@@ -1,3 +1,6 @@
+// TODO: tests that we mount components fails
+// because of web workers
+
 const GENERATE_DEBOUNCE = 200;
 
 const walkAcc = (node, path, fn) => {
