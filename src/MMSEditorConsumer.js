@@ -8,6 +8,7 @@ const MMSEditorConsumer = props => {
 
   const {
     toolbar,
+    decorate,
     children,
     renderElement,
     renderLeaf,
@@ -60,6 +61,9 @@ const MMSEditorConsumer = props => {
             autoFocus={autoFocus ? 1 : 0}
             autoCorrect={autoCorrect ? 1 : 0}
             autoCapitalize={autoCapitalize ? 1 : 0}
+            // NOTE: DO NOT pass an anonymous function
+            // ie. decorate={() => /*whatever*/}
+            decorate={decorate}
             readOnly={readOnly ? 1 : 0}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
@@ -92,6 +96,7 @@ const MMSEditorConsumer = props => {
 
 MMSEditorConsumer.propTypes = {
   toolbar: PropTypes.object,
+  decorate: PropTypes.func,
   apiArgs: PropTypes.object,
   children: PropTypes.func,
   renderElement: PropTypes.func,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSlate } from 'slate-react';
 import { FormatsApiContext } from '@editor/hooks/useFormats';
@@ -84,6 +84,7 @@ const MMSEditorProvider = props => {
         <DecoratorContext.Provider value={{}}>
           <MMSEditorConsumer
             toolbar={toolbar}
+            decorate={decorator.decorate}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             handleHotkeys={handleHotkeys}

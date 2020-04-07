@@ -1,7 +1,5 @@
 /* eslint-disable import/no-webpack-loader-syntax */
 import DecorateWorker from 'worker!./decorateWorker.js';
-import { Text, Editor, Transforms } from 'slate';
-// import { HistoryEditor } from 'slate-history';
 import getDecorComponents from '@editor/decorators/getDecorComponents';
 import getDecorTriggers from '@editor/decorators/getDecorTriggers';
 import getDecoratorKey from '@editor/decorators/utils/getDecoratorKey';
@@ -21,7 +19,6 @@ class Decorator {
   constructor() {
     this.initiate();
     this.editor = null;
-    this.lock = false;
     this.triggers = [];
     this.components = {};
     this.ranges = [];
@@ -101,12 +98,6 @@ class Decorator {
     if (!this.worker) return;
     if (!this.editor) return;
 
-    // if locked, unlock and abort
-    if (this.lock) {
-      this.lock = false;
-      return;
-    }
-
     // kill old process and start a new one
     this.restart();
 
@@ -128,50 +119,22 @@ class Decorator {
       this.matches = res.matches;
       this.aggregates = res.aggregates;
       this.total = res.total;
-      this.applyRanges();
     }
   }
 
-  // apply calculated ranges to the editor
-  applyRanges() {
-    if (!this.editor) return;
-
-    // lock the decorator internally as it triggers
-    // on change and applying ranges will cause a
-    // change, causing an infinite loop
-    this.lock = true;
-
-    // TODO: setNodes / unsetNodes doesn't seem to be working without focus!
-
-    // this won't work without focus
-    Editor.withoutNormalizing(this.editor, () => {
-
-      // remove previous decorations
-      // this may be a bit slow for very long articles
-      Transforms.unsetNodes(this.editor, 'decorations', {
-        match: Text.isText,
-        split: true,
-        mode: 'all',
-      });
-
-      // remove previous decorations
-      this.ranges.forEach(({ anchor, focus, decorations }) => {
-        try {
-          Transforms.setNodes(this.editor, { decorations }, {
-            match: Text.isText,
-            at: { anchor, focus },
-            split: true,
-          })
-        } catch (e) {
-          // since the decorations are running async
-          // within web workers, the editor contents
-          // might have changed and previously calculated
-          // ranges might not exist. in this situation,
-          // it is okay to ignore errors and let the ranges
-          // be recalculated on the next decoration cycle
-        }
-      })
-    })
+  // TODO: if we pass the entire ranges array from
+  // the root, it'll be passed down to every single
+  // node and will go through `Range.intersection`
+  // unnecessarily.
+  //
+  // To optimize this, maybe classify ranges in the
+  // worker in a dictionary where we can access ranges
+  // by path instantly and return the ranges concerning
+  // only the given path, so child nodes doesn't have to
+  // process inherited ranges that doesn't concern them.
+  decorate = ([ _, path ]) => {
+    if (path.length === 0) return this.ranges
+    else return [];
   }
 }
 
