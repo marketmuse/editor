@@ -38,6 +38,12 @@ const Blue = props => (
   </span>
 );
 
+const Red = props => (
+  <span style={{ borderBottom: '2px solid red' }} >
+    {props.children}
+  </span>
+);
+
 function App() {
 
   const [code, setCode] = useState('');
@@ -46,8 +52,8 @@ function App() {
   const [raw, setRaw] = useState('');
   const [html, setHtml] = useState('');
 
-  const [redHighlights, setRedHighlights] = useState('cat, dog, bird');
-  const [blueHighlights, setBlueHighlights] = useState('toyota, honda');
+  const [redHighlights, setRedHighlights] = useState('apm tools, performance');
+  const [blueHighlights, setBlueHighlights] = useState('apm, performance management');
   const defaultCode = 'functions.focus();\nfunctions.moveCursorToStart()\nconsole.log("cursor moved")';
 
   // add hotkeys
@@ -71,7 +77,7 @@ function App() {
       {
         id: 'red',
         match: redHighlights.split(','),
-        style: { backgroundColor: 'red', color: 'white' },
+        component: Red,
         triggers: [redHighlights],
       }
     ],

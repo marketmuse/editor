@@ -4,8 +4,6 @@ import leafs from '@components/editor/leafs';
 
 const Leaf = ({ decors = {}, attributes, children, leaf } = {}) => {
 
-  const leafDecorations = leaf.decorations || {};
-
   // apply built-ins leafs
   children = Object.keys(leafs).reduce((acc, leafKey) => {
 
@@ -23,7 +21,7 @@ const Leaf = ({ decors = {}, attributes, children, leaf } = {}) => {
   Object.keys(decors).forEach(key => {
 
     // decorator doesn't exist
-    if (!leafDecorations[key]) return;
+    if (!leaf[key]) return;
 
     // wrap children around component
     const Component = decors[key];

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSlate } from 'slate-react';
 import { FormatsApiContext } from '@editor/hooks/useFormats';
@@ -14,9 +14,11 @@ import decorator from '@editor/decorators/decorator';
 import getFormats from '@editor/formats';
 import getFunctions from '@editor/functions';
 
+// TODO: delete
+window.decorator = decorator;
+
 const MMSEditorProvider = props => {
   const editor = useSlate();
-  const [updater, setUpdater] = useState(0);
 
   const {
     children,

@@ -14,14 +14,7 @@ export default (decorators = []) => {
 
     // if a component is provided, use it
     if (decorator.component) {
-      const UseComponent = decorator.component;
-      Component = props => (
-        <span data-decorator={decorator.id}>
-          <UseComponent>
-            {props.children}
-          </UseComponent>
-        </span>
-      );
+      Component = decorator.component
     }
 
     // component styles are provided

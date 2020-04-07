@@ -1,3 +1,4 @@
+import { Text } from 'slate';
 /* eslint-disable import/no-webpack-loader-syntax */
 import DecorateWorker from 'worker!./decorateWorker.js';
 import getDecorComponents from '@editor/decorators/getDecorComponents';
@@ -22,6 +23,7 @@ class Decorator {
     this.triggers = [];
     this.components = {};
     this.ranges = [];
+    this.rangesDict = {};
     this.total = 0;
     this.matches = {};
     this.aggregates = {};
@@ -116,25 +118,17 @@ class Decorator {
     // generate callback
     if (res.command === commands.generate) {
       this.ranges = res.ranges;
+      this.rangesDict = res.rangesDict;
       this.matches = res.matches;
       this.aggregates = res.aggregates;
       this.total = res.total;
     }
   }
 
-  // TODO: if we pass the entire ranges array from
-  // the root, it'll be passed down to every single
-  // node and will go through `Range.intersection`
-  // unnecessarily.
-  //
-  // To optimize this, maybe classify ranges in the
-  // worker in a dictionary where we can access ranges
-  // by path instantly and return the ranges concerning
-  // only the given path, so child nodes doesn't have to
-  // process inherited ranges that doesn't concern them.
-  decorate = ([ _, path ]) => {
-    if (path.length === 0) return this.ranges
-    else return [];
+  decorate = ([ node, path ]) => {
+    if (!Text.isText(node)) return [];
+    const pathJoined = path.join('');
+    return this.rangesDict[pathJoined] || [];
   }
 }
 

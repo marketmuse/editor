@@ -64,18 +64,37 @@ const generateRanges = ({ children, decorators = [] }) => {
         const range = {
           anchor: { path, offset: terms.index },
           focus: { path, offset: terms.index + term.length },
-          decorations: {},
         };
 
-        // insert range
-        defineProp(range.decorations, d.key, true)
+        // insert decorator key
+        defineProp(range, d.key, true);
         ranges.push(range);
       }
     })
   })
 
+  // sort ranges by area they're covering, so longer
+  // decorations are printed at the bottom and shorter
+  // ones are printed on top of them
+  ranges.sort((r1, r2) => {
+    const d1 = Math.abs(r1.anchor.offset - r1.focus.offset);
+    const d2 = Math.abs(r2.anchor.offset - r2.focus.offset);
+    return d2 - d1;
+  })
+
+  // organize ranges in a dictionary for
+  // better performance in decorate function
+  const rangesDict = ranges.reduce((acc, r) => {
+    // anchor and focus paths are the same for decorators
+    // so we can pick up path from either of them
+    const path = r.anchor.path.join('');
+    defineProp(acc, path, (acc[path] || []).concat(r));
+    return acc;
+  }, {});
+
   return {
     ranges,
+    rangesDict,
     matches,
     aggregates,
     total,
