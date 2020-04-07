@@ -32,6 +32,12 @@ function HooksTest() {
   );
 }
 
+const Blue = props => (
+  <span style={{ backgroundColor: 'blue', color: 'white' }} >
+    {props.children}
+  </span>
+);
+
 function App() {
 
   const [code, setCode] = useState('');
@@ -59,7 +65,7 @@ function App() {
       {
         id: 'blue',
         match: blueHighlights.split(','),
-        style: { backgroundColor: 'blue', color: 'white' },
+        component: Blue,
         triggers: [blueHighlights],
       },
       {
