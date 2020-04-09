@@ -14,6 +14,7 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
     normalizerOptions: normalizerOptionsList,
     htmlDeserializerOptions: htmlDeserializerOptionsList,
     onValueChange,
+    onKeyUp,
     onKeyDown,
     onCut,
     onCopy,
@@ -67,6 +68,7 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
       onValueChange,
     },
     events: {
+      onKeyUp,
       onKeyDown,
       onCut,
       onCopy,

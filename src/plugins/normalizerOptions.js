@@ -16,6 +16,17 @@ export default {
         return true;
       }
 
+      // paragraphs cannot nest, has to be top level
+      if (node.type === types.p && path.length !== 1) {
+
+        // unwrap parent node
+        const parentPath = path.slice(0, -1);
+        Transforms.unwrapNodes(editor, { at: parentPath })
+
+        // change occured
+        return true;
+      }
+
       // no change occured
       return false;
     }

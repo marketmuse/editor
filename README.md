@@ -218,6 +218,7 @@ Certain functionality could be provided to MMS editor via plugins. It is possibl
 
 All event functions receives two arguments. First argument, `event`, is the event object. For all functions below, second argument, `arg` object holds `functions` and `formats` api's.
 
+* **onKeyUp** *(function( event: React.KeyboardEvent, args: object ))*
 * **onKeyDown** *(function( event: React.KeyboardEvent, args: object ))*
 * **onCut** *(function( event: React.ClipboardEvent, args: object ))*
 * **onCopy** *(function( event: React.ClipboardEvent, args: object ))*
