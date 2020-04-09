@@ -5,21 +5,11 @@ export default {
   normalizerOptions: {
     normalize: (editor, [ node, path ]) => {
 
-      // top-level nodes cannot be text nodes,
-      // they have to be a block-level node
-      if (path.length === 1 && node.hasOwnProperty('text')) {
-
-        // wrap node within a paragraph
-        Transforms.wrapNodes(editor, { children: [], type: types.p }, { at: path })
-
-        // change occured
-        return true;
-      }
-
       // paragraphs cannot nest, has to be top level
       if (node.type === types.p && path.length !== 1) {
 
-        // unwrap parent node
+        // unwrap parent node. this will trigger a new normalization
+        // thus this will recursively run until paragraph is at top level
         const parentPath = path.slice(0, -1);
         Transforms.unwrapNodes(editor, { at: parentPath })
 

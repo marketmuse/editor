@@ -1,4 +1,4 @@
-import { Editor } from 'slate';
+import { Transforms, Editor } from 'slate';
 import { types } from '@config/common';
 
 export default {
@@ -26,6 +26,35 @@ export default {
       e.preventDefault();
       if (isListBulleted) functions.toggleListBulleted();
       if (isListNumbered) functions.toggleListNumbered();
+    }
+  },
+  normalizerOptions: {
+    normalize: (editor, [ node, path ]) => {
+
+      // list items cannot be top level, turn them into paragraphs
+      if (node.type === types.li && path.length === 1) {
+        Transforms.setNodes(editor, { type: types.p }, { at: path })
+        return true;
+      }
+
+      // list items parents must either be bulleted list (ul)
+      // or numbered list (ol). if neither is the case, unwrap
+      // it from parent until it is. if it ends up being at the
+      // top level (ie. has no list ul or ol in its subtree), the
+      // normalizer above will pick up and turn it into a paragraph
+      if (node.type === types.li && path.length > 1) {
+        const parentPath = path.slice(0, -1);
+        const [parentListNode] = Editor.nodes(editor, {
+          at: parentPath,
+          match: n => (n.type === types.ul || n.type === types.ol)
+        });
+        if (!parentListNode) {
+          Transforms.unwrapNodes(editor, { at: parentPath })
+          return true;
+        }
+      }
+
+      return false;
     }
   },
   hotkeys: [
