@@ -106,6 +106,10 @@ this.self.onmessage = function(e) {
   const data = e.data || {};
   const commands = data.commands || {};
   const command = data.command;
+  const echo = data.echo;
+
+  // base response to all messaging
+  const base = { command, echo };
 
   // generate ranges command
   if (command === commands.generate) {
@@ -115,7 +119,7 @@ this.self.onmessage = function(e) {
     // wait for some time for debounce effect
     setTimeout(() => {
       const res = generateRanges({ children, decorators });
-      this.self.postMessage(Object.assign({}, { command }, res));
+      this.self.postMessage(Object.assign({}, base, res));
     }, GENERATE_DEBOUNCE)
   }
 };

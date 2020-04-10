@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSlate } from 'slate-react';
 import { FormatsApiContext } from '@editor/hooks/useFormats';
@@ -48,6 +48,10 @@ const MMSEditorProvider = props => {
   useEffect(() => { decorator.setEditor(editor); }, []);
   useEffect(() => { decorator.applyPlugins(decorators); }, [decorators])
 
+  // value to watch for forcing memoised
+  // renderLeaf function to get executed
+  const leafUpdater = decorator.useLeafUpdater();
+
   // api's packed together in a single object.
   // destructure before passing on
   const apiArgs = {
@@ -61,6 +65,7 @@ const MMSEditorProvider = props => {
     renderLeaf,
     renderElement
   } = useRenderers({
+    leafUpdater,
     decorComponents: decorator.components,
     decorTriggers: decorator.triggers,
   });

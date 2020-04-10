@@ -3,6 +3,7 @@ import Leaf from '@components/editor/Leaf';
 import Element from '@components/editor/Element';
 
 export default ({
+  leafUpdater,
   decorComponents,
   decorTriggers
 }) => {
@@ -13,7 +14,7 @@ export default ({
 
   const renderLeaf = useCallback(props => {
     return <Leaf decors={decorComponents} {...props} />;
-  }, [decorTriggers]);
+  }, [decorTriggers, leafUpdater]);
 
   return {
     renderLeaf,

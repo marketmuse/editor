@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Text } from 'slate';
 /* eslint-disable import/no-webpack-loader-syntax */
 import DecorateWorker from 'worker!./decorateWorker.js';
@@ -27,6 +28,18 @@ class Decorator {
     this.total = 0;
     this.matches = {};
     this.aggregates = {};
+  }
+
+  useLeafUpdater() {
+    const [ leafUpdater, setLeafUpdater ] = useState(0);
+    this.leafUpdater = leafUpdater;
+    this.setLeafUpdater = setLeafUpdater;
+    return leafUpdater;
+  }
+
+  forceRenderLeafs() {
+    this.setLeafUpdater(this.leafUpdater + 1)
+    this.leafUpdater += 1;
   }
 
   // set a ref to the editor object
@@ -122,6 +135,10 @@ class Decorator {
       this.matches = res.matches;
       this.aggregates = res.aggregates;
       this.total = res.total;
+      // call onChange to trigger decoration cycle
+      this.editor.onChange();
+      // force rerender leafs to register decorations
+      this.forceRenderLeafs();
     }
   }
 
