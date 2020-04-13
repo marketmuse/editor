@@ -80,6 +80,7 @@ const MMSEditorConsumer = props => {
             onDragOver={event => execEvent('onDragOver', event)}
             onDragStart={event => execEvent('onDragStart', event)}
             onDrop={event => execEvent('onDrop', event)}
+            onMouseUp={event => execEvent('onMouseUp', event)}
             onMouseDown={event => execEvent('onMouseDown', event)}
             onKeyUp={event => execEvent('onKeyUp', event)}
             onKeyDown={event => {

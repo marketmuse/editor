@@ -5,17 +5,12 @@ import { FormatsApiContext } from '@editor/hooks/useFormats';
 import { FunctionsApiContext } from '@editor/hooks/useFunctions';
 import { DecoratorContext } from '@editor/hooks/useDecors';
 import MMSEditorConsumer from '@/MMSEditorConsumer';
-
 import useRenderers from '@components/editor/useRenderers';
 import useHotkeys from '@editor/hotkeys/useHotkeys';
 import useEvents from '@editor/events/useEvents';
 import decorator from '@editor/decorators/decorator';
-
 import getFormats from '@editor/formats';
 import getFunctions from '@editor/functions';
-
-// TODO: delete
-window.decorator = decorator;
 
 const MMSEditorProvider = props => {
   const editor = useSlate();
