@@ -6,8 +6,8 @@ export default (html = '') => {
   // remove spaces and tabs before tags
   clean = clean.replace(/^[\t ]+</g, '<');
   clean = clean.replace(/[\t ]+</g, ' <');
-  // remove spaces and tabs between tags
-  clean = clean.replace(/>[\t ]+</g, '><');
+  // remove multiple spaces and tabs between tags
+  clean = clean.replace(/>[\t ]+</g, '> <');
   // remove whitespace after tags
   clean = clean.replace(/>[\t ]+$/g, '>');
   clean = clean.replace(/>[\t ]+/g, '> ');
