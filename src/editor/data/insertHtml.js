@@ -11,7 +11,7 @@ const normalize = editor => {
   })
 };
 
-export default (editor, setValue, html, htmlDeserializerOptions) => {
+export default (editor, html, htmlDeserializerOptions) => {
   const fragment = deserializeHtml(
     Array.isArray(htmlDeserializerOptions)
       ? htmlDeserializerOptions
@@ -23,16 +23,10 @@ export default (editor, setValue, html, htmlDeserializerOptions) => {
   }
 
   if (!hasFocus(editor)) {
-    const newChildren = isEmpty(editor)
-      ? [].concat(fragment)
-      : [].concat(editor.children || []).concat(fragment);
-
-    setValue(newChildren);
-    editor.children = newChildren;
-    normalize(editor);
-    return;
+    Transforms.insertFragment(editor, fragment, { at: [0] });
+  } else {
+    Transforms.insertFragment(editor, fragment);
   }
 
-  Transforms.insertFragment(editor, fragment);
   normalize(editor);
 };

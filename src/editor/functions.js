@@ -58,8 +58,8 @@ export default (editor, {
   // data
   import: raw => importFn(editor, setValue, raw),
   export: options => exportFn(editor, options),
-  insertHtml: (html, options) => insertHtml(editor, setValue, html, options || htmlDeserializerOptionsList),
-  insertText: text => insertText(editor, setValue, text),
+  insertHtml: (html, options) => insertHtml(editor, html, options || htmlDeserializerOptionsList),
+  insertText: text => insertText(editor, text),
 
   // state
   setState,
