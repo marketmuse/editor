@@ -6,3 +6,8 @@
 	overflow: hidden;
 	display: flex;
 }
+
+/* prevent toolbar from receiving focus while selecting text */
+body:active .mms--toolbar {
+  pointer-events: none;
+}
