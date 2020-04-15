@@ -5,6 +5,12 @@ describe('deserialize html: transform', () => {
 
   // ****
   test('transform function should work', () => {
+
+    let html = '';
+    html += '<div>';
+    html += '<b>text</b>';
+    html += '</div>';
+
     expect(
       deserializeHtml([{
         transforms: [
@@ -18,11 +24,7 @@ describe('deserialize html: transform', () => {
             return el;
           }
         ]
-      }])`
-        <div>
-          <b>text</b>
-        </div>
-      `
+      }])(html)
     ).toEqual([
       {
         type: types.p,

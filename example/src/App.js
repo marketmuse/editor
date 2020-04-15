@@ -160,6 +160,13 @@ function App() {
     }
   }
 
+  // test events
+  const copyPastePlugin = {
+    onCut: (e) => { console.log('cut', e) },
+    onCopy: (e) => { console.log('copy', e) },
+    onPaste: (e) => { console.log('paste', e) },
+  };
+
   return (
     <MMSEditor
       plugins={[
@@ -170,6 +177,7 @@ function App() {
         eventExamplePlugin,
         onValueChangePlugin,
         // forcedLayoutPlugin,
+        // copyPastePlugin,
       ]}
     >
       {({

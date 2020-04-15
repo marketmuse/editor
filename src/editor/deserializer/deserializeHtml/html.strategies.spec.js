@@ -85,6 +85,8 @@ describe('deserialize html: tag settings', () => {
     let didReceiveElementCorrectly = false;
     let didReceiveAttrs = false;
 
+    const _html = '<a href="marketmuse.com">marketmuse</a>';
+
     deserializeHtml([{
       strategies: [
         {
@@ -97,11 +99,7 @@ describe('deserialize html: tag settings', () => {
           }
         }
       ]
-    }])`
-      <a href="marketmuse.com">
-        marketmuse
-      </a>
-    `;
+    }])(_html);
 
     expect(didReceiveElement).toBe(true);
     expect(didReceiveElementCorrectly).toBe(true);
@@ -110,6 +108,14 @@ describe('deserialize html: tag settings', () => {
 
   // ****
   test('Parse function should work correctly', () => {
+
+    let _html = '';
+    _html += '<div>';
+    _html += '<a href="google.com">google</a>';
+    _html += '<a href="marketmuse.com">marketmuse</a>';
+    _html += '<a href="bing.com">bing</a>';
+    _html += '</div>';
+
     expect(
       deserializeHtml([{
         strategies: [
@@ -122,13 +128,7 @@ describe('deserialize html: tag settings', () => {
             }
           }
         ]
-      }])`
-      <div>
-        <a href="google.com">google</a>
-        <a href="marketmuse.com">marketmuse</a>
-        <a href="bing.com">bing</a>
-      </div>
-      `
+      }])(_html)
     ).toEqual([
       { text: 'google' },
       {

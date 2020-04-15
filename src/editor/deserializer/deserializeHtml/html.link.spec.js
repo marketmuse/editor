@@ -9,11 +9,8 @@ describe('deserialize html: a', () => {
 
   // ****
   test('deserialize works for links', () => {
-    expect(
-      deserializeHtml()`
-        <a href="https://marketmuse.com">marketmuse</a>
-      `
-    ).toEqual([{
+    const html = '<a href="https://marketmuse.com">marketmuse</a>';
+    expect(deserializeHtml()(html)).toEqual([{
       type: types.a,
       href: 'https://marketmuse.com',
       children: [{ text: 'marketmuse' }]
@@ -22,15 +19,14 @@ describe('deserialize html: a', () => {
 
   // ****
   test('deserialize works for multiple links', () => {
-    expect(
-      deserializeHtml()`
-        <div>
-          <a href="https://marketmuse.com">marketmuse1</a>
-          <a href="https://marketmuse.com">marketmuse2</a>
-          <a href="https://marketmuse.com">marketmuse3</a>
-        </div>
-      `
-    ).toEqual([
+    let html = '';
+    html += '<div>';
+    html += '<a href="https://marketmuse.com">marketmuse1</a>';
+    html += '<a href="https://marketmuse.com">marketmuse2</a>';
+    html += '<a href="https://marketmuse.com">marketmuse3</a>';
+    html += '</div>';
+
+    expect(deserializeHtml()(html)).toEqual([
       {
         type: types.a,
         href: 'https://marketmuse.com',
@@ -51,35 +47,27 @@ describe('deserialize html: a', () => {
 
   // ****
   test('links with no anchor gets ignored', () => {
-    expect(
-      deserializeHtml()`
-        <a href="https://marketmuse.com"></a>
-      `
-    ).toEqual([
-    ]);
+    const html = '<a href="https://marketmuse.com"></a>';
+    expect(deserializeHtml()(html)).toEqual([]);
   });
 
   // ****
   test('links with no href gets treated as text node', () => {
-    expect(
-      deserializeHtml()`
-        <a href="">marketmuse</a>
-      `
-    ).toEqual([
+    const html = '<a href="">marketmuse</a>';
+    expect(deserializeHtml()(html)).toEqual([
       { text: 'marketmuse' }
     ]);
   });
 
   // ****
   test('parse as test should work', () => {
+    const html = '<a href="https://marketmuse.com">marketmuse</a>';
     expect(
       deserializeHtml([{
         strategies: [
           { tag: 'a', strategy: TEXT }
         ]
-      }])`
-        <a href="https://marketmuse.com">marketmuse</a>
-      `
+      }])(html)
     ).toEqual([
       { text: 'marketmuse' }
     ]);
@@ -87,30 +75,26 @@ describe('deserialize html: a', () => {
 
   // ****
   test('skip link should ignore it', () => {
+    const html = '<a href="https://marketmuse.com">marketmuse</a>';
     expect(
       deserializeHtml([{
         strategies: [
           { tag: 'a', strategy: SKIP }
         ]
-      }])`
-        <a href="https://marketmuse.com">marketmuse</a>
-      `
+      }])(html)
     ).toEqual([
     ]);
   });
 
   // ****
   test('continue link should render its children', () => {
+    const html = '<a href="https://marketmuse.com"><div>marketmuse</div></a>';
     expect(
       deserializeHtml([{
         strategies: [
           { tag: 'a', strategy: CONTINUE }
         ]
-      }])`
-        <a href="https://marketmuse.com">
-          <div>marketmuse</div>
-        </a>
-      `
+      }])(html)
     ).toEqual([
       { text: 'marketmuse' }
     ]);

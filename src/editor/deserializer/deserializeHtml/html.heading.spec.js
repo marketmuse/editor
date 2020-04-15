@@ -5,18 +5,18 @@ describe('deserialize html: headings', () => {
 
   // ****
   test('deserialize works for headings', () => {
-    expect(
-      deserializeHtml()`
-        <div>
-          <h1>heading 1</h1>
-          <h2>heading 2</h2>
-          <h3>heading 3</h3>
-          <h4>heading 4</h4>
-          <h5>heading 5</h5>
-          <h6>heading 6</h6>
-        </div>
-      `
-    ).toEqual([
+
+    let html = '';
+    html += '<div>';
+    html += '<h1>heading 1</h1>';
+    html += '<h2>heading 2</h2>';
+    html += '<h3>heading 3</h3>';
+    html += '<h4>heading 4</h4>';
+    html += '<h5>heading 5</h5>';
+    html += '<h6>heading 6</h6>';
+    html += '</div>';
+
+    expect(deserializeHtml()(html)).toEqual([
       { type: types.h1, children: [{ text: 'heading 1' }] },
       { type: types.h2, children: [{ text: 'heading 2' }] },
       { type: types.h3, children: [{ text: 'heading 3' }] },

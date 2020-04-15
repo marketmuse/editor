@@ -15,20 +15,21 @@ describe('deserialize html: options', () => {
       return el;
     };
 
+    let html = '';
+    html += '<div>';
+    html += '<b>text</b>';
+    html += '</div>';
+    html += '<span>';
+    html += '<a href="marketmuse.com">marketmuse</a>';
+    html += '</span>';
+
     expect(
       deserializeHtml([
         { transforms: [turnIntoParagraph('DIV')] },
         { transforms: [turnIntoParagraph('SPAN')] },
         { strategies: [{ tag: 'b', strategy: TEXT }] },
         { strategies: [{ tag: 'a', strategy: TEXT }] },
-      ])`
-        <div>
-          <b>text</b>
-        </div>
-        <span>
-          <a href="marketmuse.com">marketmuse</a>
-        </span>
-      `
+      ])(html)
     ).toEqual([
       {
         type: types.p,

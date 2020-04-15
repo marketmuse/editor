@@ -17,17 +17,17 @@ describe('deserialize html: p', () => {
 
   // ****
   test('deserialize works with nested paragraph', () => {
-    expect(
-      deserializeHtml()`
-        <div>
-          <div>
-            <div>
-              <p>test</p>
-            </div>
-          </div>
-        </div>
-      `
-    ).toEqual([{
+
+    let html = '';
+    html += '<div>';
+    html += '<div>';
+    html += '<div>';
+    html += '<p>test</p>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+
+    expect(deserializeHtml()(html)).toEqual([{
       type: types.p,
       children: [{ text: 'test' }]
     }]);
@@ -35,15 +35,15 @@ describe('deserialize html: p', () => {
 
   // ****
   test('deserialize works with multiple nested paragraphs', () => {
-    expect(
-      deserializeHtml()`
-        <div>
-          <p>test1</p>
-          <p>test2</p>
-          <p>test3</p>
-        </div>
-      `
-    ).toEqual([
+
+    let html = '';
+    html += '<div>';
+    html += '<p>test1</p>';
+    html += '<p>test2</p>';
+    html += '<p>test3</p>';
+    html += '</div>';
+
+    expect(deserializeHtml()(html)).toEqual([
       { type: types.p, children: [{ text: 'test1' }] },
       { type: types.p, children: [{ text: 'test2' }] },
       { type: types.p, children: [{ text: 'test3' }] },

@@ -5,15 +5,15 @@ describe('deserialize html: inheritance', () => {
 
   // ****
   test('should skip style tags and pass correct props to children', () => {
-    expect(
-      deserializeHtml()`
-        <i>
-          <b>
-            <a href="marketmuse.com">marketmuse</a>
-          </b>
-        </i>
-      `
-    ).toEqual([
+
+    let html = '';
+    html += '<i>';
+    html += '<b>';
+    html += '<a href="marketmuse.com">marketmuse</a>';
+    html += '</b>';
+    html += '</i>';
+
+    expect(deserializeHtml()(html)).toEqual([
       {
         type: types.a,
         href: 'marketmuse.com',
@@ -28,15 +28,15 @@ describe('deserialize html: inheritance', () => {
 
   // ****
   test('should evaluate style tags correctly as children', () => {
-    expect(
-      deserializeHtml()`
-        <a href="marketmuse.com">
-          <b>
-            <i>marketmuse</i>
-          </b>
-        </a>
-      `
-    ).toEqual([
+
+    let html = '';
+    html += '<a href="marketmuse.com">';
+    html += '<b>';
+    html += '<i>marketmuse</i>';
+    html += '</b>';
+    html += '</a>';
+
+    expect(deserializeHtml()(html)).toEqual([
       {
         type: types.a,
         href: 'marketmuse.com',

@@ -5,20 +5,20 @@ describe('deserialize html: list', () => {
 
   // ****
   test('deserialize works for lists', () => {
-    expect(
-      deserializeHtml()`
-        <ul>
-          <li>test1</li>
-          <li>test2</li>
-          <li>test3</li>
-        </ul>
-        <ol>
-          <li>test1</li>
-          <li>test2</li>
-          <li>test3</li>
-        </ol>
-      `
-    ).toEqual([
+
+    let html = '';
+    html += '<ul>';
+    html += '<li>test1</li>';
+    html += '<li>test2</li>';
+    html += '<li>test3</li>';
+    html += '</ul>';
+    html += '<ol>';
+    html += '<li>test1</li>';
+    html += '<li>test2</li>';
+    html += '<li>test3</li>';
+    html += '</ol>';
+
+    expect(deserializeHtml()(html)).toEqual([
       {
         type: types.ul,
         children: [
