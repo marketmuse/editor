@@ -53,10 +53,10 @@ describe('deserialize html: leafs', () => {
     html += '</b>';
 
     expect(deserializeHtml()(html)).toEqual([
-      { text: 'b ', [types.b]: true },
-      { text: 'bi ', [types.b]: true, [types.i]: true },
+      { text: 'b', [types.b]: true },
+      { text: 'bi', [types.b]: true, [types.i]: true },
       { text: 'bis', [types.b]: true, [types.i]: true, [types.s]: true },
-      { text: 'bs ', [types.b]: true, [types.s]: true },
+      { text: 'bs', [types.b]: true, [types.s]: true },
       { text: 'bsi', [types.b]: true, [types.s]: true, [types.i]: true },
     ]);
   });
