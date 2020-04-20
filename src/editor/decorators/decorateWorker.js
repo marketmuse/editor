@@ -1,5 +1,5 @@
 // mock self for tests
-const self = (this && this.self) ? this.self : {};
+const _self = (this && this.self) ? this.self : {};
 
 const GENERATE_DEBOUNCE = 200;
 
@@ -102,7 +102,7 @@ const generateRanges = ({ children, decorators = [] }) => {
 }
 
 // worker is invoked
-self.onmessage = function(e) {
+_self.onmessage = function(e) {
   const data = e.data || {};
   const commands = data.commands || {};
   const command = data.command;
@@ -119,7 +119,7 @@ self.onmessage = function(e) {
     // wait for some time for debounce effect
     setTimeout(() => {
       const res = generateRanges({ children, decorators });
-      self.postMessage(Object.assign({}, base, res));
+      _self.postMessage(Object.assign({}, base, res));
     }, GENERATE_DEBOUNCE)
   }
 };
