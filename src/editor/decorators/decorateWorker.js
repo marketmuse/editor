@@ -1,5 +1,5 @@
-// TODO: tests that we mount components fails
-// because of web workers
+// mock self for tests
+const self = (this && this.self) ? this.self : {};
 
 const GENERATE_DEBOUNCE = 200;
 
@@ -102,7 +102,7 @@ const generateRanges = ({ children, decorators = [] }) => {
 }
 
 // worker is invoked
-this.self.onmessage = function(e) {
+self.onmessage = function(e) {
   const data = e.data || {};
   const commands = data.commands || {};
   const command = data.command;
@@ -119,7 +119,7 @@ this.self.onmessage = function(e) {
     // wait for some time for debounce effect
     setTimeout(() => {
       const res = generateRanges({ children, decorators });
-      this.self.postMessage(Object.assign({}, base, res));
+      self.postMessage(Object.assign({}, base, res));
     }, GENERATE_DEBOUNCE)
   }
 };

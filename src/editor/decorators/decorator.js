@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Text } from 'slate';
 /* eslint-disable import/no-webpack-loader-syntax */
 import DecorateWorker from 'worker!./decorateWorker.js';
@@ -8,6 +8,7 @@ import getDecoratorKey from '@editor/decorators/utils/getDecoratorKey';
 import regexFromRegex from '@editor/decorators/utils/regexFromRegex';
 import regexFromArray from '@editor/decorators/utils/regexFromArray';
 import regexFromString from '@editor/decorators/utils/regexFromString';
+import isTest from '@utils/test/isTest';
 
 // commands dict
 const commands = {
@@ -87,6 +88,9 @@ class Decorator {
 
   // start web worker
   initiate() {
+    // bail if test
+    if (isTest()) return;
+    // instantiate web worker
     this.worker = new DecorateWorker();
     this.worker.onmessage = e => {
       this.onResponse(e.data);
