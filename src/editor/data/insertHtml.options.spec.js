@@ -11,12 +11,11 @@ describe('insertHtml options', () => {
       { htmlDeserializerOptions: { strategies: [{ tag: 'b', strategy: 'skip' }] } },
     ];
 
-    const testHtml = `
-      <div>
-        <b>test</b>
-        <a href='https://marketmuse.com'>marketmuse</a>
-      </div>
-    `;
+    let testHtml = '';
+    testHtml += '<div>';
+    testHtml += '<b>test</b>';
+    testHtml += '<a href="https://marketmuse.com">marketmuse</a>';
+    testHtml += '</div>';
 
     const editor = mount({
       mmsEditorProps: { plugins },
@@ -26,7 +25,7 @@ describe('insertHtml options', () => {
     });
 
     expect(editor.children).toEqual(
-      [{ text: 'marketmuse' }]
+      [{ type: types.p, children: [{ text: 'marketmuse' }] }]
     );
   });
 
@@ -42,12 +41,11 @@ describe('insertHtml options', () => {
       strategies: [{ tag: 'a', strategy: 'skip' }]
     };
 
-    const testHtml = `
-      <div>
-        <b>test</b>
-        <a href='https://marketmuse.com'>marketmuse</a>
-      </div>
-    `;
+    let testHtml = '';
+    testHtml += '<div>';
+    testHtml += '<b>test</b>';
+    testHtml += '<a href="https://marketmuse.com">marketmuse</a>';
+    testHtml += '</div>';
 
     const editor = mount({
       mmsEditorProps: { plugins },
@@ -57,7 +55,7 @@ describe('insertHtml options', () => {
     });
 
     expect(editor.children).toEqual(
-      [{ text: 'test', [types.b]: true }]
+      [{ type: types.p, children: [{ text: 'test', [types.b]: true }] }]
     );
   });
 
