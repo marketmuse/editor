@@ -1,6 +1,5 @@
 import { Editor, Transforms } from 'slate';
 import hasFocus from '@editor/focus/hasFocus';
-import isEmpty from '@editor/contents/isEmpty';
 import deserializeText from '@editor/deserializer/deserializeText/deserializeText';
 
 const normalize = editor => {
