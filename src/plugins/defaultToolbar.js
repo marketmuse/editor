@@ -240,8 +240,6 @@ export const isOpen = ({ formats }) => {
   // if selection on a link and it is collapsed,
   // force show the toolbar to allow link editing
   if (formats.isLink && formats.isCollapsed) return true;
-  // force showing toolbar
-  if (formats.state.forceShowToolbar) return true;
   // return null for default behaviour
   return null;
 }
@@ -258,22 +256,6 @@ export const forceScreen = ({ formats }) => {
 }
 
 export default {
-  // toggle "force show" toolbar when clicked on the editor
-  onMouseDown: (_, { functions, formats }) => {
-    functions.setState({
-      forceShowToolbar: !formats.state.forceShowToolbar
-    });
-  },
-
-  // on key down (ie. while typing) toggle off "force show"
-  onKeyDown: (_, { functions }) => {
-    functions.setState({ forceShowToolbar: false });
-  },
-
-  // when editor loses focus, toggle "force show" off
-  onBlur: (_, { functions }) => {
-    functions.setState({ forceShowToolbar: false });
-  },
 
   toolbar: {
 
