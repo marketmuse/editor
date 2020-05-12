@@ -6,12 +6,16 @@ export default (editor, htmlDeserializerOptionsList = []) => {
   const { insertData } = editor;
 
   editor.insertData = data => {
+
     const htmlString = data.getData('text/html');
     const textString = data.getData('text/plain');
 
     if (htmlString) {
-      console.log('htmlString', htmlString);
       const fragment = deserializeHtml(htmlDeserializerOptionsList)(htmlString);
+      // TODO: a bug is causing the first node in a fragment to
+      // merge with the existing first node, causing it to lose
+      // its type to the first node. so insert an empty node for now.
+      fragment.unshift({ text: '' });
       Transforms.insertFragment(editor, fragment);
       Editor.normalize(editor, { force: true });
       return;

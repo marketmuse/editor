@@ -25,7 +25,6 @@ const transformGdocs = el => {
       return newTag;
     }, container);
 
-    console.log('wrapped', wrapped, tags);
     // el.innerHTML = wrapped.innerHTML;
     const base = document.createElement(el.tagName);
     base.appendChild(wrapped.cloneNode(true));
@@ -38,14 +37,14 @@ const transformGdocs = el => {
   if (children.length === 0) return el;
 
   // process children
-  const newChildren = Array.from(children).map(c => {
-    const cParsed = transformGdocs(c);
-    console.log('>cParsed', cParsed);
-    if (cParsed) return cParsed;
-  });
+  const newChildren = Array
+    .from(children)
+    .map(transformGdocs);
 
   const newEl = document.createElement(el.tagName);
-  newChildren.forEach(c => { newEl.appendChild(c.cloneNode(true)) })
+  newChildren.forEach(c => {
+    newEl.appendChild(c.cloneNode(true))
+  })
 
   return newEl;
 }
@@ -70,15 +69,12 @@ export default {
             newEl.innerHTML = el.innerHTML;
 
             // start transformation from the new root
-            const transformed = transformGdocs(newEl);
-            console.log('transformed', transformed);
-            return transformed;
+            return transformGdocs(newEl);
           }
 
           return el;
 
         } catch (e) {
-          console.log('failed', e)
           return el;
         }
       }
