@@ -10,6 +10,7 @@ export default (editor, htmlDeserializerOptionsList = []) => {
     const textString = data.getData('text/plain');
 
     if (htmlString) {
+      console.log('htmlString', htmlString);
       const fragment = deserializeHtml(htmlDeserializerOptionsList)(htmlString);
       Transforms.insertFragment(editor, fragment);
       Editor.normalize(editor, { force: true });

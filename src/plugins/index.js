@@ -5,3 +5,4 @@ export { default as pluginText } from '@plugins/pluginText';
 export { default as pluginMarks } from '@plugins/pluginMarks';
 export { default as pluginLists } from '@plugins/pluginLists';
 export { default as pluginHeadings } from '@plugins/pluginHeadings';
+export { default as googleDocs } from '@plugins/pluginGoogleDocs';
