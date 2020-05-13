@@ -59,8 +59,11 @@ export const HeadingOneButton = props => (
   <ToolbarButton
     id='mms--toolbar-button-h1'
     active={props.formats.isH1}
-    onClick={() => props.functions.toggleHeading(1)}
     children={props.children || <IconHeadingOne />}
+    onClick={() => {
+      props.functions.toggleHeading(1);
+      props.setScreen(SCREEN_DEFAULT);
+    }}
   />
 );
 
@@ -68,8 +71,11 @@ export const HeadingTwoButton = props => (
   <ToolbarButton
     id='mms--toolbar-button-h2'
     active={props.formats.isH2}
-    onClick={() => props.functions.toggleHeading(2)}
     children={props.children || <IconHeadingTwo />}
+    onClick={() => {
+      props.functions.toggleHeading(2);
+      props.setScreen(SCREEN_DEFAULT);
+    }}
   />
 );
 
@@ -77,8 +83,11 @@ export const HeadingThreeButton = props => (
   <ToolbarButton
     id='mms--toolbar-button-h3'
     active={props.formats.isH3}
-    onClick={() => props.functions.toggleHeading(3)}
     children={props.children || <IconHeadingThree />}
+    onClick={() => {
+      props.functions.toggleHeading(3);
+      props.setScreen(SCREEN_DEFAULT);
+    }}
   />
 );
 
