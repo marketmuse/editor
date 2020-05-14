@@ -87,7 +87,7 @@ const generateRanges = ({ children, decorators = [] }) => {
   const rangesDict = ranges.reduce((acc, r) => {
     // anchor and focus paths are the same for decorators
     // so we can pick up path from either of them
-    const path = r.anchor.path.join('');
+    const path = r.anchor.path.join('-');
     defineProp(acc, path, (acc[path] || []).concat(r));
     return acc;
   }, {});

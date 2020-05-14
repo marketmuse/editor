@@ -148,7 +148,7 @@ class Decorator {
 
   decorate = ([ node, path ]) => {
     if (!Text.isText(node)) return [];
-    const pathJoined = path.join('');
+    const pathJoined = path.join('-');
     return this.rangesDict[pathJoined] || [];
   }
 }
