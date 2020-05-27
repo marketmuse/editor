@@ -37,8 +37,17 @@ const serializeHtml = (node = {}) => {
 
   // blockquote
   if (node.type === types.q) {
-    return `<blockquote>${serializeHtmlNodes(node.children)}</blockquote>`
+    return `<blockquote>${serializeHtmlNodes(node.children)}</blockquote>`;
   }
+
+  // lists
+  if (node.type === types.ul) return `<ul>\n${serializeHtmlNodes(node.children, '\n')}\n</ul>`;
+  if (node.type === types.ol) return `<ol>\n${serializeHtmlNodes(node.children, '\n')}\n</ol>`;
+  if (node.type === types.li) return `<li>${serializeHtmlNodes(node.children)}</li>`;
+
+  // base case: invalid input
+  // return empty string
+  return '';
 };
 
 const serializeHtmlNodes = (nodes, delim = '') => {
