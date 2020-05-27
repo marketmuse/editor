@@ -1056,11 +1056,6 @@
     "@svgr/core" "^2.4.1"
     rollup-pluginutils "^2.3.1"
 
-"@types/debounce@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@types/debounce/-/debounce-1.2.0.tgz#9ee99259f41018c640b3929e1bb32c3dcecdb192"
-  integrity sha512-bWG5wapaWgbss9E238T0R6bfo5Fh3OkeoSt245CM7JJwVwpw6MEBCbIxLq5z8KzsE3uJhzcIuQkyiZmzV3M/Dw==
-
 "@types/esrever@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@types/esrever/-/esrever-0.2.0.tgz#96404a2284b2c7527f08a1e957f8a31705f9880f"
@@ -1095,6 +1090,11 @@
   dependencies:
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
+
+"@types/lodash@^4.14.149":
+  version "4.14.153"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.153.tgz#5cb7dded0649f1df97938ac5ffc4f134e9e9df98"
+  integrity sha512-lYniGRiRfZf2gGAR9cfRC3Pi5+Q1ziJCKqPmjZocigrSJUVPWf7st1BtSJ8JOeK0FLXVndQ1IjUjTco9CXGo/Q==
 
 "@types/node@*":
   version "13.1.4"
@@ -3598,11 +3598,6 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     abab "^2.0.0"
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
-
-debounce@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.2.0.tgz#44a540abc0ea9943018dc0eaa95cce87f65cd131"
-  integrity sha512-mYtLl1xfZLi1m4RtQYlZgJUNQjl4ZxVnHzIR8nLLgi4q1YT8o/WM+MK/f8yfcc9s5Ir5zRaPZyZU6xs1Syoocg==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.6, debug@^2.6.8, debug@^2.6.9:
   version "2.6.9"
@@ -10057,38 +10052,38 @@ slash@^2.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-2.0.0.tgz#de552851a1759df3a8f206535442f5ec4ddeab44"
   integrity sha512-ZYKh3Wh2z1PpEXWr0MpSBZ0V6mZHAQfYevttO11c51CaWjGTaadiKZ+wVt1PbMlDV5qhMFslpZCemhwOK7C89A==
 
-slate-history@^0.57.1:
-  version "0.57.1"
-  resolved "https://registry.yarnpkg.com/slate-history/-/slate-history-0.57.1.tgz#2938537f3f95768a69460ec5035be0333216c278"
-  integrity sha512-pSUmGcIzFJ1ClaF2S5dFm7TBS30ZG3sqkwAowTxvD0+jafG/2I3N6M6M0anhkgBEGMU1rdNQqX4O6b/qKUJPgg==
+slate-history@^0.58.1:
+  version "0.58.1"
+  resolved "https://registry.yarnpkg.com/slate-history/-/slate-history-0.58.1.tgz#ffcfa99608bd725340ff57ece3016660c3144e47"
+  integrity sha512-a+6fk8B36virDLQeR33azOzJhXFuh7uEGBMXA7JMaX9yYT1I4bUuNu/hHQkzPiBPRUlFKKm2fIftsCBTE1lIig==
   dependencies:
     immer "^5.0.0"
     is-plain-object "^3.0.0"
 
-slate-hyperscript@^0.57.1:
-  version "0.57.1"
-  resolved "https://registry.yarnpkg.com/slate-hyperscript/-/slate-hyperscript-0.57.1.tgz#d72fdedb527672302bd32d4e6d96c96eac91bbac"
-  integrity sha512-2vA1kCl/DPuyWziSn8CnmjAnEgdNJvFmmGWwoabHBusBeWg0AS1pQpGsuR95r2tBQifF2pweRA0T/2T6nN/uHg==
+slate-hyperscript@^0.58.1:
+  version "0.58.1"
+  resolved "https://registry.yarnpkg.com/slate-hyperscript/-/slate-hyperscript-0.58.1.tgz#c8bb1d05205336bdc571d7c74032de0fe24e1203"
+  integrity sha512-QAbARbJjZAzCAkK5SSpy38kIsbEXEP5N8vygGZgH5E7nisDOGCkLFCCihY/rxGxRbhelrYmEVewl6ZLuve9Xng==
   dependencies:
     is-plain-object "^3.0.0"
 
-slate-react@^0.57.1:
-  version "0.57.1"
-  resolved "https://registry.yarnpkg.com/slate-react/-/slate-react-0.57.1.tgz#219a95b7caaea365a7f6fac5f3f5aa2e9da62295"
-  integrity sha512-W+M+YEcqBvuJD2xoU1gKgGbvhv6shwYJ5OOjPF8ZPEokUvGJh81Egxf65ZnnKxJejodsERdlwc2rRjpRphx2LQ==
+slate-react@^0.58.1:
+  version "0.58.1"
+  resolved "https://registry.yarnpkg.com/slate-react/-/slate-react-0.58.1.tgz#f726c2aa934a8edbadb13d5b3059685b33c4f254"
+  integrity sha512-y94fhdUYjCFsZiN0vEMo9pxL+HA9U8RH2E4w5LxjA2ZVFk2htf8rRZC+6sq5OHBrVjp2Tw09EJbMQhrahqrtew==
   dependencies:
-    "@types/debounce" "^1.2.0"
     "@types/is-hotkey" "^0.1.1"
-    debounce "^1.2.0"
+    "@types/lodash" "^4.14.149"
     direction "^1.0.3"
     is-hotkey "^0.1.6"
     is-plain-object "^3.0.0"
+    lodash "^4.17.4"
     scroll-into-view-if-needed "^2.2.20"
 
-slate@^0.57.1:
-  version "0.57.1"
-  resolved "https://registry.yarnpkg.com/slate/-/slate-0.57.1.tgz#dc99d9a77840894c9e3d3bc1185b67ee36c17686"
-  integrity sha512-av95C0zbsi0+khfOuyQlpZy0Q3Pqqh0loCusGGi0Wlb/J8OUBAyK/a5EgTfE0zK4pmjtEBnPksfBuVilg5jrNg==
+slate@^0.58.1:
+  version "0.58.1"
+  resolved "https://registry.yarnpkg.com/slate/-/slate-0.58.1.tgz#3fdd9cb58d1b840b0361bbd01c32f3a0d31b5da2"
+  integrity sha512-2Vj1jfzHQ/X4t23iKaWoEw09iuIo1oYIsl2tZjZTEl61VNwFEIZkjzI5yuyGS4x0QnUMbNtMoOCeJQx8HxHvdw==
   dependencies:
     "@types/esrever" "^0.2.0"
     esrever "^0.2.0"
