@@ -25,6 +25,11 @@ const serializeHtml = (node, html) => {
     return `<p>${serializeHtmlNodes(node.children, '')}</p>`;
   }
 
+  // headings
+  if (node.type === types.h1) return `<h1>${serializeHtmlNodes(node.children, '')}</h1>`;
+  if (node.type === types.h2) return `<h2>${serializeHtmlNodes(node.children, '')}</h2>`;
+  if (node.type === types.h3) return `<h3>${serializeHtmlNodes(node.children, '')}</h3>`;
+
   // link
   if (node.type === types.a) {
     return `<a href="${node.href}">${serializeHtmlNodes(node.children, '')}</a>`;
