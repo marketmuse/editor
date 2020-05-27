@@ -173,6 +173,7 @@ The `functions` object is passed as an argument to `MMSEditor`'s children functi
 
 * **export( options: object )** - Export raw editor data. Options are as follows:
   * **history** *(bool)* - Include history in the export (ie. use this to persist undo's and redo's).
+* **exportHtml()** - Export editor data into clean HTML.
 * **import( raw: object )** - Import editor data. It takes the output of `export` function. This replaces the editor content.
 * **insertHtml( html: string, htmlDeserializerOptions: object )** *(void)* - Deserialize html and insert it to the location of the cursor. When `htmlDeserializerOptions` omitted, the default options provided by plugins through `MMSEditor` will be used. See (HTML Deserializer)[#html-deserializer] for options and more details.
 * **insertText( text: string )** *(void)* - Insert text to the cursor location.
