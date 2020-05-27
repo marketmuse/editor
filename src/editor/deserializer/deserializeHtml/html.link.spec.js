@@ -55,7 +55,7 @@ describe('deserialize html: a', () => {
   test('links with no href gets treated as text node', () => {
     const html = '<a href="">marketmuse</a>';
     expect(deserializeHtml()(html)).toEqual([
-      { text: 'marketmuse' }
+      { type: types.p, children: [{ text: 'marketmuse' }] }
     ]);
   });
 
@@ -68,9 +68,10 @@ describe('deserialize html: a', () => {
           { tag: 'a', strategy: TEXT }
         ]
       }])(html)
-    ).toEqual([
-      { text: 'marketmuse' }
-    ]);
+    ).toEqual([{
+      type: types.p,
+      children: [{ text: 'marketmuse' }]
+    }]);
   });
 
   // ****
@@ -95,9 +96,10 @@ describe('deserialize html: a', () => {
           { tag: 'a', strategy: CONTINUE }
         ]
       }])(html)
-    ).toEqual([
-      { text: 'marketmuse' }
-    ]);
+    ).toEqual([{
+      type: types.p,
+      children: [{ text: 'marketmuse' }]
+    }]);
   });
 
 });

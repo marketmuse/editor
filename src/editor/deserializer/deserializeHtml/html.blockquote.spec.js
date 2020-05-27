@@ -27,9 +27,10 @@ describe('deserialize html: blockquote', () => {
           { tag: 'blockquote', strategy: TEXT }
         ]
       }])(html)
-    ).toEqual([
-      { text: 'marketmuse' }
-    ]);
+    ).toEqual([{
+      type: types.p,
+      children: [{ text: 'marketmuse' }]
+    }]);
   });
 
 });

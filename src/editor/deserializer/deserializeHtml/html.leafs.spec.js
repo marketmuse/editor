@@ -13,10 +13,10 @@ describe('deserialize html: leafs', () => {
     html += '<s>s</s>';
 
     expect(deserializeHtml()(html)).toEqual([
-      { text: 'b', [types.b]: true },
-      { text: 'i', [types.i]: true },
-      { text: 'u', [types.u]: true },
-      { text: 's', [types.s]: true },
+      { type: types.p, children: [{ text: 'b', [types.b]: true }] },
+      { type: types.p, children: [{ text: 'i', [types.i]: true }] },
+      { type: types.p, children: [{ text: 'u', [types.u]: true }] },
+      { type: types.p, children: [{ text: 's', [types.s]: true }] },
     ]);
   });
 
@@ -34,8 +34,8 @@ describe('deserialize html: leafs', () => {
     html += '</b>';
 
     expect(deserializeHtml()(html)).toEqual([
-      { text: 'bi', [types.b]: true, [types.i]: true },
-      { text: 'bis', [types.b]: true, [types.i]: true, [types.s]: true },
+      { type: types.p, children: [{ text: 'bi', [types.b]: true, [types.i]: true }] },
+      { type: types.p, children: [{ text: 'bis', [types.b]: true, [types.i]: true, [types.s]: true }] },
     ]);
   });
 
@@ -53,11 +53,11 @@ describe('deserialize html: leafs', () => {
     html += '</b>';
 
     expect(deserializeHtml()(html)).toEqual([
-      { text: 'b', [types.b]: true },
-      { text: 'bi', [types.b]: true, [types.i]: true },
-      { text: 'bis', [types.b]: true, [types.i]: true, [types.s]: true },
-      { text: 'bs', [types.b]: true, [types.s]: true },
-      { text: 'bsi', [types.b]: true, [types.s]: true, [types.i]: true },
+      { type: types.p, children: [{ text: 'b', [types.b]: true }] },
+      { type: types.p, children: [{ text: 'bi', [types.b]: true, [types.i]: true }] },
+      { type: types.p, children: [{ text: 'bis', [types.b]: true, [types.i]: true, [types.s]: true }] },
+      { type: types.p, children: [{ text: 'bs', [types.b]: true, [types.s]: true }] },
+      { type: types.p, children: [{ text: 'bsi', [types.b]: true, [types.s]: true, [types.i]: true }] },
     ]);
   });
 

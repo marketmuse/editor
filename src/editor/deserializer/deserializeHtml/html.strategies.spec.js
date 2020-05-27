@@ -37,7 +37,8 @@ describe('deserialize html: tag settings', () => {
   // ****
   test('TEXT should parse node and children as text', () => {
     expect(deserializeHtml(CONFIG_TEXT)(html)).toEqual([{
-      text: 'test marketmuse'
+      type: types.p,
+      children: [{ text: 'test marketmuse' }]
     }]);
   });
 
@@ -54,7 +55,7 @@ describe('deserialize html: tag settings', () => {
   // ****
   test('CONTINUE should skip node and parse children normally', () => {
     expect(deserializeHtml(CONFIG_CONTINUE)(html)).toEqual([
-      { text: 'test ' },
+      { type: types.p, children: [{ text: 'test ' }] },
       {
         type: types.a,
         href: 'marketmuse.com',
@@ -67,9 +68,10 @@ describe('deserialize html: tag settings', () => {
 
   // ****
   test('CONTINUE_TEXT should skip node and parse children as text (excl. text nodes)', () => {
-    expect(deserializeHtml(CONFIG_CONTINUE_TEXT)(html)).toEqual([
-      { text: 'marketmuse' }
-    ]);
+    expect(deserializeHtml(CONFIG_CONTINUE_TEXT)(html)).toEqual([{
+      type: types.p,
+      children: [{ text: 'marketmuse' }]
+    }]);
   });
 
   // ****
@@ -130,13 +132,19 @@ describe('deserialize html: tag settings', () => {
         ]
       }])(_html)
     ).toEqual([
-      { text: 'google' },
+      {
+        type: types.p,
+        children: [{ text: 'google' }]
+      },
       {
         type: types.a,
         href: 'marketmuse.com',
         children: [{ text: 'marketmuse' }]
       },
-      { text: 'bing' }
+      {
+        type: types.p,
+        children: [{ text: 'bing' }]
+      }
     ]);
   });
 
