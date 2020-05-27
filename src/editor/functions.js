@@ -59,7 +59,7 @@ export default (editor, {
   // data
   import: raw => importFn(editor, setValue, raw),
   export: options => exportFn(editor, options),
-  exportHtml: options => exportFn(editor, options),
+  exportHtml: options => exportHtml(editor, options),
   insertHtml: (html, options) => insertHtml(editor, html, options || htmlDeserializerOptionsList),
   insertText: text => insertText(editor, text),
 

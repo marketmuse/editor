@@ -51,6 +51,7 @@ function App() {
   const [url, setUrl] = useState('google.com');
   const [raw, setRaw] = useState('');
   const [html, setHtml] = useState('');
+  const [htmlExport, setHtmlExport] = useState('');
 
   const [redHighlights, setRedHighlights] = useState('apm tools, performance');
   const [blueHighlights, setBlueHighlights] = useState('apm, performance management');
@@ -212,6 +213,33 @@ function App() {
         const mBlue = get(decors, 'matches.blue') || {};
         const aRed = get(decors, 'aggregates.red') || 0;
         const mRed = get(decors, 'matches.red') || {};
+
+        const renderHtmlExport = () => {
+          return (
+            <>
+              <Separator text="Export HTML" />
+              <section className="col">
+                <textarea
+                  className="has-item-below"
+                  style={{ borderBottom: 'none' }}
+                  value={htmlExport}
+                />
+                <section style={{ margin: 0 }}>
+                  <button
+                    className="has-item-above has-item-right"
+                    onClick={() => {
+                      const exported = functions.exportHtml();
+                      console.log('exported', exported);
+                      setHtmlExport(exported);
+                    }}
+                  >
+                    export
+                  </button>
+                </section>
+              </section>
+            </>
+          )
+        };
 
         const renderImportsExports = () => {
           return (
@@ -483,6 +511,7 @@ function App() {
               {renderLinks()}
               {renderSelections()}
               {renderContentControls()}
+              {renderHtmlExport()}
               {renderImportsExports()}
               {renderJsPanel()}
             </div>
