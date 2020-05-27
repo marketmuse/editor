@@ -22,18 +22,23 @@ const serializeHtml = (node, html) => {
 
   // paragraph
   if (node.type === types.p) {
-    return `<p>\n${serializeHtmlNodes(node.children)}\n</p>`;
+    return `<p>${serializeHtmlNodes(node.children, '')}</p>`;
   }
 
   // link
   if (node.type === types.a) {
-    return `<a href="${node.href}">\n${serializeHtmlNodes(node.children)}\n</a>`;
+    return `<a href="${node.href}">${serializeHtmlNodes(node.children, '')}</a>`;
+  }
+
+  // blockquote
+  if (node.type === types.q) {
+    return `<blockquote>${serializeHtmlNodes(node.children, '')}</blockquote>`
   }
 };
 
-const serializeHtmlNodes = nodes => {
+const serializeHtmlNodes = (nodes, delim = '\n') => {
   const useNodes = Array.isArray(nodes) ? nodes : [nodes];
-  return useNodes.map(serializeHtml).join('\n');
+  return useNodes.map(serializeHtml).join(delim);
 }
 
 export default data => {
