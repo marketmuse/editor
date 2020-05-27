@@ -43,7 +43,7 @@ const serializeHtml = (node = {}) => {
 
 const serializeHtmlNodes = (nodes, delim = '') => {
   const useNodes = Array.isArray(nodes) ? nodes : [nodes];
-  return useNodes.map(serializeHtml).filter(Boolean).join(delim);
+  return useNodes.filter(Boolean).map(serializeHtml).join(delim);
 }
 
 export default data => {
