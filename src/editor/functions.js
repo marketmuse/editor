@@ -13,6 +13,7 @@ import isEmpty from '@editor/contents/isEmpty';
 import getPlainText from '@editor/contents/getPlainText';
 import toggleFormat from '@editor/formatters/toggleFormat';
 import exportFn from '@editor/data/export';
+import exportHtml from '@editor/data/exportHtml';
 import importFn from '@editor/data/import';
 import insertHtml from '@editor/data/insertHtml';
 import insertText from '@editor/data/insertText';
@@ -58,6 +59,7 @@ export default (editor, {
   // data
   import: raw => importFn(editor, setValue, raw),
   export: options => exportFn(editor, options),
+  exportHtml: options => exportFn(editor, options),
   insertHtml: (html, options) => insertHtml(editor, html, options || htmlDeserializerOptionsList),
   insertText: text => insertText(editor, text),
 

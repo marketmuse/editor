@@ -32,7 +32,12 @@ const MMSEditor = props => {
   const [state, setState] = useState({});
 
   return (
-    <Slate editor={editor} value={value} onChange={setValue}>
+    <Slate
+      editor={editor}
+      value={value}
+      onChange={setValue}
+      setFragmentData={data => { debugger; }}
+    >
       <MMSEditorProvider
         value={value}
         state={state}
