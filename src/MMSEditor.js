@@ -36,7 +36,6 @@ const MMSEditor = props => {
       editor={editor}
       value={value}
       onChange={setValue}
-      setFragmentData={data => { debugger; }}
     >
       <MMSEditorProvider
         value={value}
