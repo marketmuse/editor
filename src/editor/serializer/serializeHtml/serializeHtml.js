@@ -1,6 +1,6 @@
 import { types } from '@config/common';
 
-const serializeHtml = (node, html) => {
+const serializeHtml = (node = {}) => {
 
   // base case: leaf
   if (node.hasOwnProperty('text')) {
@@ -22,30 +22,30 @@ const serializeHtml = (node, html) => {
 
   // paragraph
   if (node.type === types.p) {
-    return `<p>${serializeHtmlNodes(node.children, '')}</p>`;
+    return `<p>${serializeHtmlNodes(node.children)}</p>`;
   }
 
   // headings
-  if (node.type === types.h1) return `<h1>${serializeHtmlNodes(node.children, '')}</h1>`;
-  if (node.type === types.h2) return `<h2>${serializeHtmlNodes(node.children, '')}</h2>`;
-  if (node.type === types.h3) return `<h3>${serializeHtmlNodes(node.children, '')}</h3>`;
+  if (node.type === types.h1) return `<h1>${serializeHtmlNodes(node.children)}</h1>`;
+  if (node.type === types.h2) return `<h2>${serializeHtmlNodes(node.children)}</h2>`;
+  if (node.type === types.h3) return `<h3>${serializeHtmlNodes(node.children)}</h3>`;
 
   // link
   if (node.type === types.a) {
-    return `<a href="${node.href}">${serializeHtmlNodes(node.children, '')}</a>`;
+    return `<a href="${node.href}">${serializeHtmlNodes(node.children)}</a>`;
   }
 
   // blockquote
   if (node.type === types.q) {
-    return `<blockquote>${serializeHtmlNodes(node.children, '')}</blockquote>`
+    return `<blockquote>${serializeHtmlNodes(node.children)}</blockquote>`
   }
 };
 
-const serializeHtmlNodes = (nodes, delim = '\n') => {
+const serializeHtmlNodes = (nodes, delim = '') => {
   const useNodes = Array.isArray(nodes) ? nodes : [nodes];
-  return useNodes.map(serializeHtml).join(delim);
+  return useNodes.map(serializeHtml).filter(Boolean).join(delim);
 }
 
 export default data => {
-  return serializeHtmlNodes(data);
+  return serializeHtmlNodes(data, '\n');
 };
