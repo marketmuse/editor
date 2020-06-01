@@ -6,3 +6,4 @@ export { default as pluginMarks } from '@plugins/pluginMarks';
 export { default as pluginLists } from '@plugins/pluginLists';
 export { default as pluginHeadings } from '@plugins/pluginHeadings';
 export { default as googleDocs } from '@plugins/pluginGoogleDocs';
+// export { default as msOffice } from '@plugins/pluginMsOffice';
