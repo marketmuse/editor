@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title>Clipboard HTML Tool</title>
+  </head>
+  <body style="margin:0px;padding:0px;">
+    <textarea id="mms-txt" placeholder="Paste rich text content" style="width:100%;height:100%;border:none;outline:none;padding:22px;resize:none;"></textarea>
+    <script>
+      var area = document.getElementById('mms-txt');
+      
+      area.addEventListener('paste', event => {
+        event.preventDefault();
+        var htmlContent = event.clipboardData.getData('text/html');
+        if (!htmlContent) {
+          var msg = "Warning: ";
+          msg += "Your clipboard is empty or does not contain HTML content. "
+          msg += "Please make sure the source you copied from supports rich text. "
+          event.target.value = msg;
+        } else {
+          event.target.value = htmlContent;
+        }
+      })
+    </script>
+  </body>
+</html>
