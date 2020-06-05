@@ -1,8 +1,18 @@
-// TODO
-const normalizeMsOffice = () => {};
+// Replace weird unicode characters MS Word inserts
+const normalizeMsOffice = (str = '') => (
+  str
+    .replace(/\u2000|\u2001|\u2002|\u2003|\u2004|\u2005|\u2006|\u2007|\u2008|\u2009|\u00A0/g, ' ')
+    .replace(/\u2010|\u2011|\u2012|\u2013|\u2014|\u2015/g, '-')
+    .replace(/\u2016/g, '|')
+    .replace(/‘|’/g, `'`)
+    .replace(/“|”/g, `"`)
+    .replace(/…/g, `...`)
+);
 
-// TODO
-const transformMsOffice = () => {};
+// Parse MS word clipboard contents
+const transformMsOffice = el => {
+
+};
 
 export default {
   htmlDeserializerOptions: {
@@ -10,8 +20,12 @@ export default {
       el => {
         try {
 
-          // TODO
-          const isMsOfficeRootElement = false;
+          // include all microsoft office products
+          const isMsOfficeRootElement = (
+            (el.getAttribute('xmlns:o') || '').indexOf('schemas-microsoft-com:office') ||
+            (el.getAttribute('xmlns:w') || '').indexOf('schemas-microsoft-com:office') ||
+            (el.getAttribute('xmlns:m') || '').indexOf('schemas.microsoft.com/office')
+          );
 
           // this HTML is coming from MS Office
           if (isMsOfficeRootElement) {
