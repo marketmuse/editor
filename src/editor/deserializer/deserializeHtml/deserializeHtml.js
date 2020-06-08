@@ -159,6 +159,7 @@ export default (htmlDeserializerOptionsList = []) => (...strs) => {
   const html = Array.isArray(strs[0]) ? String.raw(...strs) : strs[0];
   const clean = cleanHtml(html);
   const parsed = new window.DOMParser().parseFromString(clean, 'text/html');
+  const rootEl = parsed.documentElement;
 
   const {
     transforms,
@@ -170,6 +171,6 @@ export default (htmlDeserializerOptionsList = []) => (...strs) => {
     deserializeHtml({
       transforms,
       strategiesDict: strategiesToDict(strategies)
-    }, parsed.body, {})
+    }, rootEl, {})
   );
 };

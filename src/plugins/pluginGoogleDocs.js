@@ -41,7 +41,15 @@ const transformGdocs = el => {
     .from(children)
     .map(transformGdocs);
 
-  const newEl = document.createElement(el.tagName);
+  // create a new element with the same tag
+  let newEl = null;
+  try {
+    newEl = document.createElement(el.tagName);
+  } catch (e) {
+    newEl = document.createElement('span');
+  }
+
+  // add new children
   newChildren.forEach(c => {
     newEl.appendChild(c.cloneNode(true))
   })
