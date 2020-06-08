@@ -112,9 +112,7 @@ export default {
           newEl.innerHTML = normalizedHtmlString;
 
           // start transformation from the new root
-          const transformed = transformMsOffice(newEl);
-          console.log('transformed', transformed);
-          return transformed;
+          return transformMsOffice(newEl);
 
         } catch (e) {
           console.log('err', e);
