@@ -1,6 +1,7 @@
-// Replace weird unicode characters MS Word inserts
-const normalizeMsOffice = (str = '') => str
+// Normalize html string and replace some characters
+const normalizeHtmlString = (str = '') => str
   .replace(/<!--\[if(.|\n)*?endif]-->/g, '')
+  .replace(/<o:p>(.|\n)*?<\/o:p>/g, '')
   .replace(/\u2000|\u2001|\u2002|\u2003|\u2004|\u2005|\u2006|\u2007|\u2008|\u2009|\u00A0/g, ' ')
   .replace(/\u2010|\u2011|\u2012|\u2013|\u2014|\u2015/g, '-')
   .replace(/\u2016/g, '|')
@@ -8,18 +9,45 @@ const normalizeMsOffice = (str = '') => str
   .replace(/“|”/g, `"`)
   .replace(/…/g, `...`);
 
+// ms office produces html in a way that text
+// are not individually wrapped with DOM nodes
+// and can appear as their siblings. for example:
+// `<p>Click <a href="...">here</a>.</p>`
+// this causes the text nodes to be ignored,
+// therefore text nodes needs to be wrapped with
+// span tags, and these span tags should have no
+// children other than the text they contain
+const wrapTextNodes = el => {
+  // already a text node
+  if (el.nodeType === 3) return el;
+  // element has no text nodes
+  if (Array.from(el.childNodes).every(c => c.nodeType !== 3)) return el;
+  // every child of this element is already a text node
+  if (Array.from(el.childNodes).every(c => c.nodeType === 3)) return el;
+  // shallow clone node
+  const newEl = el.cloneNode(false);
+  // add child nodes, wrapping text within spans
+  (el.childNodes || []).forEach(child => {
+    if (child && child.nodeType === 3) {
+      // text node
+      const wrapper = document.createElement('span');
+      wrapper.innerText = child.textContent;
+      newEl.appendChild(wrapper);
+    } else {
+      newEl.appendChild(child.cloneNode(true));
+    }
+  })
+
+  return newEl;
+}
+
 // reference to the list container being parsed
 let activeListRef = null;
 
 // Parse MS word clipboard contents
-const transformMsOffice = el => {
+const transformMsOffice = _el => {
 
-  // span tags contain text and `<o:p></o:p>` tags which we
-  // don't need to parse, so disregard html content of
-  // span tags and convert them to readable text
-  if (el.tagName === 'SPAN') {
-    el.innerHTML = el.innerText;
-  }
+  const el = wrapTextNodes(_el);
 
   // list items
   if (el.className.indexOf('MsoList') !== -1) {
@@ -104,7 +132,7 @@ export default {
           const htmlString = body ? body.innerHTML : el.innerHTML;
 
           // normalize html string
-          const normalizedHtmlString = normalizeMsOffice(htmlString);
+          const normalizedHtmlString = normalizeHtmlString(htmlString);
 
           // convert the root tag into a div, which will
           // then be eliminated by the deserializer later on
