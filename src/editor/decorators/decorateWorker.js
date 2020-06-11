@@ -34,6 +34,33 @@ const generateRanges = ({ children, decorators = [] }) => {
   const aggregates = {};
   const ranges = [];
 
+  // process regular expression against node text
+  const processRegex = (node, path, d, rgx) => {
+    let terms = [];
+    while ((terms = rgx.exec(node.text)) !== null) {
+
+      // matched term
+      const term = (terms[0] || '');
+      const termSafe = term.toLowerCase();
+
+      // keep stats of matches
+      if (!matches[d.id][termSafe]) defineProp(matches[d.id], termSafe, 0);
+      defineProp(matches[d.id], termSafe, (matches[d.id][termSafe] || 0) + 1);
+      defineProp(aggregates, d.id, aggregates[d.id] + 1);
+      total += 1;
+
+      // create range object
+      const range = {
+        anchor: { path, offset: terms.index },
+        focus: { path, offset: terms.index + term.length },
+      };
+
+      // insert decorator key
+      defineProp(range, d.key, true);
+      ranges.push(range);
+    }
+  }
+
   walk(children, (node, path) => {
 
     // only run for text nodes
@@ -43,32 +70,16 @@ const generateRanges = ({ children, decorators = [] }) => {
     decorators.filter(d => d.regex).forEach(d => {
 
       // initiate matches and aggregates
-      if (!matches[d.id]) defineProp(matches, d.id, {})
-      if (!aggregates[d.id]) defineProp(aggregates, d.id, 0)
+      if (!matches[d.id]) defineProp(matches, d.id, {});
+      if (!aggregates[d.id]) defineProp(aggregates, d.id, 0);
 
       // match here
-      let terms = [];
-      while ((terms = d.regex.exec(node.text)) !== null) {
-
-        // matched term
-        const term = (terms[0] || '');
-        const termSafe = term.toLowerCase();
-
-        // keep stats of matches
-        if (!matches[d.id][termSafe]) defineProp(matches[d.id], termSafe, 0);
-        defineProp(matches[d.id], termSafe, (matches[d.id][termSafe] || 0) + 1);
-        defineProp(aggregates, d.id, aggregates[d.id] + 1);
-        total += 1;
-
-        // create range object
-        const range = {
-          anchor: { path, offset: terms.index },
-          focus: { path, offset: terms.index + term.length },
-        };
-
-        // insert decorator key
-        defineProp(range, d.key, true);
-        ranges.push(range);
+      if (Array.isArray(d.regex)) {
+        d.regex.forEach(rg => {
+          processRegex(node, path, d, rg);
+        })
+      } else {
+        processRegex(node, path, d, d.regex);
       }
     })
   })

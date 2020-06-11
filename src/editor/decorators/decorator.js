@@ -6,7 +6,6 @@ import getDecorComponents from '@editor/decorators/getDecorComponents';
 import getDecorTriggers from '@editor/decorators/getDecorTriggers';
 import getDecoratorKey from '@editor/decorators/utils/getDecoratorKey';
 import regexFromRegex from '@editor/decorators/utils/regexFromRegex';
-import regexFromArray from '@editor/decorators/utils/regexFromArray';
 import regexFromString from '@editor/decorators/utils/regexFromString';
 import isTest from '@utils/test/isTest';
 
@@ -67,8 +66,15 @@ class Decorator {
       let regex = d.match;
       if (regex instanceof RegExp) regex = regexFromRegex(regex);
       if (typeof regex === 'string') regex = regexFromString(regex);
-      if (Array.isArray(regex)) regex = regexFromArray(regex);
-      if (regex instanceof RegExp !== true) regex = null;
+      if (Array.isArray(regex)) {
+        regex = d.match
+          .map(s => regexFromString(s, { wholeWord: true }))
+          .filter(Boolean)
+          .map(regexFromRegex);
+      }
+      if (!Array.isArray(regex) && regex instanceof RegExp !== true) {
+        regex = null;
+      }
 
       const id = d.id;
       const key = getDecoratorKey(id);

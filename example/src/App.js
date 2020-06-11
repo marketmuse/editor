@@ -53,8 +53,8 @@ function App() {
   const [html, setHtml] = useState('');
   const [htmlExport, setHtmlExport] = useState('');
 
-  const [redHighlights, setRedHighlights] = useState('apm tools, performance');
-  const [blueHighlights, setBlueHighlights] = useState('apm, performance management');
+  const [redHighlights, setRedHighlights] = useState('lorem, lorem ipsum');
+  const [blueHighlights, setBlueHighlights] = useState('apm tools, apm');
   const defaultCode = 'functions.focus();\nfunctions.moveCursorToStart()\nconsole.log("cursor moved")';
 
   // add hotkeys
@@ -286,7 +286,7 @@ function App() {
         const renderHighlights = () => {
           return (
             <>
-              <Separator text={`Highlights (${dTotal})`} />
+              <Separator text={`Decorations (${dTotal})`} />
               <label>Blue ({aBlue})</label>
               {Object.keys(mBlue).map(k => (
                 <label key={k} style={{ border: 'none' }}>{k}: {mBlue[k]}</label>
