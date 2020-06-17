@@ -1,13 +1,7 @@
 // Normalize html string and replace some characters
 const normalizeHtmlString = (str = '') => str
-  .replace(/<!--\[if(.|\n)*?endif]-->/g, '')
-  .replace(/<o:p>(.|\n)*?<\/o:p>/g, '')
-  .replace(/\u2000|\u2001|\u2002|\u2003|\u2004|\u2005|\u2006|\u2007|\u2008|\u2009|\u00A0/g, ' ')
-  .replace(/\u2010|\u2011|\u2012|\u2013|\u2014|\u2015/g, '-')
-  .replace(/\u2016/g, '|')
-  .replace(/‘|’/g, `'`)
-  .replace(/“|”/g, `"`)
-  .replace(/…/g, `...`);
+  // remove unnecessary <o:p>...</o:p> tags
+  .replace(/<o:p>(.|\n)*?<\/o:p>/g, '');
 
 // ms office produces html in a way that text
 // are not individually wrapped with DOM nodes
