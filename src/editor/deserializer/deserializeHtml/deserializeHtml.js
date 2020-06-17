@@ -1,9 +1,9 @@
 import merge from 'lodash/merge';
 import cleanHtml from '@utils/cleanHtml';
-import { types } from '@config/common';
 import strategiesToDict from '@editor/deserializer/deserializeHtml/utils/strategiesToDict';
 import extractAttributes from '@editor/deserializer/deserializeHtml/utils/extractAttributes';
 import combineOptions from '@editor/deserializer/deserializeHtml/utils/combineOptions';
+import postDeserializeNormalization from '@editor/deserializer/deserialize/postDeserializeNormalization';
 
 import deserialize, {
   STYLE_TAG,
@@ -145,14 +145,6 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
   return deserialize(nodeName, { ...htmlAttrs, ...instructionArgs }, children);
 }
 
-const wrapLonelyTextNodes = (fragments = []) => {
-  return fragments.map(f => (
-    (!f.type && f.text)
-      ? { children: [f], type: types.p }
-      : f
-  ))
-}
-
 export default (htmlDeserializerOptionsList = []) => (...strs) => {
 
   // cover tag function usage (ie. invocation with template literals)
@@ -167,7 +159,7 @@ export default (htmlDeserializerOptionsList = []) => (...strs) => {
   } = combineOptions(
     htmlDeserializerOptionsList);
 
-  return wrapLonelyTextNodes(
+  return postDeserializeNormalization(
     deserializeHtml({
       transforms,
       strategiesDict: strategiesToDict(strategies)
