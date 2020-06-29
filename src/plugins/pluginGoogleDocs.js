@@ -1,7 +1,7 @@
 const transformGdocs = el => {
 
-  // do not parse children of li tags
-  if (el.tagName === 'LI') {
+  // do not parse children of li and a tags
+  if (el.tagName === 'LI' || el.tagName === 'A') {
     el.innerHTML = el.innerText;
   }
 
