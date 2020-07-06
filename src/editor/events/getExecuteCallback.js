@@ -3,5 +3,5 @@ export default (callbacks = {}, args) => (callbackName, params = {}) => {
   if (!functions || !Array.isArray(functions)) return null;
   functions
     .filter(f => typeof f === 'function')
-    .forEach(f => f({ ...args, ...params }))
+    .forEach(f => f(args ? { ...args, ...params } : params))
 };

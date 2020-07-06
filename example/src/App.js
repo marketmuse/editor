@@ -14,7 +14,7 @@ const Separator = props => (
 function HooksTest() {
   const formatsHookTest = useFormats();
   const functionsHookTest = useFunctions();
-  
+
   return (
     <div style={{ position: 'absolute', display: 'flex' }}>
       <button
@@ -92,7 +92,7 @@ function App() {
         formats.isBold ||
         formats.isItalic ||
         formats.isUnderlined ||
-        formats.isStrikethrough 
+        formats.isStrikethrough
       )
     }),
   }
@@ -132,7 +132,7 @@ function App() {
   }
 
   // plugin that will make first block hading
-  // and the second block a paragraph 
+  // and the second block a paragraph
   const forcedLayoutPlugin = {
     normalizerOptions: {
       normalize: (editor, [ node, path ]) => {
@@ -165,7 +165,7 @@ function App() {
   const copyPastePlugin = {
     onCut: (e) => { console.log('cut', e) },
     onCopy: (e) => { console.log('copy', e) },
-    onPaste: (e) => { console.log('paste', e) },
+    onInsertData: data => { console.log('insert', data, data.getData('text/plain')) }
   };
 
   return (
@@ -177,8 +177,8 @@ function App() {
         extendFunctionsPlugin,
         eventExamplePlugin,
         onValueChangePlugin,
-        // forcedLayoutPlugin,
         // copyPastePlugin,
+        // forcedLayoutPlugin,
       ]}
     >
       {({
@@ -490,7 +490,7 @@ function App() {
 
         return (
           <div className="main-wrapper">
-            
+
             {/* to test the hooks */}
             <HooksTest />
 

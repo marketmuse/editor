@@ -51,11 +51,11 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 # Formats
 
-Formats api is an object with flags that provides information about the cursors location / selection. They are useful for building custom toolbars. 
+Formats api is an object with flags that provides information about the cursors location / selection. They are useful for building custom toolbars.
 
 ### Usage
 
-The `formats` object is passed as an argument to `MMSEditor`'s children function as well as several other api functions. It is also possible to receive it by using `useFormats` hook, as long as the component is inside `MMSEditor`'s context. 
+The `formats` object is passed as an argument to `MMSEditor`'s children function as well as several other api functions. It is also possible to receive it by using `useFormats` hook, as long as the component is inside `MMSEditor`'s context.
 
 Example:
 
@@ -65,7 +65,7 @@ import MMSEditor, { useFormats, useFunctions } from '@marketmuse/editor';
 const MakeBoldButton = () => {
   const formats = useFormats();
   const functions = useFunctions();
-  
+
   return (
     <button
       disabled={formats.isBold}
@@ -156,14 +156,14 @@ The `functions` object is passed as an argument to `MMSEditor`'s children functi
 
 *Formatters*:
 
-* **toggleBold( status?: bool )** *(void)* - Toggles bold state of current selection. 
-* **toggleItalic( status?: bool )** *(void)* - Toggles italic state of current selection. 
-* **toggleUnderline( status?: bool )** *(void)* - Toggles underline state of current selection. 
-* **toggleStrikethrough( status?: bool )** *(void)* - Toggles strikethrough state of current selection. 
-* **toggleHeading( level: int, status?: bool )** *(void)* - Toggles heading state of current block. 
-* **toggleBlockquote( status?: bool )** *(void)* - Toggles blockquote state of current block. 
-* **toggleListNumbered( status?: bool )** *(void)* - Toggles numbered list state of current block. 
-* **toggleListBulleted( status?: bool )** *(void)* - Toggles bulleted list state of current block. 
+* **toggleBold( status?: bool )** *(void)* - Toggles bold state of current selection.
+* **toggleItalic( status?: bool )** *(void)* - Toggles italic state of current selection.
+* **toggleUnderline( status?: bool )** *(void)* - Toggles underline state of current selection.
+* **toggleStrikethrough( status?: bool )** *(void)* - Toggles strikethrough state of current selection.
+* **toggleHeading( level: int, status?: bool )** *(void)* - Toggles heading state of current block.
+* **toggleBlockquote( status?: bool )** *(void)* - Toggles blockquote state of current block.
+* **toggleListNumbered( status?: bool )** *(void)* - Toggles numbered list state of current block.
+* **toggleListBulleted( status?: bool )** *(void)* - Toggles bulleted list state of current block.
 
 *State*:
 
@@ -223,7 +223,6 @@ All event functions receives two arguments. First argument, `event`, is the even
 * **onKeyDown** *(function( event: React.KeyboardEvent, args: object ))*
 * **onCut** *(function( event: React.ClipboardEvent, args: object ))*
 * **onCopy** *(function( event: React.ClipboardEvent, args: object ))*
-* **onPaste** *(function( event: React.ClipboardEvent, args: object ))*
 * **onBeforeInput** *(function( event: React.FormEvent, args: object ))*
 * **onBlur** *(function( event: React.FocusEvent, args: object ))*
 * **onFocus** *(function( event: React.FocusEvent, args: object ))*
@@ -238,10 +237,10 @@ All event functions receives two arguments. First argument, `event`, is the even
 
 *Callbacks*
 
-Callbacks are like events, however they do not have a synthetic event object. They get invoked with a single argument, `args`, which is an object that holds `functions` and `formats` api's like in the events. 
+Callbacks are like events, however they do not have a synthetic event object attached to it. While some of them will have access to `args` just like the events, some are used as enhancers before the initialization of the editor object, so `args` will not be accessible. Their arguments varies.
 
 * **onValueChange** *(function( args: object ))* - This function gets invoked on editor state change. It should be used as a replacement to the `onChange` event. Note that changes to the editor state under this callback should be made conditionally, otherwise it will cause an infinite loop.
-
+* **onInsertData** *(function ( data: DataTransfer ))* - Runs on editor.insertData, receives the DataTransfer object as the argument.
 
 ### Example
 
@@ -255,7 +254,7 @@ plugins: [{
       formats.isBold ||
       formats.isItalic ||
       formats.isUnderlined ||
-      formats.isStrikethrough 
+      formats.isStrikethrough
     )
   })
 }]
@@ -428,18 +427,18 @@ Next, we need to create `FoodStats` component, which displays how many of each f
 import { useDecors } from '@marketmuse/editor';
 
 export default props => {
-  
+
   // get decor object using `useDecors` hook.
   const decors = useDecors();
-  
+
   // fruit stats
   const fTotal = decors.aggregates?.fruits || 0;
   const fMatches = decors.matches?.fruits || {};
-  
+
   // vegetable stats
   const vTotal = decors.aggregates?.vegetables || 0;
   const vMatches = decors.matches?.vegetables || {};
-  
+
   return (
     <>
       <h3>Fruits: {fTotal}</h3>
@@ -469,12 +468,12 @@ Hotkeys api accepts an array of keymap objects, order of execution of the comman
 
 ### keymap objects
 
-* **key** *(string)* - Natural syntax expression that describes the key bindings delaminated by `+` sign. Use `mod` to describe `cmd` on Mac, `ctrl` on Windows. This is the first argument evaluated by [is-hotkey](https://github.com/ianstormtaylor/is-hotkey) library, check out the [api](https://github.com/ianstormtaylor/is-hotkey#api) for more details. 
+* **key** *(string)* - Natural syntax expression that describes the key bindings delaminated by `+` sign. Use `mod` to describe `cmd` on Mac, `ctrl` on Windows. This is the first argument evaluated by [is-hotkey](https://github.com/ianstormtaylor/is-hotkey) library, check out the [api](https://github.com/ianstormtaylor/is-hotkey#api) for more details.
 * **when** *(function( args: object ) -> bool)* - Contextual awareness for hotkeys, commands will run only when this function returns true. If omitted, commands will run every time. The args it receives is as follows:
-  * **event** *([KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent))* - The KeyboardEvent object received from `onKeyDown` event. 
+  * **event** *([KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent))* - The KeyboardEvent object received from `onKeyDown` event.
   * **formats** *(object)* - Formats api (see Formats api section for details).
 * **command** *(function( args: object ) -> void)* - Command that fires upon `onKeyDown` event. Args are as follows:
-  * **event** *([KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent))* - The KeyboardEvent object received from `onKeyDown` event. 
+  * **event** *([KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent))* - The KeyboardEvent object received from `onKeyDown` event.
   * **functions** *(object)* - Functions api (see Functions api section for details).
   * **formats** *(object)* - Formats api (see Formats api section for details).
 
@@ -508,25 +507,25 @@ By default, MMS Editor will try to convert as much HTML as it can, however the b
 htmlDeserializerOptions: {
   transforms: [
     el => {
-    
+
       // if the element is a span that contains '.bold' class
       if (el.nodeName === "SPAN" && el.classList.contains('bold')) {
-        
+
         // create a new <b> node
         const newEl = document.createElement('b');
-      
+
         // Make sure to pass on the contents
         newEl.innerHTML = el.innerHTML;
-      
+
         // or to manipulate the children:
         // el.childNodes
         //  .filter(n => /* whatever */)
         //  .forEach(n => newEl.appendChild(n.cloneNode(true)))
-      
+
         // return new element
         return newEl;
       }
-    
+
       return el;
     }
   ]
@@ -539,9 +538,9 @@ htmlDeserializerOptions: {
 
 ## strategy object
 
-Using this option, you can customize how MMS Editor should deserialize a given HTML tag. 
+Using this option, you can customize how MMS Editor should deserialize a given HTML tag.
 
-* **tag** *(string)* - The tag name 
+* **tag** *(string)* - The tag name
 * **strategy** *(string or function ( el: [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), attrs: object ) -> string)* - You can either provide a strategy as string, or a function that takes in the HTMLElement instance and returns the string. The value (or the value returned from this function) could be one of the following:
   * **normal** *(default)* - Deserialize node and children normally
   * **text** - Deserialize node and children as text.
@@ -586,10 +585,10 @@ MMS Editor allows you to add normalizers via plugins, using `normalizerOptions`.
 
 ### normalizerOptions
 
-* **normalize** *(function( editor, [ node, path ] ) -> boolean)* - This function allows you to pass your own normalization rules along with the [default one](/src/plugins/defaultNormalizerOptions.js). However, this is a low level function; which requires an understanding of the editor data model and interaction with Slate's api. MMS Editor exposes slate's exports under `slate`. Please read [Slate's documentation on Normalizations](https://docs.slatejs.org/concepts/10-normalizing). The return value of this function indicates whether or not you have made a change to the editor within the normalize function. 
+* **normalize** *(function( editor, [ node, path ] ) -> boolean)* - This function allows you to pass your own normalization rules along with the [default one](/src/plugins/defaultNormalizerOptions.js). However, this is a low level function; which requires an understanding of the editor data model and interaction with Slate's api. MMS Editor exposes slate's exports under `slate`. Please read [Slate's documentation on Normalizations](https://docs.slatejs.org/concepts/10-normalizing). The return value of this function indicates whether or not you have made a change to the editor within the normalize function.
 
 
-### Example 
+### Example
 
 Below is an example to implement a forced layout, which will make the first block a heading and second block a paragraph.
 
@@ -599,14 +598,14 @@ import { slate, types } from '@marketmuse/editor';
 const normalizePlugin = {
   normalizationOptions: {
     normalize: (editor, [ node, path ]) => {
-      
+
       // details about the current path / node
       const isTopLevel = path.length === 1;
       const isFirstBlock = path[0] === 0;
       const isSecondBlock = path[0] === 1;
       const isHeading = node.type === types.h1;
       const isParagraph = node.type === types.p;
-      
+
       // make first block a heading
       if (isTopLevel && isFirstBlock && !isHeading) {
         slate.Transforms.unwrapNodes(editor, { at: path });
@@ -614,7 +613,7 @@ const normalizePlugin = {
         // we made a change, return true
         return true;
       }
-      
+
       // make second block a paragraph
       if (isTopLevel && isSecondBlock && !isParagraph) {
         slate.Transforms.unwrapNodes(editor, { at: path });
@@ -622,7 +621,7 @@ const normalizePlugin = {
         // we made a change, return true
         return true;
       }
-     
+
      // no changes were made, return false
      return false;
   }

@@ -14,6 +14,7 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
     normalizerOptions: normalizerOptionsList,
     htmlDeserializerOptions: htmlDeserializerOptionsList,
     onValueChange,
+    onInsertData,
     onKeyUp,
     onKeyDown,
     onCut,
@@ -67,6 +68,7 @@ export default (plugins = [], { useDefaultPlugins } = {}) => {
     htmlDeserializerOptionsList,
     callbacks: {
       onValueChange,
+      onInsertData,
     },
     events: {
       onKeyUp,

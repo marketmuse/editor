@@ -70,7 +70,9 @@ const MMSEditorConsumer = props => {
             placeholder={placeholder}
             onCut={event => execEvent('onCut', event)}
             onCopy={event => execEvent('onCopy', event)}
-            onPaste={event => execEvent('onPaste', event)}
+            // onPaste event is inconsistent and does not work on some browsers
+            // https://github.com/ianstormtaylor/slate/pull/3670/commits/a04875ce591c5a17f17036f137c9be5ac17c7ec0
+            // onPaste={event => execEvent('onPaste', event)}
             onBeforeInput={event => execEvent('onBeforeInput', event)}
             onBlur={event => execEvent('onBlur', event)}
             onFocus={event => execEvent('onFocus', event)}
