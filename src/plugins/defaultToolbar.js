@@ -214,17 +214,19 @@ export const LinkInput = props => {
   const clean = cleanUrl(url);
   const isValid = isValidUrl(clean);
 
+  const onFormSubmit = e => {
+    e.preventDefault();
+    props.functions.replaceLink(clean);
+    // TODO (BUG2): after replacing a link, because of the
+    // appended classname, it keeps stuck at the link
+    // screen until focusing out of the text input
+    if (!isPopupScreen) props.setScreen(SCREEN_DEFAULT);
+  }
+
   return (
     <form
       style={{ display: 'flex' }}
-      onSubmit={e => {
-        e.preventDefault();
-        props.functions.replaceLink(clean);
-        // TODO (BUG2): after replacing a link, because of the
-        // appended classname, it keeps stuck at the link
-        // screen until focusing out of the text input
-        if (!isPopupScreen) props.setScreen(SCREEN_DEFAULT);
-      }}
+      onSubmit={onFormSubmit}
     >
       <ToolbarInput
         value={url}
@@ -234,10 +236,11 @@ export const LinkInput = props => {
         className={classname}
       />
       <ToolbarButton
+        type='submit'
         id='mms--toolbar-button-submitlink'
         disabled={!isValid}
-        type='submit'
         children={<IconTick />}
+        onClick={onFormSubmit}
       />
     </form>
   )
