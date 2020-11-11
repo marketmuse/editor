@@ -1,4 +1,4 @@
-import { Editor, Transforms } from 'slate';
+import { Editor, Node, Transforms } from 'slate';
 import hasFocus from '@editor/focus/hasFocus';
 import deserializeText from '@editor/deserializer/deserializeText/deserializeText';
 
@@ -12,11 +12,18 @@ const normalize = editor => {
 export default (editor, text) => {
   const fragment = deserializeText(text);
 
-  if (!hasFocus(editor)) {
-    Transforms.insertFragment(editor, fragment, { at: [0] });
+  let at = null;
+  if (editor.selection) {
+    at = editor.selection
+  } else if (editor.children.length > 0) {
+    at = Editor.end(editor, [])
   } else {
-    Transforms.insertFragment(editor, fragment);
+    at = [0]
   }
+  
+  Transforms.insertNodes(editor, fragment);
+  
+  Transforms.delete(editor, { at })
 
   normalize(editor);
 };

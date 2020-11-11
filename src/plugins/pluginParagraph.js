@@ -1,4 +1,4 @@
-import { Transforms } from 'slate';
+import { Node, Transforms } from 'slate';
 import { types } from '@config/common';
 
 export default {

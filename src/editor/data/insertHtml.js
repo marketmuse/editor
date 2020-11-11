@@ -1,7 +1,6 @@
-import { Editor, Transforms } from 'slate';
+import { Node, Editor, Transforms } from 'slate';
 import isNil from 'lodash/isNil';
 import hasFocus from '@editor/focus/hasFocus';
-import isEmpty from '@editor/contents/isEmpty';
 import deserializeHtml from '@editor/deserializer/deserializeHtml/deserializeHtml';
 
 const normalize = editor => {
@@ -22,10 +21,19 @@ export default (editor, html, htmlDeserializerOptions) => {
     throw new Error('Failed to insert: cannot deserialize');
   }
 
-  if (!hasFocus(editor)) {
-    Transforms.insertFragment(editor, fragment, { at: [0] });
+  let at = null;
+  if (editor.selection) {
+    at = editor.selection
+  } else if (editor.children.length > 0) {
+    at = Editor.end(editor, [])
   } else {
-    Transforms.insertFragment(editor, fragment);
+    at = [0]
+  }
+
+  Transforms.insertNodes(editor, fragment);
+
+  if (at && (!at.offset || at.offset === 0)) {
+    Transforms.delete(editor, { at })
   }
 
   normalize(editor);

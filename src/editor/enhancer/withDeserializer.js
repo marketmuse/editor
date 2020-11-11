@@ -12,11 +12,7 @@ export default (editor, htmlDeserializerOptionsList = []) => {
 
     if (htmlString) {
       const fragment = deserializeHtml(htmlDeserializerOptionsList)(htmlString);
-      // TODO: a bug is causing the first node in a fragment to
-      // merge with the existing first node, causing it to lose
-      // its type to the first node. so insert an empty node for now.
-      fragment.unshift({ text: '' });
-      Transforms.insertFragment(editor, fragment);
+      Transforms.insertNodes(editor, fragment);
       Editor.normalize(editor, { force: true });
       return;
     }
@@ -25,7 +21,7 @@ export default (editor, htmlDeserializerOptionsList = []) => {
     // and insert it as fragment
     if (textString) {
       const fragment = deserializeText(textString);
-      Transforms.insertFragment(editor, fragment);
+      Transforms.insertNodes(editor, fragment);
       Editor.normalize(editor, { force: true });
       return;
     }

@@ -12,7 +12,6 @@ describe('insertHtml', () => {
       <editor>
         <p>
           <cursor />
-          <text />
         </p>
       </editor>
     );
