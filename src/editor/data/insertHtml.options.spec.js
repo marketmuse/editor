@@ -59,4 +59,18 @@ describe('insertHtml options', () => {
     );
   });
 
+  // ****
+  test('heading tags should be parsed', () => {
+
+    const editor = mount({
+      fn: ({ functions }) => {
+        functions.insertHtml('<h1>test</h1>');
+      }
+    });
+
+    expect(editor.children).toEqual(
+      [{ type: types.h1, children: [{ text: 'test' }] }]
+    );
+  })
+
 });
