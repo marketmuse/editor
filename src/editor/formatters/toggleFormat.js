@@ -2,9 +2,13 @@ import { Editor, Transforms, Text } from 'slate';
 import isNil from 'lodash/isNil';
 import { types } from '@config/common';
 import isFormatActive from '@editor/formatters/isFormatActive';
+import normalizeSelection from '@editor/selection/normalizeSelection';
 
 export default (editor, type, format, { status } = {}) => {
   Editor.withoutNormalizing(editor, () => {
+
+    // fix selection anormalities
+    normalizeSelection(editor);
 
     // toggle to opposite state
     const isActive = isFormatActive(editor, type, format)
