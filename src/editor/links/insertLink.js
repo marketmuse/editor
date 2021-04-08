@@ -11,17 +11,21 @@ export default (editor, href) => {
   if (isLinkActive(editor)) removeLink(editor);
 
   const { selection } = editor;
-  const isCollapsed = selection && Range.isCollapsed(selection)
+  const isCollapsed = selection && Range.isCollapsed(selection);
 
   const linkConfig = attrs.a({ href });
   const link = Object.assign(linkConfig, {
-    children: isCollapsed ? [{ text: href }] : [],
-  })
+    children: isCollapsed ? [{ text: href }] : []
+  });
 
-  if (isCollapsed) {
-    Transforms.insertNodes(editor, link)
-  } else {
-    Transforms.wrapNodes(editor, link, { split: true })
-    Transforms.collapse(editor, { edge: 'end' })
+  try {
+    if (isCollapsed) {
+      Transforms.insertNodes(editor, link);
+    } else {
+      Transforms.wrapNodes(editor, link, { split: true });
+      Transforms.collapse(editor, { edge: "end" });
+    }
+  } catch (error) {
+    console.error(error);
   }
-}
+};

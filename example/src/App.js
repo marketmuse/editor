@@ -131,43 +131,6 @@ function App() {
     }
   }
 
-  // plugin that will make first block hading
-  // and the second block a paragraph
-  const forcedLayoutPlugin = {
-    normalizerOptions: {
-      normalize: (editor, [ node, path ]) => {
-        const isTopLevel = path.length === 1;
-        const isFirst = path[0] === 0;
-        const isSecond = path[0] === 1;
-        const isHeading = node.type === types.h1;
-        const isParagraph = node.type === types.p;
-
-        // make first block heading
-        if (isTopLevel && isFirst && !isHeading) {
-          slate.Transforms.unwrapNodes(editor, { at: path });
-          slate.Transforms.wrapNodes(editor, { children: [], type: types.h1 }, { at: path })
-          return true;
-        }
-
-        // make second block paragraph
-        if (isTopLevel && isSecond && !isParagraph) {
-          slate.Transforms.unwrapNodes(editor, { at: path });
-          slate.Transforms.wrapNodes(editor, { children: [], type: types.p }, { at: path })
-          return true;
-        }
-
-        return false;
-      }
-    }
-  }
-
-  // test events
-  const copyPastePlugin = {
-    onCut: (e) => { console.log('cut', e) },
-    onCopy: (e) => { console.log('copy', e) },
-    onInsertData: data => { console.log('insert', data, data.getData('text/plain')) }
-  };
-
   return (
     <MMSEditor
       plugins={[
@@ -176,9 +139,7 @@ function App() {
         extendFormatsPlugin,
         extendFunctionsPlugin,
         eventExamplePlugin,
-        onValueChangePlugin,
-        // copyPastePlugin,
-        // forcedLayoutPlugin,
+        onValueChangePlugin
       ]}
     >
       {({
