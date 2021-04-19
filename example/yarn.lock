@@ -1166,8 +1166,15 @@
     "@types/yargs" "^13.0.0"
 
 "@marketmuse/editor@link:..":
-  version "0.0.0"
-  uid ""
+  version "0.0.34"
+  dependencies:
+    is-hotkey "^0.1.6"
+    is-url "^1.2.4"
+    lodash "^4.17.15"
+    slate "0.61.3"
+    slate-history "0.61.3"
+    slate-hyperscript "0.61.3"
+    slate-react "0.61.3"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -4207,9 +4214,9 @@ fb-watchman@^2.0.0:
     bser "2.1.1"
 
 figgy-pudding@^3.5.1:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/figgy-pudding/-/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
-  integrity sha512-vNKxJHTEKNThjfrdJwHc7brvM6eVevuO5nTj6ez8ZQ1qbXTvGthucRF7S4vf2cr71QVnT70V34v0S1DyQsti0w==
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/figgy-pudding/-/figgy-pudding-3.5.2.tgz#b4eee8148abb01dcf1d1ac34367d59e12fa61d6e"
+  integrity sha512-0btnI/H8f2pavGMN8w40mlSKOfTK2SVJmBfBeVIj3kNw0swwgzyRq0d5TJVOwodFmtvpPeWPN/MCcfuWF0Ezbw==
 
 figures@^3.0.0:
   version "3.2.0"
@@ -6314,7 +6321,7 @@ loglevel@^1.6.6:
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.6.7.tgz#b3e034233188c68b889f5b862415306f565e2c56"
   integrity sha512-cY2eLFrQSAfVPhCgH1s7JI73tMbg9YC3v3+ZHVW67sBS7UxWzNEk/ZBbSfLykBWHp33dqqtOv82gjhKEi81T/A==
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
+loose-envify@^1.0.0, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -8159,7 +8166,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -8357,7 +8364,6 @@ react-dev-utils@^10.2.0:
 
 "react-dom@link:../node_modules/react-dom":
   version "0.0.0"
-  uid ""
 
 react-error-overlay@^6.0.6:
   version "6.0.6"
@@ -8431,7 +8437,6 @@ react-scripts@^3.4.0:
 
 "react@link:../node_modules/react":
   version "0.0.0"
-  uid ""
 
 read-pkg-up@^2.0.0:
   version "2.0.0"
@@ -8907,14 +8912,6 @@ saxes@^3.1.9:
   dependencies:
     xmlchars "^2.1.1"
 
-scheduler@^0.18.0:
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.18.0.tgz#5901ad6659bc1d8f3fdaf36eb7a67b0d6746b1c4"
-  integrity sha512-agTSHR1Nbfi6ulI0kYNK0203joW2Y5W4po4l+v03tOoiJKpTBbxpNhWDvqc/4IcOw+KLmSiQLTasZ4cab2/UWQ==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-
 schema-utils@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-1.0.0.tgz#0b79a93204d7b600d4b2850d1f66c2a34951c770"
@@ -9134,25 +9131,25 @@ slash@^3.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
-slate-history@^0.62.0:
-  version "0.62.0"
-  resolved "https://registry.yarnpkg.com/slate-history/-/slate-history-0.62.0.tgz#facd2e1ef249f979ecc0d0811d280515877d9352"
-  integrity sha512-nE3fihtHV7kUrDO3zNb+DWzQVUg59uKCZVt0r9GafZLiHB98n0X+qqtcjFHerDPDRPkHgqM8UL4wh1jhL4WzmA==
+slate-history@0.61.3:
+  version "0.61.3"
+  resolved "https://registry.yarnpkg.com/slate-history/-/slate-history-0.61.3.tgz#f250efee20b833b31af8e531e62cc3f8b08cf7da"
+  integrity sha512-pXTQhCXdR+cxQXGJotaadtANC6yZAOJIaCXEX8Cv6E+WSjs0v0PneufKxL/BqkCQZvy6e6kEa6svhHDlqQ5RmQ==
   dependencies:
     immer "^7.0.0"
     is-plain-object "^3.0.0"
 
-slate-hyperscript@^0.62.0:
-  version "0.62.0"
-  resolved "https://registry.yarnpkg.com/slate-hyperscript/-/slate-hyperscript-0.62.0.tgz#ff6f86e94936fbf90f8ec07d2ae8fbcd7e45a927"
-  integrity sha512-PbtxrrIr4qPvtPmKli4/FnvQFjf8zmnF0kyNeDQGHvUzpHnsoSYHM/i4POye3/qt5d8WGukiJBPL03QsIW+SIw==
+slate-hyperscript@0.61.3:
+  version "0.61.3"
+  resolved "https://registry.yarnpkg.com/slate-hyperscript/-/slate-hyperscript-0.61.3.tgz#668ea1fd2d384cee08b3f2432cdaf8b892b9af78"
+  integrity sha512-3F9+GbYaguorWPOdU1Zl3Nja2mlnLE6vHrdUbuwFRyWvmwOI/JOx0FuWZxCYY1yXRKi/nd7xkMjTXGOIktiYCQ==
   dependencies:
     is-plain-object "^3.0.0"
 
-slate-react@^0.62.0:
-  version "0.62.0"
-  resolved "https://registry.yarnpkg.com/slate-react/-/slate-react-0.62.0.tgz#023a2b797bd417adbb56b0a1e961768404f05be5"
-  integrity sha512-La3fROGdqOlD9s4p5+ObvAeuAj0LDYrXhYcGrPxHbz60fhXvGePtYXvhoEXARqJY9cF2Ql26kJ5f7+nqUzY4BA==
+slate-react@0.61.3:
+  version "0.61.3"
+  resolved "https://registry.yarnpkg.com/slate-react/-/slate-react-0.61.3.tgz#ae022dcf46aae5d6dac677ebef9dc8bac2da318d"
+  integrity sha512-458/7oDKV0i3nVp+UXLtB3MJST1/TNFgWkONfanbuO4bTVJdU8fWdWoZYKD9JInKJG1qjg5IIBbSTy0MtMd+5w==
   dependencies:
     "@types/is-hotkey" "^0.1.1"
     "@types/lodash" "^4.14.149"
@@ -9161,18 +9158,16 @@ slate-react@^0.62.0:
     is-plain-object "^3.0.0"
     lodash "^4.17.4"
     scroll-into-view-if-needed "^2.2.20"
-    tiny-invariant "1.0.6"
 
-slate@^0.62.0:
-  version "0.62.0"
-  resolved "https://registry.yarnpkg.com/slate/-/slate-0.62.0.tgz#7269502f46e06afd1bd61e9f7b6b4240db1c533b"
-  integrity sha512-eV00ONY/wc0Xy8SragC04Iv5w2uZn2KE6eNACon1zojrwOs4RL+BUV8hZo2PKj2SBoxMJ4s/NGtqgTaUjBIRDw==
+slate@0.61.3:
+  version "0.61.3"
+  resolved "https://registry.yarnpkg.com/slate/-/slate-0.61.3.tgz#1b20a623f2b4628c02c0ffa372a423f30b73e312"
+  integrity sha512-cbQScBlWWZ+aj8tL+OpLkJkeocnXAshKj6gvz7Zmtrcy5efBvlirfGMHuisF4ZBfBqU/gLRkus+FEaKLd86YaA==
   dependencies:
     "@types/esrever" "^0.2.0"
     esrever "^0.2.0"
     immer "^7.0.0"
     is-plain-object "^3.0.0"
-    lodash "^4.17.4"
     tiny-warning "^1.0.3"
 
 slice-ansi@^2.1.0:
@@ -9357,9 +9352,9 @@ sshpk@^1.7.0:
     tweetnacl "~0.14.0"
 
 ssri@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.1.tgz#2a3c41b28dd45b62b63676ecb74001265ae9edd8"
-  integrity sha512-3Wge10hNcT1Kur4PDFwEieXSCMCJs/7WvSACcrMYrNp+b8kDL1/0wJch5Ni2WrtwEa2IO8OsVfeKIciKCDx/QA==
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.2.tgz#157939134f20464e7301ddba3e90ffa8f7728ac5"
+  integrity sha512-cepbSq/neFK7xB6A50KHN0xHDotYzq58wWCa5LeWqnPrHG8GzfEjO/4O8kpmcGW+oaxkvhEJCWgbgNk4/ZV93Q==
   dependencies:
     figgy-pudding "^3.5.1"
 
@@ -9752,11 +9747,6 @@ timsort@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
-
-tiny-invariant@1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.0.6.tgz#b3f9b38835e36a41c843a3b0907a5a7b3755de73"
-  integrity sha512-FOyLWWVjG+aC0UqG76V53yAWdXfH8bO6FNmyZOuUrzDzK8DI3/JRY25UD7+g49JWM1LXwymsKERB+DzI0dTEQA==
 
 tiny-warning@^1.0.3:
   version "1.0.3"
