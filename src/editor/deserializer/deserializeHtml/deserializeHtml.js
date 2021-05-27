@@ -55,12 +55,12 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
 
   // extract tag settings
   let strategy = strategiesDict[nodeName.toLowerCase()];
-
   // if strategy is a function
   // execute it to get the settings
   if (typeof strategy === 'function') {
     strategy = strategy(current, htmlAttrs);
   }
+// console.log('here_strategy', nodeType, strategy, textContent);
 
   // get deserialize strategy for this tag
   let strategySkip = strategy === SKIP;
@@ -88,7 +88,7 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
   const isElement = nodeType === window.Node.ELEMENT_NODE;
   const isLink = nodeName === 'A';
   const hasTextContent = !!textContent;
-
+// console.log('here_', { isText, isElement, isLink, hasTextContent});
   // enhance current nodes args
   let instructionArgs = { ...childrenArgs }
   if (isText) instructionArgs = { ...instructionArgs, ...childrenLeafArgs }
@@ -140,7 +140,9 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
   if (strategyContinue) {
     return children;
   }
-
+if(nodeName.toLowerCase() === 'a') {
+  console.log('here_!!!', current,'->', deserialize(nodeName, { ...htmlAttrs, ...instructionArgs }, children));
+}
   // parse node and children normally
   return deserialize(nodeName, { ...htmlAttrs, ...instructionArgs }, children);
 }
@@ -158,7 +160,10 @@ export default (htmlDeserializerOptionsList = []) => (...strs) => {
     strategies,
   } = combineOptions(
     htmlDeserializerOptionsList);
-
+console.log('here_31231231231231', deserializeHtml({
+  transforms,
+  strategiesDict: strategiesToDict(strategies)
+}, rootEl, {}));
   return postDeserializeNormalization(
     deserializeHtml({
       transforms,

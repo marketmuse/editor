@@ -55,6 +55,8 @@ export const tags = {
   'BLOCK': fragment,
   'BR': paragraph, // <- treat br tags as empty paragraphs
   'P': paragraph,
+  'SPAN': paragraph,
+  'DIV': paragraph,
   'BLOCKQUOTE': blockQuote,
   'Q': blockQuote,
   'H1': headingOne,

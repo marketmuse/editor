@@ -20,6 +20,8 @@ export const types = {
 
 export const attrs = {
   p: () => ({ type: types.p }),
+  div: () => ({ type: types.p }),
+  span: () => ({ type: types.p }),
   h1: () => ({ type: types.h1 }),
   h2: () => ({ type: types.h2 }),
   h3: () => ({ type: types.h3 }),
