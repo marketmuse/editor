@@ -57,13 +57,17 @@ describe('deserialize html: tag settings', () => {
     expect(deserializeHtml(CONFIG_CONTINUE)(html)).toEqual([
       { type: types.p, children: [{ text: 'test ' }] },
       {
-        type: types.a,
-        href: 'marketmuse.com',
-        children: [{
-          text: 'marketmuse'
-        }]
-      }
-    ]);
+        children: [
+          {
+            type: types.a,
+            href: 'marketmuse.com',
+            children: [{
+              text: 'marketmuse'
+            }]
+          }
+        ],
+        type: types.p
+      }]);
   });
 
   // ****
@@ -131,21 +135,13 @@ describe('deserialize html: tag settings', () => {
           }
         ]
       }])(_html)
-    ).toEqual([
-      {
-        type: types.p,
-        children: [{ text: 'google' }]
-      },
-      {
-        type: types.a,
-        href: 'marketmuse.com',
-        children: [{ text: 'marketmuse' }]
-      },
-      {
-        type: types.p,
-        children: [{ text: 'bing' }]
-      }
-    ]);
+    ).toEqual([{
+      children: [
+        { text: 'google' },
+        { children: [{ text: 'marketmuse' }], href: 'marketmuse.com', type: types.a },
+        { text: 'bing' }
+      ]
+    }]);
   });
 
 });

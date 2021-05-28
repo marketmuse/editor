@@ -28,8 +28,14 @@ describe('deserialize html: p', () => {
     html += '</div>';
 
     expect(deserializeHtml()(html)).toEqual([{
-      type: types.p,
-      children: [{ text: 'test' }]
+      children: [{
+        children: [{
+          children: [{
+            children: [{ text: 'test' }],
+            type: types.p
+          }]
+        }]
+      }]
     }]);
   });
 
@@ -43,11 +49,13 @@ describe('deserialize html: p', () => {
     html += '<p>test3</p>';
     html += '</div>';
 
-    expect(deserializeHtml()(html)).toEqual([
-      { type: types.p, children: [{ text: 'test1' }] },
-      { type: types.p, children: [{ text: 'test2' }] },
-      { type: types.p, children: [{ text: 'test3' }] },
-    ]);
+    expect(deserializeHtml()(html)).toEqual([{
+      children: [
+        { children: [{text: 'test1'}], type: types.p },
+        { children: [{text: 'test2'}], type: types.p },
+        { children: [{text: 'test3'}], type: types.p }
+      ]
+    }]);
   });
 
 });

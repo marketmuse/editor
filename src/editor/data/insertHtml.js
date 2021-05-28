@@ -1,6 +1,5 @@
-import { Node, Editor, Transforms } from 'slate';
+import { Editor, Transforms } from 'slate';
 import isNil from 'lodash/isNil';
-import hasFocus from '@editor/focus/hasFocus';
 import deserializeHtml from '@editor/deserializer/deserializeHtml/deserializeHtml';
 
 const normalize = editor => {

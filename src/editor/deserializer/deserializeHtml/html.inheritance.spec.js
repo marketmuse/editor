@@ -15,15 +15,17 @@ describe('deserialize html: inheritance', () => {
 
     expect(deserializeHtml()(html)).toEqual([
       {
-        type: types.a,
-        href: 'marketmuse.com',
         children: [{
-          text: 'marketmuse',
-          [types.b]: true,
-          [types.i]: true,
-        }]
-      },
-    ]);
+          type: types.a,
+          href: 'marketmuse.com',
+          children: [{
+            text: 'marketmuse',
+            [types.b]: true,
+            [types.i]: true,
+          }]
+        }],
+        type: types.p
+      }]);
   });
 
   // ****
@@ -38,15 +40,17 @@ describe('deserialize html: inheritance', () => {
 
     expect(deserializeHtml()(html)).toEqual([
       {
-        type: types.a,
-        href: 'marketmuse.com',
         children: [{
-          text: 'marketmuse',
-          [types.b]: true,
-          [types.i]: true,
-        }]
-      },
-    ]);
+          type: types.a,
+          href: 'marketmuse.com',
+          children: [{
+            text: 'marketmuse',
+            [types.b]: true,
+            [types.i]: true,
+          }]
+        }],
+        type: types.p
+      }]);
   });
 
 });
