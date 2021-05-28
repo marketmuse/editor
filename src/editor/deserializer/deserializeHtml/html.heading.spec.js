@@ -16,15 +16,16 @@ describe('deserialize html: headings', () => {
     html += '<h6>heading 6</h6>';
     html += '</div>';
 
-    expect(deserializeHtml()(html)).toEqual([
-      { type: types.h1, children: [{ text: 'heading 1' }] },
-      { type: types.h2, children: [{ text: 'heading 2' }] },
-      { type: types.h3, children: [{ text: 'heading 3' }] },
-      // h4, h5 and h6 are not supported and deserialized as h3
-      { type: types.h3, children: [{ text: 'heading 4' }] },
-      { type: types.h3, children: [{ text: 'heading 5' }] },
-      { type: types.h3, children: [{ text: 'heading 6' }] },
-    ]);
+    expect(deserializeHtml()(html)).toEqual([{
+      children: [
+        { children: [{ text: 'heading 1' }], type: types.h1 },
+        { children: [{ text: 'heading 2' }], type: types.h2 },
+        { children: [{ text: 'heading 3' }], type: types.h3 },
+        { children: [{ text: 'heading 4' }], type: types.h3 },
+        { children: [{ text: 'heading 5' }], type: types.h3 },
+        { children: [{ text: 'heading 6' }], type: types.h3 }
+      ]
+    }]);
   });
 
 });

@@ -24,9 +24,9 @@ describe('insertHtml options', () => {
       }
     });
 
-    expect(editor.children).toEqual(
-      [{ type: types.p, children: [{ text: 'marketmuse' }] }]
-    );
+    expect(editor.children).toEqual([{
+      children: [{ text: 'marketmuse' }]
+    }]);
   });
 
   // ****
@@ -55,7 +55,7 @@ describe('insertHtml options', () => {
     });
 
     expect(editor.children).toEqual(
-      [{ type: types.p, children: [{ text: 'test', [types.b]: true }] }]
+      [{ children: [{ text: 'test', [types.b]: true }] }]
     );
   });
 

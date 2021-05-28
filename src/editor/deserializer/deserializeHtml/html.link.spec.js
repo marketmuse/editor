@@ -11,9 +11,12 @@ describe('deserialize html: a', () => {
   test('deserialize works for links', () => {
     const html = '<a href="https://marketmuse.com">marketmuse</a>';
     expect(deserializeHtml()(html)).toEqual([{
-      type: types.a,
-      href: 'https://marketmuse.com',
-      children: [{ text: 'marketmuse' }]
+      children: [{
+        type: types.a,
+        href: 'https://marketmuse.com',
+        children: [{ text: 'marketmuse' }]
+      }],
+      type: types.p
     }]);
   });
 
@@ -26,23 +29,25 @@ describe('deserialize html: a', () => {
     html += '<a href="https://marketmuse.com">marketmuse3</a>';
     html += '</div>';
 
-    expect(deserializeHtml()(html)).toEqual([
-      {
-        type: types.a,
-        href: 'https://marketmuse.com',
-        children: [{ text: 'marketmuse1' }]
-      },
-      {
-        type: types.a,
-        href: 'https://marketmuse.com',
-        children: [{ text: 'marketmuse2' }]
-      },
-      {
-        type: types.a,
-        href: 'https://marketmuse.com',
-        children: [{ text: 'marketmuse3' }]
-      },
-    ]);
+    expect(deserializeHtml()(html)).toEqual([{
+      children: [
+        {
+          type: types.a,
+          href: 'https://marketmuse.com',
+          children: [{ text: 'marketmuse1' }]
+        },
+        {
+          type: types.a,
+          href: 'https://marketmuse.com',
+          children: [{ text: 'marketmuse2' }]
+        },
+        {
+          type: types.a,
+          href: 'https://marketmuse.com',
+          children: [{ text: 'marketmuse3' }]
+        }
+      ]
+    }]);
   });
 
   // ****
@@ -97,7 +102,6 @@ describe('deserialize html: a', () => {
         ]
       }])(html)
     ).toEqual([{
-      type: types.p,
       children: [{ text: 'marketmuse' }]
     }]);
   });

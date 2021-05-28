@@ -12,7 +12,7 @@ export default (fragments = []) => fragments
 
   // wrap lonely text nodes
   .map(f => (
-    (!f.type && f.text)
+    ((!f.type && f.text) || f.type === types.a)
       ? { children: [f], type: types.p }
       : f
   ))

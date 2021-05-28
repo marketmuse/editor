@@ -55,7 +55,6 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
 
   // extract tag settings
   let strategy = strategiesDict[nodeName.toLowerCase()];
-
   // if strategy is a function
   // execute it to get the settings
   if (typeof strategy === 'function') {
@@ -88,7 +87,6 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
   const isElement = nodeType === window.Node.ELEMENT_NODE;
   const isLink = nodeName === 'A';
   const hasTextContent = !!textContent;
-
   // enhance current nodes args
   let instructionArgs = { ...childrenArgs }
   if (isText) instructionArgs = { ...instructionArgs, ...childrenLeafArgs }
@@ -140,7 +138,6 @@ const deserializeHtml = (options = {}, el, inherit = {}) => {
   if (strategyContinue) {
     return children;
   }
-
   // parse node and children normally
   return deserialize(nodeName, { ...htmlAttrs, ...instructionArgs }, children);
 }
@@ -156,8 +153,7 @@ export default (htmlDeserializerOptionsList = []) => (...strs) => {
   const {
     transforms,
     strategies,
-  } = combineOptions(
-    htmlDeserializerOptionsList);
+  } = combineOptions(htmlDeserializerOptionsList);
 
   return postDeserializeNormalization(
     deserializeHtml({
