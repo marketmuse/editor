@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import get from 'lodash/get';
-import MMSEditor, { types, slate, useFormats, useFunctions } from '@marketmuse/editor';
+import MMSEditor, { useFormats, useFunctions } from '@marketmuse/editor';
 import '@marketmuse/editor/dist/mms-editor.css';
 
 import './App.css';
